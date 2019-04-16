@@ -1,226 +1,66 @@
-# `Texture-Studio`
+# What is a "Texture Studio"
 
+Texture Studio is an advanced, server-based map editor. You can use Texture Studio for practically any kind of SA-MP map. It has many features that allow you to create, texture, and modify SA-MP maps with ease.
 
-# *Commands:*
+--------
 
+# Features
 
+### Map Management
 
-## Maps:
+* Maps are saved in database files containing all of their objects, vehicles, and settings (author name, creation date, last modification date, spawn position, etc).
+* You can load, save, rename, and even delete maps in-game.
+* PAWN map code can be imported and exported in multiple formats.
 
-/loadmap - Load a map
+### Map Editor
 
-/newmap - Create a new map
+* You can use commands or the GUI for most features, we've provided both so it's up to the user to decide which works best for them.
+* Basic functionality such as creating, destroying, moving, and also cloning objects.
+* Set notes, model, and many other properties for each object.
+* Object models can be searched with visually represented results.
+* Use flymode to fly around the map with ease... with additional settings for speed and acceleration.
+* Command binds can be used to save multiple commands to a list that can be executed later.
+* Advanced in-game help command that lists all commands and tells what each of them do.
+* Undo support to take back the command that deleted your whole map.
 
-/importmap - Import CreateObject() or CreateDynamicObject() raw code
+* **Texturing**
 
-/export - Export a map to code
+    * Set the texture, color, or put text on objects.
+    * Texture themes (a collection of textures) can be created and saved.
+    * Textures can be searched and viewed via a 3D menu.
+    * View texture indexes of the object being edited, to avoid confusion with texture slots.
 
+* **Groups**
 
+    * Objects can be grouped and edited all at once.
+    * Multiple groups of objects can be handled.
+    * Texture all items in a groups.
+    * Add or remove ranges of objects to and from groups.
+    * Rotate or move the entire map or a particular group.
+    * Select a group of objects by model.
+    * Mirror objects in a group.
+    * Export groups as a prefabricated set of objects for future use.
 
-## Objects:
+* **SA Objects (Buildings)**
 
-/cobject <objectid> - Create an object
+    * The default San Andreas map can also be edited.
+    * Access each object in the map via ID.
+    * Rmove, copy, or replace objects.
 
-/dobject - Delete your selected object
+* **Vehicles**
 
-/robject - Resets an objects text and materials
+    * Add vehicles to a map.
+    * Set the color, siren mode, tuning, and spawn position of vehicles.
+    * Attach objects to a vehicle.
 
-/osearch - Search for a object
+--------
 
-/sel <objectid> - Select a object id index
+# Commands
 
-/csel - Use the mouse to select an object
+Visit the [commands page](../../wiki/All-Commands) for a list of commands provided in Texture Studio, as well as syntax and use information for each.
 
-/lsel - Graphical object selection
+# Tutorials
 
-/flymode - Enter flymode
+See [Using Texture Studio](../../wiki/Using-Texture-Studio) for a basic usage tutorial by Earl (of Red County Roleplay and SA-MP Discord). It includes information for installation as well. I've edited it a bit for clarification and simplicity, the original can be found [here](https://forum.redcountyrp.com/threads/texture-studio-guide.126089/).
 
-/ogoto - Goto your selected object (must be in flymode)
-
-/pivot - Set a pivot position to rotate objects around
-
-/togpivot - Turn on/off pivot rotation
-
-/oprop - Object property editor
-
-
-
-## Movement:
-
-/editobject - Edit object mode
-
-/ox - /oy - /oz - Standard movement commands
-
-/rx - ry - /rz - Standard rotation commands
-
-/dox - /doy - /doz - Delta move map
-
-/drx - /dry - /drz - Rotate map around map center
-
-
-
-## Textures/Text/Indexes/Theme:
-
-/mtextures - Show a list of textures in a list
-
-/ttextures - Show a list of textures in (Theme)
-
-/stexture - Texture editor
-
-/mtset <index> <textureref> - Set a material
-
-/mtsetall <index> <textureref> - Set a material to ALL objects of the same modelid
-
-/mtcolor <index> <Hex Color ARGB> - Sets a material color
-
-/mtcolorall <index> <Hex Color ARGB> - Sets a material color to ALL objects of the same modelid
-
-/copy - Copy object properties to buffer from currently selected object
-
-/paste - Paste object properties from buffer to currently selected object
-
-/clear - Clear object properties from buffer
-
-/text - Open the object text editor
-
-/sindex - Set text on a object will show material IDs
-
-/rindex - Removes material indexes shown on an object
-
-/loadtheme - Load a texture theme
-
-/savetheme - Saves a texture theme
-
-/deletetheme - Delete a texture theme
-
-/tsearch - Find a texture by part of name
-
-
-
-## Groups/Prefabs:
-
-/setgroup - Sets a group id for a group objects
-
-/selectgroup - Select a group of objects to edit
-
-/gsel - Open up click select to add/remove objects from your group
-
-/gadd - Add an object to your group useful for objects that cannot be clicked on
-
-/grem - Remove a specific object from your group
-
-/gclear - Clear your group selection
-
-/gclone - Clone your group selection
-
-/gdelete - Delete all objects in your group
-
-/editgroup - Start editing a group
-
-/gox - /goy - /goz - Stardard group movement commands
-
-/gox - /goy - /goz - Stardard group rotation commands
-
-/gaexport - Exports a group of objects to a attached object FS (Not yet completed)
-
-/gprefab - Export a group of objects to a loadable prefab file
-
-/prefabsetz - Set the load offset of a prefab file
-
-/prefab <LoadName"> - Load a prefab file, /prefab will show all prefabs
-
-
-
-## Bind Editor:
-
-/bindeditor - Open the bind editor you can enter a series of commands to execute
-
-/runbind <index> - Runs a bind
-
-
-
-## GTA Objects:
-
-/gtaobjects - Shows 3D Text of all GTA objects the indexes can be used for deleting objects
-
-/remobject <index> - Remove a GTA object specify the index
-
-/swapbuilding <index> - Remove a GTA and swap with an editable object
-
-
-
-## Vehicles:
-
-/avmodcar - Mod a car it will teleport the vehicle to the correct mod garage if modable
-
-/avsetspawn - Set the spawn position of a vehicle
-
-/avnewcar - Create a new car
-
-/avdeletecar - Delete an unwanted car
-
-/avcarcolor - Set vehicle car color
-
-/avpaint - Set a vehicles paintjob
-
-/avattach - Attach currently selected object to currently selected vehicle
-
-/avdetach - Detach currently selected object from vehicle
-
-/avsel - Select a vehicle to edit
-
-/avexport - Export a car to filterscript
-
-/avexportall - Export all cars to filterscript
-
-/avox - /avoy - /avoz - Standard vehicle object movement commands
-
-/avrx - /avry - /avrz - Standard vehicle object rotation commands
-
-/avmirror - Mirror an object attached to a vehicle
-
-(Special note: using /editobject on an attached object will edit the object on the vehicle)
-
-
-
-## Other:
-
-/echo - Will echo back any text sent this is useful for autohotkey so that you can create
-
-displayed output for your keybinds
-
-
-
-
-
-# *Key Combos:*
-
-
-
-## /csel:
-
-Holding 'H' while clicking an object will copy properites to buffer
-
-Holding 'Walk Key' while clicking an object will paste properties from buffer
-
-
-
-## /editgroup:
-
-Hold 'Walk Key' to set the group rotation pivot you can only do this once per edit
-
-
-
-## GUI:
-
-When in fly mode to open the GUI press 'Jump Key' otherwise it can be opened by pressing 'N' Key
-
-
-
-## Texture Viewer:
-
-In Fly mode instead of pressing Y/H to scroll through textures hold enter/exit vehicle and press ANALOG Left ---- ANALOG Right
-
-Pressing sprint will add textures to your theme in fly mode press sprint+aim to add textures to theme in walk mode
-
-Walk key will apply the selected texture to your object
+See [Screenshots and Videos](../../wiki/Screenshots-and-Videos) for some tutorial videos and other media relating to Texture Studio.
