@@ -1,3 +1,6 @@
+#detect .inc files as pawn code
+*.inc linguist-language=PAWN
+
 # Auto detect text files and perform LF normalization
 * text=auto
 

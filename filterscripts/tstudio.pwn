@@ -42,7 +42,7 @@ works very similarily to medit but with a greatly enhanced core design.
 
 Commands: (Currently 65 commands)
 
-	Maps:
+	Maps:r
 	/loadmap - Load a map
 	/newmap - Create a new map
 	/importmap - Import CreateObject() or CreateDynamicObject() raw code
