@@ -17,10 +17,7 @@ public OnFilterScriptInit()
 	
 	ResetSettings();
 	
-	#if defined AddSimpleModel // DL-SUPPORT
-	Streamer_SetVisibleItems(STREAMER_TYPE_OBJECT, 1500);
-	#endif
-	
+	Streamer_SetVisibleItems(STREAMER_TYPE_OBJECT, MAX_OBJECTS);
 	return 1;
 }
 
