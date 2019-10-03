@@ -2020,6 +2020,9 @@ LoadMap(playerid)
 	new extension[3];
 	new fcount;
 
+	//create a list that will contain all maps for easy pagination.
+	new List:maps = list_new();
+
 	// Create a load list
 	while(dir_list(dHandle, item, type))
 	{
@@ -2033,82 +2036,110 @@ LoadMap(playerid)
 				// File is apparently a db
 				if(!strcmp(extension, "db"))
 				{
-					format(line, sizeof(line), "%s\n%s", item, line);
+					list_add_str(maps, item);
 					fcount++;
 				}
 			}
 	    }
 	}
 
-	// Files were found
-	if(fcount > 0)
+	//sort the maps alphabetically
+	list_sort(maps);
+
+	task_yield(1);
+	new response[e_DIALOG_RESPONSE_INFO];
+
+	//no files were found.
+	if(fcount == 0)
 	{
-        inline Select(spid, sdialogid, sresponse, slistitem, string:stext[])
-        {
-            #pragma unused slistitem, sdialogid, spid
+		await_arr(response) ShowPlayerAsyncDialog(playerid, DIALOG_STYLE_MSGBOX, "Texture Studio", "There are no maps to load.\nCreate a new map?", "Ok", "Cancel");
+		if(response[E_DIALOG_RESPONSE_Response])
+		{
+			NewMap(playerid);
+		}
+	    return 1;
+	}
 
-			// Player selected map to load
-            if(sresponse)
-            {
-				ClearAllUndoInfo();
+	//loop infinitely so we can easily re-show the dialog with pagination
+	new offset, count, mapname[128];
+	for(;;)
+	{
+		line[0] = EOS;
+		count = 0;
+		new Iter:i = list_iter(maps, offset * 20); //only show 20 maps per page
+		while(iter_inside(i))
+		{
+			if(count >= 20) break;
 
-				format(MapName, sizeof(MapName), "tstudio/SavedMaps/%s", stext);
+			iter_get_str(i, mapname);
+			strcat(line, sprintf("%s\n", mapname));
+			iter_move_next(i);
+			++count;
+		}
+		if(count >= 20) strcat(line, "--> Next Page\n");
+		if(offset != 0) strcat(line, "<-- Previous Page\n");
+		await_arr(response) ShowPlayerAsyncDialog(playerid, DIALOG_STYLE_LIST, "Texture Studio (Load Map)", line, "Ok", "Cancel");
+		if(!response[E_DIALOG_RESPONSE_Response]) break;
 
-				// Map is now open
-                EditMap = db_open_persistent(MapName);
+		if(!strcmp(response[E_DIALOG_RESPONSE_InputText], "--> Next Page"))
+		{
+			++offset;
+			continue;
+		}
+		if(!strcmp(response[E_DIALOG_RESPONSE_InputText], "<-- Previous Page"))
+		{
+			--offset;
+			continue;
+		}
 
-                // Load the maps settings
-                sqlite_LoadSettings();
-                
-				// Perform any version updates
-				sqlite_UpdateDB();
+		ClearAllUndoInfo();
 
-				// Load the maps remove buildings
-			    new rmcount = sqlite_LoadRemoveBuildings();
+		format(MapName, sizeof(MapName), "tstudio/SavedMaps/%s", response[E_DIALOG_RESPONSE_InputText]);
 
-                // Load the maps objects
-                new ocount = sqlite_LoadMapObjects();
+		// Map is now open
+        EditMap = db_open_persistent(MapName);
 
-				// Load any vehicles
-			    sqlite_LoadCars();
+        // Load the maps settings
+        sqlite_LoadSettings();
+        
+		// Perform any version updates
+		sqlite_UpdateDB();
 
-				// Map is now open
-                MapOpen = true;
+		// Load the maps remove buildings
+	    new rmcount = sqlite_LoadRemoveBuildings();
 
-				// Default editing mode
-   				EditingMode[playerid] = false;
-				SetEditMode(playerid,EDIT_MODE_NONE);
+        // Load the maps objects
+        new ocount = sqlite_LoadMapObjects();
 
-				SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
-				SendClientMessage(playerid, STEALTH_GREEN, sprintf("You have loaded a map with %i objects and %i removed buildings.", ocount, rmcount));
-                
-                new DBResult:timeResult = db_query(EditMap, sprintf("SELECT datetime(%i, 'unixepoch', 'localtime')", MapSetting[mLastEdit]));
-                new timestr[64];
-                db_get_field(timeResult, 0, timestr, 64);
-                db_free_result(timeResult);
-                
-                if(MapSetting[mLastEdit])
-				{
-                    SendClientMessage(playerid, STEALTH_GREEN, sprintf("This map was created by %s.", MapSetting[mAuthor]));
-                    SendClientMessage(playerid, STEALTH_GREEN, sprintf("This map was last edited on %s.", timestr)); // by %s
-                }
-				
-                // Update the maps settings, so the last edit time updates
-                sqlite_UpdateSettings();
-            }
+		// Load any vehicles
+	    sqlite_LoadCars();
+
+		// Map is now open
+        MapOpen = true;
+
+		// Default editing mode
+		EditingMode[playerid] = false;
+		SetEditMode(playerid,EDIT_MODE_NONE);
+
+		SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+		SendClientMessage(playerid, STEALTH_GREEN, sprintf("You have loaded a map with %i objects and %i removed buildings.", ocount, rmcount));
+        
+        new DBResult:timeResult = db_query(EditMap, sprintf("SELECT datetime(%i, 'unixepoch', 'localtime')", MapSetting[mLastEdit]));
+        new timestr[64];
+        db_get_field(timeResult, 0, timestr, 64);
+        db_free_result(timeResult);
+        
+        if(MapSetting[mLastEdit])
+		{
+            SendClientMessage(playerid, STEALTH_GREEN, sprintf("This map was created by %s.", MapSetting[mAuthor]));
+            SendClientMessage(playerid, STEALTH_GREEN, sprintf("This map was last edited on %s.", timestr)); // by %s
         }
-        Dialog_ShowCallback(playerid, using inline Select, DIALOG_STYLE_LIST, "Texture Studio (Load Map)", line, "Ok", "Cancel");
+		
+        // Update the maps settings, so the last edit time updates
+        sqlite_UpdateSettings();
+		break;
 	}
-	// No files found
- 	else
-	{
-	    inline CreateMap(cpid, cdialogid, cresponse, clistitem, string:ctext[])
-	    {
-            #pragma unused clistitem, cdialogid, cpid, ctext
- 			if(cresponse) NewMap(playerid);
-	    }
-	    Dialog_ShowCallback(playerid, using inline CreateMap, DIALOG_STYLE_MSGBOX, "Texture Studio", "There are no maps to load create a new map?", "Ok", "Cancel");
-	}
+	list_delete(maps);
 	return 1;
 }
 
