@@ -74,7 +74,8 @@ static Operators[16][3] = {
 	"(", ")"
 };
 
-public OnFilterScriptInit()
+#include <YSI_Coding\y_hooks>
+hook OnFilterScriptInit()
 {
 	CreateSearchDraws();
 	foreach(new i : Player)
@@ -82,22 +83,10 @@ public OnFilterScriptInit()
 		CreatePlayerSearchDraw(i);
 	}
 
-	#if defined OS_OnFilterScriptInit
-		OS_OnFilterScriptInit();
-	#endif
-	return 1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
-#if defined _ALS_OnFilterScriptInit
-	#undef OnFilterScriptInit
-#else
-	#define _ALS_OnFilterScriptInit
-#endif
-#define OnFilterScriptInit OS_OnFilterScriptInit
-#if defined OS_OnFilterScriptInit
-	forward OS_OnFilterScriptInit();
-#endif
 
-public OnFilterScriptExit()
+hook OnFilterScriptExit()
 {
 	DestroySearchDraws();
 	foreach(new i : Player)
@@ -105,23 +94,10 @@ public OnFilterScriptExit()
 	    DestroyPlayerSearchDraw(i);
 	}
 
-	#if defined OS_OnFilterScriptExit
-		OS_OnFilterScriptExit();
-	#endif
-	return 1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
-#if defined _ALS_OnFilterScriptExit
-	#undef OnFilterScriptExit
-#else
-	#define _ALS_OnFilterScriptExit
-#endif
-#define OnFilterScriptExit OS_OnFilterScriptExit
-#if defined OS_OnFilterScriptExit
-	forward OS_OnFilterScriptExit();
-#endif
 
-
-public OnPlayerConnect(playerid)
+hook OnPlayerConnect(playerid)
 {
     CreatePlayerSearchDraw(playerid);
 	CurrOSXRot[playerid] = -20.0;
@@ -129,20 +105,8 @@ public OnPlayerConnect(playerid)
 	CurrOSZRot[playerid] = -50.0;
 	CurrOSZoom[playerid] = 1.0;
 
-	#if defined OS_OnPlayerConnect
-		OS_OnPlayerConnect(playerid);
-	#endif
-	return 1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
-#if defined _ALS_OnPlayerConnect
-	#undef OnPlayerConnect
-#else
-	#define _ALS_OnPlayerConnect
-#endif
-#define OnPlayerConnect OS_OnPlayerConnect
-#if defined OS_OnPlayerConnect
-	forward OS_OnPlayerConnect(playerid);
-#endif
 
 // Search for object names
 YCMD:osearch(playerid, arg[], help)
@@ -308,8 +272,10 @@ YCMD:osearchex(playerid, arg[], help)
 	return 1;
 }
 
-ClickTextDrawOSearch(playerid, Text:clickedid)
+hook OnPlayerClickTextDraw(playerid, Text:clickedid)
 {
+	if(GetCurrTextDraw(playerid) != TEXTDRAW_OSEARCH) return Y_HOOKS_CONTINUE_RETURN_0;
+
 	if (Text:INVALID_TEXT_DRAW == clickedid)
 	{
 		// Textdraws are now closed
@@ -333,7 +299,7 @@ ClickTextDrawOSearch(playerid, Text:clickedid)
 		// Unpause
 		SetTimerEx("PlayerSetGUIPaused", 300, false, "ii", playerid, 0);
 
-	    return 1;
+	    return Y_HOOKS_BREAK_RETURN_1;
 	}
 
 	// Rotate XLeft
@@ -381,14 +347,14 @@ ClickTextDrawOSearch(playerid, Text:clickedid)
 
 	else if(ZoomLeft == clickedid)
 	{
-		if(CurrOSZoom[playerid] > OS_MIN_ZOOM_CONSTRAINT) return 1;
+		if(CurrOSZoom[playerid] > OS_MIN_ZOOM_CONSTRAINT) return Y_HOOKS_BREAK_RETURN_1;
 		CurrOSZoom[playerid] += 0.1;
 		UpdateOSPreview(playerid);
 	}
 
 	else if(ZoomRight == clickedid)
 	{
-		if(CurrOSZoom[playerid] < OS_MAX_ZOOM_CONSTRAINT) return 1;
+		if(CurrOSZoom[playerid] < OS_MAX_ZOOM_CONSTRAINT) return Y_HOOKS_BREAK_RETURN_1;
 		CurrOSZoom[playerid] -= 0.1;
 		UpdateOSPreview(playerid);
 	}
@@ -422,22 +388,24 @@ ClickTextDrawOSearch(playerid, Text:clickedid)
 		}
 	}
 
-	return 0;
+	return Y_HOOKS_CONTINUE_RETURN_0;
 }
 
-ClickPlayerTextDrawOSearch(playerid, PlayerText:clickedid)
+hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 {
+	if(GetCurrTextDraw(playerid) != TEXTDRAW_OSEARCH) return Y_HOOKS_CONTINUE_RETURN_0;
+
 	for(new i = 0; i < MAX_OS_PAGE; i++)
 	{
-	    if(clickedid == OSearchIndex[playerid][i])
+	    if(playertextid == OSearchIndex[playerid][i])
 	    {
 			CurrOSHighlight[playerid] = i;
 		    UpdateOSHighLight(playerid);
 		    UpdateOSPreview(playerid);
-			return 1;
+			return Y_HOOKS_BREAK_RETURN_1;
 	    }
 	}
-	return 0;
+	return Y_HOOKS_CONTINUE_RETURN_0;
 }
 
 static ShowObjectList(playerid)

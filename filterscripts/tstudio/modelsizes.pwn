@@ -5,24 +5,14 @@
 
 new DB:MS_DB, MS_QUERY[128], DBResult:MS_RESULT, Float:MS_VALUE[6];
 
-public OnFilterScriptInit()
+#include <YSI_Coding\y_hooks>
+hook OnFilterScriptInit()
 {
 	if((MS_DB = db_open("tstudio/modelsizes.db")) == DB:0)
 		print("Model Sizes Plus - Loading Failed (Database Could Not Be Opened).");
-	#if defined MS_OnFilterScriptInit
-		MS_OnFilterScriptInit();
-	#endif
-	return 1;
+
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
-#if defined _ALS_OnFilterScriptInit
-	#undef OnFilterScriptInit
-#else
-	#define _ALS_OnFilterScriptInit
-#endif
-#define OnFilterScriptInit MS_OnFilterScriptInit
-#if defined MS_OnFilterScriptInit
-	forward MS_OnFilterScriptInit();
-#endif
 
 #define GetColCount() (20000)
 

@@ -5,23 +5,13 @@
 
 new DB:AO_DB, DBResult:AO_RESULT;
 
-public OnFilterScriptInit()
+#include <YSI_Coding\y_hooks>
+hook OnFilterScriptInit()
 {
 	if((AO_DB = db_open("tstudio/allbuildings.db")) == DB:0)
 		print("All Buildings - Loading Failed (Database Could Not Be Opened).");
-	#if defined AO_OnFilterScriptInit
-		AO_OnFilterScriptInit();
-	#endif
-	return 1;
+	
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
-#if defined _ALS_OnFilterScriptInit
-	#undef OnFilterScriptInit
-#else
-	#define _ALS_OnFilterScriptInit
-#endif
-#define OnFilterScriptInit AO_OnFilterScriptInit
-#if defined AO_OnFilterScriptInit
-	forward AO_OnFilterScriptInit();
-#endif
 
 #define SEARCH_DATA_SIZE (44763)

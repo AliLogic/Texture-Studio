@@ -8,7 +8,9 @@ new CommandBuffer[MAX_PLAYERS][MAX_COMMAND_BUFFER][128];
 	(((newkeys & (%0)) != (%0)) && ((oldkeys & (%0)) == (%0)))
 
 new bool:HoldKeyPressed;
-OnPlayerKeyStateChangeCMD(playerid,newkeys,oldkeys)
+
+#include <YSI_Coding\y_hooks>
+hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
 	if(HoldKeyPressed && PRESSED(KEY_CROUCH) && !isnull(CommandBuffer[playerid][0]))
         Command_ReProcess(playerid, CommandBuffer[playerid][0], 0); //BroadcastCommand(playerid, CommandBuffer[playerid][0]);
@@ -18,10 +20,10 @@ OnPlayerKeyStateChangeCMD(playerid,newkeys,oldkeys)
 	else if(RELEASED(KEY_WALK))
         HoldKeyPressed = false;
     
-    return 0;
+    return Y_HOOKS_CONTINUE_RETURN_0;
 }
 
-public OnPlayerCommandText(playerid, const cmdtext[]) 
+hook OnPlayerCommandText(playerid, const cmdtext[]) 
 {
 	//print(cmdtext);
 
@@ -37,38 +39,14 @@ public OnPlayerCommandText(playerid, const cmdtext[])
 	//CommandBuffer[playerid][0][0] = EOS;
 	format(CommandBuffer[playerid][0], 128, "%s", cmdtext);
 
-	#if defined CB_OnPlayerCommandText
-		CB_OnPlayerCommandText(playerid, cmdtext);
-	#endif
-	return 1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
-#if defined _ALS_OnPlayerCommandText
-	#undef OnPlayerCommandText
-#else
-	#define _ALS_OnPlayerCommandText
-#endif
-#define OnPlayerCommandText CB_OnPlayerCommandText
-#if defined CB_OnPlayerCommandText
-	forward CB_OnPlayerCommandText(playerid, const cmdtext[]);
-#endif
 
-public OnPlayerConnect(playerid)
+hook OnPlayerConnect(playerid)
 {
     // Reset the player's buffer
     new tmpCommandBuffer[MAX_COMMAND_BUFFER][128];
     CommandBuffer[playerid] = tmpCommandBuffer;
 
-	#if defined CB_OnPlayerConnect
-		CB_OnPlayerConnect(playerid);
-	#endif
-	return 1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
-#if defined _ALS_OnPlayerConnect
-	#undef OnPlayerConnect
-#else
-	#define _ALS_OnPlayerConnect
-#endif
-#define OnPlayerConnect CB_OnPlayerConnect
-#if defined CB_OnPlayerConnect
-	forward CB_OnPlayerConnect(playerid);
-#endif

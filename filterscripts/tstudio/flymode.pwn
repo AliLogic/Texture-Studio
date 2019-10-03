@@ -54,8 +54,8 @@ new bool:FlyMode[MAX_PLAYERS];
 
 tsfunc IsFlyMode(playerid) { return noclipdata[playerid][cameramode]; }
 
-
-public OnFilterScriptExit()
+#include <YSI_Coding\y_hooks>
+hook OnFilterScriptExit()
 {
 	// If any players are still in edit mode, boot them out before the filterscript unloads
 	for(new x; x<MAX_PLAYERS; x++)
@@ -63,24 +63,12 @@ public OnFilterScriptExit()
 		if(noclipdata[x][cameramode] == CAMERA_MODE_FLY) CancelFlyMode(x);
 	}
 
-	#if defined FM_OnFilterScriptExit
-		FM_OnFilterScriptExit();
-	#endif
-	return 1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
-#if defined _ALS_OnFilterScriptExit
-	#undef OnFilterScriptExit
-#else
-	#define _ALS_OnFilterScriptExit
-#endif
-#define OnFilterScriptExit FM_OnFilterScriptExit
-#if defined FM_OnFilterScriptExit
-	forward FM_OnFilterScriptExit();
-#endif
 
 //--------------------------------------------------
 
-public OnPlayerConnect(playerid)
+hook OnPlayerConnect(playerid)
 {
 	// Reset the data belonging to this player slot
 	noclipdata[playerid][cameramode] 	= CAMERA_MODE_NONE;
@@ -93,21 +81,8 @@ public OnPlayerConnect(playerid)
 	noclipdata[playerid][accelrate]   	= ACCEL_RATE;
 	noclipdata[playerid][maxspeed]   	= MOVE_SPEED;
 	FlyMode[playerid] = false;
-
-	#if defined FM_OnPlayerConnect
-		FM_OnPlayerConnect(playerid);
-	#endif
-	return 1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
-#if defined _ALS_OnPlayerConnect
-	#undef OnPlayerConnect
-#else
-	#define _ALS_OnPlayerConnect
-#endif
-#define OnPlayerConnect FM_OnPlayerConnect
-#if defined FM_OnPlayerConnect
-	forward FM_OnPlayerConnect(playerid);
-#endif
 
 //--------------------------------------------------
 
@@ -190,7 +165,7 @@ YCMD:fmtoggle(playerid, arg[], help)
 
 //--------------------------------------------------
 
-public OnPlayerUpdate(playerid)
+hook OnPlayerUpdate(playerid)
 {
 	if(noclipdata[playerid][cameramode] == CAMERA_MODE_FLY)
 	{
@@ -225,26 +200,10 @@ public OnPlayerUpdate(playerid)
 		}
 		noclipdata[playerid][udold] = ud; noclipdata[playerid][lrold] = lr; // Store current keys pressed for comparison next update
 
-		#if defined FM_OnPlayerUpdate
-			FM_OnPlayerUpdate(playerid);
-		#endif
-		return 0;
+		return Y_HOOKS_CONTINUE_RETURN_0;
 	}
-
-	#if defined FM_OnPlayerUpdate
-		FM_OnPlayerUpdate(playerid);
-	#endif
-	return 1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
-#if defined _ALS_OnPlayerUpdate
-	#undef OnPlayerUpdate
-#else
-	#define _ALS_OnPlayerUpdate
-#endif
-#define OnPlayerUpdate FM_OnPlayerUpdate
-#if defined FM_OnPlayerUpdate
-	forward FM_OnPlayerUpdate(playerid);
-#endif
 
 //--------------------------------------------------
 

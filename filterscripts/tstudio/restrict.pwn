@@ -1,41 +1,18 @@
-public OnFilterScriptInit()
+#include <YSI_Coding\y_hooks>
+hook OnFilterScriptInit()
 {
 	Iter_Init(Restriction);
     
-	#if defined RS_OnFilterScriptInit
-		RS_OnFilterScriptInit();
-	#endif
-	return 1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
-#if defined _ALS_OnFilterScriptInit
-	#undef OnFilterScriptInit
-#else
-	#define _ALS_OnFilterScriptInit
-#endif
-#define OnFilterScriptInit RS_OnFilterScriptInit
-#if defined RS_OnFilterScriptInit
-	forward RS_OnFilterScriptInit();
-#endif
 
-public OnPlayerDisconnect(playerid, reason)
+hook OnPlayerDisconnect(playerid, reason)
 {
 	for(new g; g < 51; g++)
         Iter_Remove(Restriction[g], playerid);
     
-	#if defined RS_OnPlayerDisconnect
-		RS_OnPlayerDisconnect(playerid, reason);
-	#endif
-	return 1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
-#if defined _ALS_OnPlayerDisconnect
-	#undef OnPlayerDisconnect
-#else
-	#define _ALS_OnPlayerDisconnect
-#endif
-#define OnPlayerDisconnect RS_OnPlayerDisconnect
-#if defined RS_OnPlayerDisconnect
-	forward RS_OnPlayerDisconnect(playerid, reason);
-#endif
 
 YCMD:restrict(playerid, arg[], help)
 {

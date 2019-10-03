@@ -75,7 +75,8 @@ static
 	ScreenWidth, ScreenHeight,
 	VirtualKeys[46][E_KEY_STRUCT];
 
-public OnFilterScriptInit()
+#include <YSI_Coding\y_hooks>
+hook OnFilterScriptInit()
 {
 	VirtualKeys[00][KEY_CODE] = VK_KEY_0;
 	VirtualKeys[01][KEY_CODE] = VK_KEY_1;
@@ -127,22 +128,10 @@ public OnFilterScriptInit()
 	editorid = INVALID_PLAYER_ID;
 	SetTimer("OnEditorUpdate", 25, true);
 
-	#if defined LI_OnFilterScriptInit
-		LI_OnFilterScriptInit();
-	#endif
-	return 1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
-#if defined _ALS_OnFilterScriptInit
-	#undef OnFilterScriptInit
-#else
-	#define _ALS_OnFilterScriptInit
-#endif
-#define OnFilterScriptInit LI_OnFilterScriptInit
-#if defined LI_OnFilterScriptInit
-	forward LI_OnFilterScriptInit();
-#endif
 
-public OnPlayerConnect(playerid)
+hook OnPlayerConnect(playerid)
 {
 	if(editorid != INVALID_PLAYER_ID)
 		return 1;
@@ -153,40 +142,16 @@ public OnPlayerConnect(playerid)
 	if(!strcmp(ip, "127.0.0.1"))
 		editorid = playerid;
 
-	#if defined LI_OnPlayerConnect
-		LI_OnPlayerConnect(playerid);
-	#endif
-	return 1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
-#if defined _ALS_OnPlayerConnect
-	#undef OnPlayerConnect
-#else
-	#define _ALS_OnPlayerConnect
-#endif
-#define OnPlayerConnect LI_OnPlayerConnect
-#if defined LI_OnPlayerConnect
-	forward LI_OnPlayerConnect(playerid);
-#endif
 
-public OnPlayerDisconnect(playerid, reason)
+hook OnPlayerDisconnect(playerid, reason)
 {
 	if(editorid == playerid)
 		editorid = INVALID_PLAYER_ID;
 		
-    #if defined LI_OnPlayerDisconnect
-        LI_OnPlayerDisconnect(playerid, reason);
-    #endif
-    return 1;
+    return Y_HOOKS_CONTINUE_RETURN_1;
 }
-#if defined _ALS_OnPlayerDisconnect
-    #undef OnPlayerDisconnect
-#else
-    #define _ALS_OnPlayerDisconnect
-#endif
-#define OnPlayerDisconnect LI_OnPlayerDisconnect
-#if defined LI_OnPlayerDisconnect
-    forward LI_OnPlayerDisconnect(playerid, reason);
-#endif
 
 public OnEditorUpdate()
 {

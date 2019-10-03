@@ -105,7 +105,8 @@ static bool:IgnoreNextClose[MAX_PLAYERS];
 static bool:SelectionOn[MAX_PLAYERS];
 
 // Init playergui //////////////////////////////////////////////////////////////
-public OnFilterScriptInit()
+#include <YSI_Coding\y_hooks>
+hook OnFilterScriptInit()
 {
 	for(new i = 0; i < MAX_PLAYERS; i++)
 	{
@@ -115,25 +116,12 @@ public OnFilterScriptInit()
 			for(new k = 0; k < MAX_PLAYER_BINDS; k++) { PlayerGUIData[i][j][PlayerTextDrawBinds][k] = INVALID_MENU_GUI; }
 		}
 	}
-
-	#if defined PG_OnFilterScriptInit
-		PG_OnFilterScriptInit();
-	#endif
-	return 1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
-#if defined _ALS_OnFilterScriptInit
-	#undef OnFilterScriptInit
-#else
-	#define _ALS_OnFilterScriptInit
-#endif
-#define OnFilterScriptInit PG_OnFilterScriptInit
-#if defined PG_OnFilterScriptInit
-	forward PG_OnFilterScriptInit();
-#endif
 
 ////////////////////////////////////////////////////////////////////////////////
 
-public OnFilterScriptExit()
+hook OnFilterScriptExit()
 {
 	foreach(new i : Player)
 	{
@@ -144,24 +132,12 @@ public OnFilterScriptExit()
 		}
 	}
 
-	#if defined PG_OnFilterScriptExit
-		PG_OnFilterScriptExit();
-	#endif
-	return 1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
-#if defined _ALS_OnFilterScriptExit
-	#undef OnFilterScriptExit
-#else
-	#define _ALS_OnFilterScriptExit
-#endif
-#define OnFilterScriptExit PG_OnFilterScriptExit
-#if defined PG_OnFilterScriptExit
-	forward PG_OnFilterScriptExit();
-#endif
 
 ////////////////////////////////////////////////////////////////////////////////
 
-public OnPlayerDisconnect(playerid, reason)
+hook OnPlayerDisconnect(playerid, reason)
 {
     for(new i = 0; i < MAX_PLAYER_GUI; i++)
 	{
@@ -177,24 +153,11 @@ public OnPlayerDisconnect(playerid, reason)
 	IgnoreNextClose[playerid] = false;
 	SelectionOn[playerid] = false;
 	GUIPaused[playerid] = false;
-
-	#if defined PG_OnPlayerDisconnect
-		PG_OnPlayerDisconnect(playerid,reason);
-	#endif
-	return 1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
-#if defined _ALS_OnPlayerDisconnect
-	#undef OnPlayerDisconnect
-#else
-	#define _ALS_OnPlayerDisconnect
-#endif
-#define OnPlayerDisconnect PG_OnPlayerDisconnect
-#if defined PG_OnPlayerDisconnect
-	forward PG_OnPlayerDisconnect(playerid,reason);
-#endif
 
 ////////////////////////////////////////////////////////////////////////////////
-public OnPlayerClickTextDraw(playerid, Text:clickedid)
+hook OnPlayerClickTextDraw(playerid, Text:clickedid)
 {
 	if(!GUIPaused[playerid])
 	{
@@ -204,26 +167,13 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
 			{
 			    IgnoreNextClose[playerid] = false;
 				SelectionOn[playerid] = false;
-			    return 1;
+			    return Y_HOOKS_BREAK_RETURN_1;
 			}
-			if(GUIHideFirstInStack(playerid)) return 1;
+			if(GUIHideFirstInStack(playerid)) return Y_HOOKS_BREAK_RETURN_1;
 		}
 	}
-
-	#if defined PG_OnPlayerClickTextDraw
-		PG_OnPlayerClickTextDraw(playerid, Text:clickedid);
-	#endif
-	return 1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
-#if defined _ALS_OnPlayerClickTextDraw
-	#undef OnPlayerClickTextDraw
-#else
-	#define _ALS_OnPlayerClickTextDraw
-#endif
-#define OnPlayerClickTextDraw PG_OnPlayerClickTextDraw
-#if defined PG_OnPlayerClickTextDraw
-	forward PG_OnPlayerClickTextDraw(playerid, Text:clickedid);
-#endif
 
 GUIHideFirstInStack(playerid)
 {
@@ -246,7 +196,7 @@ GUIHideFirstInStack(playerid)
 ////////////////////////////////////////////////////////////////////////////////
 
 
-public GUIOnPCPDT(playerid, PlayerText:playertextid)
+hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 {
 	if(!GUIPaused[playerid])
 	{
@@ -269,7 +219,7 @@ public GUIOnPCPDT(playerid, PlayerText:playertextid)
 	        }
 		}
 	}
-	return 0;
+	return Y_HOOKS_CONTINUE_RETURN_0;
 }
 ////////////////////////////////////////////////////////////////////////////////
 

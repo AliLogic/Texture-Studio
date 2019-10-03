@@ -8,29 +8,16 @@ static bool:GTAObjectDeleted[SEARCH_DATA_SIZE];
 static bool:GTAObjectSwapped[SEARCH_DATA_SIZE];
 static HighLightObject[MAX_PLAYERS] = -1;
 
-public OnPlayerDisconnect(playerid, reason)
+#include <YSI_Coding\y_hooks>
+hook OnPlayerDisconnect(playerid, reason)
 {
 	if(HighLightObject[playerid] > -1)
 	{
 		DestroyDynamicObject(HighLightObject[playerid]);
         HighLightObject[playerid] = -1;
 	}
-
-	#if defined GO_OnPlayerDisconnect
-		GO_OnPlayerDisconnect(playerid, reason);
-	#endif
-	return 1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
-#if defined _ALS_OnPlayerDisconnect
-	#undef OnPlayerDisconnect
-#else
-	#define _ALS_OnPlayerDisconnect
-#endif
-#define OnPlayerDisconnect GO_OnPlayerDisconnect
-#if defined GO_OnPlayerDisconnect
-	forward GO_OnPlayerDisconnect(playerid, reason);
-#endif
-
 
 ResetGTADeletedObjects()
 {

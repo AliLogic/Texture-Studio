@@ -2,6 +2,7 @@
 /// Standard Callbacks /////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+#include <YSI_Coding\y_hooks>
 public OnFilterScriptInit()
 {
 	print("----------------------------------------------");
@@ -112,9 +113,8 @@ SetCurrObject(playerid, index)
     return 0;
 }
 
-OnPlayerKeyStateChangeOEdit(playerid,newkeys,oldkeys)
+hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
-	#pragma unused oldkeys
 	if(GetEditMode(playerid) == EDIT_MODE_OBJECT)
 	{
 		// Clone object
@@ -133,11 +133,11 @@ OnPlayerKeyStateChangeOEdit(playerid,newkeys,oldkeys)
 			SendClientMessage(playerid, STEALTH_GREEN, "Object position updated and saved");
 	    }
 	}
-	return 0;
+	return Y_HOOKS_CONTINUE_RETURN_0;
 }
 
 // player finished editing an object
-public OnPlayerEditDynamicObject(playerid, objectid, response, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz)
+hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz)
 {
 	//printf("%i, %i, %i, %i", playerid, objectid, response, GetEditMode(playerid));
 	switch(GetEditMode(playerid))
@@ -208,29 +208,13 @@ public OnPlayerEditDynamicObject(playerid, objectid, response, Float:x, Float:y,
 
 			}
 		}
-		case EDIT_MODE_OBJECTGROUP: OnPlayerEditDOGroup(playerid, objectid, response, x, y, z, rx, ry, rz);
-		case EDIT_MODE_OBM: OnPlayerEditDOOBM(playerid, objectid, response, x, y, z, rx, ry, rz);
-
-		case EDIT_MODE_VOBJECT: OnPlayerEditVObject(playerid, objectid, response, x, y, z, rx, ry, rz);
 	}
 
-	#if defined MA_OnPlayerEditDynamicObject
-		MA_OnPlayerEditDynamicObject(playerid, objectid, response, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz);
-	#endif
-	return 1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
-#if defined _ALS_OnPlayerEditDynamicObject
-	#undef OnPlayerEditDynamicObject
-#else
-	#define _ALS_OnPlayerEditDynamicObject
-#endif
-#define OnPlayerEditDynamicObject MA_OnPlayerEditDynamicObject
-#if defined MA_OnPlayerEditDynamicObject
-	forward MA_OnPlayerEditDynamicObject(playerid, objectid, response, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz);
-#endif
 
 // Player clicked a dynamic object
-public OnPlayerSelectDynamicObject(playerid, objectid, modelid, Float:x, Float:y, Float:z)
+hook OnPlayerSelectDynObject(playerid, objectid, modelid, Float:x, Float:y, Float:z)
 {
 	switch(GetEditMode(playerid))
 	{
@@ -279,69 +263,7 @@ public OnPlayerSelectDynamicObject(playerid, objectid, modelid, Float:x, Float:y
 			}
 		}
 	}
-	return 1;
-}
-
-// Player clicked textdraw
-public OnPlayerClickTextDraw(playerid, Text:clickedid)
-{
-	// Text editing mode
-	if(GetCurrTextDraw(playerid) == TEXTDRAW_TEXTEDIT) if(ClickTextDrawEditText(playerid, Text:clickedid)) return 1;
-    if(GetCurrTextDraw(playerid) == TEXTDRAW_MATERIALS) if(ClickTextDrawEditMat(playerid, Text:clickedid)) return 1;
-    if(GetCurrTextDraw(playerid) == TEXTDRAW_LISTSEL) if(ClickTextDrawListSel(playerid, Text:clickedid)) return 1;
-    if(GetCurrTextDraw(playerid) == TEXTDRAW_OSEARCH) if(ClickTextDrawOSearch(playerid, Text:clickedid)) return 1;
-
-	#if defined MA_OnPlayerClickTextDraw
-		return MA_OnPlayerClickTextDraw(playerid, Text:clickedid);
-	#endif
-	return 0;
-}
-#if defined _ALS_OnPlayerClickTextDraw
-	#undef OnPlayerClickTextDraw
-#else
-	#define _ALS_OnPlayerClickTextDraw
-#endif
-#define OnPlayerClickTextDraw MA_OnPlayerClickTextDraw
-#if defined MA_OnPlayerClickTextDraw
-	forward MA_OnPlayerClickTextDraw(playerid, Text:clickedid);
-#endif
-
-
-// Player clicked player textdraw
-public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
-{
-	// Text editing mode
-    if(GetCurrTextDraw(playerid) == TEXTDRAW_TEXTEDIT) if(ClickPlayerTextDrawEditText(playerid, PlayerText:playertextid)) return 1;
-    if(GetCurrTextDraw(playerid) == TEXTDRAW_MATERIALS) if(ClickPlayerTextDrawEditMat(playerid, PlayerText:playertextid)) return 1;
-    if(GetCurrTextDraw(playerid) == TEXTDRAW_LISTSEL) if(ClickPlayerTextListSel(playerid, PlayerText:playertextid)) return 1;
-    if(GetCurrTextDraw(playerid) == TEXTDRAW_OSEARCH) if(ClickPlayerTextDrawOSearch(playerid, PlayerText:playertextid)) return 1;
-
-	#if defined MA_OnPlayerClickPlayerTextDraw
-		return MA_OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid);
-	#endif
-	return 0;
-}
-#if defined _ALS_OnPlayerClickPlayerTD
-	#undef OnPlayerClickPlayerTextDraw
-#else
-	#define _ALS_OnPlayerClickPlayerTD
-#endif
-#define OnPlayerClickPlayerTextDraw MA_OnPlayerClickPlayerTextDraw
-#if defined MA_OnPlayerClickPlayerTextDraw
-	forward MA_OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid);
-#endif
-
-
-public OnPlayerKeyStateChange(playerid,newkeys,oldkeys)
-{
-	if(OnPlayerKeyStateChangeOEdit(playerid,newkeys,oldkeys)) return 1;
-    if(OnPlayerKeyStateChange3DMenu(playerid,newkeys,oldkeys)) return 1;
-    if(OnPlayerKeyStateGroupChange(playerid, newkeys, oldkeys)) return 1;
-    if(OnPlayerKeyStateMenuChange(playerid, newkeys, oldkeys)) return 1;
-    if(OnPlayerKeyStateChangeTex(playerid,newkeys,oldkeys)) return 1;
-    if(OnPlayerKeyStateChangeLSel(playerid,newkeys,oldkeys)) return 1;
-    if(OnPlayerKeyStateChangeCMD(playerid,newkeys,oldkeys)) return 1;
-	return 1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
 
 

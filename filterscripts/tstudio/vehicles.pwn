@@ -233,62 +233,27 @@ SSCANF:vehiclemodel(string[])
     return -1;
 }
 
-public OnFilterScriptInit()
+#include <YSI_Coding\y_hooks>
+hook OnFilterScriptInit()
 {
 	for(new i = 0; i < 212; i++) format(VehicleList, sizeof(VehicleList), "%s(%i) %s\n", VehicleList, i+400, VehicleNames[i]);
 
-	#if defined VH_OnFilterScriptInit
-		VH_OnFilterScriptInit();
-	#endif
-	return 1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
-#if defined _ALS_OnFilterScriptInit
-	#undef OnFilterScriptInit
-#else
-	#define _ALS_OnFilterScriptInit
-#endif
-#define OnFilterScriptInit VH_OnFilterScriptInit
-#if defined VH_OnFilterScriptInit
-	forward VH_OnFilterScriptInit();
-#endif
 
-public OnFilterScriptExit()
+hook OnFilterScriptExit()
 {
 	DeleteAllCars();
 
-	#if defined VH_OnFilterScriptExit
-		VH_OnFilterScriptExit();
-	#endif
-	return 1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
-#if defined _ALS_OnFilterScriptExit
-	#undef OnFilterScriptExit
-#else
-	#define _ALS_OnFilterScriptExit
-#endif
-#define OnFilterScriptExit VH_OnFilterScriptExit
-#if defined VH_OnFilterScriptExit
-	forward VH_OnFilterScriptExit();
-#endif
 
-public OnPlayerDisconnect(playerid, reason)
+hook OnPlayerDisconnect(playerid, reason)
 {
     CurrVehicle[playerid] = -1;
 
-	#if defined VH_OnPlayerDisconnect
-		VH_OnPlayerDisconnect(playerid, reason);
-	#endif
-	return 1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
-#if defined _ALS_OnPlayerDisconnect
-	#undef OnPlayerDisconnect
-#else
-	#define _ALS_OnPlayerDisconnect
-#endif
-#define OnPlayerDisconnect VH_OnPlayerDisconnect
-#if defined VH_OnPlayerDisconnect
-	forward VH_OnPlayerDisconnect(playerid, reason);
-#endif
 
 public OnEnterExitModShop(playerid,enterexit,interiorid)
 {
@@ -1694,9 +1659,10 @@ EditVehicleObject(playerid)
 	return 1;
 }
 
-OnPlayerEditVObject(playerid, objectid, response, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz)
+hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz)
 {
-	#pragma unused objectid
+	if(GetEditMode(playerid) != EDIT_MODE_VOBJECT) return Y_HOOKS_CONTINUE_RETURN_0;
+
 	if(response == EDIT_RESPONSE_FINAL)
 	{
 		new refindex = GetCarObjectRefIndex(ObjectData[CurrObject[playerid]][oAttachedVehicle], CurrObject[playerid]);

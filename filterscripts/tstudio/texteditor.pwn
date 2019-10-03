@@ -5,6 +5,7 @@
 // This is adapted from 420medit
 
 #include "fontdata.pwn"
+#include <YSI_Coding\y_hooks>
 
 // Text draws background
 new Text:TextEdit_Background_0;
@@ -117,10 +118,9 @@ UpdateTextEditor(playerid)
 }
 
 // Only closes text editor
-forward ClickTextDrawEditText(playerid, Text:clickedid);
-public ClickTextDrawEditText(playerid, Text:clickedid)
+hook OnPlayerClickTextDraw(playerid, Text:clickedid)
 {
-	if (Text:INVALID_TEXT_DRAW == clickedid)
+	if (GetCurrTextDraw(playerid) == TEXTDRAW_TEXTEDIT && clickedid == Text:INVALID_TEXT_DRAW)
 	{
 		// Textdraws are now closed
 	    ToggleTextDrawOpen(playerid, false);
@@ -138,15 +138,16 @@ public ClickTextDrawEditText(playerid, Text:clickedid)
 		EditingMode[playerid] = false;
 		SetEditMode(playerid, EDIT_MODE_NONE);
 				
-	    return 1;
+	    return Y_HOOKS_BREAK_RETURN_1;
 	}
-	return 0;
+	return Y_HOOKS_CONTINUE_RETURN_0;
 }
 
 // Player clicked a textdraw option
-forward ClickPlayerTextDrawEditText(playerid, PlayerText:playertextid);
-public ClickPlayerTextDrawEditText(playerid, PlayerText:playertextid)
+hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 {
+	if(GetCurrTextDraw(playerid) != TEXTDRAW_TEXTEDIT) return Y_HOOKS_CONTINUE_RETURN_0;
+
 	new index = CurrObject[playerid];
 
 	// Toggle text off and on
@@ -467,7 +468,7 @@ HideTextEditorDraw(playerid)
 
 
 // Initalize Static draws
-public OnFilterScriptInit()
+hook OnFilterScriptInit()
 {
 	TextEdit_Background_0 = TextDrawCreate(10.000000, 150.000000, "Text On:");
 	TextDrawBackgroundColor(TextEdit_Background_0, 255);
@@ -556,82 +557,44 @@ public OnFilterScriptInit()
 	
 	}
 
-	#if defined TE_OnFilterScriptInit
-		TE_OnFilterScriptInit();
-	#endif
-	return 1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
-#if defined _ALS_OnFilterScriptInit
-	#undef OnFilterScriptInit
-#else
-	#define _ALS_OnFilterScriptInit
-#endif
-#define OnFilterScriptInit TE_OnFilterScriptInit
-#if defined TE_OnFilterScriptInit
-	forward TE_OnFilterScriptInit();
-#endif
 
-public OnFilterScriptExit()
+hook OnFilterScriptExit()
 {
+	TextDrawDestroy(TextEdit_Background_0);
+	TextDrawDestroy(TextEdit_Background_2);
+	TextDrawDestroy(TextEdit_Background_3);
+	TextDrawDestroy(TextEdit_Background_4);
+	TextDrawDestroy(TextEdit_Background_5);
+	TextDrawDestroy(TextEdit_Background_6);
+	TextDrawDestroy(TextEdit_Background_7);
+	TextDrawDestroy(TextEdit_Background_8);
+	TextDrawDestroy(TextEdit_Background_9);
+
 	foreach(new i : Player)
 	{
-		TextDrawDestroy(TextEdit_Background_0);
-		TextDrawDestroy(TextEdit_Background_2);
-		TextDrawDestroy(TextEdit_Background_3);
-		TextDrawDestroy(TextEdit_Background_4);
-		TextDrawDestroy(TextEdit_Background_5);
-		TextDrawDestroy(TextEdit_Background_6);
-		TextDrawDestroy(TextEdit_Background_7);
-		TextDrawDestroy(TextEdit_Background_8);
-		TextDrawDestroy(TextEdit_Background_9);
-
-		PlayerTextDrawDestroy(i,Click_ToggleText[i]);
-		PlayerTextDrawDestroy(i,Click_SetText[i]);
-		PlayerTextDrawDestroy(i,Click_SetFont[i]);
-		PlayerTextDrawDestroy(i,Click_SetFontSize[i]);
-		PlayerTextDrawDestroy(i,Click_ToggleBold[i]);
-		PlayerTextDrawDestroy(i,Click_FontColor[i]);
-		PlayerTextDrawDestroy(i,Click_BackColor[i]);
-		PlayerTextDrawDestroy(i,Click_Alignment[i]);
-		PlayerTextDrawDestroy(i,Click_FontTextSize[i]);
-
+		PlayerTextDrawDestroy(i, Click_ToggleText[i]);
+		PlayerTextDrawDestroy(i, Click_SetText[i]);
+		PlayerTextDrawDestroy(i, Click_SetFont[i]);
+		PlayerTextDrawDestroy(i, Click_SetFontSize[i]);
+		PlayerTextDrawDestroy(i, Click_ToggleBold[i]);
+		PlayerTextDrawDestroy(i, Click_FontColor[i]);
+		PlayerTextDrawDestroy(i, Click_BackColor[i]);
+		PlayerTextDrawDestroy(i, Click_Alignment[i]);
+		PlayerTextDrawDestroy(i, Click_FontTextSize[i]);
 	}
 
-	#if defined TE_OnFilterScriptExit
-		TE_OnFilterScriptExit();
-	#endif
-	return 1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
-#if defined _ALS_OnFilterScriptExit
-	#undef OnFilterScriptExit
-#else
-	#define _ALS_OnFilterScriptExit
-#endif
-#define OnFilterScriptExit TE_OnFilterScriptExit
-#if defined TE_OnFilterScriptExit
-	forward TE_OnFilterScriptExit();
-#endif
 
-
-public OnPlayerConnect(playerid)
+hook OnPlayerConnect(playerid)
 {
 	CreatePlayerTextDraws(playerid);
     TextEditing[playerid] = false;
 
-	#if defined TE_OnPlayerConnect
-		TE_OnPlayerConnect(playerid);
-	#endif
-	return 1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
-#if defined _ALS_OnPlayerConnect
-	#undef OnPlayerConnect
-#else
-	#define _ALS_OnPlayerConnect
-#endif
-#define OnPlayerConnect TE_OnPlayerConnect
-#if defined TE_OnPlayerConnect
-	forward TE_OnPlayerConnect(playerid);
-#endif
 
 CreatePlayerTextDraws(playerid)
 {

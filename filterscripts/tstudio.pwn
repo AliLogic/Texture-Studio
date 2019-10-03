@@ -250,6 +250,7 @@ Change Log:
 #define YSI_NO_HEAP_MALLOC
 #include <YSI_Data\y_iterate>
 #include <YSI_Coding\y_inline>
+#include <YSI_Coding\y_hooks>
 #include <YSI_Visual\y_dialog>
 
 #define Y_COMMANDS_NO_IPC 

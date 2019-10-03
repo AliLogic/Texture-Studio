@@ -83,7 +83,8 @@ sqlite_ThemeSetup()
 }
 
 // Delete for include
-public OnFilterScriptInit()
+#include <YSI_Coding\y_hooks>
+hook OnFilterScriptInit()
 {
 	foreach(new i : Player)
 	{
@@ -156,23 +157,10 @@ public OnFilterScriptInit()
 	TextDrawTextSize(Click_CloseTexture, 80.000000, 10.000000);
 	TextDrawSetSelectable(Click_CloseTexture, 1);
 
-	#if defined TV_OnFilterScriptInit
-		TV_OnFilterScriptInit();
-	#endif
-	return 1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
-#if defined _ALS_OnFilterScriptInit
-	#undef OnFilterScriptInit
-#else
-	#define _ALS_OnFilterScriptInit
-#endif
-#define OnFilterScriptInit TV_OnFilterScriptInit
-#if defined TV_OnFilterScriptInit
-	forward TV_OnFilterScriptInit();
-#endif
 
-
-public OnFilterScriptExit()
+hook OnFilterScriptExit()
 {
 	foreach(new i : Player)
 	{
@@ -202,24 +190,12 @@ public OnFilterScriptExit()
 	
 	TextDrawDestroy(Click_CloseTexture);
 
-	#if defined TV_OnFilterScriptExit
-		TV_OnFilterScriptExit();
-	#endif
-	return 1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
-#if defined _ALS_OnFilterScriptExit
-	#undef OnFilterScriptExit
-#else
-	#define _ALS_OnFilterScriptExit
-#endif
-#define OnFilterScriptExit TV_OnFilterScriptExit
-#if defined TV_OnFilterScriptExit
-	forward TV_OnFilterScriptExit();
-#endif
 
 
 // Hook for include
-public OnPlayerConnect(playerid)
+hook OnPlayerConnect(playerid)
 {
 	InitText3DDraw(playerid);
 	InitPlayerTextureInfo(playerid);
@@ -227,20 +203,8 @@ public OnPlayerConnect(playerid)
 	LoadPlayerTheme(playerid, "default_theme");
 	// Create texture editor
 
-	#if defined TV_OnPlayerConnect
-		TV_OnPlayerConnect(playerid);
-	#endif
-	return 1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
-#if defined _ALS_OnPlayerConnect
-	#undef OnPlayerConnect
-#else
-	#define _ALS_OnPlayerConnect
-#endif
-#define OnPlayerConnect TV_OnPlayerConnect
-#if defined TV_OnPlayerConnect
-	forward TV_OnPlayerConnect(playerid);
-#endif
 
 InitText3DDraw(playerid)
 {
@@ -257,7 +221,7 @@ InitText3DDraw(playerid)
 }
 
 // Player disconnected
-public OnPlayerDisconnect(playerid, reason)
+hook OnPlayerDisconnect(playerid, reason)
 {
 	// Out of preview state
     Menu3DData[playerid][TPreviewState] = PREVIEW_STATE_NONE;
@@ -275,20 +239,8 @@ public OnPlayerDisconnect(playerid, reason)
 	TextureAll[playerid] = false;
     CurrTexturingIndex[playerid] = 0;
 
-	#if defined TV_OnPlayerDisconnect
-		TV_OnPlayerDisconnect(playerid, reason);
-	#endif
-	return 1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
-#if defined _ALS_OnPlayerDisconnect
-	#undef OnPlayerDisconnect
-#else
-	#define _ALS_OnPlayerDisconnect
-#endif
-#define OnPlayerDisconnect TV_OnPlayerDisconnect
-#if defined TV_OnPlayerDisconnect
-	forward TV_OnPlayerDisconnect(playerid, reason);
-#endif
 
 static BitArray:FoundTextures<(sizeof(ObjectTextures) + 1)>, sFoundTextures[4096];
 YCMD:tsearch(playerid, arg[], help)
@@ -904,18 +856,17 @@ OnPlayerKeyStateChangeMenu(playerid,newkeys,oldkeys)
 }
 
 
-OnPlayerKeyStateChangeTex(playerid,newkeys,oldkeys)
+hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
-	#pragma unused oldkeys
 	if( newkeys & KEY_NO || (IsFlyMode(playerid) && newkeys & KEY_JUMP) )
 	{
 	    if(GetEditMode(playerid) == EDIT_MODE_TEXTURING)
 		{
 			SelectTextDraw(playerid, 0xD9D919FF);
-			return 1;
+			return Y_HOOKS_BREAK_RETURN_1;
 		}
 	}
-	return 0;
+	return Y_HOOKS_CONTINUE_RETURN_0;
 }
 
 
@@ -1427,8 +1378,10 @@ static InitPlayerTextureInfo(playerid)
 	return 1;
 }
 
-ClickTextDrawEditMat(playerid, Text:clickedid)
+hook OnPlayerClickTextDraw(playerid, Text:clickedid)
 {
+	if(GetCurrTextDraw(playerid) != TEXTDRAW_MATERIALS) return Y_HOOKS_CONTINUE_RETURN_0;
+
 	for(new i = 0; i < MAX_MATERIALS; i++)
 	{
 		// Player clicked set texture
@@ -1443,7 +1396,7 @@ ClickTextDrawEditMat(playerid, Text:clickedid)
 			format(line, sizeof(line), "Editing texture index %i use /mtextures - /ttextures to select a texture");
 			SendClientMessage(playerid, STEALTH_GREEN, line);
 
-	        return 1;
+	        return Y_HOOKS_BREAK_RETURN_1;
 	    }
 		// Player clicked set color
 	    else if(Click_SetColor[i] == clickedid)
@@ -1636,7 +1589,7 @@ ClickTextDrawEditMat(playerid, Text:clickedid)
 				}
 			}
 			Dialog_ShowCallback(playerid, using inline SelectColorMet, DIALOG_STYLE_LIST, "Texture Studio - Select Color Method", "Hex Value\nCombinator\nWeb Colors\nReset Color", "Ok", "Cancel");
-			return 1;
+			return Y_HOOKS_BREAK_RETURN_1;
 	    }
     	// Player clicked clear texture/color
 	    else if(Click_ClearTexture[i] == clickedid)
@@ -1663,18 +1616,18 @@ ClickTextDrawEditMat(playerid, Text:clickedid)
 				SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 				SendClientMessage(playerid, STEALTH_GREEN, line);
 			}
-			return 1;
+			return Y_HOOKS_BREAK_RETURN_1;
 	    }
 	}
 
 	if(clickedid == Click_CloseTexture) BroadcastCommand(playerid, "/stexture");
-	return 0;
+	return Y_HOOKS_CONTINUE_RETURN_0;
 }
 
 
-ClickPlayerTextDrawEditMat(playerid, PlayerText:playertextid)
+hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 {
-	if(Click_TextureAll[playerid] == playertextid)
+	if(GetCurrTextDraw(playerid) == TEXTDRAW_MATERIALS && Click_TextureAll[playerid] == playertextid)
 	{
 		SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 		if(TextureAll[playerid])
@@ -1693,9 +1646,9 @@ ClickPlayerTextDrawEditMat(playerid, PlayerText:playertextid)
 		    PlayerTextDrawShow(playerid, Click_TextureAll[playerid]);
 		    SendClientMessage(playerid, STEALTH_GREEN, "All like objects will now be textured");
 		}
-		return 1;
+		return Y_HOOKS_BREAK_RETURN_1;
     }
-	return 0;
+	return Y_HOOKS_CONTINUE_RETURN_0;
 }
 
 UpdateTextureSlot(playerid, index)

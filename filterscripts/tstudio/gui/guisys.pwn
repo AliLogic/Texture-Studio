@@ -76,6 +76,5 @@ public PlayerSetGUIPaused(playerid, bool:paused)
 	return 1;
 }
 
-#include "guihook.pwn"
 #include "gui.pwn"
 #include "playergui.pwn"

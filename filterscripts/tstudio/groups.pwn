@@ -7,7 +7,8 @@ new Float:LastPivot[MAX_PLAYERS][XYZR];
 new Float:LastGroupPosition[MAX_PLAYERS][XYZ];
 new bool:PivotReset[MAX_PLAYERS];
 
-public OnFilterScriptInit()
+#include <YSI_Coding\y_hooks>
+hook OnFilterScriptInit()
 {
 	for(new i = 0; i < MAX_PLAYERS; i++)
 	{
@@ -16,24 +17,10 @@ public OnFilterScriptInit()
 	        GroupObjectText[i][j] = Text3D:-1;
 	    }
 	}
-
-	#if defined GR_OnFilterScriptInit
-		GR_OnFilterScriptInit();
-	#endif
-	return 1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
-#if defined _ALS_OnFilterScriptInit
-	#undef OnFilterScriptInit
-#else
-	#define _ALS_OnFilterScriptInit
-#endif
-#define OnFilterScriptInit GR_OnFilterScriptInit
-#if defined GR_OnFilterScriptInit
-	forward GR_OnFilterScriptInit();
-#endif
 
-
-public OnPlayerDisconnect(playerid, reason)
+hook OnPlayerDisconnect(playerid, reason)
 {
 	for(new i = 0; i < MAX_TEXTURE_OBJECTS; i++)
 	{
@@ -44,21 +31,8 @@ public OnPlayerDisconnect(playerid, reason)
 		}
     }
 	ClearGroup(playerid);
-
-	#if defined GR_OnPlayerDisconnect
-		GR_OnPlayerDisconnect(playerid, reason);
-	#endif
-	return 1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
-#if defined _ALS_OnPlayerDisconnect
-	#undef OnPlayerDisconnect
-#else
-	#define _ALS_OnPlayerDisconnect
-#endif
-#define OnPlayerDisconnect GR_OnPlayerDisconnect
-#if defined GR_OnPlayerDisconnect
-	forward GR_OnPlayerDisconnect(playerid, reason);
-#endif
 
 HideGroupLabels(playerid)
 {
@@ -81,9 +55,6 @@ ShowGroupLabels(playerid)
 		}
     }
 }
-
-
-
 
 public OnUpdateGroup3DText(index)
 {
@@ -123,8 +94,7 @@ public OnDeleteGroup3DText(index)
 	return 1;
 }
 
-
-public OnPlayerSelectDynamicObject(playerid, objectid, modelid, Float:x, Float:y, Float:z)
+hook OnPlayerSelectDynObject(playerid, objectid, modelid, Float:x, Float:y, Float:z)
 {
 	if(GetEditMode(playerid) == EDIT_MODE_GROUP)
 	{
@@ -179,41 +149,28 @@ public OnPlayerSelectDynamicObject(playerid, objectid, modelid, Float:x, Float:y
             }
         }
 	}
-
-	#if defined GR_OnPlayerSelectDynamicObject
-		GR_OnPlayerSelectDynamicObject(playerid, objectid, modelid, Float:x, Float:y, Float:z);
-	#endif
-	return 1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
-#if defined _ALS_OnPlayerSelectDynamicObj
-	#undef OnPlayerSelectDynamicObject
-#else
-	#define _ALS_OnPlayerSelectDynamicObj
-#endif
-#define OnPlayerSelectDynamicObject GR_OnPlayerSelectDynamicObject
-#if defined GR_OnPlayerSelectDynamicObject
-	forward GR_OnPlayerSelectDynamicObject(playerid, objectid, modelid, Float:x, Float:y, Float:z);
-#endif
 
-OnPlayerKeyStateGroupChange(playerid, newkeys, oldkeys)
+hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
-	#pragma unused newkeys
     if(GetEditMode(playerid) == EDIT_MODE_OBJECTGROUP)
     {
 		if(oldkeys & KEY_WALK)
 		{
-			if(PivotReset[playerid] == false) return 1;
+			if(PivotReset[playerid] == false) return Y_HOOKS_BREAK_RETURN_1;
 			SendClientMessage(playerid, STEALTH_GREEN, "Pivot has been set");
 			PivotReset[playerid] = false;
-			return 1;
+			return Y_HOOKS_BREAK_RETURN_1;
 		}
     }
-    return 0;
+    return Y_HOOKS_CONTINUE_RETURN_0;
 }
 
-OnPlayerEditDOGroup(playerid, objectid, response, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz)
+hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz)
 {
-	#pragma unused objectid
+	if(GetEditMode(playerid) != EDIT_MODE_OBJECTGROUP) return Y_HOOKS_CONTINUE_RETURN_0;
+
 	if(response == EDIT_RESPONSE_FINAL)
 	{
 		// Get the center (never changes)
@@ -326,7 +283,7 @@ OnPlayerEditDOGroup(playerid, objectid, response, Float:x, Float:y, Float:z, Flo
 			}
 		}
 	}
-	return 1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
 
 tsfunc ClearGroup(playerid)

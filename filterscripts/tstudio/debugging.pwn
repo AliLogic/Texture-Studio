@@ -1,18 +1,6 @@
-public OnPlayerCommandText(playerid, const cmdtext[]) 
+#include <YSI_Coding\y_hooks>
+hook OnPlayerCommandText(playerid, const cmdtext[]) 
 {
 	print(cmdtext);
-
-	#if defined DB_OnPlayerCommandText
-		DB_OnPlayerCommandText(playerid, cmdtext);
-	#endif
-	return 1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
-#if defined _ALS_OnPlayerCommandText
-	#undef OnPlayerCommandText
-#else
-	#define _ALS_OnPlayerCommandText
-#endif
-#define OnPlayerCommandText DB_OnPlayerCommandText
-#if defined DB_OnPlayerCommandText
-	forward DB_OnPlayerCommandText(playerid, const cmdtext[]);
-#endif

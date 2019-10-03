@@ -79,23 +79,11 @@ new WebColorsARGB[216][11] = {
 	{"0xFFFFFF00"},{"0xFFFFFF33"},{"0xFFFFFF66"},{"0xFFFFFF99"},{"0xFFFFFFCC"},{"0xFFFFFFFF"}
 };
 
-public OnFilterScriptInit()
+#include <YSI_Coding\y_hooks>
+hook OnFilterScriptInit()
 {
 	for(new j = 0; j < 216; j++)
 		strcat(webcolors, sprintf("%s@@@\n", WebColorsRGB[j]));
 
-	#if defined WC_OnFilterScriptInit
-		WC_OnFilterScriptInit();
-	#endif
-	return 1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
-#if defined _ALS_OnFilterScriptInit
-	#undef OnFilterScriptInit
-#else
-	#define _ALS_OnFilterScriptInit
-#endif
-#define OnFilterScriptInit WC_OnFilterScriptInit
-#if defined WC_OnFilterScriptInit
-	forward WC_OnFilterScriptInit();
-#endif
-

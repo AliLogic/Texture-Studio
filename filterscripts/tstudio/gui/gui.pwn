@@ -55,7 +55,8 @@ enum GUIMENUINFO {
 
 static GUIData[MAX_GUI][GUIMENUINFO];
 
-public OnFilterScriptExit()
+#include <YSI_Coding\y_hooks>
+hook OnFilterScriptExit()
 {
     for(new i = 0; i < MAX_GUI; i++)
 	{
@@ -64,24 +65,11 @@ public OnFilterScriptExit()
 			DestroyGUI(GUIMenu:i);
 		}
 	}
-
-	#if defined GI_OnFilterScriptExit
-		GI_OnFilterScriptExit();
-	#endif
-	return 1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
-#if defined _ALS_OnFilterScriptExit
-	#undef OnFilterScriptExit
-#else
-	#define _ALS_OnFilterScriptExit
-#endif
-#define OnFilterScriptExit GI_OnFilterScriptExit
-#if defined GI_OnFilterScriptExit
-	forward GI_OnFilterScriptExit();
-#endif
 
 ////////////////////////////////////////////////////////////////////////////////
-public OnPlayerClickTextDraw(playerid, Text:clickedid)
+hook OnPlayerClickTextDraw(playerid, Text:clickedid)
 {
 	if(!GUIPaused[playerid])
 	{
@@ -115,21 +103,8 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
 			}
 		}
 	}
-
-	#if defined GI_OnPlayerClickTextDraw
-		GI_OnPlayerClickTextDraw(playerid, Text:clickedid);
-	#endif
-	return 1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
-#if defined _ALS_OnPlayerClickTextDraw
-	#undef OnPlayerClickTextDraw
-#else
-	#define _ALS_OnPlayerClickTextDraw
-#endif
-#define OnPlayerClickTextDraw GI_OnPlayerClickTextDraw
-#if defined GI_OnPlayerClickTextDraw
-	forward GI_OnPlayerClickTextDraw(playerid, Text:clickedid);
-#endif
 
 ////////////////////////////////////////////////////////////////////////////////
 

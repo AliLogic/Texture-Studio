@@ -157,8 +157,10 @@ static bool:DeltaMapMovement[MAX_PLAYERS];
 
 ////////////////////////////////////////////////////////////////////////////////
 
+#include <YSI_Coding\y_hooks>
+
 // Initialize all GUIMenus
-public OnFilterScriptInit()
+hook OnFilterScriptInit()
 {
 // Static menu draws ///////////////////////////////////////////////////////
 	MainMenu = CreateGUI("MainMenu");
@@ -472,40 +474,15 @@ public OnFilterScriptInit()
 	    CreatePlayerMenus(i);
 	}
 
-	#if defined MG_OnFilterScriptInit
-		MG_OnFilterScriptInit();
-	#endif
-	return 1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
-#if defined _ALS_OnFilterScriptInit
-	#undef OnFilterScriptInit
-#else
-	#define _ALS_OnFilterScriptInit
-#endif
-#define OnFilterScriptInit MG_OnFilterScriptInit
-#if defined MG_OnFilterScriptInit
-	forward MG_OnFilterScriptInit();
-#endif
 
-
-public OnPlayerConnect(playerid)
+hook OnPlayerConnect(playerid)
 {
 	CreatePlayerMenus(playerid);
 
-	#if defined MG_OnPlayerConnect
-		MG_OnPlayerConnect(playerid);
-	#endif
-	return 1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
-#if defined _ALS_OnPlayerConnect
-	#undef OnPlayerConnect
-#else
-	#define _ALS_OnPlayerConnect
-#endif
-#define OnPlayerConnect MG_OnPlayerConnect
-#if defined MG_OnPlayerConnect
-	forward MG_OnPlayerConnect(playerid);
-#endif
 
 static CreatePlayerMenus(playerid)
 {
@@ -580,19 +557,18 @@ static CreatePlayerMenus(playerid)
 	return 1;
 }
 
-OnPlayerKeyStateMenuChange(playerid, newkeys, oldkeys)
+hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
-	#pragma unused oldkeys
 	if( newkeys & KEY_NO || (IsFlyMode(playerid) && newkeys & KEY_JUMP) )
 	{
 	    if(!EditingMode[playerid])
 	    {
             PlayerShowGUIMenu(playerid, PlayerMainMenu[playerid], true);
             PlayerSelectGUITextDraw(playerid);
-			return 1;
+			return Y_HOOKS_BREAK_RETURN_1;
 		}
 	}
-	return 0;
+	return Y_HOOKS_CONTINUE_RETURN_0;
 }
 
 

@@ -9083,34 +9083,11 @@ new ObjectTextures[][TEXTUREDEF] =
 	{ 19076, "xmastree1", "goldplate" }
 };
 
-#if defined FILTERSCRIPT
-	public OnFilterScriptInit()
-	{
-		MAX_TEXTURES = sizeof(ObjectTextures);
-		printf("LOADED %i texture definitions", MAX_TEXTURES);
-		return CallLocalFunction("Texture_ALS_OnFilterScriptInit", "");
-	}
-	#if defined _ALS_OnFilterScriptInit
-		#undef OnFilterScriptInit
-	#else
-		#define _ALS_OnFilterScriptInit
-	#endif
-	#define OnFilterScriptInit Texture_ALS_OnFilterScriptInit
+#include <YSI_Coding\y_hooks>
+hook OnFilterScriptInit()
+{
+	MAX_TEXTURES = sizeof(ObjectTextures);
+	printf("LOADED %i texture definitions", MAX_TEXTURES);
 
-	forward Texture_ALS_OnFilterScriptInit();
-#else
-	public OnGameModeInit()
-	{
-		MAX_TEXTURES = sizeof(ObjectTextures);
-		printf("LOADED %i texture definitions", MAX_TEXTURES);
-		return CallLocalFunction("Texture_ALS_OnGameModeInit", "");
-	}
-	#if defined _ALS_OnGameModeInit
-		#undef OnGameModeInit
-	#else
-		#define _ALS_OnGameModeInit
-	#endif
-	#define OnGameModeInit Texture_ALS_OnGameModeInit
-
-	forward Texture_ALS_OnGameModeInit();
-#endif
+	return Y_HOOKS_CONTINUE_RETURN_1;
+}

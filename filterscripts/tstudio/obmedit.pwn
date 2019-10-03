@@ -72,7 +72,8 @@ static Float:OBMOriginSave[MAX_PLAYERS][6];
 static Float:OBMOrientationSave[MAX_PLAYERS][3];
 static OBMEditMode[MAX_PLAYERS];
 
-public OnFilterScriptInit()
+#include <YSI_Coding\y_hooks>
+hook OnFilterScriptInit()
 {
 	for(new i = 0; i < MAX_PLAYERS; i++)
 	{
@@ -80,39 +81,15 @@ public OnFilterScriptInit()
 	    OBMData[i][pOBMDegrees] = 360;
 	}
 
-	#if defined OE_OnFilterScriptInit
-		OE_OnFilterScriptInit();
-	#endif
-	return 1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
-#if defined _ALS_OnFilterScriptInit
-	#undef OnFilterScriptInit
-#else
-	#define _ALS_OnFilterScriptInit
-#endif
-#define OnFilterScriptInit OE_OnFilterScriptInit
-#if defined OE_OnFilterScriptInit
-	forward OE_OnFilterScriptInit();
-#endif
 
-public OnPlayerDisconnect(playerid, reason)
+hook OnPlayerDisconnect(playerid, reason)
 {
     ResetOBMValues(playerid);
 
-	#if defined OE_OnPlayerDisconnect
-		OE_OnPlayerDisconnect(playerid, reason);
-	#endif
-	return 1;
+    return Y_HOOKS_CONTINUE_RETURN_1;
 }
-#if defined _ALS_OnPlayerDisconnect
-	#undef OnPlayerDisconnect
-#else
-	#define _ALS_OnPlayerDisconnect
-#endif
-#define OnPlayerDisconnect OE_OnPlayerDisconnect
-#if defined OE_OnPlayerDisconnect
-	forward OE_OnPlayerDisconnect(playerid, reason);
-#endif
 
 YCMD:obmedit(playerid, arg[], help)
 {
@@ -1308,13 +1285,10 @@ static UpdateOBM(playerid)
 	return 1;
 }
 
-
-
-
-OnPlayerEditDOOBM(playerid, objectid, response, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz)
+hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz)
 {
-	#pragma unused objectid
-	
+	if(GetEditMode(playerid) != EDIT_MODE_OBM) return Y_HOOKS_CONTINUE_RETURN_0;
+
 	// Edit origin
 	if(OBMEditMode[playerid] == OBME_ORIGIN)
 	{

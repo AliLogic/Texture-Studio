@@ -43,7 +43,8 @@ static CurrListHighlightObject[MAX_PLAYERS] = { -1, ... };
 enum LISTSELINFO { Float:LRX, Float:LRY, Float:LRZ, Float:LZoom }
 static ListSelData[MAX_PLAYERS][LISTSELINFO];
 
-public OnFilterScriptInit()
+#include <YSI_Coding\y_hooks>
+hook OnFilterScriptInit()
 {
 	// Background
 	ListSelBackGround_0 = TextDrawCreate(539.000000, 159.000000, "RX");
@@ -261,7 +262,6 @@ public OnFilterScriptInit()
 	TextDrawTextSize(ListSelSelectObject, 40.000000, 40.000000);
 	TextDrawSetSelectable(ListSelSelectObject, 1);
 
-
 	new Float:offx = 10.0, Float:offy = 110.0;
 	for(new i = 0; i < MAX_LIST_OBJECTS; i++)
 	{
@@ -275,23 +275,10 @@ public OnFilterScriptInit()
 	}
 
 	foreach(new i : Player) CreatePlayerListDraws(i);
-
-	#if defined LS_OnFilterScriptInit
-		LS_OnFilterScriptInit();
-	#endif
-	return 1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
-#if defined _ALS_OnFilterScriptInit
-	#undef OnFilterScriptInit
-#else
-	#define _ALS_OnFilterScriptInit
-#endif
-#define OnFilterScriptInit LS_OnFilterScriptInit
-#if defined LS_OnFilterScriptInit
-	forward LS_OnFilterScriptInit();
-#endif
 
-public OnFilterScriptExit()
+hook OnFilterScriptExit()
 {
 	TextDrawDestroy(ListSelBackGround_0);
 	TextDrawDestroy(ListSelBackGround_1);
@@ -326,42 +313,18 @@ public OnFilterScriptExit()
 		DisablePlayerCheckpoint(i);
 	}
 
-	#if defined LS_OnFilterScriptExit
-		LS_OnFilterScriptExit();
-	#endif
-	return 1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
-#if defined _ALS_OnFilterScriptExit
-	#undef OnFilterScriptExit
-#else
-	#define _ALS_OnFilterScriptExit
-#endif
-#define OnFilterScriptExit LS_OnFilterScriptExit
-#if defined LS_OnFilterScriptExit
-	forward LS_OnFilterScriptExit();
-#endif
 
-public OnPlayerConnect(playerid)
+hook OnPlayerConnect(playerid)
 {
 	CreatePlayerListDraws(playerid);
 	CurrListOffset[playerid] = 0;
 	CurrListHighlight[playerid] = 0;
 	CurrListHighlightObject[playerid] = -1;
 
-	#if defined LS_OnPlayerConnect
-		LS_OnPlayerConnect(playerid);
-	#endif
-	return 1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
-#if defined _ALS_OnPlayerConnect
-	#undef OnPlayerConnect
-#else
-	#define _ALS_OnPlayerConnect
-#endif
-#define OnPlayerConnect LS_OnPlayerConnect
-#if defined LS_OnPlayerConnect
-	forward LS_OnPlayerConnect(playerid);
-#endif
 
 static CreatePlayerListDraws(playerid)
 {
@@ -399,14 +362,11 @@ static CreatePlayerListDraws(playerid)
 	return 1;
 }
 
-ClickTextDrawListSel(playerid, Text:clickedid)
+hook OnPlayerClickTextDraw(playerid, Text:clickedid)
 {
-	if(clickedid == Text:INVALID_TEXT_DRAW)
-	{
-	    return 1;
-	}
-	
-	else if(clickedid == ListSelExit)
+	if(GetCurrTextDraw(playerid) != TEXTDRAW_LISTSEL) return Y_HOOKS_CONTINUE_RETURN_0;
+
+	if(clickedid == ListSelExit)
 	{
 		TextDrawHideForPlayer(playerid, ListSelBackGround_0);
 		TextDrawHideForPlayer(playerid, ListSelBackGround_1);
@@ -563,13 +523,13 @@ ClickTextDrawListSel(playerid, Text:clickedid)
 			SendClientMessage(playerid, STEALTH_YELLOW, "That object does not exist!");
 		}
 	}
-
-
-	return 1;
+	return Y_HOOKS_BREAK_RETURN_1;
 }
 
-ClickPlayerTextListSel(playerid, PlayerText:playertextid)
+hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 {
+	if(GetCurrTextDraw(playerid) != TEXTDRAW_LISTSEL) return Y_HOOKS_CONTINUE_RETURN_0;
+
 	for(new i = 0; i < MAX_LIST_OBJECTS; i++)
 	{
         if(playertextid == ListObjects[playerid][i])
@@ -578,11 +538,11 @@ ClickPlayerTextListSel(playerid, PlayerText:playertextid)
 			HideListSelHighLights(playerid);
 			TextDrawShowForPlayer(playerid, ListSelHighLight[i]);
 			CurrListHighlight[playerid] = i;
-			return 1;
+			return Y_HOOKS_BREAK_RETURN_1;
 		}
 	}
 
-	return 1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
 
 static HideListSelHighLights(playerid)
@@ -592,15 +552,14 @@ static HideListSelHighLights(playerid)
 }
 
 
-OnPlayerKeyStateChangeLSel(playerid,newkeys,oldkeys)
+hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
-	#pragma unused oldkeys
 	if(GetEditMode(playerid) == EDIT_MODE_LISTSEL)
 	{
 		if( (newkeys & KEY_NO) || (FlyMode[playerid] && newkeys & KEY_JUMP) ) SelectTextDraw(playerid, 0xD9D919FF);
-		return 1;
+		return Y_HOOKS_BREAK_RETURN_1;
 	}
-	return 0;
+	return Y_HOOKS_CONTINUE_RETURN_0;
 }
 
 

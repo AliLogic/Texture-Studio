@@ -58,65 +58,30 @@ enum OBMINFO
 
 static OBMStack[MAX_PLAYERS][MAX_OBM][OBMINFO];
 
-public OnFilterScriptInit()
+#include <YSI_Coding\y_hooks>
+hook OnFilterScriptInit()
 {
 	for(new i = 0; i < MAX_PLAYERS; i++)
 	{
 		for(new j = 0; j < MAX_OBM; j++) OBMStack[i][j][OMBID] = -1;
 	}
 
-	#if defined OM_OnFilterScriptInit
-		OM_OnFilterScriptInit();
-	#endif
-	return 1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
-#if defined _ALS_OnFilterScriptInit
-	#undef OnFilterScriptInit
-#else
-	#define _ALS_OnFilterScriptInit
-#endif
-#define OnFilterScriptInit OM_OnFilterScriptInit
-#if defined OM_OnFilterScriptInit
-	forward OM_OnFilterScriptInit();
-#endif
 
-public OnFilterScriptExit()
+hook OnFilterScriptExit()
 {
 	foreach(new i : Player) ClearOBMStack(i);
 
-	#if defined OM_OnFilterScriptExit
-		OM_OnFilterScriptExit();
-	#endif
-	return 1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
-#if defined _ALS_OnFilterScriptExit
-	#undef OnFilterScriptExit
-#else
-	#define _ALS_OnFilterScriptExit
-#endif
-#define OnFilterScriptExit OM_OnFilterScriptExit
-#if defined OM_OnFilterScriptExit
-	forward OM_OnFilterScriptExit();
-#endif
 
-public OnPlayerDisconnect(playerid, reason)
+hook OnPlayerDisconnect(playerid, reason)
 {
     ClearOBMStack(playerid);
 
-	#if defined OM_OnPlayerDisconnect
-		OM_OnPlayerDisconnect(playerid, reason);
-	#endif
-	return 1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
-#if defined _ALS_OnPlayerDisconnect
-	#undef OnPlayerDisconnect
-#else
-	#define _ALS_OnPlayerDisconnect
-#endif
-#define OnPlayerDisconnect OM_OnPlayerDisconnect
-#if defined OM_OnPlayerDisconnect
-	forward OM_OnPlayerDisconnect(playerid, reason);
-#endif
 
 ClearOBMStack(playerid)
 {
