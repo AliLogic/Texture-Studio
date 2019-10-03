@@ -1441,10 +1441,10 @@ UpdateObject3DText(index, bool:newobject=false)
 	// Shows the models index
 	if(ObjectData[index][oAttachedVehicle] > -1)
 	{
-		ObjectData[index][oTextID] = CreateDynamic3DTextLabel(line, 0xFF8800FF, ObjectData[index][oX], ObjectData[index][oY], ObjectData[index][oZ], TEXT3D_DRAW_DIST, INVALID_PLAYER_ID, CarData[ObjectData[index][oAttachedVehicle]][CarID]);
+		ObjectData[index][oTextID] = CreateDynamic3DTextLabel(line, 0xFF8800EE, ObjectData[index][oX], ObjectData[index][oY], ObjectData[index][oZ], TEXT3D_DRAW_DIST, INVALID_PLAYER_ID, CarData[ObjectData[index][oAttachedVehicle]][CarID]);
 		Update3DAttachCarPos(index, ObjectData[index][oAttachedVehicle]);
 	}
-	else ObjectData[index][oTextID] = CreateDynamic3DTextLabel(line, 0xFF8800FF, ObjectData[index][oX], ObjectData[index][oY], ObjectData[index][oZ], TEXT3D_DRAW_DIST);
+	else ObjectData[index][oTextID] = CreateDynamic3DTextLabel(line, 0xFF8800EE, ObjectData[index][oX], ObjectData[index][oY], ObjectData[index][oZ], TEXT3D_DRAW_DIST);
 
 	// Update the streamer
 	foreach(new i : Player)
@@ -5068,51 +5068,35 @@ YCMD:odd(playerid, arg[], help)
 }
 
 // Extras
-YCMD:hidetext3d(playerid, arg[], help)
+YCMD:togtext3d(playerid, arg[], help)
 {
 	if(help)
 	{
 		SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
-		SendClientMessage(playerid, STEALTH_GREEN, "Hide all 3D text labels.");
+		SendClientMessage(playerid, STEALTH_GREEN, "Toggles informative 3D text labels on or off. Can be created with custom stream distance. (defaults to 100 meters)");
 		return 1;
 	}
 
-    TextOption[tShowText] = false;
-    
-	HideGroupLabels(playerid);
-	HideObjectText();
-	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
-	SendClientMessage(playerid, STEALTH_GREEN, "All 3D Text labels hidden");
-	return 1;
-}
-
-YCMD:showtext3d(playerid, arg[], help)
-{
-	if(help)
+	if(TextOption[tShowText])
 	{
+		HideGroupLabels(playerid);
+		HideObjectText();
 		SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
-		SendClientMessage(playerid, STEALTH_GREEN, "Show all 3D text labels.");
-		return 1;
-	}
-	
-	/*/Experimental Multiplier
-	new Float:mult = floatstr(arg);
-	if(0.0 < mult <= 1.0)
-		Streamer_SetRadiusMultiplier(STREAMER_TYPE_3D_TEXT_LABEL, mult, playerid);
-	else if(mult) {
-		SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
-		SendClientMessage(playerid, STEALTH_GREEN, "Invalid multiplier specified, must be between 0.0 and 1.0");
-		return 1;
+		SendClientMessage(playerid, STEALTH_GREEN, "All 3D Text labels hidden");
 	}
 	else
-		Streamer_SetRadiusMultiplier(STREAMER_TYPE_3D_TEXT_LABEL, 1.0, playerid);*/
-    
-    TextOption[tShowText] = true;
-    
-    ShowGroupLabels(playerid);
-	ShowObjectText();
-	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
-	SendClientMessage(playerid, STEALTH_GREEN, "All 3D Text labels shown");
+	{
+		//check params for a custom stream distance and apply it.
+		extract arg -> new Float:streamdist = 100.0;
+		if(streamdist <= 0.0) streamdist = 100.0;
+		TEXT3D_DRAW_DIST = streamdist;
+
+	    ShowGroupLabels(playerid);
+		ShowObjectText();
+		SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+		SendClientMessage(playerid, STEALTH_GREEN, "All 3D Text labels shown");
+	}
+	TextOption[tShowText] = !TextOption[tShowText];
 	return 1;
 }
 

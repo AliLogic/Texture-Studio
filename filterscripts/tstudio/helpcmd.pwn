@@ -183,8 +183,7 @@ new Commands[][COMMAND_INFO] = {
     {8, 0, "makebind"},
     {8, 0, "bindeditor"},
     
-    {9, 0, "hidetext3d"},
-    {9, 0, "showtext3d"},
+    {9, 0, "togtext3d"},
     {9, 0, "edittext3d"},
     {9, 0, "minfo"},
     {9, 0, "flymode"},
