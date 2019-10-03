@@ -1,4 +1,4 @@
-#include "tstudio\menudata.pwn"
+#include "menudata.pwn"
 
 static PlayerGUIMenu:PlayerMainMenu[MAX_PLAYERS];
 static PlayerGUIMenu:PlayerObjectMenu[MAX_PLAYERS];

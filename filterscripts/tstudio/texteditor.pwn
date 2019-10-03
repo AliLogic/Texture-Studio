@@ -4,7 +4,7 @@
 
 // This is adapted from 420medit
 
-#include "tstudio\fontdata.pwn"
+#include "fontdata.pwn"
 
 // Text draws background
 new Text:TextEdit_Background_0;

@@ -1,4 +1,4 @@
-#include "tstudio\allobjects.pwn"
+#include "allobjects.pwn"
 
 #define         MIN_GTAOBJECT_LABEL_DIST            5.0
 

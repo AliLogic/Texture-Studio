@@ -76,6 +76,6 @@ public PlayerSetGUIPaused(playerid, bool:paused)
 	return 1;
 }
 
-#include "tstudio\gui\guihook.pwn"
-#include "tstudio\gui\gui.pwn"
-#include "tstudio\gui\playergui.pwn"
+#include "guihook.pwn"
+#include "gui.pwn"
+#include "playergui.pwn"

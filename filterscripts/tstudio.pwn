@@ -199,6 +199,11 @@ Change Log:
 -  Minor: 0.X0 (# 1-10)
 -  Patch: 0.0X (Letter a-z, not A-Z)
 */
+
+//temporarily disable const correctness warnings while I see about updating YSI
+#pragma warning disable 239
+#pragma warning disable 214
+
 #define TS_VERSION (0x00010904)
 
 #define FILTERSCRIPT
