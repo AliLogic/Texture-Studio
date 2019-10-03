@@ -589,7 +589,10 @@ new Iterator:Restriction[51]<MAX_PLAYERS>, bool:gRestricted[51] = {false, ...};
     (!(0 < %1 <= 50) || (!gRestricted[%1] || !Iter_Count(Restriction[%1]) || Iter_Contains(Restriction[%1], playerid) || IsPlayerAdmin(playerid)))
     //not in this ? then safely test these
 // ===== Not a very good modular technique... =====
-    
+
+// Debug/testing commands (teleporting to other players, setting the weather, etc)
+#include "tstudio/debug.pwn"
+
 // Group editing
 #include "tstudio\groups.pwn"
 

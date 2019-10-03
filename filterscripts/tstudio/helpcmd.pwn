@@ -198,7 +198,15 @@ new Commands[][COMMAND_INFO] = {
     {9, 0, "gotomap"},
     {9, 0, "restrict"},
     {9, 0, "unrestrict"},
-    {9, 0, "stopedit"}
+    {9, 0, "stopedit"},
+    {9, 0, "weather"},
+    {9, 0, "time"},
+    {9, 0, "skin"},
+    {9, 0, "goto"},
+    {9, 0, "get"},
+    {9, 0, "setposition"},
+    {9, 0, "weapon"},
+    {9, 0, "setinterior"}
 #if defined MANGLE
     ,{10, 9, "cobjectsets"},
     {10, 9, "osets"},

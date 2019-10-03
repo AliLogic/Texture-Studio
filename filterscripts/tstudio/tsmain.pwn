@@ -84,7 +84,7 @@ public OnPlayerConnect(playerid)
 			found = false;
 	}
 	if(warn)
-		printf("Warning: There's something missing or extra in /thelp for player %i.\n    (Report to Crayder on SA-MP Discord if this message ever shows)");
+		printf("Warning: There's something missing or extra in /thelp for player %i.\n    (Report to Crayder or TommyB on SA-MP Discord if this message ever shows)");
 	
 	return 1;
 }
