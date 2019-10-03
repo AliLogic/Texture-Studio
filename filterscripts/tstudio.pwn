@@ -256,7 +256,9 @@ Change Log:
 #include <formatex>
 #include <strlib>
 
+#define PP_SYNTAX_AWAIT
 #include <PawnPlus>
+#include <async-dialogs>
 
 // All SA Textures
 #include "tstudio\alltextures.pwn"
