@@ -26,8 +26,8 @@
 // Util
 native print(const string[]);
 native printf(const format[], {Float,_}:...);
-native format(output[], len, const format[], {Float,_}:...);
-native SetTimer(funcname[], interval, repeating);
+native format(const output[], len, const format[], {Float,_}:...);
+native SetTimer(const funcname[], interval, repeating);
 native KillTimer(timerid);
 native GetTickCount();
 native Float:asin(Float:value);
@@ -35,8 +35,8 @@ native Float:acos(Float:value);
 native Float:atan(Float:value);
 native Float:atan2(Float:x, Float:y);
 
-native SendChat(msg[]);
-native SendCommand(commandtext[]);
+native SendChat(const msg[]);
+native SendCommand(const commandtext[]);
 
 native GetPlayerState(playerid);
 native GetPlayerPos(playerid, &Float:x, &Float:y, &Float:z);
@@ -64,7 +64,7 @@ native IsPlayerConnected(playerid);
 #define PLAYER_RECORDING_TYPE_DRIVER	1
 #define PLAYER_RECORDING_TYPE_ONFOOT	2
 
-native StartRecordingPlayback(playbacktype, recordname[]);
+native StartRecordingPlayback(playbacktype, const recordname[]);
 native StopRecordingPlayback();
 native PauseRecordingPlayback();
 native ResumeRecordingPlayback();
@@ -174,13 +174,13 @@ native ResumeRecordingPlayback();
 forward OnNPCModeInit();
 forward OnNPCModeExit();
 forward OnNPCConnect(myplayerid);
-forward OnNPCDisconnect(reason[]);
+forward OnNPCDisconnect(const reason[]);
 forward OnNPCSpawn();
 forward OnNPCEnterVehicle(vehicleid, seatid);
 forward OnNPCExitVehicle();
-forward OnClientMessage(color, text[]);
+forward OnClientMessage(color, const text[]);
 forward OnPlayerDeath(playerid);
-forward OnPlayerText(playerid, text[]);
+forward OnPlayerText(playerid, const text[]);
 forward OnPlayerStreamIn(playerid);
 forward OnPlayerStreamOut(playerid);
 forward OnVehicleStreamIn(vehicleid);

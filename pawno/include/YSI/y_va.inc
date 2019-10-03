@@ -1,19 +1,9 @@
-/**--------------------------------------------------------------------------**\
-					==============================
-					 y_va - Enhanced vararg code!
-					==============================
-Description:
-	This library currently provides two functions - va_printf and va_format
-	which perform printf and format using variable arguments passed to another
-	function.
-	
-	This is bsed on the variable parameter passing method based on code by Zeex.
-	See page 15 of the code optimisations topic.
+/*
 Legal:
 	Version: MPL 1.1
 	
 	The contents of this file are subject to the Mozilla Public License Version 
-	1.1 (the "License"); you may not use this file except in compliance with 
+	1.1 the "License"; you may not use this file except in compliance with 
 	the License. You may obtain a copy of the License at 
 	http://www.mozilla.org/MPL/
 	
@@ -22,83 +12,70 @@ Legal:
 	for the specific language governing rights and limitations under the
 	License.
 	
-	The Original Code is the YSI vararg include.
+	The Original Code is the YSI framework.
 	
 	The Initial Developer of the Original Code is Alex "Y_Less" Cole.
-	Portions created by the Initial Developer are Copyright (C) 2011
+	Portions created by the Initial Developer are Copyright C 2011
 	the Initial Developer. All Rights Reserved.
-	
-	Contributors:
-		ZeeX, koolk, JoeBullet/Google63, g_aSlice/Slice
-	
-	Thanks:
-		JoeBullet/Google63 - Handy arbitrary ASM jump code using SCTRL.
-		ZeeX - Very productive conversations.
-		koolk - IsPlayerinAreaEx code.
-		TheAlpha - Danish translation.
-		breadfish - German translation.
-		Fireburn - Dutch translation.
-		yom - French translation.
-		50p - Polish translation.
-		Zamaroht - Spanish translation.
-		Dracoblue, sintax, mabako, Xtreme, other coders - Producing other modes
-			for me to strive to better.
-		Pixels^ - Running XScripters where the idea was born.
-		Matite - Pestering me to release it and using it.
-	
-	Very special thanks to:
-		Thiadmer - PAWN, whose limits continue to amaze me!
-		Kye/Kalcor - SA:MP.
-		SA:MP Team past, present and future - SA:MP.
-	
-Version:
-	1.0
-Changelog:
-	02/05/11:
-		First version.
-Functions:
-	Public:
-		-
-	Core:
-		-
-	Stock:
-		-
-	Static:
-		-
-	Inline:
-		-
-	API:
-		-
-Callbacks:
-	-
-Definitions:
-	-
-Enums:
-	-
-Macros:
-	-
-Tags:
-	-
-Variables:
-	Global:
-		-
-	Static:
-		-
-Commands:
-	-
-Compile options:
-	-
-Operators:
-	-
-</remarks>
-\**--------------------------------------------------------------------------**/
 
-//#define va_args<%0> %0
-#define va_args<%0> GLOBAL_TAG_TYPES:...
-#define va_start<%0> (va_:(%0))
+Contributors:
+	Y_Less
+	koolk
+	JoeBullet/Google63
+	g_aSlice/Slice
+	Misiur
+	samphunter
+	tianmeta
+	maddinat0r
+	spacemud
+	Crayder
+	Dayvison
+	Ahmad45123
+	Zeex
+	irinel1996
+	Yiin-
+	Chaprnks
+	Konstantinos
+	Masterchen09
+	Southclaws
+	PatchwerkQWER
+	m0k1
+	paulommu
+	udan111
 
-#include "y_va/impl"
-#if defined YSI_TESTS
-	#include "y_testing"
-	#include "y_va/tests"
+Thanks:
+	JoeBullet/Google63 - Handy arbitrary ASM jump code using SCTRL.
+	ZeeX - Very productive conversations.
+	koolk - IsPlayerinAreaEx code.
+	TheAlpha - Danish translation.
+	breadfish - German translation.
+	Fireburn - Dutch translation.
+	yom - French translation.
+	50p - Polish translation.
+	Zamaroht - Spanish translation.
+	Los - Portuguese translation.
+	Dracoblue, sintax, mabako, Xtreme, other coders - Producing other modes for
+		me to strive to better.
+	Pixels^ - Running XScripters where the idea was born.
+	Matite - Pestering me to release it and using it.
+
+Very special thanks to:
+	Thiadmer - PAWN, whose limits continue to amaze me!
+	Kye/Kalcor - SA:MP.
+	SA:MP Team past, present and future - SA:MP.
+
+Optional plugins:
+	Gamer_Z - GPS.
+	Incognito - Streamer.
+	Me - sscanf2, fixes2, Whirlpool.
+*/
+
+#include <YSI_Coding\y_va>
+
+#if !defined __PawnBuild
+	static USE@YSI_Coding@y_va;
+	#endinput
 #endif
+
+#warning Please use `#include <YSI_Coding\y_va>`
+

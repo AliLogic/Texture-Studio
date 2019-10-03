@@ -21,7 +21,7 @@ OnPlayerKeyStateChangeCMD(playerid,newkeys,oldkeys)
     return 0;
 }
 
-public OnPlayerCommandText(playerid, cmdtext[]) 
+public OnPlayerCommandText(playerid, const cmdtext[]) 
 {
 	//print(cmdtext);
 
@@ -49,7 +49,7 @@ public OnPlayerCommandText(playerid, cmdtext[])
 #endif
 #define OnPlayerCommandText CB_OnPlayerCommandText
 #if defined CB_OnPlayerCommandText
-	forward CB_OnPlayerCommandText(playerid, cmdtext[]);
+	forward CB_OnPlayerCommandText(playerid, const cmdtext[]);
 #endif
 
 public OnPlayerConnect(playerid)

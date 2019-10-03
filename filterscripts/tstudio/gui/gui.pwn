@@ -269,7 +269,7 @@ stock SetGUIElementGroup(GUIMenu:gindex, pindex, gval)
 }
 
 // Create a new GUI menu
-stock GUIMenu:CreateGUI(name[])
+stock GUIMenu:CreateGUI(const name[])
 {
 	for(new i = 0; i < MAX_GUI; i++)
 	{

@@ -305,7 +305,7 @@ stock PlayerGUIIgnoreClose(playerid, PlayerGUIMenu:gindex, bool:ignore)
 
 
 // Apply a template array to a GUI
-stock PlayerApplyGUIArray(playerid, PlayerGUIMenu:gindex, pindex, GUIType[GUIDEF], Float:xoffset = 0.0, Float:yoffset = 0.0)
+stock PlayerApplyGUIArray(playerid, PlayerGUIMenu:gindex, pindex, const GUIType[GUIDEF], Float:xoffset = 0.0, Float:yoffset = 0.0)
 {
 	PlayerGUIValid(playerid, gindex, pindex);
 	
@@ -507,7 +507,7 @@ stock PlayerUpdateGUIElement(playerid, PlayerGUIMenu:gindex, pindex)
 }
 
 // Create a new GUI menu
-stock PlayerGUIMenu:PlayerCreateGUI(playerid, name[])
+stock PlayerGUIMenu:PlayerCreateGUI(playerid, const name[])
 {
 	for(new i = 0; i < MAX_PLAYER_GUI; i++)
 	{
@@ -545,7 +545,7 @@ stock PlayerGUIDestroy(playerid, PlayerGUIMenu:gindex)
 }
 
 // Create a GUI element
-stock PlayerCreateGUIElement(playerid, PlayerGUIMenu:gindex, GUIType[GUIDEF], Float:xoffset, Float:yoffset)
+stock PlayerCreateGUIElement(playerid, PlayerGUIMenu:gindex, const GUIType[GUIDEF], Float:xoffset, Float:yoffset)
 {
 	PlayerGUIValidIndex(playerid, gindex);
 	for(new i = 0; i < MAX_PLAYER_ELEMENTS; i++)
@@ -618,7 +618,7 @@ static ResetPlayerGUIData(playerid, gindex)
 }
 
 // Player textdraw functions
-stock PlayerGUISetPlayerText(playerid, PlayerGUIMenu:gindex, pindex, text[])
+stock PlayerGUISetPlayerText(playerid, PlayerGUIMenu:gindex, pindex, const text[])
 {
 	PlayerGUIValid(playerid, gindex, pindex);
     PlayerTextDrawSetString(playerid, PlayerGUIData[playerid][_:gindex][PlayerGUIid][pindex], text);

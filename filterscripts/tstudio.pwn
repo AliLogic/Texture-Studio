@@ -200,9 +200,7 @@ Change Log:
 -  Patch: 0.0X (Letter a-z, not A-Z)
 */
 
-//temporarily disable const correctness warnings while I see about updating YSI
-#pragma warning disable 239
-#pragma warning disable 214
+#pragma dynamic 500000
 
 #define TS_VERSION (0x00010904)
 
@@ -239,8 +237,6 @@ Change Log:
 
 // System includes
 #include <sqlitei>
-#include <formatex>
-#include <strlib>
 
 // Plugins
 #include <streamer>
@@ -251,11 +247,16 @@ Change Log:
 #include "tstudio\gui\guisys.pwn"
 
 // YSI
-#include <YSI\y_iterate>
-#include <YSI\y_inline>
-#include <YSI\y_dialog>
+#define YSI_NO_HEAP_MALLOC
+#include <YSI_Data\y_iterate>
+#include <YSI_Coding\y_inline>
+#include <YSI_Visual\y_dialog>
+
 #define Y_COMMANDS_NO_IPC 
-#include <YSI\y_commands>
+#include <YSI_Visual\y_commands>
+
+#include <formatex>
+#include <strlib>
 
 // All SA Textures
 #include "tstudio\alltextures.pwn"

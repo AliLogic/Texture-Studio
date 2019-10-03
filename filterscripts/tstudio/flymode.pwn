@@ -320,7 +320,7 @@ tsfunc GetFlyModePos(playerid, &Float:x, &Float:y, &Float:z)
 
 //--------------------------------------------------
 
-tsfunc GetNextCameraPosition(move_mode, Float:CP[3], Float:FV[3], &Float:X, &Float:Y, &Float:Z)
+tsfunc GetNextCameraPosition(move_mode, const Float:CP[3], const Float:FV[3], &Float:X, &Float:Y, &Float:Z)
 {
     // Calculate the cameras next position based on their current position and the direction their camera is facing
     #define OFFSET_X (FV[0]*6000.0)

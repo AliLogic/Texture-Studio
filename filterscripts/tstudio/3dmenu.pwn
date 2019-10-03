@@ -77,7 +77,7 @@ tsfunc Create3DMenu(playerid,Float:x,Float:y,Float:z,Float:rotation,boxes)
 	return -1;
 }
 
-tsfunc SetBoxMaterial(MenuID,box,index,model,txd[],texture[], selectcolor, unselectcolor)
+tsfunc SetBoxMaterial(MenuID,box,index,model,const txd[],const texture[], selectcolor, unselectcolor)
 {
 	if(!MenuInfo[MenuID][IsExist]) return -1;
 	if(box == MenuInfo[MenuID][Boxes] || box < 0) return -1;

@@ -1960,7 +1960,7 @@ RemoveAllBuildings(playerid)
 }
 
 // Is string a hexvalue
-IsHexValue(hstring[])
+IsHexValue(const hstring[])
 {
 	if(strlen(hstring) < 10) return 0;
 	if(hstring[0] == 48 && hstring[1] == 120)
@@ -3660,7 +3660,7 @@ YCMD:ogroup(playerid, arg[], help)
 
 
 
-tsfunc ColumnExists(DB:database, table[], columnname[])
+tsfunc ColumnExists(DB:database, const table[], const columnname[])
 {
 	new q[128];
 	format(q, sizeof(q), "pragma table_info(%s)", table);
@@ -3860,7 +3860,7 @@ ClearCopyBuffer(playerid)
 }
 
 // Gets the mindex and tref from command arguments
-GetMaterials(playerid, arg[], &mindex, &tref)
+GetMaterials(playerid, const arg[], &mindex, &tref)
 {
 	if(sscanf(arg, "ii", mindex, tref))
 	{

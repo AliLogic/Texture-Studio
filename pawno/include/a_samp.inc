@@ -56,7 +56,7 @@
 // Util
 native print(const string[]);
 native printf(const format[], {Float,_}:...);
-native format(output[], len, const format[], {Float,_}:...);
+native format(const output[], len, const format[], {Float,_}:...);
 native SendClientMessage(playerid, color, const message[]);
 native SendClientMessageToAll(color, const message[]);
 native SendPlayerMessageToPlayer(playerid, senderid, const message[]);
@@ -65,8 +65,8 @@ native SendDeathMessage(killer, killee, weapon);
 native SendDeathMessageToPlayer(playerid, killer, killee, weapon);
 native GameTextForAll(const string[],time,style);
 native GameTextForPlayer(playerid,const string[],time,style);
-native SetTimer(funcname[], interval, repeating);
-native SetTimerEx(funcname[], interval, repeating, const format[], {Float,_}:...);
+native SetTimer(const funcname[], interval, repeating);
+native SetTimerEx(const funcname[], interval, repeating, const format[], {Float,_}:...);
 native KillTimer(timerid);
 native GetTickCount();
 native GetMaxPlayers();
@@ -82,16 +82,16 @@ native GetVehiclePoolSize();
 native GetActorPoolSize();
 
 // Hash
-native SHA256_PassHash(password[], salt[], ret_hash[], ret_hash_len); // SHA256 for password hashing
+native SHA256_PassHash(const password[], const salt[], const ret_hash[], ret_hash_len); // SHA256 for password hashing
 
 // Server wide persistent variable system (SVars)
-native SetSVarInt(varname[], int_value);
-native GetSVarInt(varname[]);
-native SetSVarString(varname[], string_value[]);
-native GetSVarString(varname[], string_return[], len);
-native SetSVarFloat(varname[], Float:float_value);
-native Float:GetSVarFloat(varname[]);
-native DeleteSVar(varname[]);
+native SetSVarInt(const varname[], int_value);
+native GetSVarInt(const varname[]);
+native SetSVarString(const varname[], const string_value[]);
+native GetSVarString(const varname[], const string_return[], len);
+native SetSVarFloat(const varname[], Float:float_value);
+native Float:GetSVarFloat(const varname[]);
+native DeleteSVar(const varname[]);
 
 // SVar enumeration
 #define	SERVER_VARTYPE_NONE			0
@@ -100,8 +100,8 @@ native DeleteSVar(varname[]);
 #define SERVER_VARTYPE_FLOAT		3
 
 native GetSVarsUpperIndex();
-native GetSVarNameAtIndex(index, ret_varname[], ret_len);
-native GetSVarType(varname[]);
+native GetSVarNameAtIndex(index, const ret_varname[], ret_len);
+native GetSVarType(const varname[]);
 
 // Game
 native SetGameModeText(const string[]);
@@ -135,7 +135,7 @@ native LimitGlobalChatRadius(Float:chat_radius);
 native LimitPlayerMarkerRadius(Float:marker_radius);
 
 // Npc
-native ConnectNPC(name[], script[]);
+native ConnectNPC(const name[], const script[]);
 native IsPlayerNPC(playerid);
 
 // Artwork/NetModels
@@ -143,31 +143,31 @@ native IsPlayerNPC(playerid);
 #define DOWNLOAD_REQUEST_MODEL_FILE		1
 #define DOWNLOAD_REQUEST_TEXTURE_FILE	2
 
-native AddCharModel(baseid, newid, dffname[], txdname[]);
-native AddSimpleModel(virtualworld, baseid, newid, dffname[], txdname[]);
-native AddSimpleModelTimed(virtualworld, baseid, newid, dffname[], txdname[], timeon, timeoff);
+native AddCharModel(baseid, newid, const dffname[], const txdname[]);
+native AddSimpleModel(virtualworld, baseid, newid, const dffname[], const txdname[]);
+native AddSimpleModelTimed(virtualworld, baseid, newid, const dffname[], const txdname[], timeon, timeoff);
 native FindModelFileNameFromCRC(crc, retstr[], retstr_size);
 native FindTextureFileNameFromCRC(crc, retstr[], retstr_size);
-native RedirectDownload(playerid, url[]);
+native RedirectDownload(playerid, const url[]);
 
 // Admin
 native IsPlayerAdmin(playerid);
 native Kick(playerid);
 native Ban(playerid);
 native BanEx(playerid, const reason[]);
-native SendRconCommand(command[]);
-native GetPlayerNetworkStats(playerid, retstr[], retstr_size);
-native GetNetworkStats(retstr[], retstr_size);
+native SendRconCommand(const command[]);
+native GetPlayerNetworkStats(playerid, const retstr[], retstr_size);
+native GetNetworkStats(const retstr[], retstr_size);
 native GetPlayerVersion(playerid, const version[], len); // Returns the SA-MP client revision as reported by the player
-native BlockIpAddress(ip_address[], timems);
-native UnBlockIpAddress(ip_address[]);
+native BlockIpAddress(const ip_address[], timems);
+native UnBlockIpAddress(const ip_address[]);
 
 // Deprecated:
-native GetServerVarAsString(const varname[], buffer[], len);
+native GetServerVarAsString(const varname[], const buffer[], len);
 native GetServerVarAsInt(const varname[]);
 native GetServerVarAsBool(const varname[]);
 // These are the same 3 functions as above although they avoid the name ambiguity/conflict with the SVar system.
-native GetConsoleVarAsString(const varname[], buffer[], len);
+native GetConsoleVarAsString(const varname[], const buffer[], len);
 native GetConsoleVarAsInt(const varname[]);
 native GetConsoleVarAsBool(const varname[]);
 
@@ -181,7 +181,7 @@ native NetStats_BytesSent(playerid);
 native NetStats_MessagesRecvPerSecond(playerid);
 native Float:NetStats_PacketLossPercent(playerid);
 native NetStats_ConnectionStatus(playerid);
-native NetStats_GetIpPort(playerid, ip_port[], ip_port_len);
+native NetStats_GetIpPort(playerid, const ip_port[], ip_port_len);
 
 // Menu
 native Menu:CreateMenu(const title[], columns, Float:x, Float:y, Float:col1width, Float:col2width = 0.0);
@@ -199,7 +199,7 @@ native Menu:GetPlayerMenu(playerid);
 #define TEXT_DRAW_FONT_SPRITE_DRAW	 4
 #define TEXT_DRAW_FONT_MODEL_PREVIEW 5
 
-native Text:TextDrawCreate(Float:x, Float:y, text[]);
+native Text:TextDrawCreate(Float:x, Float:y, const text[]);
 native TextDrawDestroy(Text:text);
 native TextDrawLetterSize(Text:text, Float:x, Float:y);
 native TextDrawTextSize(Text:text, Float:x, Float:y);
@@ -217,7 +217,7 @@ native TextDrawShowForPlayer(playerid, Text:text);
 native TextDrawHideForPlayer(playerid, Text:text);
 native TextDrawShowForAll(Text:text);
 native TextDrawHideForAll(Text:text);
-native TextDrawSetString(Text:text, string[]);
+native TextDrawSetString(Text:text, const string[]);
 native TextDrawSetPreviewModel(Text:text, modelindex);
 native TextDrawSetPreviewRot(Text:text, Float:fRotX, Float:fRotY, Float:fRotZ, Float:fZoom = 1.0);
 native TextDrawSetPreviewVehCol(Text:text, color1, color2);
@@ -235,16 +235,16 @@ native GangZoneStopFlashForPlayer(playerid, zone);
 native GangZoneStopFlashForAll(zone);
 
 // Global 3D Text Labels
-native Text3D:Create3DTextLabel(text[], color, Float:X, Float:Y, Float:Z, Float:DrawDistance, virtualworld, testLOS=0);
+native Text3D:Create3DTextLabel(const text[], color, Float:X, Float:Y, Float:Z, Float:DrawDistance, virtualworld, testLOS=0);
 native Delete3DTextLabel(Text3D:id);
 native Attach3DTextLabelToPlayer(Text3D:id, playerid, Float:OffsetX, Float:OffsetY, Float:OffsetZ);
 native Attach3DTextLabelToVehicle(Text3D:id, vehicleid, Float:OffsetX, Float:OffsetY, Float:OffsetZ);
-native Update3DTextLabelText(Text3D:id, color, text[]);
+native Update3DTextLabelText(Text3D:id, color, const text[]);
 
 // Per-player 3D Text Labels
-native PlayerText3D:CreatePlayer3DTextLabel(playerid, text[], color, Float:X, Float:Y, Float:Z, Float:DrawDistance, attachedplayer=INVALID_PLAYER_ID, attachedvehicle=INVALID_VEHICLE_ID, testLOS=0);
+native PlayerText3D:CreatePlayer3DTextLabel(playerid, const text[], color, Float:X, Float:Y, Float:Z, Float:DrawDistance, attachedplayer=INVALID_PLAYER_ID, attachedvehicle=INVALID_VEHICLE_ID, testLOS=0);
 native DeletePlayer3DTextLabel(playerid, PlayerText3D:id);
-native UpdatePlayer3DTextLabelText(playerid, PlayerText3D:id, color, text[]);
+native UpdatePlayer3DTextLabelText(playerid, PlayerText3D:id, color, const text[]);
 
 // Player GUI Dialog
 #define DIALOG_STYLE_MSGBOX				0
@@ -254,7 +254,7 @@ native UpdatePlayer3DTextLabelText(playerid, PlayerText3D:id, color, text[]);
 #define DIALOG_STYLE_TABLIST			4
 #define DIALOG_STYLE_TABLIST_HEADERS	5
 
-native ShowPlayerDialog(playerid, dialogid, style, caption[], info[], button1[], button2[]);
+native ShowPlayerDialog(playerid, dialogid, style, const caption[], const info[], const button1[], const button2[]);
 
 // --------------------------------------------------
 // Defines
@@ -363,8 +363,8 @@ forward OnPlayerSpawn(playerid);
 forward OnPlayerDeath(playerid, killerid, reason);
 forward OnVehicleSpawn(vehicleid);
 forward OnVehicleDeath(vehicleid, killerid);
-forward OnPlayerText(playerid, text[]);
-forward OnPlayerCommandText(playerid, cmdtext[]);
+forward OnPlayerText(playerid, const text[]);
+forward OnPlayerCommandText(playerid, const cmdtext[]);
 forward OnPlayerRequestClass(playerid, classid);
 forward OnPlayerEnterVehicle(playerid, vehicleid, ispassenger);
 forward OnPlayerExitVehicle(playerid, vehicleid);
@@ -373,7 +373,7 @@ forward OnPlayerEnterCheckpoint(playerid);
 forward OnPlayerLeaveCheckpoint(playerid);
 forward OnPlayerEnterRaceCheckpoint(playerid);
 forward OnPlayerLeaveRaceCheckpoint(playerid);
-forward OnRconCommand(cmd[]);
+forward OnRconCommand(const cmd[]);
 forward OnPlayerRequestSpawn(playerid);
 forward OnObjectMoved(objectid);
 forward OnPlayerObjectMoved(playerid, objectid);
@@ -396,14 +396,14 @@ forward OnVehicleStreamIn(vehicleid, forplayerid);
 forward OnVehicleStreamOut(vehicleid, forplayerid);
 forward OnActorStreamIn(actorid, forplayerid);
 forward OnActorStreamOut(actorid, forplayerid);
-forward OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]);
+forward OnDialogResponse(playerid, dialogid, response, listitem, const inputtext[]);
 forward OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart);
 forward OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart);
 forward OnPlayerGiveDamageActor(playerid, damaged_actorid, Float:amount, weaponid, bodypart);
 forward OnPlayerClickMap(playerid, Float:fX, Float:fY, Float:fZ);
 forward OnPlayerClickTextDraw(playerid, Text:clickedid);
 forward OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid);
-forward OnIncomingConnection(playerid, ip_address[], port);
+forward OnIncomingConnection(playerid, const ip_address[], port);
 forward OnTrailerUpdate(playerid, vehicleid);
 forward OnVehicleSirenStateChange(playerid, vehicleid, newstate);
 forward OnPlayerFinishedDownloading(playerid, virtualworld);

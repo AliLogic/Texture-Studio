@@ -1,4 +1,4 @@
-public OnPlayerCommandText(playerid, cmdtext[]) 
+public OnPlayerCommandText(playerid, const cmdtext[]) 
 {
 	print(cmdtext);
 
@@ -14,5 +14,5 @@ public OnPlayerCommandText(playerid, cmdtext[])
 #endif
 #define OnPlayerCommandText DB_OnPlayerCommandText
 #if defined DB_OnPlayerCommandText
-	forward DB_OnPlayerCommandText(playerid, cmdtext[]);
+	forward DB_OnPlayerCommandText(playerid, const cmdtext[]);
 #endif

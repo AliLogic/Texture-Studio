@@ -14,7 +14,7 @@
 	#error "introspect" is required.  Get it here: github.com/oscar-broman/samp-introspect
 #endif
 
-public OnPlayerText(playerid, text[])
+public OnPlayerText(playerid, const text[])
 {
 	if (text[0] == PARSER_TEXT_CHAR)
 	{

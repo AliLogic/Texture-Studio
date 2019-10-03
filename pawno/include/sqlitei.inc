@@ -647,7 +647,7 @@ stock DB::LazyInitialize() {
 	}
 #endif
 
-stock db_escape_string(szString[], const szEnclosing[] = "'", iSize = sizeof(szString)) {
+stock db_escape_string(const szString[], const szEnclosing[] = "'", iSize = sizeof(szString)) {
 	DB::LazyInitialize();
 	
 	new

@@ -1,4 +1,4 @@
-#tryinclude <YSI\y_iterate>
+#tryinclude <YSI_Data\y_iterate>
 
 #if !defined _Y_ITERATE_LOCAL_VERSION
 	#error y_iterate not found

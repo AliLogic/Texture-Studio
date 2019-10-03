@@ -1280,7 +1280,7 @@ static SavePlayerTheme(playerid, name[], bool:deletedb=false)
 	return 1;
 }
 
-static LoadPlayerTheme(playerid, name[], bool:cleararray=true)
+static LoadPlayerTheme(playerid, const name[], bool:cleararray=true)
 {
 	new q[128];
 	new DBResult:r;
