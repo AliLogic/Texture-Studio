@@ -3843,21 +3843,27 @@ YCMD:ogoto(playerid, arg[], help)
 
     MapOpenCheck();
 
-	EditCheck(playerid);
-
 	NoEditingMode(playerid);
 
-	if(!InFlyMode(playerid))
+	extract arg -> new objectindex = -1;
+	if(objectindex <= -1) objectindex = CurrObject[playerid];
+	if(!Iter_Contains(Objects, objectindex))
 	{
-	   	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
-	   	SendClientMessage(playerid, STEALTH_YELLOW, "You must be in flymode to use this command");
-	   	return 1;
+		SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+		return SendClientMessage(playerid, STEALTH_GREEN, "Invalid object. Enter the object index you'd like to teleport to, or enter no params to teleport to an object you're currently editing.");
 	}
 
    	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
-   	SendClientMessage(playerid, STEALTH_GREEN, "Moved to object currently being edited");
+   	SendClientMessage(playerid, STEALTH_GREEN, sprintf("Moved to object %i.", objectindex));
 
-	SetFlyModePos(playerid, ObjectData[CurrObject[playerid]][oX], ObjectData[CurrObject[playerid]][oY], ObjectData[CurrObject[playerid]][oZ]);
+   	if(IsFlyMode(playerid))
+   	{
+   		SetFlyModePos(playerid, ObjectData[objectindex][oX], ObjectData[objectindex][oY], ObjectData[objectindex][oZ]);
+   	}
+   	else
+   	{
+   		SetPlayerPos(playerid, ObjectData[objectindex][oX], ObjectData[objectindex][oY], ObjectData[objectindex][oZ] + 1.5);
+   	}
 	return 1;
 }
 

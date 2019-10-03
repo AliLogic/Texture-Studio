@@ -343,8 +343,7 @@ CancelFlyMode(playerid)
 {
 	new Float:x, Float:y, Float:z;
 	GetPlayerCameraPos(playerid, x, y, z);
-
-	SetTimerEx("DelaySetPos", 2000, false, "ifff", playerid, x, y, z);
+	SetSpawnInfo(playerid, 0, GetPlayerSkin(playerid), x, y, z, 0.0, 0, 0, 0, 0, 0, 0);
 
 	FlyMode[playerid] = false;
 	CancelEdit(playerid);
@@ -352,11 +351,10 @@ CancelFlyMode(playerid)
 
 	DestroyPlayerObject(playerid, noclipdata[playerid][flyobject]);
 	noclipdata[playerid][cameramode] = CAMERA_MODE_NONE;
+
+	SpawnPlayer(playerid);
 	return 1;
 }
-
-forward DelaySetPos(playerid, Float:x, Float:y, Float:z);
-public DelaySetPos(playerid, Float:x, Float:y, Float:z) { SetPlayerPos(playerid, x, y, z); }
 
 //--------------------------------------------------
 
