@@ -1432,124 +1432,83 @@ hook OnPlayerClickTextDraw(playerid, Text:clickedid)
 						}
 				        case 1:
 						{
-							new red, green, blue, alpha;
-                            inline SelectRed(redpid, reddialogid, redresponse, redlistitem, string:redtext[])
-                            {
-                                #pragma unused redlistitem, reddialogid, redpid, redtext
-								if(redresponse)
+							inline InputColors(colorpid, colordialogid, colorresponse, colorlistitem, string:colortext[])
+							{
+								#pragma unused colorpid, colorlistitem, colordialogid
+
+								if(!colorresponse) return Y_HOOKS_BREAK_RETURN_0;
+								extract colortext -> new red, green, blue, alpha = 255; else Dialog_ShowCallback(playerid, using inline InputColors, DIALOG_STYLE_INPUT, "Texture Studio - Color Combinator", "Enter values for Red, Green, Blue and Alpha (0-255). Separate the values with a space.", "Ok", "Cancel");
+								if(red < 0 || red > 255) Dialog_ShowCallback(playerid, using inline InputColors, DIALOG_STYLE_INPUT, "Texture Studio - Color Combinator", "Enter values for Red, Green, Blue and Alpha (0-255). Separate the values with a space.", "Ok", "Cancel");
+								if(blue < 0 || blue > 255) Dialog_ShowCallback(playerid, using inline InputColors, DIALOG_STYLE_INPUT, "Texture Studio - Color Combinator", "Enter values for Red, Green, Blue and Alpha (0-255). Separate the values with a space.", "Ok", "Cancel");
+								if(green < 0 || green > 255) Dialog_ShowCallback(playerid, using inline InputColors, DIALOG_STYLE_INPUT, "Texture Studio - Color Combinator", "Enter values for Red, Green, Blue and Alpha (0-255). Separate the values with a space.", "Ok", "Cancel");
+								if(alpha < 0 || alpha > 255) Dialog_ShowCallback(playerid, using inline InputColors, DIALOG_STYLE_INPUT, "Texture Studio - Color Combinator", "Enter values for Red, Green, Blue and Alpha (0-255). Separate the values with a space.", "Ok", "Cancel");
+
+							   	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+                                new index = CurrObject[playerid];
+
+                                if(TextureAll[playerid])
 								{
-									red = strval(redtext);
-									if(red < 0 || red > 255) Dialog_ShowCallback(playerid, using inline SelectRed, DIALOG_STYLE_INPUT, "Texture Studio - Color Combinator", "Enter Red Value <0 - 255>", "Ok", "Cancel");
-									else
+									foreach(new j : Objects)
 									{
-									    inline SelectGreen(greenpid, greendialogid, greenresponse, greenlistitem, string:greentext[])
+									    if(ObjectData[j][oModel] == ObjectData[CurrObject[playerid]][oModel])
 									    {
-									        #pragma unused greenlistitem, greendialogid, greenpid, greentext
-											if(greenresponse)
-											{
-												green = strval(greentext);
-												if(green < 0 || green > 255) Dialog_ShowCallback(playerid, using inline SelectGreen, DIALOG_STYLE_INPUT, "Texture Studio - Color Combinator", "Enter Green Value <0 - 255>", "Ok", "Cancel");
-												else
-												{
-												    inline SelectBlue(bluepid, bluedialogid, blueresponse, bluelistitem, string:bluetext[])
-												    {
-												        #pragma unused bluelistitem, bluedialogid, bluepid, bluetext
-														if(blueresponse)
-														{
-															blue = strval(bluetext);
-															if(blue < 0 || blue > 255) Dialog_ShowCallback(playerid, using inline SelectBlue, DIALOG_STYLE_INPUT, "Texture Studio - Color Combinator", "Enter Blue Value <0 - 255>", "Ok", "Cancel");
-															else
-															{
-															    inline SelectAlpha(alphapid, alphadialogid, alpharesponse, alphalistitem, string:alphatext[])
-															    {
-															        #pragma unused alphalistitem, alphadialogid, alphapid, alphatext
-																	if(alpharesponse)
-																	{
-																		if(isnull(alphatext)) alpha = 255;
-																		else alpha = strval(alphatext);
-																		if(alpha < 0 || alpha > 255) Dialog_ShowCallback(playerid, using inline SelectAlpha, DIALOG_STYLE_INPUT, "Texture Studio - Color Combinator", "Enter Alpha Value <0 - 255>\nNote: Leaving this empty is full alpha 255", "Ok", "Cancel");
-																		else
-																		{
-																		   	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
-                                                                            new index = CurrObject[playerid];
+									        ObjectData[j][oColorIndex][i] = ARGB(alpha, red, green, blue);
 
-                                                                            if(TextureAll[playerid])
-																			{
-																				foreach(new j : Objects)
-																				{
-																				    if(ObjectData[j][oModel] == ObjectData[CurrObject[playerid]][oModel])
-																				    {
-																				        ObjectData[j][oColorIndex][i] = ARGB(alpha, red, green, blue);
+											// Destroy the object
+										    DestroyDynamicObject(ObjectData[j][oID]);
 
-																						// Destroy the object
-																					    DestroyDynamicObject(ObjectData[j][oID]);
+											// Re-create object
+											ObjectData[j][oID] = CreateDynamicObject(ObjectData[j][oModel], ObjectData[j][oX], ObjectData[j][oY], ObjectData[j][oZ], ObjectData[j][oRX], ObjectData[j][oRY], ObjectData[j][oRZ], -1, -1, -1, 300.0);
+											Streamer_SetFloatData(STREAMER_TYPE_OBJECT, ObjectData[j][oID], E_STREAMER_DRAW_DISTANCE, 300.0);
 
-																						// Re-create object
-																						ObjectData[j][oID] = CreateDynamicObject(ObjectData[j][oModel], ObjectData[j][oX], ObjectData[j][oY], ObjectData[j][oZ], ObjectData[j][oRX], ObjectData[j][oRY], ObjectData[j][oRZ], -1, -1, -1, 300.0);
-																						Streamer_SetFloatData(STREAMER_TYPE_OBJECT, ObjectData[j][oID], E_STREAMER_DRAW_DISTANCE, 300.0);
+											// Update the materials
+											UpdateMaterial(j);
 
-																						// Update the materials
-																						UpdateMaterial(j);
-
-																						// Save this material index to the data base
-																						sqlite_SaveColorIndex(j);
-																				    }
-
-																				}
-																				// Update the streamer
-																				foreach(new j : Player)
-																				{
-																				    if(IsPlayerInRangeOfPoint(j, 300.0, ObjectData[index][oX], ObjectData[index][oY], ObjectData[index][oZ])) Streamer_Update(j);
-																				}
-
-																				SendClientMessage(playerid, STEALTH_GREEN, "Changed All Color");
-
-																			}
-																			else
-																			{
-																				// Set the color
-																		        ObjectData[index][oColorIndex][i] = ARGB(alpha, red, green, blue);
-
-																				// Destroy the object
-																			    DestroyDynamicObject(ObjectData[index][oID]);
-
-																				// Re-create object
-																				ObjectData[index][oID] = CreateDynamicObject(ObjectData[index][oModel], ObjectData[index][oX], ObjectData[index][oY], ObjectData[index][oZ], ObjectData[index][oRX], ObjectData[index][oRY], ObjectData[index][oRZ], -1, -1, -1, 300.0);
-																				Streamer_SetFloatData(STREAMER_TYPE_OBJECT, ObjectData[index][oID], E_STREAMER_DRAW_DISTANCE, 300.0);
-
-																				// Update the materials
-																				UpdateMaterial(index);
-
-																				// Save this material index to the data base
-																				sqlite_SaveColorIndex(index);
-
-																				// Update texture tool
-																		        UpdateTextureSlot(playerid, i);
-
-																				// Update the streamer
-																				foreach(new j : Player)
-																				{
-																				    if(IsPlayerInRangeOfPoint(j, 300.0, ObjectData[index][oX], ObjectData[index][oY], ObjectData[index][oZ])) Streamer_Update(j);
-																				}
-
-																				SendClientMessage(playerid, STEALTH_GREEN, "Changed Color");
-																			}
-																		}
-																	}
-																}
-																Dialog_ShowCallback(playerid, using inline SelectAlpha, DIALOG_STYLE_INPUT, "Texture Studio - Color Combinator", "Enter Alpha Value <0 - 255>\nNote: Leaving this empty is full alpha 255", "Ok", "Cancel");
-															}
-														}
-													}
-													Dialog_ShowCallback(playerid, using inline SelectBlue, DIALOG_STYLE_INPUT, "Texture Studio - Color Combinator", "Enter Blue Value <0 - 255>", "Ok", "Cancel");
-												}
-											}
+											// Save this material index to the data base
+											sqlite_SaveColorIndex(j);
 									    }
-									    Dialog_ShowCallback(playerid, using inline SelectGreen, DIALOG_STYLE_INPUT, "Texture Studio - Color Combinator", "Enter Green Value <0 - 255>", "Ok", "Cancel");
+
 									}
+									// Update the streamer
+									foreach(new j : Player)
+									{
+									    if(IsPlayerInRangeOfPoint(j, 300.0, ObjectData[index][oX], ObjectData[index][oY], ObjectData[index][oZ])) Streamer_Update(j);
+									}
+
+									SendClientMessage(playerid, STEALTH_GREEN, "Changed All Color");
+
 								}
-                            }
-                            Dialog_ShowCallback(playerid, using inline SelectRed, DIALOG_STYLE_INPUT, "Texture Studio - Color Combinator", "Enter Red Value <0 - 255>", "Ok", "Cancel");
+								else
+								{
+									// Set the color
+							        ObjectData[index][oColorIndex][i] = ARGB(alpha, red, green, blue);
+
+									// Destroy the object
+								    DestroyDynamicObject(ObjectData[index][oID]);
+
+									// Re-create object
+									ObjectData[index][oID] = CreateDynamicObject(ObjectData[index][oModel], ObjectData[index][oX], ObjectData[index][oY], ObjectData[index][oZ], ObjectData[index][oRX], ObjectData[index][oRY], ObjectData[index][oRZ], -1, -1, -1, 300.0);
+									Streamer_SetFloatData(STREAMER_TYPE_OBJECT, ObjectData[index][oID], E_STREAMER_DRAW_DISTANCE, 300.0);
+
+									// Update the materials
+									UpdateMaterial(index);
+
+									// Save this material index to the data base
+									sqlite_SaveColorIndex(index);
+
+									// Update texture tool
+							        UpdateTextureSlot(playerid, i);
+
+									// Update the streamer
+									foreach(new j : Player)
+									{
+									    if(IsPlayerInRangeOfPoint(j, 300.0, ObjectData[index][oX], ObjectData[index][oY], ObjectData[index][oZ])) Streamer_Update(j);
+									}
+
+									SendClientMessage(playerid, STEALTH_GREEN, "Changed Color");
+								}
+							}
+                            Dialog_ShowCallback(playerid, using inline InputColors, DIALOG_STYLE_INPUT, "Texture Studio - Color Combinator", "Enter values for Red, Green, Blue and Alpha (0-255). Separate the values with a space.", "Ok", "Cancel");
 						}
 				        case 2:
 						{

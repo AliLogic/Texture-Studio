@@ -316,7 +316,7 @@ forward OnDeleteGroup3DText(index);
 // Edit check makes sure the player is actually editing an object before doing certain commands
 #define EditCheck(%0); if(CurrObject[%0] == -1) { \
 	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________"); \
-	return SendClientMessage(playerid, STEALTH_YELLOW, "You need to select an object to use this command"); }
+	return SendClientMessage(playerid, STEALTH_YELLOW, "You need to select an object (/sel) to use this command"); }
 
 // Don't let player use command if they are editing an object
 #define NoEditingMode(%0); if(EditingMode[%0]) { \
