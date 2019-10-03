@@ -286,7 +286,7 @@ hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float
 	return Y_HOOKS_CONTINUE_RETURN_1;
 }
 
-tsfunc ClearGroup(playerid)
+ClearGroup(playerid)
 {
 	for(new i = 0; i < MAX_TEXTURE_OBJECTS; i++)
 	{
@@ -296,7 +296,7 @@ tsfunc ClearGroup(playerid)
 	return 1;
 }
 
-tsfunc GroupUpdate(index)
+GroupUpdate(index)
 {
 	foreach(new i : Player)
 	{
@@ -306,7 +306,7 @@ tsfunc GroupUpdate(index)
 }
 
 #if defined COMPILE_MANGLE
-tsfunc GroupRotate(playerid, Float:rx, Float:ry, Float:rz, update = true)
+GroupRotate(playerid, Float:rx, Float:ry, Float:rz, update = true)
 {
 	new Float:gCenterX, Float:gCenterY, Float:gCenterZ;
 	GetGroupCenter(playerid, gCenterX, gCenterY, gCenterZ);
@@ -420,7 +420,7 @@ GetGroupRadius(playerid, &Float:radius)
 	return 1;
 }
 
-tsfunc GetGroupCenter(playerid, &Float:X, &Float:Y, &Float:Z)
+GetGroupCenter(playerid, &Float:X, &Float:Y, &Float:Z)
 {
 	new Float:highX = -9999999.0;
 	new Float:highY = -9999999.0;
@@ -2193,7 +2193,7 @@ YCMD:0group(playerid, arg[], help)
 	return 1;
 }
 
-tsfunc ShowPrefabs(playerid)
+ShowPrefabs(playerid)
 {
 	new dir:dHandle = dir_open("./scriptfiles/tstudio/PreFabs/");
 	new item[40], type;

@@ -2306,7 +2306,7 @@ stock IsValidModel(modelid)
 	return 0;
 }
 
-tsfunc GetModelArray(modelid)
+GetModelArray(modelid)
 {
 	for(new i = 0; i < sizeof(ObjectList); i++)
 	{
@@ -2316,7 +2316,7 @@ tsfunc GetModelArray(modelid)
 	return -1;
 }
 
-tsfunc GetModelName(modelid) 
+GetModelName(modelid) 
 {
 	new temp[50] = "N/A";
 	for(new i = 0; i < sizeof(ObjectList); i++)

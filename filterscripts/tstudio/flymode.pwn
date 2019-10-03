@@ -52,7 +52,7 @@ new bool:FlyMode[MAX_PLAYERS];
 
 //--------------------------------------------------
 
-tsfunc IsFlyMode(playerid) { return noclipdata[playerid][cameramode]; }
+IsFlyMode(playerid) { return noclipdata[playerid][cameramode]; }
 
 #include <YSI_Coding\y_hooks>
 hook OnFilterScriptExit()
@@ -207,7 +207,7 @@ hook OnPlayerUpdate(playerid)
 
 //--------------------------------------------------
 
-tsfunc GetMoveDirectionFromKeys(ud, lr)
+GetMoveDirectionFromKeys(ud, lr)
 {
 	new direction = 0;
 	
@@ -231,7 +231,7 @@ tsfunc GetMoveDirectionFromKeys(ud, lr)
 
 //--------------------------------------------------
 
-tsfunc MoveCamera(playerid)
+MoveCamera(playerid)
 {
 	new Float:FV[3], Float:CP[3];
 	//GetPlayerCameraPos(playerid, CP[0], CP[1], CP[2]);          // 	Cameras position in space
@@ -256,7 +256,7 @@ tsfunc MoveCamera(playerid)
 	return 1;
 }
 
-tsfunc SetFlyModePos(playerid, Float:x, Float:y, Float:z)
+SetFlyModePos(playerid, Float:x, Float:y, Float:z)
 {
 	if(FlyMode[playerid])
 	{
@@ -266,7 +266,7 @@ tsfunc SetFlyModePos(playerid, Float:x, Float:y, Float:z)
 	}
 	return 0;
 }
-tsfunc GetFlyModePos(playerid, &Float:x, &Float:y, &Float:z)
+GetFlyModePos(playerid, &Float:x, &Float:y, &Float:z)
 {
 	if(FlyMode[playerid])
 	{
@@ -279,7 +279,7 @@ tsfunc GetFlyModePos(playerid, &Float:x, &Float:y, &Float:z)
 
 //--------------------------------------------------
 
-tsfunc GetNextCameraPosition(move_mode, const Float:CP[3], const Float:FV[3], &Float:X, &Float:Y, &Float:Z)
+GetNextCameraPosition(move_mode, const Float:CP[3], const Float:FV[3], &Float:X, &Float:Y, &Float:Z)
 {
     // Calculate the cameras next position based on their current position and the direction their camera is facing
     #define OFFSET_X (FV[0]*6000.0)
@@ -339,7 +339,7 @@ tsfunc GetNextCameraPosition(move_mode, const Float:CP[3], const Float:FV[3], &F
 }
 //--------------------------------------------------
 
-tsfunc CancelFlyMode(playerid)
+CancelFlyMode(playerid)
 {
 	new Float:x, Float:y, Float:z;
 	GetPlayerCameraPos(playerid, x, y, z);
@@ -360,7 +360,7 @@ public DelaySetPos(playerid, Float:x, Float:y, Float:z) { SetPlayerPos(playerid,
 
 //--------------------------------------------------
 
-tsfunc StartFlyMode(playerid)
+StartFlyMode(playerid)
 {
 	// Create an invisible object for the players camera to be attached to
 	new Float:X, Float:Y, Float:Z;

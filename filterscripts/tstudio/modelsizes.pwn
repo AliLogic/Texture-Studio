@@ -16,7 +16,7 @@ hook OnFilterScriptInit()
 
 #define GetColCount() (20000)
 
-tsfunc Float:GetColSphereRadius(objectmodel)
+Float:GetColSphereRadius(objectmodel)
 {
 	format(MS_QUERY, 128, "SELECT `Size` FROM `Sphere` WHERE `Model` = '%d'", objectmodel);
 	MS_RESULT = db_query(MS_DB, MS_QUERY);
@@ -28,7 +28,7 @@ tsfunc Float:GetColSphereRadius(objectmodel)
 	return MS_VALUE[0];
 }
 
-tsfunc GetColSphereOffset(objectmodel, &Float:x, &Float:y, &Float:z)
+GetColSphereOffset(objectmodel, &Float:x, &Float:y, &Float:z)
 {
 	format(MS_QUERY, 128, "SELECT `OffsetX`, `OffsetY`, `OffsetZ` FROM `Sphere` WHERE `Model` = '%d'", objectmodel);
 	MS_RESULT = db_query(MS_DB, MS_QUERY);
@@ -48,7 +48,7 @@ tsfunc GetColSphereOffset(objectmodel, &Float:x, &Float:y, &Float:z)
 	}
 }
 
-tsfunc GetModelBoundingBox(objectmodel, &Float:MinX, &Float:MinY, &Float:MinZ, &Float:MaxX, &Float:MaxY, &Float:MaxZ)
+GetModelBoundingBox(objectmodel, &Float:MinX, &Float:MinY, &Float:MinZ, &Float:MaxX, &Float:MaxY, &Float:MaxZ)
 {
 	format(MS_QUERY, 128, "SELECT `MinX`, `MinY`, `MinZ`, `MaxX`, `MaxY`, `MaxZ` FROM `AABB` WHERE `Model` = '%d'", objectmodel);
 	MS_RESULT = db_query(MS_DB, MS_QUERY);

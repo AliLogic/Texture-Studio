@@ -791,7 +791,7 @@ static HidePlayerOSDraws(playerid)
 
 }
 
-tsfunc isnumeric_f(const str[])
+isnumeric_f(const str[])
 {
 	new i, ch;
 	while ((ch = str[i++])) if (!('0' <= ch <= '9') && ch != '.') return 0;

@@ -1469,7 +1469,7 @@ public OnObjectUpdatePos(playerid, index)
 	return 1;
 }
 
-tsfunc UpdatePlayerOSelText(playerid)
+UpdatePlayerOSelText(playerid)
 {
 	if(CurrObject[playerid] == -1)
 	{
@@ -1534,7 +1534,7 @@ tsfunc UpdatePlayerOSelText(playerid)
 
 
 
-tsfunc UpdatePlayerGSelText(playerid)
+UpdatePlayerGSelText(playerid)
 {
 	new Float:x, Float:y, Float:z;
 	if(!GetGroupCenter(playerid, x, y, z))
