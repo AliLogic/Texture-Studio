@@ -1,6 +1,9 @@
 #amx files
 *.amx
 
+#texture studio map db files (that aren't the default ones)
+scriptfiles/tstudio/SavedMaps/*
+
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
