@@ -2097,7 +2097,7 @@ LoadMap(playerid)
 
 	new dir:dHandle = dir_open("./scriptfiles/tstudio/SavedMaps/");
 	new item[40], type;
-	new line[1024];
+	new line[4096];
 	new extension[3];
 	new fcount;
 
