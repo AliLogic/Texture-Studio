@@ -3829,6 +3829,7 @@ SetMaterials(index, mindex, tref)
 }
 
 
+//teleporting
 YCMD:ogoto(playerid, arg[], help)
 {
 	if(help)
@@ -3861,6 +3862,58 @@ YCMD:ogoto(playerid, arg[], help)
    	{
    		SetPlayerPos(playerid, ObjectData[objectindex][oX], ObjectData[objectindex][oY], ObjectData[objectindex][oZ] + 1.5);
    	}
+	return 1;
+}
+
+YCMD:warp(playerid, arg[], help)
+{
+	if(help)
+	{
+		SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+		SendClientMessage(playerid, STEALTH_GREEN, "Teleports you X amount of meters in front of yourself. Teleport distance defaults to 3 meters.");
+		return 1;
+	}
+
+	extract arg -> new Float:distance = 3.0;
+
+	new Float:x, Float:y, Float:z;
+	GetPlayerPos(playerid, x, y, z);
+	GetXYInFrontOfPlayer(playerid, x, y, distance);
+	SetPlayerPos(playerid, x, y, z);
+	return 1;
+}
+
+YCMD:goup(playerid, arg[], help)
+{
+	if(help)
+	{
+		SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+		SendClientMessage(playerid, STEALTH_GREEN, "Teleports you X amount of meters upward. Teleport distance defaults to 3 meters.");
+		return 1;
+	}
+
+	extract arg -> new Float:distance = 3.0;
+
+	new Float:x, Float:y, Float:z;
+	GetPlayerPos(playerid, x, y, z);
+	SetPlayerPos(playerid, x, y, z + distance);
+	return 1;
+}
+
+YCMD:godown(playerid, arg[], help)
+{
+	if(help)
+	{
+		SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+		SendClientMessage(playerid, STEALTH_GREEN, "Teleports you X amount of meters downward. Teleport distance defaults to 3 meters.");
+		return 1;
+	}
+
+	extract arg -> new Float:distance = 3.0;
+
+	new Float:x, Float:y, Float:z;
+	GetPlayerPos(playerid, x, y, z);
+	SetPlayerPos(playerid, x, y, z - distance);
 	return 1;
 }
 

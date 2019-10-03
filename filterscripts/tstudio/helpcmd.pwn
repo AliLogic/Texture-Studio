@@ -205,7 +205,10 @@ new Commands[][COMMAND_INFO] = {
     {9, 0, "get"},
     {9, 0, "setposition"},
     {9, 0, "weapon"},
-    {9, 0, "setinterior"}
+    {9, 0, "setinterior"},
+    {9, 0, "warp"},
+    {9, 0, "goup"},
+    {9, 0, "godown"}
 #if defined MANGLE
     ,{10, 9, "cobjectsets"},
     {10, 9, "osets"},

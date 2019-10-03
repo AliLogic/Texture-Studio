@@ -252,7 +252,6 @@ YCMD:weapon(playerid, arg[], help)
 	SendClientMessage(playerid, STEALTH_YELLOW, sprintf("Weapon spawned: %s.", aWeaponNames[weaponid]));
 	return 1;
 }
-
 GetWeaponIDFromName(const name[])
 {
 	for(new i = 0; i < sizeof(aWeaponNames); i++)
