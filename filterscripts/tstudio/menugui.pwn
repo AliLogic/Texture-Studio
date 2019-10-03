@@ -1616,9 +1616,10 @@ YCMD:makebind(playerid, arg[], help)
 	if(0 > index > MAX_CLICK_BINDS) return SendClientMessage(playerid, STEALTH_YELLOW, "Usage /makebind <Bind Index (0-9)> <Number of Commands (1-10)>");
 	if(1 > range > MAX_COMMAND_BUFFER) return SendClientMessage(playerid, STEALTH_YELLOW, "Usage /makebind <Bind Index (0-9)> <Number of Commands (1-10)>");
 	
-	for(new x; x < range; x++) { 
-		//CommandBindData[index][x] = CommandBuffer[playerid][range - 1 - x];
-		format(CommandBindData[index][x], 128, "%s", CommandBuffer[playerid][range - 1 - x]);
+	new commandtext[256];
+	for(new x; x < range; x++) {
+		list_get_arr(CommandBuffer[playerid], range - 1 - x, commandtext) ;
+		format(CommandBindData[index][x], 128, commandtext);
 		printf("%i: %s", x, CommandBindData[index][x]);
 	}
 	

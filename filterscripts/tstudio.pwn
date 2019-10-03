@@ -256,6 +256,8 @@ Change Log:
 #include <formatex>
 #include <strlib>
 
+#include <PawnPlus>
+
 // All SA Textures
 #include "tstudio\alltextures.pwn"
 

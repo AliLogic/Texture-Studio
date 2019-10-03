@@ -1,6 +1,6 @@
 #define MAX_COMMAND_BUFFER          (20)
 
-new CommandBuffer[MAX_PLAYERS][MAX_COMMAND_BUFFER][128];
+new List:CommandBuffer[MAX_PLAYERS];
 
 #define PRESSED(%0) \
 	(((newkeys & (%0)) == (%0)) && ((oldkeys & (%0)) != (%0)))
@@ -12,8 +12,12 @@ new bool:HoldKeyPressed;
 #include <YSI_Coding\y_hooks>
 hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
-	if(HoldKeyPressed && PRESSED(KEY_CROUCH) && !isnull(CommandBuffer[playerid][0]))
-        Command_ReProcess(playerid, CommandBuffer[playerid][0], 0); //BroadcastCommand(playerid, CommandBuffer[playerid][0]);
+	if(HoldKeyPressed && PRESSED(KEY_CROUCH) && !list_size(CommandBuffer[playerid]))
+	{
+		new commandtext[256];
+		list_get_str(CommandBuffer[playerid], 0, commandtext);
+        Command_ReProcess(playerid, commandtext, 0); //BroadcastCommand(playerid, CommandBuffer[playerid][0]);
+	}
     
 	if(PRESSED(KEY_WALK))
         HoldKeyPressed = true;
@@ -25,28 +29,21 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
 hook OnPlayerCommandText(playerid, const cmdtext[]) 
 {
-	//print(cmdtext);
-
-	// Make every slot, start from slot 2, take the data from the slot before
-	for(new i = MAX_COMMAND_BUFFER - 1; i > 0; --i) {
-		//printf("i = %2i 1, CB[i] = %s, CB[i-1] = %s", i, CommandBuffer[playerid][i], CommandBuffer[playerid][i - 1]);
-		//CommandBuffer[playerid][i] = CommandBuffer[playerid][i - 1];
-		//printf("i = %2i 2, CB[i] = %s, CB[i-1] = %s", i, CommandBuffer[playerid][i], CommandBuffer[playerid][i - 1]);
-		format(CommandBuffer[playerid][i], 128, "%s", CommandBuffer[playerid][i - 1]);
+	if(list_valid(CommandBuffer[playerid]))
+	{
+		list_remove_if(CommandBuffer[playerid], expr_parse("$key >= 20"));
+		list_add_str(CommandBuffer[playerid], cmdtext, 0);
 	}
-	
-	// Insert the command and it's parameters into the buffer
-	//CommandBuffer[playerid][0][0] = EOS;
-	format(CommandBuffer[playerid][0], 128, "%s", cmdtext);
 
 	return Y_HOOKS_CONTINUE_RETURN_1;
 }
 
 hook OnPlayerConnect(playerid)
 {
-    // Reset the player's buffer
-    new tmpCommandBuffer[MAX_COMMAND_BUFFER][128];
-    CommandBuffer[playerid] = tmpCommandBuffer;
+	if(!list_valid(CommandBuffer[playerid]))
+		CommandBuffer[playerid] = list_new();
+	else
+		list_clear(CommandBuffer[playerid]);
 
 	return Y_HOOKS_CONTINUE_RETURN_1;
 }
