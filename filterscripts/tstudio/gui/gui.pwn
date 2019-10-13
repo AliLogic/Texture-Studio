@@ -58,7 +58,7 @@ static GUIData[MAX_GUI][GUIMENUINFO];
 #include <YSI_Coding\y_hooks>
 hook OnFilterScriptExit()
 {
-    for(new i = 0; i < MAX_GUI; i++)
+	for(new i = 0; i < MAX_GUI; i++)
 	{
 		if(GUIData[i][GUIActive])
 		{
@@ -77,29 +77,29 @@ hook OnPlayerClickTextDraw(playerid, Text:clickedid)
 		{
 			for(new i = 0; i < MAX_GUI; i++)
 			{
-		        if(GUIData[i][GUIActive])
-		        {
+				if(GUIData[i][GUIActive])
+				{
 					for(new j = 0; j < MAX_ELEMENTS; j++)
 					{
-					    if(GUIData[i][GUIUsed][j])
-					    {
-					        if(GUIData[i][GUIid][j] == clickedid)
-					        {
+						if(GUIData[i][GUIUsed][j])
+						{
+							if(GUIData[i][GUIid][j] == clickedid)
+							{
 								#if defined GUI_DEBUG
 									printf("Playerid:%i ElementGroup:%i  gindex:%i pindex:%i", playerid, GUIData[i][GUIElementGroups][j], i, j);
 								#endif
 								
-					            new CallFunc[32];
-					            format(CallFunc, sizeof(CallFunc), "ONGUI_%s", GUIData[i][GUICallFunc]);
+								new CallFunc[32];
+								format(CallFunc, sizeof(CallFunc), "ONGUI_%s", GUIData[i][GUICallFunc]);
 
 								#if defined GUI_DEBUG
 									printf(CallFunc);
 								#endif
-					            CallLocalFunction(CallFunc, "iiii", playerid, GUIData[i][GUIElementGroups][j], i, j);
-					        }
-					    }
+								CallLocalFunction(CallFunc, "iiii", playerid, GUIData[i][GUIElementGroups][j], i, j);
+							}
+						}
 					}
-		        }
+				}
 			}
 		}
 	}
@@ -116,18 +116,18 @@ stock ApplyGUIArray(GUIMenu:gindex, pindex, const GUIType[GUIDEF], Float:xoffset
 	// Only text
 	if(GUIType[GUIFont] < 4)
 	{
-	    xoffset += GUIType[GUITextSizeX];
-	    yoffset += GUI_Y_OFFSET+GUIType[GUITextSizeY];
+		xoffset += GUIType[GUITextSizeX];
+		yoffset += GUI_Y_OFFSET+GUIType[GUITextSizeY];
 	}
 	else
 	{
-	    xoffset = GUIType[GUITextSizeX];
-	    yoffset = GUIType[GUITextSizeY];
+		xoffset = GUIType[GUITextSizeX];
+		yoffset = GUIType[GUITextSizeY];
 	}
 
-  	GUISetPlayerText(gindex, pindex, GUIType[GUIText]);
-  	GUISetBackColor(gindex, pindex, GUIType[GUIBackColor]);
-    GUISetFont(gindex, pindex, GUIType[GUIFont]);
+	GUISetPlayerText(gindex, pindex, GUIType[GUIText]);
+	GUISetBackColor(gindex, pindex, GUIType[GUIBackColor]);
+	GUISetFont(gindex, pindex, GUIType[GUIFont]);
 	GUISetLetterSize(gindex, pindex, GUIType[GUILSizeX], GUIType[GUILSizeY]);
 	GUISetColor(gindex, pindex, GUIType[GUIColor]);
 	GUISetOutline(gindex, pindex, GUIType[GUIOutline]);
@@ -156,7 +156,7 @@ stock ApplyGUIArray(GUIMenu:gindex, pindex, const GUIType[GUIDEF], Float:xoffset
 // Show the given menu
 stock ShowGUIMenu(playerid, GUIMenu:gindex)
 {
-    GUIValidIndex(gindex);
+	GUIValidIndex(gindex);
 	for(new i = 0; i < MAX_ELEMENTS; i++)
 	{
 		if(GUIData[_:gindex][GUIUsed][i]) TextDrawShowForPlayer(playerid, GUIData[_:gindex][GUIid][i]);
@@ -168,7 +168,7 @@ stock ShowGUIMenu(playerid, GUIMenu:gindex)
 // Hide the given menu
 stock HideGUIMenu(playerid, GUIMenu:gindex)
 {
-    GUIValidIndex(gindex);
+	GUIValidIndex(gindex);
 	for(new i = 0; i < MAX_ELEMENTS; i++)
 	{
 		if(GUIData[_:gindex][GUIUsed][i]) TextDrawHideForPlayer(playerid, GUIData[_:gindex][GUIid][i]);
@@ -179,7 +179,7 @@ stock HideGUIMenu(playerid, GUIMenu:gindex)
 // Update everything in a GUI menu
 stock UpdateGUIMenu(playerid, GUIMenu:gindex, pindex)
 {
-    GUIValidIndex(gindex);
+	GUIValidIndex(gindex);
 	// Hide all first
 	for(new i = 0; i < MAX_ELEMENTS; i++)
 	{
@@ -195,11 +195,11 @@ stock UpdateGUIMenu(playerid, GUIMenu:gindex, pindex)
 
 stock LoadGUIMenu(GUIMenu:gindex, const LoadArray[][GUIDEF], Float:xoffset, Float:yoffset, group, EPI[MAX_ELEMENTS+1], size = sizeof(LoadArray))
 {
-    for(new i = 0; i < size; i++)
+	for(new i = 0; i < size; i++)
 	{
-        EPI[i] = CreateGUIElement(gindex,LoadArray[i],xoffset, yoffset);
-        SetGUIElementGroup(gindex,EPI[i],group);
-        ApplyGUIArray(gindex,EPI[i],LoadArray[i], xoffset, yoffset);
+		EPI[i] = CreateGUIElement(gindex,LoadArray[i],xoffset, yoffset);
+		SetGUIElementGroup(gindex,EPI[i],group);
+		ApplyGUIArray(gindex,EPI[i],LoadArray[i], xoffset, yoffset);
 	}
 	return 1;
 }
@@ -214,7 +214,7 @@ stock LoadGUIElement(GUIMenu:gindex, const LoadArray[GUIDEF], Float:xoffset, Flo
 // Show the given menu element
 stock ShowGUIElement(playerid, GUIMenu:gindex, pindex)
 {
-    GUIValid(gindex, pindex);
+	GUIValid(gindex, pindex);
 	TextDrawHideForPlayer(playerid, GUIData[_:gindex][GUIid][pindex]);
 	return 1;
 }
@@ -222,7 +222,7 @@ stock ShowGUIElement(playerid, GUIMenu:gindex, pindex)
 // Hide the given menu element
 stock HideGUIElement(playerid, GUIMenu:gindex, pindex)
 {
-    GUIValid(gindex, pindex);
+	GUIValid(gindex, pindex);
 	TextDrawHideForPlayer(playerid, GUIData[_:gindex][GUIid][pindex]);
 	return 1;
 }
@@ -230,16 +230,16 @@ stock HideGUIElement(playerid, GUIMenu:gindex, pindex)
 // Update GUI element
 stock UpdateGUIElement(playerid, GUIMenu:gindex, pindex)
 {
-    GUIValid(gindex, pindex);
-    TextDrawHideForPlayer(playerid, GUIData[_:gindex][GUIid][pindex]);
-    TextDrawHideForPlayer(playerid, GUIData[_:gindex][GUIid][pindex]);
+	GUIValid(gindex, pindex);
+	TextDrawHideForPlayer(playerid, GUIData[_:gindex][GUIid][pindex]);
+	TextDrawHideForPlayer(playerid, GUIData[_:gindex][GUIid][pindex]);
 	return 1;
 }
 
 // Set GUI Element group
 stock SetGUIElementGroup(GUIMenu:gindex, pindex, gval)
 {
-    GUIData[_:gindex][GUIElementGroups][pindex] = gval;
+	GUIData[_:gindex][GUIElementGroups][pindex] = gval;
 	return 1;
 }
 
@@ -248,11 +248,11 @@ stock GUIMenu:CreateGUI(const name[])
 {
 	for(new i = 0; i < MAX_GUI; i++)
 	{
-	    if(!GUIData[i][GUIActive])
+		if(!GUIData[i][GUIActive])
 		{
-		    GUIData[i][GUIActive] = true;
+			GUIData[i][GUIActive] = true;
 			format(GUIData[i][GUICallFunc], FUNC_NAME_SIZE, "%s", name);
-		    return GUIMenu:i;
+			return GUIMenu:i;
 		}
 	}
 	return INVALID_MENU_GUI;
@@ -265,14 +265,14 @@ stock DestroyGUI(GUIMenu:gindex)
 	
 	for(new i = 0; i < MAX_ELEMENTS; i++)
 	{
-	    if(GUIData[_:gindex][GUIUsed][i])
+		if(GUIData[_:gindex][GUIUsed][i])
 		{
 			foreach(new j : Player) TextDrawHideForPlayer(j, GUIData[_:gindex][GUIid][i]);
-            GUIData[_:gindex][GUIUsed][i] = false;
-            GUIData[_:gindex][GUIElementGroups][i] = 0;
-            TextDrawDestroy(GUIData[_:gindex][GUIid][i]);
-            GUIData[_:gindex][GUIOffsetX] = 0.0;
-            GUIData[_:gindex][GUIOffsetY] = 0.0;
+			GUIData[_:gindex][GUIUsed][i] = false;
+			GUIData[_:gindex][GUIElementGroups][i] = 0;
+			TextDrawDestroy(GUIData[_:gindex][GUIid][i]);
+			GUIData[_:gindex][GUIOffsetX] = 0.0;
+			GUIData[_:gindex][GUIOffsetY] = 0.0;
 	}
 	}
 	GUIData[_:gindex][GUIActive] = false;
@@ -285,14 +285,14 @@ stock CreateGUIElement(GUIMenu:gindex, const GUIType[GUIDEF], Float:xoffset = 0.
 	GUIValidIndex(gindex);
 	for(new i = 0; i < MAX_ELEMENTS; i++)
 	{
-	    if(!GUIData[_:gindex][GUIUsed][i])
-	    {
-	        GUIData[_:gindex][GUIid][i] = TextDrawCreate(GUI_X_OFFSET+GUIType[GUIOffX]+xoffset, GUI_Y_OFFSET+GUIType[GUIOffY]+yoffset, "_");
-	        GUIData[_:gindex][GUIUsed][i] = true;
+		if(!GUIData[_:gindex][GUIUsed][i])
+		{
+			GUIData[_:gindex][GUIid][i] = TextDrawCreate(GUI_X_OFFSET+GUIType[GUIOffX]+xoffset, GUI_Y_OFFSET+GUIType[GUIOffY]+yoffset, "_");
+			GUIData[_:gindex][GUIUsed][i] = true;
 			GUIData[_:gindex][GUIOffsetX][i] = GUI_X_OFFSET+GUIType[GUIOffX]+xoffset;
 			GUIData[_:gindex][GUIOffsetY][i] = GUI_Y_OFFSET+GUIType[GUIOffY]+yoffset;
 			return i;
-	    }
+		}
 	}
 	printf("ERROR: Tried to created too many elements");
 	return 0;
@@ -301,8 +301,8 @@ stock CreateGUIElement(GUIMenu:gindex, const GUIType[GUIDEF], Float:xoffset = 0.
 // Destroy a GUI element
 stock DeleteMenuElement(GUIMenu:gindex, pindex)
 {
-    GUIValid(gindex, pindex);
-    DestroyTextDraw(playerid, GUIData[_:gindex][GUIid][pindex]);
+	GUIValid(gindex, pindex);
+	DestroyTextDraw(playerid, GUIData[_:gindex][GUIid][pindex]);
 	GUIData[_:gindex][GUIUsed][pindex] = false;
 	return 1;
 }
@@ -310,73 +310,73 @@ stock DeleteMenuElement(GUIMenu:gindex, pindex)
 // Player textdraw functions
 stock GUISetPlayerText(GUIMenu:gindex, pindex, const text[])
 {
- 	GUIValid(gindex, pindex);
-    TextDrawSetStringC(GUIData[_:gindex][GUIid][pindex], text);
+	GUIValid(gindex, pindex);
+	TextDrawSetStringC(GUIData[_:gindex][GUIid][pindex], text);
 	return 1;
 }
 
 // Set a previewmodel
 stock GUISetPreviewModel(GUIMenu:gindex, pindex, value)
 {
-   	GUIValid(gindex, pindex);
-    TextDrawSetPreviewModel(GUIData[_:gindex][GUIid][pindex], value);
+	GUIValid(gindex, pindex);
+	TextDrawSetPreviewModel(GUIData[_:gindex][GUIid][pindex], value);
 	return 1;
 }
 
 // Set a previewmodel
 stock GUISetPreviewModelRot(GUIMenu:gindex, pindex, Float:rx, Float:ry, Float:rz, Float:zoom)
 {
-   	GUIValid(gindex, pindex);
-    TextDrawSetPreviewRot(GUIData[_:gindex][GUIid][pindex], rx, ry, rz, zoom);
+	GUIValid(gindex, pindex);
+	TextDrawSetPreviewRot(GUIData[_:gindex][GUIid][pindex], rx, ry, rz, zoom);
 	return 1;
 }
 
 stock GUISetBackColor(GUIMenu:gindex, pindex, value)
 {
 	GUIValid(gindex, pindex);
-    TextDrawBackgroundColor(GUIData[_:gindex][GUIid][pindex], value);
+	TextDrawBackgroundColor(GUIData[_:gindex][GUIid][pindex], value);
 	return 1;
 }
 
 stock GUISetFont(GUIMenu:gindex, pindex, value)
 {
 	GUIValid(gindex, pindex);
-    TextDrawFont(GUIData[_:gindex][GUIid][pindex], value);
+	TextDrawFont(GUIData[_:gindex][GUIid][pindex], value);
 	return 1;
 }
 
 stock GUISetLetterSize(GUIMenu:gindex, pindex, Float:x, Float:y)
 {
 	GUIValid(gindex, pindex);
-    TextDrawLetterSize(GUIData[_:gindex][GUIid][pindex], x, y);
+	TextDrawLetterSize(GUIData[_:gindex][GUIid][pindex], x, y);
 	return 1;
 }
 
 stock GUISetColor(GUIMenu:gindex, pindex, value)
 {
 	GUIValid(GUIMenu:gindex, pindex);
-    TextDrawColor(GUIData[_:gindex][GUIid][pindex], value);
+	TextDrawColor(GUIData[_:gindex][GUIid][pindex], value);
 	return 1;
 }
 
 stock GUISetOutline(GUIMenu:gindex, pindex, value)
 {
 	GUIValid(gindex, pindex);
-    TextDrawSetOutline(GUIData[_:gindex][GUIid][pindex], value);
+	TextDrawSetOutline(GUIData[_:gindex][GUIid][pindex], value);
 	return 1;
 }
 
 stock GUISetProportional(GUIMenu:gindex, pindex, value)
 {
 	GUIValid(gindex, pindex);
-    TextDrawSetProportional(GUIData[_:gindex][GUIid][pindex], value);
+	TextDrawSetProportional(GUIData[_:gindex][GUIid][pindex], value);
 	return 1;
 }
 
 stock GUISetAlignment(GUIMenu:gindex, pindex, value)
 {
 	GUIValid(gindex, pindex);
-    TextDrawAlignment(GUIData[_:gindex][GUIid][pindex], value);
+	TextDrawAlignment(GUIData[_:gindex][GUIid][pindex], value);
 	return 1;
 }
 
@@ -384,34 +384,34 @@ stock GUISetAlignment(GUIMenu:gindex, pindex, value)
 stock GUISetShadow(GUIMenu:gindex, pindex, value)
 {
 	GUIValid(gindex, pindex);
-    TextDrawSetShadow(GUIData[_:gindex][GUIid][pindex], value);
+	TextDrawSetShadow(GUIData[_:gindex][GUIid][pindex], value);
 	return 1;
 }
 
 stock GUISetBox(GUIMenu:gindex, pindex, value)
 {
 	GUIValid(gindex, pindex);
-    TextDrawUseBox(GUIData[_:gindex][GUIid][pindex], value);
+	TextDrawUseBox(GUIData[_:gindex][GUIid][pindex], value);
 	return 1;
 }
 
 stock GUISetBoxColor(GUIMenu:gindex, pindex, value)
 {
 	GUIValid(gindex, pindex);
-    TextDrawBoxColor(GUIData[_:gindex][GUIid][pindex], value);
+	TextDrawBoxColor(GUIData[_:gindex][GUIid][pindex], value);
 	return 1;
 }
 
 stock GUISetTextSize(GUIMenu:gindex, pindex, Float:x, Float:y)
 {
 	GUIValid(gindex, pindex);
-    TextDrawTextSize(GUIData[_:gindex][GUIid][pindex], x, y);
+	TextDrawTextSize(GUIData[_:gindex][GUIid][pindex], x, y);
 	return 1;
 }
 
 stock GUISetSelectable(GUIMenu:gindex, pindex, value)
 {
 	GUIValid(gindex, pindex);
-    TextDrawSetSelectable(GUIData[_:gindex][GUIid][pindex], value);
+	TextDrawSetSelectable(GUIData[_:gindex][GUIid][pindex], value);
 	return 1;
 }

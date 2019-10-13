@@ -110,7 +110,7 @@ hook OnFilterScriptInit()
 {
 	for(new i = 0; i < MAX_PLAYERS; i++)
 	{
-	    for(new j = 0; j < MAX_PLAYER_GUI; j++)
+		for(new j = 0; j < MAX_PLAYER_GUI; j++)
 		{
 			PlayerGUIOrderData[i][j] = -1;
 			for(new k = 0; k < MAX_PLAYER_BINDS; k++) { PlayerGUIData[i][j][PlayerTextDrawBinds][k] = INVALID_MENU_GUI; }
@@ -125,9 +125,9 @@ hook OnFilterScriptExit()
 {
 	foreach(new i : Player)
 	{
-	    for(new j = 0; j < MAX_PLAYER_GUI; j++)
+		for(new j = 0; j < MAX_PLAYER_GUI; j++)
 		{
-		    if(PlayerGUIData[i][j][PlayerGUIActive]) PlayerGUIDestroy(i, PlayerGUIMenu:j);
+			if(PlayerGUIData[i][j][PlayerGUIActive]) PlayerGUIDestroy(i, PlayerGUIMenu:j);
 			for(new k = 0; k < MAX_PLAYER_BINDS; k++) { PlayerGUIData[i][j][PlayerTextDrawBinds][k] = INVALID_MENU_GUI; }
 		}
 	}
@@ -139,12 +139,12 @@ hook OnFilterScriptExit()
 
 hook OnPlayerDisconnect(playerid, reason)
 {
-    for(new i = 0; i < MAX_PLAYER_GUI; i++)
+	for(new i = 0; i < MAX_PLAYER_GUI; i++)
 	{
-	    if(PlayerGUIData[playerid][i][PlayerGUIActive]) ResetPlayerGUIData(playerid, i);
+		if(PlayerGUIData[playerid][i][PlayerGUIActive]) ResetPlayerGUIData(playerid, i);
 	}
 
- 	for(new i = 0; i < MAX_PLAYER_GUI; i++)
+	for(new i = 0; i < MAX_PLAYER_GUI; i++)
 	{
 		PlayerGUIOrderData[playerid][i] = -1;
 		for(new j = 0; j < MAX_PLAYER_BINDS; j++) { PlayerGUIData[playerid][i][PlayerTextDrawBinds][j] = INVALID_MENU_GUI; }
@@ -165,9 +165,9 @@ hook OnPlayerClickTextDraw(playerid, Text:clickedid)
 		{
 			if(IgnoreNextClose[playerid])
 			{
-			    IgnoreNextClose[playerid] = false;
+				IgnoreNextClose[playerid] = false;
 				SelectionOn[playerid] = false;
-			    return Y_HOOKS_BREAK_RETURN_1;
+				return Y_HOOKS_BREAK_RETURN_1;
 			}
 			if(GUIHideFirstInStack(playerid)) return Y_HOOKS_BREAK_RETURN_1;
 		}
@@ -183,8 +183,8 @@ GUIHideFirstInStack(playerid)
 		if(PlayerGUIData[playerid][i][PlayerGUIIsVisible])
 		{
 			new CallFunc[32];
-		    format(CallFunc, sizeof(CallFunc), "ONGUIC_%s", PlayerGUIData[playerid][i][PlayerGUICallFunc]);
-		    CallLocalFunction(CallFunc, "iii", playerid, PlayerGUIData[playerid][i][PlayerGUIElementGroups], i);
+			format(CallFunc, sizeof(CallFunc), "ONGUIC_%s", PlayerGUIData[playerid][i][PlayerGUICallFunc]);
+			CallLocalFunction(CallFunc, "iii", playerid, PlayerGUIData[playerid][i][PlayerGUIElementGroups], i);
 
 			PlayerHideGUIMenu(playerid, PlayerGUIMenu:i, false);
 			return 1;
@@ -202,21 +202,21 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 	{
 		for(new i = 0; i < MAX_PLAYER_GUI; i++)
 		{
-	        if(PlayerGUIData[playerid][i][PlayerGUIActive])
-	        {
+			if(PlayerGUIData[playerid][i][PlayerGUIActive])
+			{
 				for(new j = 0; j < MAX_PLAYER_ELEMENTS; j++)
 				{
-				    if(PlayerGUIData[playerid][i][PlayerGUIUsed][j])
-				    {
-				        if(PlayerGUIData[playerid][i][PlayerGUIid][j] == playertextid)
-				        {
-				            new CallFunc[32];
-				            format(CallFunc, sizeof(CallFunc), "ONGUIP_%s", PlayerGUIData[playerid][i][PlayerGUICallFunc]);
-				            return CallLocalFunction(CallFunc, "iiii", playerid, PlayerGUIData[playerid][i][PlayerGUIElementGroups], i, j);
-				        }
-				    }
+					if(PlayerGUIData[playerid][i][PlayerGUIUsed][j])
+					{
+						if(PlayerGUIData[playerid][i][PlayerGUIid][j] == playertextid)
+						{
+							new CallFunc[32];
+							format(CallFunc, sizeof(CallFunc), "ONGUIP_%s", PlayerGUIData[playerid][i][PlayerGUICallFunc]);
+							return CallLocalFunction(CallFunc, "iiii", playerid, PlayerGUIData[playerid][i][PlayerGUIElementGroups], i, j);
+						}
+					}
 				}
-	        }
+			}
 		}
 	}
 	return Y_HOOKS_CONTINUE_RETURN_0;
@@ -249,7 +249,7 @@ stock PlayerGUISelection(playerid) { return SelectionOn[playerid]; }
 // Ignore a menu closing
 stock PlayerGUIIgnoreClose(playerid, PlayerGUIMenu:gindex, bool:ignore)
 {
-    PlayerGUIData[playerid][_:gindex][IgnoreClose] = ignore;
+	PlayerGUIData[playerid][_:gindex][IgnoreClose] = ignore;
 	return 1;
 }
 
@@ -262,18 +262,18 @@ stock PlayerApplyGUIArray(playerid, PlayerGUIMenu:gindex, pindex, const GUIType[
 	// Only text
 	if(GUIType[GUIFont] < 4)
 	{
-	    xoffset += GUIType[GUITextSizeX];
-	    yoffset += GUI_Y_OFFSET+GUIType[GUITextSizeY];
+		xoffset += GUIType[GUITextSizeX];
+		yoffset += GUI_Y_OFFSET+GUIType[GUITextSizeY];
 	}
 	else
 	{
-	    xoffset = GUIType[GUITextSizeX];
-	    yoffset = GUIType[GUITextSizeY];
+		xoffset = GUIType[GUITextSizeX];
+		yoffset = GUIType[GUITextSizeY];
 	}
 
-  	PlayerGUISetPlayerText(playerid, gindex, pindex, GUIType[GUIText]);
-  	PlayerGUISetBackColor(playerid, gindex, pindex, GUIType[GUIBackColor]);
-    PlayerGUISetFont(playerid, gindex, pindex, GUIType[GUIFont]);
+	PlayerGUISetPlayerText(playerid, gindex, pindex, GUIType[GUIText]);
+	PlayerGUISetBackColor(playerid, gindex, pindex, GUIType[GUIBackColor]);
+	PlayerGUISetFont(playerid, gindex, pindex, GUIType[GUIFont]);
 	PlayerGUISetLetterSize(playerid, gindex, pindex, GUIType[GUILSizeX], GUIType[GUILSizeY]);
 	PlayerGUISetColor(playerid, gindex, pindex, GUIType[GUIColor]);
 	PlayerGUISetOutline(playerid, gindex, pindex, GUIType[GUIOutline]);
@@ -317,11 +317,11 @@ stock PlayerBindGUITextDraw(playerid, PlayerGUIMenu:gindex, GUIMenu:tindex)
 		if(PlayerGUIData[playerid][_:gindex][PlayerTextDrawBinds][i] == INVALID_MENU_GUI)
 		{
 			#if defined GUI_DEBUG
-			    printf("PlayerBindGUITextDraw::playerid:%i PlayerGUIMenu:%i, GUIMenu:%i, Index:%i", playerid, _:gindex, _:tindex, i);
+				printf("PlayerBindGUITextDraw::playerid:%i PlayerGUIMenu:%i, GUIMenu:%i, Index:%i", playerid, _:gindex, _:tindex, i);
 			#endif
 
-		    PlayerGUIData[playerid][_:gindex][PlayerTextDrawBinds][i] = tindex;
-		    return i;
+			PlayerGUIData[playerid][_:gindex][PlayerTextDrawBinds][i] = tindex;
+			return i;
 		}
 	}
 	print("ERROR: Tried to bind too many textdraws");
@@ -335,7 +335,7 @@ stock PlayerClearBindTextDraw(playerid, PlayerGUIMenu:gindex, GUIMenu:tindex)
 	{
 		if(PlayerGUIData[playerid][_:gindex][PlayerTextDrawBinds][i] == tindex)
 		{
-            HideGUIMenu(playerid, PlayerGUIData[playerid][_:gindex][PlayerTextDrawBinds][i]);
+			HideGUIMenu(playerid, PlayerGUIData[playerid][_:gindex][PlayerTextDrawBinds][i]);
 			PlayerGUIData[playerid][_:gindex][PlayerTextDrawBinds][i] = INVALID_MENU_GUI;
 			return 0;
 		}
@@ -348,7 +348,7 @@ stock PlayerClearBindTextDraw(playerid, PlayerGUIMenu:gindex, GUIMenu:tindex)
 // Show the given menu
 stock PlayerShowGUIMenu(playerid, PlayerGUIMenu:gindex, showbinds = true, bool:visible = true)
 {
-    PlayerGUIValidIndex(playerid, gindex);
+	PlayerGUIValidIndex(playerid, gindex);
 	PlayerGUIData[playerid][_:gindex][PlayerGUIIsVisible] = visible;
 	
 	for(new i = 0; i < MAX_PLAYER_ELEMENTS; i++)
@@ -361,7 +361,7 @@ stock PlayerShowGUIMenu(playerid, PlayerGUIMenu:gindex, showbinds = true, bool:v
 			{
 				for(new j = 0; j < MAX_PLAYER_BINDS; j++)
 				{
-				    if(PlayerGUIData[playerid][_:gindex][PlayerTextDrawBinds][j] != INVALID_MENU_GUI) ShowGUIMenu(playerid, PlayerGUIData[playerid][_:gindex][PlayerTextDrawBinds][j]);
+					if(PlayerGUIData[playerid][_:gindex][PlayerTextDrawBinds][j] != INVALID_MENU_GUI) ShowGUIMenu(playerid, PlayerGUIData[playerid][_:gindex][PlayerTextDrawBinds][j]);
 				}
 			}
 		}
@@ -372,12 +372,12 @@ stock PlayerShowGUIMenu(playerid, PlayerGUIMenu:gindex, showbinds = true, bool:v
 // Hides all bound menus
 stock PlayerHideAllGUIBindMenu(playerid, PlayerGUIMenu:gindex)
 {
-    PlayerGUIValidIndex(playerid, gindex);
+	PlayerGUIValidIndex(playerid, gindex);
 
 	// Hide any binds
 	for(new j = 0; j < MAX_PLAYER_BINDS; j++)
 	{
-	    if(PlayerGUIData[playerid][_:gindex][PlayerTextDrawBinds][j] != INVALID_MENU_GUI) HideGUIMenu(playerid, PlayerGUIData[playerid][_:gindex][PlayerTextDrawBinds][j]);
+		if(PlayerGUIData[playerid][_:gindex][PlayerTextDrawBinds][j] != INVALID_MENU_GUI) HideGUIMenu(playerid, PlayerGUIData[playerid][_:gindex][PlayerTextDrawBinds][j]);
 	}
 	return 1;
 }
@@ -385,7 +385,7 @@ stock PlayerHideAllGUIBindMenu(playerid, PlayerGUIMenu:gindex)
 // Hide the given menu
 stock PlayerHideGUIMenu(playerid, PlayerGUIMenu:gindex, bool:visible = false)
 {
-    PlayerGUIValidIndex(playerid, gindex);
+	PlayerGUIValidIndex(playerid, gindex);
 	PlayerGUIData[playerid][_:gindex][PlayerGUIIsVisible] = visible;
 
 	for(new i = 0; i < MAX_PLAYER_ELEMENTS; i++)
@@ -394,22 +394,22 @@ stock PlayerHideGUIMenu(playerid, PlayerGUIMenu:gindex, bool:visible = false)
 		// Hide any binds
 		for(new j = 0; j < MAX_PLAYER_BINDS; j++)
 		{
-		    if(PlayerGUIData[playerid][_:gindex][PlayerTextDrawBinds][j] != INVALID_MENU_GUI) HideGUIMenu(playerid, PlayerGUIData[playerid][_:gindex][PlayerTextDrawBinds][j]);
+			if(PlayerGUIData[playerid][_:gindex][PlayerTextDrawBinds][j] != INVALID_MENU_GUI) HideGUIMenu(playerid, PlayerGUIData[playerid][_:gindex][PlayerTextDrawBinds][j]);
 		}
 	}
 
 	new count;
 	for(new j = 0; j < MAX_PLAYER_GUI; j++)
 	{
-	    if(PlayerGUIData[playerid][j][PlayerGUIIsVisible])
+		if(PlayerGUIData[playerid][j][PlayerGUIIsVisible])
 		{
-		    count++;
-		    break;
+			count++;
+			break;
 		}
 	}
 
 	if(!PlayerGUIData[playerid][_:gindex][IgnoreClose] && count) PlayerSelectGUITextDraw(playerid);
- 	else if(!PlayerGUIData[playerid][_:gindex][IgnoreClose] && count == 0) PlayerCancelSelectGUITextDraw(playerid);
+	else if(!PlayerGUIData[playerid][_:gindex][IgnoreClose] && count == 0) PlayerCancelSelectGUITextDraw(playerid);
 
 	return 1;
 }
@@ -417,7 +417,7 @@ stock PlayerHideGUIMenu(playerid, PlayerGUIMenu:gindex, bool:visible = false)
 // Update everything in a GUI menu
 stock PlayerUpdateGUIMenu(playerid, PlayerGUIMenu:gindex, pindex)
 {
-    PlayerGUIValidIndex(playerid, gindex);
+	PlayerGUIValidIndex(playerid, gindex);
 	// Hide all first
 	for(new i = 0; i < MAX_PLAYER_ELEMENTS; i++)
 	{
@@ -434,7 +434,7 @@ stock PlayerUpdateGUIMenu(playerid, PlayerGUIMenu:gindex, pindex)
 // Show the given menu element
 stock PlayerShowGUIElement(playerid, PlayerGUIMenu:gindex, pindex)
 {
-    PlayerGUIValid(playerid, gindex, pindex);
+	PlayerGUIValid(playerid, gindex, pindex);
 	PlayerTextDrawShow(playerid, PlayerGUIData[playerid][_:gindex][PlayerGUIid][pindex]);
 	return 1;
 }
@@ -442,7 +442,7 @@ stock PlayerShowGUIElement(playerid, PlayerGUIMenu:gindex, pindex)
 // Show the given menu element
 stock PlayerHideGUIElement(playerid, PlayerGUIMenu:gindex, pindex)
 {
-    PlayerGUIValid(playerid, gindex, pindex);
+	PlayerGUIValid(playerid, gindex, pindex);
 	PlayerTextDrawHide(playerid, PlayerGUIData[playerid][_:gindex][PlayerGUIid][pindex]);
 	return 1;
 }
@@ -450,9 +450,9 @@ stock PlayerHideGUIElement(playerid, PlayerGUIMenu:gindex, pindex)
 // Update GUI element
 stock PlayerUpdateGUIElement(playerid, PlayerGUIMenu:gindex, pindex)
 {
-    PlayerGUIValid(playerid, gindex, pindex);
-    PlayerTextDrawHide(playerid, PlayerGUIData[playerid][_:gindex][PlayerGUIid][pindex]);
-    PlayerTextDrawShow(playerid, PlayerGUIData[playerid][_:gindex][PlayerGUIid][pindex]);
+	PlayerGUIValid(playerid, gindex, pindex);
+	PlayerTextDrawHide(playerid, PlayerGUIData[playerid][_:gindex][PlayerGUIid][pindex]);
+	PlayerTextDrawShow(playerid, PlayerGUIData[playerid][_:gindex][PlayerGUIid][pindex]);
 	return 1;
 }
 
@@ -461,15 +461,15 @@ stock PlayerGUIMenu:PlayerCreateGUI(playerid, const name[])
 {
 	for(new i = 0; i < MAX_PLAYER_GUI; i++)
 	{
-	    if(!PlayerGUIData[playerid][i][PlayerGUIActive])
+		if(!PlayerGUIData[playerid][i][PlayerGUIActive])
 		{
 			#if defined GUI_DEBUG
 				printf("PlayerGUIMenu::playerid: %i Tag Name: %s Index: %i", playerid, name, i);
 			#endif
 
-		    PlayerGUIData[playerid][i][PlayerGUIActive] = true;
+			PlayerGUIData[playerid][i][PlayerGUIActive] = true;
 			format(PlayerGUIData[playerid][i][PlayerGUICallFunc], FUNC_NAME_SIZE, "%s", name);
-		    return PlayerGUIMenu:i;
+			return PlayerGUIMenu:i;
 		}
 	}
 	return INVALID_MENU_PLAYERGUI;
@@ -481,13 +481,13 @@ stock PlayerGUIDestroy(playerid, PlayerGUIMenu:gindex)
 	PlayerGUIValidIndex(playerid, gindex);
 	for(new i = 0; i < MAX_PLAYER_ELEMENTS; i++)
 	{
-	    if(PlayerGUIData[playerid][_:gindex][PlayerGUIUsed][i])
+		if(PlayerGUIData[playerid][_:gindex][PlayerGUIUsed][i])
 		{
-            PlayerGUIData[playerid][_:gindex][PlayerGUIUsed][i] = false;
-            PlayerGUIData[playerid][_:gindex][PlayerGUIElementGroups][i] = 0;
-            PlayerTextDrawDestroy(playerid, PlayerGUIData[playerid][_:gindex][PlayerGUIid][i]);
-            PlayerGUIData[playerid][_:gindex][PlayerGUIOffsetX] = 0.0;
-            PlayerGUIData[playerid][_:gindex][PlayerGUIOffsetY] = 0.0;
+			PlayerGUIData[playerid][_:gindex][PlayerGUIUsed][i] = false;
+			PlayerGUIData[playerid][_:gindex][PlayerGUIElementGroups][i] = 0;
+			PlayerTextDrawDestroy(playerid, PlayerGUIData[playerid][_:gindex][PlayerGUIid][i]);
+			PlayerGUIData[playerid][_:gindex][PlayerGUIOffsetX] = 0.0;
+			PlayerGUIData[playerid][_:gindex][PlayerGUIOffsetY] = 0.0;
 		}
 	}
 	PlayerGUIData[playerid][_:gindex][PlayerGUIActive] = false;
@@ -500,20 +500,20 @@ stock PlayerCreateGUIElement(playerid, PlayerGUIMenu:gindex, const GUIType[GUIDE
 	PlayerGUIValidIndex(playerid, gindex);
 	for(new i = 0; i < MAX_PLAYER_ELEMENTS; i++)
 	{
-	    if(!PlayerGUIData[playerid][_:gindex][PlayerGUIUsed][i])
-	    {
+		if(!PlayerGUIData[playerid][_:gindex][PlayerGUIUsed][i])
+		{
 			PlayerGUIData[playerid][_:gindex][PlayerGUIid][i] = CreatePlayerTextDraw(playerid, GUI_X_OFFSET+GUIType[GUIOffX]+xoffset, GUI_Y_OFFSET+GUIType[GUIOffY]+yoffset, "_");
-	        PlayerGUIData[playerid][_:gindex][PlayerGUIUsed][i] = true;
+			PlayerGUIData[playerid][_:gindex][PlayerGUIUsed][i] = true;
 			PlayerGUIData[playerid][_:gindex][PlayerGUIOffsetX][i] = GUI_X_OFFSET+GUIType[GUIOffX]+xoffset;
 			PlayerGUIData[playerid][_:gindex][PlayerGUIOffsetY][i] = GUI_Y_OFFSET+GUIType[GUIOffY]+yoffset;
 
 
 			#if defined GUI_DEBUG
-			    printf("PlayerCreateGUIElement::playerid: %i gindex:%i Textdrawid: %i", playerid, _:gindex, _:PlayerGUIData[playerid][_:gindex][PlayerGUIid][i]);
+				printf("PlayerCreateGUIElement::playerid: %i gindex:%i Textdrawid: %i", playerid, _:gindex, _:PlayerGUIData[playerid][_:gindex][PlayerGUIid][i]);
 			#endif
 
 			return i;
-	    }
+		}
 	}
 	printf("ERROR: Tried to created too many elements");
 	return 0;
@@ -522,11 +522,11 @@ stock PlayerCreateGUIElement(playerid, PlayerGUIMenu:gindex, const GUIType[GUIDE
 
 stock PlayerLoadGUIMenu(playerid, PlayerGUIMenu:gindex, const LoadArray[][GUIDEF], Float:xoffset, Float:yoffset, group, EPI[MAX_PLAYER_ELEMENTS+1], size = sizeof(LoadArray))
 {
-    for(new i = 0; i < size; i++)
+	for(new i = 0; i < size; i++)
 	{
-        EPI[i] = PlayerCreateGUIElement(playerid,gindex,LoadArray[i],xoffset, yoffset);
-        PlayerSetGUIElementGroup(playerid,gindex,EPI[i],group);
-        PlayerApplyGUIArray(playerid,gindex,EPI[i],LoadArray[i]);
+		EPI[i] = PlayerCreateGUIElement(playerid,gindex,LoadArray[i],xoffset, yoffset);
+		PlayerSetGUIElementGroup(playerid,gindex,EPI[i],group);
+		PlayerApplyGUIArray(playerid,gindex,EPI[i],LoadArray[i]);
 	}
 	return 1;
 }
@@ -535,8 +535,8 @@ stock PlayerLoadGUIMenu(playerid, PlayerGUIMenu:gindex, const LoadArray[][GUIDEF
 // Destroy a GUI element
 stock PlayerDeleteGUIElement(playerid, PlayerGUIMenu:gindex, pindex)
 {
-    PlayerGUIValid(playerid, gindex, pindex);
-    DestroyPlayerTextDraw(playerid, PlayerGUIData[playerid][_:gindex][PlayerGUIid][pindex]);
+	PlayerGUIValid(playerid, gindex, pindex);
+	DestroyPlayerTextDraw(playerid, PlayerGUIData[playerid][_:gindex][PlayerGUIid][pindex]);
 	PlayerGUIData[playerid][_:gindex][PlayerGUIUsed][pindex] = false;
 	return 1;
 }
@@ -544,7 +544,7 @@ stock PlayerDeleteGUIElement(playerid, PlayerGUIMenu:gindex, pindex)
 // Set GUI Element group
 stock PlayerSetGUIElementGroup(playerid, PlayerGUIMenu:gindex, pindex, gval)
 {
-    PlayerGUIData[playerid][_:gindex][PlayerGUIElementGroups][pindex] = gval;
+	PlayerGUIData[playerid][_:gindex][PlayerGUIElementGroups][pindex] = gval;
 	return 1;
 }
 
@@ -553,17 +553,17 @@ static ResetPlayerGUIData(playerid, gindex)
 {
 	for(new i = 0; i < MAX_PLAYER_ELEMENTS; i++)
 	{
-	    if(PlayerGUIData[playerid][gindex][PlayerGUIUsed][i])
+		if(PlayerGUIData[playerid][gindex][PlayerGUIUsed][i])
 		{
-	        PlayerGUIData[playerid][gindex][PlayerGUIUsed][i] = false;
+			PlayerGUIData[playerid][gindex][PlayerGUIUsed][i] = false;
 			PlayerGUIData[playerid][gindex][PlayerGUIElementGroups][i] = -1;
 			PlayerGUIData[playerid][gindex][PlayerGUIOffsetX][i] = 0.0;
 			PlayerGUIData[playerid][gindex][PlayerGUIOffsetY][i] = 0.0;
 		}
 	}
 
-    PlayerGUIData[playerid][_:gindex][IgnoreClose] = false;
-    PlayerGUIData[playerid][_:gindex][PlayerGUIActive] = false;
+	PlayerGUIData[playerid][_:gindex][IgnoreClose] = false;
+	PlayerGUIData[playerid][_:gindex][PlayerGUIActive] = false;
 	return 1;
 }
 
@@ -571,72 +571,72 @@ static ResetPlayerGUIData(playerid, gindex)
 stock PlayerGUISetPlayerText(playerid, PlayerGUIMenu:gindex, pindex, const text[])
 {
 	PlayerGUIValid(playerid, gindex, pindex);
-    PlayerTextDrawSetString(playerid, PlayerGUIData[playerid][_:gindex][PlayerGUIid][pindex], text);
+	PlayerTextDrawSetString(playerid, PlayerGUIData[playerid][_:gindex][PlayerGUIid][pindex], text);
 	return 1;
 }
 
 // Set a previewmodel
 stock PlayerGUISetPreviewModel(playerid, PlayerGUIMenu:gindex, pindex, value)
 {
-   	PlayerGUIValid(playerid, gindex, pindex);
-    PlayerTextDrawSetPreviewModel(playerid, PlayerGUIData[playerid][_:gindex][PlayerGUIid][pindex], value);
+	PlayerGUIValid(playerid, gindex, pindex);
+	PlayerTextDrawSetPreviewModel(playerid, PlayerGUIData[playerid][_:gindex][PlayerGUIid][pindex], value);
 	return 1;
 }
 
 // Set a previewmodel
 stock PlayerGUISetPreviewModelRot(playerid, PlayerGUIMenu:gindex, pindex, Float:rx, Float:ry, Float:rz, Float:zoom)
 {
-   	PlayerGUIValid(playerid, gindex, pindex);
-    PlayerTextDrawSetPreviewRot(playerid, PlayerGUIData[playerid][_:gindex][PlayerGUIid][pindex], rx, ry, rz, zoom);
+	PlayerGUIValid(playerid, gindex, pindex);
+	PlayerTextDrawSetPreviewRot(playerid, PlayerGUIData[playerid][_:gindex][PlayerGUIid][pindex], rx, ry, rz, zoom);
 	return 1;
 }
 
 stock PlayerGUISetBackColor(playerid, PlayerGUIMenu:gindex, pindex, value)
 {
 	PlayerGUIValid(playerid, gindex, pindex);
-    PlayerTextDrawBackgroundColor(playerid, PlayerGUIData[playerid][_:gindex][PlayerGUIid][pindex], value);
+	PlayerTextDrawBackgroundColor(playerid, PlayerGUIData[playerid][_:gindex][PlayerGUIid][pindex], value);
 	return 1;
 }
 
 stock PlayerGUISetFont(playerid, PlayerGUIMenu:gindex, pindex, value)
 {
 	PlayerGUIValid(playerid, gindex, pindex);
-    PlayerTextDrawFont(playerid,PlayerGUIData[playerid][_:gindex][PlayerGUIid][pindex], value);
+	PlayerTextDrawFont(playerid,PlayerGUIData[playerid][_:gindex][PlayerGUIid][pindex], value);
 	return 1;
 }
 
 stock PlayerGUISetLetterSize(playerid, PlayerGUIMenu:gindex, pindex, Float:x, Float:y)
 {
 	PlayerGUIValid(playerid, gindex, pindex);
-    PlayerTextDrawLetterSize(playerid, PlayerGUIData[playerid][_:gindex][PlayerGUIid][pindex], x, y);
+	PlayerTextDrawLetterSize(playerid, PlayerGUIData[playerid][_:gindex][PlayerGUIid][pindex], x, y);
 	return 1;
 }
 
 stock PlayerGUISetColor(playerid, PlayerGUIMenu:gindex, pindex, value)
 {
 	PlayerGUIValid(playerid, PlayerGUIMenu:gindex, pindex);
-    PlayerTextDrawColor(playerid,PlayerGUIData[playerid][_:gindex][PlayerGUIid][pindex], value);
+	PlayerTextDrawColor(playerid,PlayerGUIData[playerid][_:gindex][PlayerGUIid][pindex], value);
 	return 1;
 }
 
 stock PlayerGUISetOutline(playerid, PlayerGUIMenu:gindex, pindex, value)
 {
 	PlayerGUIValid(playerid, gindex, pindex);
-    PlayerTextDrawSetOutline(playerid,PlayerGUIData[playerid][_:gindex][PlayerGUIid][pindex], value);
+	PlayerTextDrawSetOutline(playerid,PlayerGUIData[playerid][_:gindex][PlayerGUIid][pindex], value);
 	return 1;
 }
 
 stock PlayerGUISetProportional(playerid, PlayerGUIMenu:gindex, pindex, value)
 {
 	PlayerGUIValid(playerid, gindex, pindex);
-    PlayerTextDrawSetProportional(playerid,PlayerGUIData[playerid][_:gindex][PlayerGUIid][pindex], value);
+	PlayerTextDrawSetProportional(playerid,PlayerGUIData[playerid][_:gindex][PlayerGUIid][pindex], value);
 	return 1;
 }
 
 stock PlayerGUISetAlignment(playerid, PlayerGUIMenu:gindex, pindex, value)
 {
 	PlayerGUIValid(playerid, gindex, pindex);
-    PlayerTextDrawAlignment(playerid,PlayerGUIData[playerid][_:gindex][PlayerGUIid][pindex], value);
+	PlayerTextDrawAlignment(playerid,PlayerGUIData[playerid][_:gindex][PlayerGUIid][pindex], value);
 	return 1;
 }
 
@@ -644,34 +644,34 @@ stock PlayerGUISetAlignment(playerid, PlayerGUIMenu:gindex, pindex, value)
 stock PlayerGUISetShadow(playerid, PlayerGUIMenu:gindex, pindex, value)
 {
 	PlayerGUIValid(playerid, gindex, pindex);
-    PlayerTextDrawSetShadow(playerid,PlayerGUIData[playerid][_:gindex][PlayerGUIid][pindex], value);
+	PlayerTextDrawSetShadow(playerid,PlayerGUIData[playerid][_:gindex][PlayerGUIid][pindex], value);
 	return 1;
 }
 
 stock PlayerGUISetBox(playerid, PlayerGUIMenu:gindex, pindex, value)
 {
 	PlayerGUIValid(playerid, gindex, pindex);
-    PlayerTextDrawUseBox(playerid,PlayerGUIData[playerid][_:gindex][PlayerGUIid][pindex], value);
+	PlayerTextDrawUseBox(playerid,PlayerGUIData[playerid][_:gindex][PlayerGUIid][pindex], value);
 	return 1;
 }
 
 stock PlayerGUISetBoxColor(playerid, PlayerGUIMenu:gindex, pindex, value)
 {
 	PlayerGUIValid(playerid, gindex, pindex);
-    PlayerTextDrawBoxColor(playerid,PlayerGUIData[playerid][_:gindex][PlayerGUIid][pindex], value);
+	PlayerTextDrawBoxColor(playerid,PlayerGUIData[playerid][_:gindex][PlayerGUIid][pindex], value);
 	return 1;
 }
 
 stock PlayerGUISetTextSize(playerid, PlayerGUIMenu:gindex, pindex, Float:x, Float:y)
 {
 	PlayerGUIValid(playerid, gindex, pindex);
-    PlayerTextDrawTextSize(playerid,PlayerGUIData[playerid][_:gindex][PlayerGUIid][pindex], x, y);
+	PlayerTextDrawTextSize(playerid,PlayerGUIData[playerid][_:gindex][PlayerGUIid][pindex], x, y);
 	return 1;
 }
 
 stock PlayerGUISetSelectable(playerid, PlayerGUIMenu:gindex, pindex, value)
 {
 	PlayerGUIValid(playerid, gindex, pindex);
-    PlayerTextDrawSetSelectable(playerid,PlayerGUIData[playerid][_:gindex][PlayerGUIid][pindex], value);
+	PlayerTextDrawSetSelectable(playerid,PlayerGUIData[playerid][_:gindex][PlayerGUIid][pindex], value);
 	return 1;
 }

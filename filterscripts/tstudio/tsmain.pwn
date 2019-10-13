@@ -11,7 +11,7 @@ public OnFilterScriptInit()
 
 	SystemDB = db_open_persistent("tstudio/system.db");
 	ThemeDataDB = db_open_persistent("tstudio/themedata.db");
-    
+	
 	sqlite_ThemeSetup();
 	sqlite_LoadBindString();
 	
@@ -35,12 +35,12 @@ public OnFilterScriptExit()
 
 	foreach(new i : Player)
 	{
- 		ClearCopyBuffer(i);
+		ClearCopyBuffer(i);
 	}
-    
+	
 	// Always close map
 	if(MapOpen)
-    {
+	{
 		db_free_persistent(EditMap);
 		sqlite_UpdateSettings();
 	}
@@ -49,7 +49,7 @@ public OnFilterScriptExit()
 
 	foreach(new i : Player)
 	{
-	    CancelSelectTextDraw(i);
+		CancelSelectTextDraw(i);
 	}
 
 	return 1;
@@ -57,15 +57,15 @@ public OnFilterScriptExit()
 
 public OnPlayerConnect(playerid)
 {
-    RemoveAllBuildings(playerid);
-    
-    SendClientMessage(playerid, STEALTH_GREEN, "Welcome to Texture Studio!");
-    SendClientMessage(playerid, STEALTH_GREEN, sprintf("There are currently %i commands registered, check \"/thelp\" to see them!", Command_GetPlayerCommandCount(playerid)));
+	RemoveAllBuildings(playerid);
+	
+	SendClientMessage(playerid, STEALTH_GREEN, "Welcome to Texture Studio!");
+	SendClientMessage(playerid, STEALTH_GREEN, sprintf("There are currently %i commands registered, check \"/thelp\" to see them!", Command_GetPlayerCommandCount(playerid)));
 	
 	new bool:found, bool:warn, string[36];
 	for (new i, j = Command_GetPlayerCommandCount(playerid); i < j; i++)
-  	{
-  	    format(string, 36, "%s", Command_GetNext(i, playerid));
+	{
+		format(string, 36, "%s", Command_GetNext(i, playerid));
 		//foreach(new c : Command()) {
 		
 		for(new k; k < sizeof(Commands); k++) {
@@ -101,13 +101,13 @@ public OnPlayerDisconnect(playerid, reason)
 
 SetCurrObject(playerid, index)
 {
-    if(CanSelectObject(playerid, index))
-    {
-        CurrObject[playerid] = index;
-        CallLocalFunction("OnPlayerObjectSelectChange", "ii", playerid, index);
-        return 1;
-    }
-    return 0;
+	if(CanSelectObject(playerid, index))
+	{
+		CurrObject[playerid] = index;
+		CallLocalFunction("OnPlayerObjectSelectChange", "ii", playerid, index);
+		return 1;
+	}
+	return 0;
 }
 
 hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
@@ -115,20 +115,20 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 	if(GetEditMode(playerid) == EDIT_MODE_OBJECT)
 	{
 		// Clone object
-	    if(newkeys & KEY_WALK)
+		if(newkeys & KEY_WALK)
 		{
 			Edit_SetObjectPos(CurrObject[playerid], CurrEditPos[playerid][0], CurrEditPos[playerid][1], CurrEditPos[playerid][2], CurrEditPos[playerid][3], CurrEditPos[playerid][4], CurrEditPos[playerid][5], true);
-            SetCurrObject(playerid, CloneObject(CurrObject[playerid]));
-            EditDynamicObject(playerid, ObjectData[CurrObject[playerid]][oID]);
-            SendClientMessage(playerid, STEALTH_GREEN, "Object has been cloned");
-	    }
+			SetCurrObject(playerid, CloneObject(CurrObject[playerid]));
+			EditDynamicObject(playerid, ObjectData[CurrObject[playerid]][oID]);
+			SendClientMessage(playerid, STEALTH_GREEN, "Object has been cloned");
+		}
 
 		// Update object position
-	    else if(newkeys & KEY_SECONDARY_ATTACK)
-	    {
+		else if(newkeys & KEY_SECONDARY_ATTACK)
+		{
 			Edit_SetObjectPos(CurrObject[playerid], CurrEditPos[playerid][0], CurrEditPos[playerid][1], CurrEditPos[playerid][2], CurrEditPos[playerid][3], CurrEditPos[playerid][4], CurrEditPos[playerid][5], true);
 			SendClientMessage(playerid, STEALTH_GREEN, "Object position updated and saved");
-	    }
+		}
 	}
 	return Y_HOOKS_CONTINUE_RETURN_0;
 }
@@ -139,8 +139,8 @@ hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float
 	//printf("%i, %i, %i, %i", playerid, objectid, response, GetEditMode(playerid));
 	switch(GetEditMode(playerid))
 	{
-	    case EDIT_MODE_OBJECT:
-	    {
+		case EDIT_MODE_OBJECT:
+		{
 			// Player finished editing an object
 			if(response == EDIT_RESPONSE_FINAL)
 			{
@@ -192,8 +192,8 @@ hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float
 				EditingMode[playerid] = false;
 				SetEditMode(playerid, EDIT_MODE_NONE);
 
-		    }
-    		else if(response == EDIT_RESPONSE_CANCEL)
+			}
+			else if(response == EDIT_RESPONSE_CANCEL)
 			{
 				SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 				SendClientMessage(playerid, STEALTH_YELLOW, "Cancelled Pivot editing");
@@ -217,17 +217,17 @@ hook OnPlayerSelectDynObject(playerid, objectid, modelid, Float:x, Float:y, Floa
 	{
 		case EDIT_MODE_SELECTION:
 		{
-		    new Keys,ud,lr,index;
-		    GetPlayerKeys(playerid,Keys,ud,lr);
+			new Keys,ud,lr,index;
+			GetPlayerKeys(playerid,Keys,ud,lr);
 
 			// Find edit object
 			foreach(new i : Objects)
 			{
 				// Object found
-			    if(ObjectData[i][oID] == objectid)
+				if(ObjectData[i][oID] == objectid)
 				{
 					index = i;
-				    break;
+					break;
 				}
 			}
 
@@ -236,14 +236,14 @@ hook OnPlayerSelectDynObject(playerid, objectid, modelid, Float:x, Float:y, Floa
 			{
 				CopyCopyBuffer(playerid, index);
 
-			    SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
-		    	SendClientMessage(playerid, STEALTH_GREEN, "Copied object textures/color/text to buffer");
+				SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+				SendClientMessage(playerid, STEALTH_GREEN, "Copied object textures/color/text to buffer");
 			}
 			else if(Keys & KEY_WALK)
 			{
 				PasteCopyBuffer(playerid, index);
 
-			    SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+				SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 				SendClientMessage(playerid, STEALTH_GREEN, "Pasted your copy buffer to object");
 			}
 			else
@@ -251,12 +251,12 @@ hook OnPlayerSelectDynObject(playerid, objectid, modelid, Float:x, Float:y, Floa
 				SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 
 				if(SetCurrObject(playerid, index)) {
-                    new line[128];
-                    format(line, sizeof(line), "You have selected object index %i for editing", index);
-                    SendClientMessage(playerid, STEALTH_GREEN, line);
-                }
-                else
-                    SendClientMessage(playerid, STEALTH_YELLOW, "You can not select objects in this object's group");
+					new line[128];
+					format(line, sizeof(line), "You have selected object index %i for editing", index);
+					SendClientMessage(playerid, STEALTH_GREEN, line);
+				}
+				else
+					SendClientMessage(playerid, STEALTH_YELLOW, "You can not select objects in this object's group");
 			}
 		}
 	}
@@ -285,55 +285,55 @@ sqlite_LoadMapObjects()
 	loadstmt = db_prepare(EditMap, "SELECT * FROM `Objects`");
 
 	// Bind our results
-    stmt_bind_result_field(loadstmt, 0, DB::TYPE_INT, currindex);
-    stmt_bind_result_field(loadstmt, 1, DB::TYPE_INT, tmpobject[oModel]);
-    stmt_bind_result_field(loadstmt, 2, DB::TYPE_FLOAT, tmpobject[oX]);
-    stmt_bind_result_field(loadstmt, 3, DB::TYPE_FLOAT, tmpobject[oY]);
-    stmt_bind_result_field(loadstmt, 4, DB::TYPE_FLOAT, tmpobject[oZ]);
-    stmt_bind_result_field(loadstmt, 5, DB::TYPE_FLOAT, tmpobject[oRX]);
-    stmt_bind_result_field(loadstmt, 6, DB::TYPE_FLOAT, tmpobject[oRY]);
-    stmt_bind_result_field(loadstmt, 7, DB::TYPE_FLOAT, tmpobject[oRZ]);
-    stmt_bind_result_field(loadstmt, 8, DB::TYPE_ARRAY, tmpobject[oTexIndex], MAX_MATERIALS);
-    stmt_bind_result_field(loadstmt, 9, DB::TYPE_ARRAY, tmpobject[oColorIndex], MAX_MATERIALS);
-    stmt_bind_result_field(loadstmt, 10, DB::TYPE_INT, tmpobject[ousetext]);
-    stmt_bind_result_field(loadstmt, 11, DB::TYPE_INT, tmpobject[oFontFace]);
-    stmt_bind_result_field(loadstmt, 12, DB::TYPE_INT, tmpobject[oFontSize]);
-    stmt_bind_result_field(loadstmt, 13, DB::TYPE_INT, tmpobject[oFontBold]);
-    stmt_bind_result_field(loadstmt, 14, DB::TYPE_INT, tmpobject[oFontColor]);
-    stmt_bind_result_field(loadstmt, 15, DB::TYPE_INT, tmpobject[oBackColor]);
-    stmt_bind_result_field(loadstmt, 16, DB::TYPE_INT, tmpobject[oAlignment]);
-    stmt_bind_result_field(loadstmt, 17, DB::TYPE_INT, tmpobject[oTextFontSize]);
-    stmt_bind_result_field(loadstmt, 18, DB::TYPE_STRING, tmpobject[oObjectText], MAX_TEXT_LENGTH);
-    stmt_bind_result_field(loadstmt, 19, DB::TYPE_INT, tmpobject[oGroup]);
-    stmt_bind_result_field(loadstmt, 20, DB::TYPE_STRING, tmpobject[oNote], 64);
-    stmt_bind_result_field(loadstmt, 21, DB::TYPE_FLOAT, tmpobject[oDD]);
+	stmt_bind_result_field(loadstmt, 0, DB::TYPE_INT, currindex);
+	stmt_bind_result_field(loadstmt, 1, DB::TYPE_INT, tmpobject[oModel]);
+	stmt_bind_result_field(loadstmt, 2, DB::TYPE_FLOAT, tmpobject[oX]);
+	stmt_bind_result_field(loadstmt, 3, DB::TYPE_FLOAT, tmpobject[oY]);
+	stmt_bind_result_field(loadstmt, 4, DB::TYPE_FLOAT, tmpobject[oZ]);
+	stmt_bind_result_field(loadstmt, 5, DB::TYPE_FLOAT, tmpobject[oRX]);
+	stmt_bind_result_field(loadstmt, 6, DB::TYPE_FLOAT, tmpobject[oRY]);
+	stmt_bind_result_field(loadstmt, 7, DB::TYPE_FLOAT, tmpobject[oRZ]);
+	stmt_bind_result_field(loadstmt, 8, DB::TYPE_ARRAY, tmpobject[oTexIndex], MAX_MATERIALS);
+	stmt_bind_result_field(loadstmt, 9, DB::TYPE_ARRAY, tmpobject[oColorIndex], MAX_MATERIALS);
+	stmt_bind_result_field(loadstmt, 10, DB::TYPE_INT, tmpobject[ousetext]);
+	stmt_bind_result_field(loadstmt, 11, DB::TYPE_INT, tmpobject[oFontFace]);
+	stmt_bind_result_field(loadstmt, 12, DB::TYPE_INT, tmpobject[oFontSize]);
+	stmt_bind_result_field(loadstmt, 13, DB::TYPE_INT, tmpobject[oFontBold]);
+	stmt_bind_result_field(loadstmt, 14, DB::TYPE_INT, tmpobject[oFontColor]);
+	stmt_bind_result_field(loadstmt, 15, DB::TYPE_INT, tmpobject[oBackColor]);
+	stmt_bind_result_field(loadstmt, 16, DB::TYPE_INT, tmpobject[oAlignment]);
+	stmt_bind_result_field(loadstmt, 17, DB::TYPE_INT, tmpobject[oTextFontSize]);
+	stmt_bind_result_field(loadstmt, 18, DB::TYPE_STRING, tmpobject[oObjectText], MAX_TEXT_LENGTH);
+	stmt_bind_result_field(loadstmt, 19, DB::TYPE_INT, tmpobject[oGroup]);
+	stmt_bind_result_field(loadstmt, 20, DB::TYPE_STRING, tmpobject[oNote], 64);
+	stmt_bind_result_field(loadstmt, 21, DB::TYPE_FLOAT, tmpobject[oDD]);
 
 	// Execute query
-    if(stmt_execute(loadstmt))
-    {
+	if(stmt_execute(loadstmt))
+	{
 		new count;
-        while(stmt_fetch_row(loadstmt))
-        {
+		while(stmt_fetch_row(loadstmt))
+		{
 			// Load object into database at specified index (Don't save to sqlite database)
 			AddDynamicObject(tmpobject[oModel], tmpobject[oX], tmpobject[oY], tmpobject[oZ], tmpobject[oRX], tmpobject[oRY], tmpobject[oRZ], currindex, false, .dd = tmpobject[oDD]);
 
 			// Set textures and colors
 			for(new i = 0; i < MAX_MATERIALS; i++)
 			{
-                ObjectData[currindex][oTexIndex][i] = tmpobject[oTexIndex][i];
-	            ObjectData[currindex][oColorIndex][i] = tmpobject[oColorIndex][i];
+				ObjectData[currindex][oTexIndex][i] = tmpobject[oTexIndex][i];
+				ObjectData[currindex][oColorIndex][i] = tmpobject[oColorIndex][i];
 			}
 
 			// Get all text settings
-		   	ObjectData[currindex][ousetext] = tmpobject[ousetext];
-		    ObjectData[currindex][oFontFace] = tmpobject[oFontFace];
-		    ObjectData[currindex][oFontSize] = tmpobject[oFontSize];
-		    ObjectData[currindex][oFontBold] = tmpobject[oFontBold];
-		    ObjectData[currindex][oFontColor] = tmpobject[oFontColor];
-		    ObjectData[currindex][oBackColor] = tmpobject[oBackColor];
-		    ObjectData[currindex][oAlignment] = tmpobject[oAlignment];
-		    ObjectData[currindex][oTextFontSize] = tmpobject[oTextFontSize];
-		    ObjectData[currindex][oGroup] = tmpobject[oGroup];
+			ObjectData[currindex][ousetext] = tmpobject[ousetext];
+			ObjectData[currindex][oFontFace] = tmpobject[oFontFace];
+			ObjectData[currindex][oFontSize] = tmpobject[oFontSize];
+			ObjectData[currindex][oFontBold] = tmpobject[oFontBold];
+			ObjectData[currindex][oFontColor] = tmpobject[oFontColor];
+			ObjectData[currindex][oBackColor] = tmpobject[oBackColor];
+			ObjectData[currindex][oAlignment] = tmpobject[oAlignment];
+			ObjectData[currindex][oTextFontSize] = tmpobject[oTextFontSize];
+			ObjectData[currindex][oGroup] = tmpobject[oGroup];
 
 			// Get any text string
 			format(ObjectData[currindex][oObjectText], MAX_TEXT_LENGTH, "%s", tmpobject[oObjectText]);
@@ -349,12 +349,12 @@ sqlite_LoadMapObjects()
 			UpdateObject3DText(currindex, true);
 			
 			count++;
-        }
+		}
 		stmt_close(loadstmt);
-        return count;
-    }
+		return count;
+	}
 	stmt_close(loadstmt);
-    return 0;
+	return 0;
 }
 
 // Insert stmt statement
@@ -372,7 +372,7 @@ sqlite_InsertObject(index)
 			InsertObjectString,
 			sizeof(InsertObjectString),
 			"INSERT INTO `Objects`",
-	        "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+			"VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
 		);
 		// Prepare data base for writing
 	}
@@ -382,30 +382,30 @@ sqlite_InsertObject(index)
 
 
 	// Bind our results
-    stmt_bind_value(insertstmt, 0, DB::TYPE_INT, index);
-    stmt_bind_value(insertstmt, 1, DB::TYPE_INT, ObjectData[index][oModel]);
-    stmt_bind_value(insertstmt, 2, DB::TYPE_FLOAT, ObjectData[index][oX]);
-    stmt_bind_value(insertstmt, 3, DB::TYPE_FLOAT, ObjectData[index][oY]);
-    stmt_bind_value(insertstmt, 4, DB::TYPE_FLOAT, ObjectData[index][oZ]);
-    stmt_bind_value(insertstmt, 5, DB::TYPE_FLOAT, ObjectData[index][oRX]);
-    stmt_bind_value(insertstmt, 6, DB::TYPE_FLOAT, ObjectData[index][oRY]);
-    stmt_bind_value(insertstmt, 7, DB::TYPE_FLOAT, ObjectData[index][oRZ]);
-    stmt_bind_value(insertstmt, 8, DB::TYPE_ARRAY, ObjectData[index][oTexIndex], MAX_MATERIALS);
-    stmt_bind_value(insertstmt, 9, DB::TYPE_ARRAY, ObjectData[index][oColorIndex], MAX_MATERIALS);
-    stmt_bind_value(insertstmt, 10, DB::TYPE_INT, ObjectData[index][ousetext]);
-    stmt_bind_value(insertstmt, 11, DB::TYPE_INT, ObjectData[index][oFontFace]);
-    stmt_bind_value(insertstmt, 12, DB::TYPE_INT, ObjectData[index][oFontSize]);
-    stmt_bind_value(insertstmt, 13, DB::TYPE_INT, ObjectData[index][oFontBold]);
-    stmt_bind_value(insertstmt, 14, DB::TYPE_INT, ObjectData[index][oFontColor]);
-    stmt_bind_value(insertstmt, 15, DB::TYPE_INT, ObjectData[index][oBackColor]);
-    stmt_bind_value(insertstmt, 16, DB::TYPE_INT, ObjectData[index][oAlignment]);
-    stmt_bind_value(insertstmt, 17, DB::TYPE_INT, ObjectData[index][oTextFontSize]);
-    stmt_bind_value(insertstmt, 18, DB::TYPE_STRING, ObjectData[index][oObjectText], MAX_TEXT_LENGTH);
-    stmt_bind_value(insertstmt, 19, DB::TYPE_INT, ObjectData[index][oGroup]);
-    stmt_bind_value(insertstmt, 20, DB::TYPE_STRING, ObjectData[index][oNote]);
-    stmt_bind_value(insertstmt, 21, DB::TYPE_FLOAT, ObjectData[index][oDD]);
+	stmt_bind_value(insertstmt, 0, DB::TYPE_INT, index);
+	stmt_bind_value(insertstmt, 1, DB::TYPE_INT, ObjectData[index][oModel]);
+	stmt_bind_value(insertstmt, 2, DB::TYPE_FLOAT, ObjectData[index][oX]);
+	stmt_bind_value(insertstmt, 3, DB::TYPE_FLOAT, ObjectData[index][oY]);
+	stmt_bind_value(insertstmt, 4, DB::TYPE_FLOAT, ObjectData[index][oZ]);
+	stmt_bind_value(insertstmt, 5, DB::TYPE_FLOAT, ObjectData[index][oRX]);
+	stmt_bind_value(insertstmt, 6, DB::TYPE_FLOAT, ObjectData[index][oRY]);
+	stmt_bind_value(insertstmt, 7, DB::TYPE_FLOAT, ObjectData[index][oRZ]);
+	stmt_bind_value(insertstmt, 8, DB::TYPE_ARRAY, ObjectData[index][oTexIndex], MAX_MATERIALS);
+	stmt_bind_value(insertstmt, 9, DB::TYPE_ARRAY, ObjectData[index][oColorIndex], MAX_MATERIALS);
+	stmt_bind_value(insertstmt, 10, DB::TYPE_INT, ObjectData[index][ousetext]);
+	stmt_bind_value(insertstmt, 11, DB::TYPE_INT, ObjectData[index][oFontFace]);
+	stmt_bind_value(insertstmt, 12, DB::TYPE_INT, ObjectData[index][oFontSize]);
+	stmt_bind_value(insertstmt, 13, DB::TYPE_INT, ObjectData[index][oFontBold]);
+	stmt_bind_value(insertstmt, 14, DB::TYPE_INT, ObjectData[index][oFontColor]);
+	stmt_bind_value(insertstmt, 15, DB::TYPE_INT, ObjectData[index][oBackColor]);
+	stmt_bind_value(insertstmt, 16, DB::TYPE_INT, ObjectData[index][oAlignment]);
+	stmt_bind_value(insertstmt, 17, DB::TYPE_INT, ObjectData[index][oTextFontSize]);
+	stmt_bind_value(insertstmt, 18, DB::TYPE_STRING, ObjectData[index][oObjectText], MAX_TEXT_LENGTH);
+	stmt_bind_value(insertstmt, 19, DB::TYPE_INT, ObjectData[index][oGroup]);
+	stmt_bind_value(insertstmt, 20, DB::TYPE_STRING, ObjectData[index][oNote]);
+	stmt_bind_value(insertstmt, 21, DB::TYPE_FLOAT, ObjectData[index][oDD]);
 
-    stmt_execute(insertstmt);
+	stmt_execute(insertstmt);
 	stmt_close(insertstmt);
 }
 
@@ -422,10 +422,10 @@ sqlite_RemoveObject(index)
 
 sqlite_CreateNewMap()
 {
-    sqlite_CreateMapDB();
-    sqlite_CreateRBDB();
-    sqlite_CreateVehicle();
-    sqlite_CreateSettings();
+	sqlite_CreateMapDB();
+	sqlite_CreateRBDB();
+	sqlite_CreateVehicle();
+	sqlite_CreateSettings();
 	sqlite_InitSettings();
 }
 
@@ -520,23 +520,23 @@ sqlite_InitSettings()
 			InitSettingsString,
 			sizeof(InitSettingsString),
 			"INSERT INTO `Settings`",
-	        "VALUES(?, ?, ?, ?, ?, ?, ?, ?)"
+			"VALUES(?, ?, ?, ?, ?, ?, ?, ?)"
 		);
 		// Prepare data base for writing
 	}
 	insertsettingstmt = db_prepare(EditMap, InitSettingsString);
-    
+	
 	// Bind our results
-    stmt_bind_value(insertsettingstmt, 0, DB::TYPE_INT, MapSetting[mVersion]);
-    stmt_bind_value(insertsettingstmt, 1, DB::TYPE_INT, MapSetting[mLastEdit]);
-    stmt_bind_value(insertsettingstmt, 2, DB::TYPE_STRING, MapSetting[mAuthor]);
-    stmt_bind_value(insertsettingstmt, 3, DB::TYPE_FLOAT, MapSetting[mSpawn][xPos]);
-    stmt_bind_value(insertsettingstmt, 4, DB::TYPE_FLOAT, MapSetting[mSpawn][yPos]);
-    stmt_bind_value(insertsettingstmt, 5, DB::TYPE_FLOAT, MapSetting[mSpawn][zPos]);
-    stmt_bind_value(insertsettingstmt, 6, DB::TYPE_INT, MapSetting[mInterior]);
-    stmt_bind_value(insertsettingstmt, 7, DB::TYPE_INT, MapSetting[mVirtualWorld]);
+	stmt_bind_value(insertsettingstmt, 0, DB::TYPE_INT, MapSetting[mVersion]);
+	stmt_bind_value(insertsettingstmt, 1, DB::TYPE_INT, MapSetting[mLastEdit]);
+	stmt_bind_value(insertsettingstmt, 2, DB::TYPE_STRING, MapSetting[mAuthor]);
+	stmt_bind_value(insertsettingstmt, 3, DB::TYPE_FLOAT, MapSetting[mSpawn][xPos]);
+	stmt_bind_value(insertsettingstmt, 4, DB::TYPE_FLOAT, MapSetting[mSpawn][yPos]);
+	stmt_bind_value(insertsettingstmt, 5, DB::TYPE_FLOAT, MapSetting[mSpawn][zPos]);
+	stmt_bind_value(insertsettingstmt, 6, DB::TYPE_INT, MapSetting[mInterior]);
+	stmt_bind_value(insertsettingstmt, 7, DB::TYPE_INT, MapSetting[mVirtualWorld]);
 
-    stmt_execute(insertsettingstmt);
+	stmt_execute(insertsettingstmt);
 	stmt_close(insertsettingstmt);
 }
 
@@ -567,7 +567,7 @@ sqlite_UpdateDB()
 			db_exec(EditMap, "ALTER TABLE `Objects` ADD COLUMN `DrawDistance` REAL DEFAULT 300.0");
 			db_exec(EditMap, "ALTER TABLE `Vehicles` ADD COLUMN `CarSiren` INTEGER DEFAULT 0");
 		}
-    }
+	}
 	
 	/* example: Less than 1.9b
 	if(major <= 1 && minor <= 9 && patch <= 'b'))
@@ -575,32 +575,32 @@ sqlite_UpdateDB()
 		print("worked");
 		sqlite_CreateRangeRemoved();
 		sqlite_InitSettings();
-    }*/
+	}*/
 	
 	
-    /*new dbver = db_query_int(EditMap, "SELECT Version FROM Settings");
-    if(dbver != TS_VERSION)
-    {
-        printf("Map version (%i.%i%c) does not match TS version (%i.%i%c)",
-            (dbver & 0x00FF0000), (dbver & 0x0000FF00), (dbver & 0x000000FF) + 96,
-            (TS_VERSION & 0x00FF0000), (TS_VERSION & 0x0000FF00), (TS_VERSION & 0x000000FF) + 96);
-    
-        if((dbver & 0x00FF0000) > (TS_VERSION & 0x00FF0000)) // Major version, changes were made that are needed to edit this map
-            printf("Map major version is higher than TS version, update TS to edit this map.");
-        else if((dbver & 0x0000FF00) > (TS_VERSION & 0x0000FF00)) // Minor version, changes were made that affect this map
-            printf("Map minor version is higher than TS version, update TS to edit this map correctly.");
-        else if((dbver & 0x000000FF) > (TS_VERSION & 0x000000FF)) // Patch, backwards compatible
-            printf("Your version of TS is old, consider updating.");
-        
-        if((dbver & 0x00FF0000) < (TS_VERSION & 0x00FF0000)) // Major version, making updates
-            printf("Map major version is lower than TS version, updating map.");
-        else if((dbver & 0x0000FF00) < (TS_VERSION & 0x0000FF00)) // Minor version, making updates
-            printf("Map minor version is lower than TS version, updating map.");
-        else if((dbver & 0x000000FF) < (TS_VERSION & 0x000000FF)) // Patch, backwards compatible
-            printf("Map version is compatible with TS version.");
-    }*/
+	/*new dbver = db_query_int(EditMap, "SELECT Version FROM Settings");
+	if(dbver != TS_VERSION)
+	{
+		printf("Map version (%i.%i%c) does not match TS version (%i.%i%c)",
+			(dbver & 0x00FF0000), (dbver & 0x0000FF00), (dbver & 0x000000FF) + 96,
+			(TS_VERSION & 0x00FF0000), (TS_VERSION & 0x0000FF00), (TS_VERSION & 0x000000FF) + 96);
 	
-    sqlite_UpdateSettings();
+		if((dbver & 0x00FF0000) > (TS_VERSION & 0x00FF0000)) // Major version, changes were made that are needed to edit this map
+			printf("Map major version is higher than TS version, update TS to edit this map.");
+		else if((dbver & 0x0000FF00) > (TS_VERSION & 0x0000FF00)) // Minor version, changes were made that affect this map
+			printf("Map minor version is higher than TS version, update TS to edit this map correctly.");
+		else if((dbver & 0x000000FF) > (TS_VERSION & 0x000000FF)) // Patch, backwards compatible
+			printf("Your version of TS is old, consider updating.");
+		
+		if((dbver & 0x00FF0000) < (TS_VERSION & 0x00FF0000)) // Major version, making updates
+			printf("Map major version is lower than TS version, updating map.");
+		else if((dbver & 0x0000FF00) < (TS_VERSION & 0x0000FF00)) // Minor version, making updates
+			printf("Map minor version is lower than TS version, updating map.");
+		else if((dbver & 0x000000FF) < (TS_VERSION & 0x000000FF)) // Patch, backwards compatible
+			printf("Map version is compatible with TS version.");
+	}*/
+	
+	sqlite_UpdateSettings();
 	return 1;
 }
 
@@ -623,14 +623,14 @@ sqlite_SaveMaterialIndex(index)
 			"WHERE `IndexID` = ?"
 		);
 	}
-    texturestmt = db_prepare(EditMap, TextureUpdateString);
+	texturestmt = db_prepare(EditMap, TextureUpdateString);
 
 	// Bind values
 	stmt_bind_value(texturestmt, 0, DB::TYPE_ARRAY, ObjectData[index][oTexIndex], MAX_MATERIALS);
 	stmt_bind_value(texturestmt, 1, DB::TYPE_INT, index);
 
 	// Execute stmt
-    stmt_execute(texturestmt);
+	stmt_execute(texturestmt);
 	stmt_close(texturestmt);
 
 	return 1;
@@ -655,14 +655,14 @@ sqlite_SaveColorIndex(index)
 		);
 	}
 
-    colorstmt = db_prepare(EditMap, ColorUpdateString);
+	colorstmt = db_prepare(EditMap, ColorUpdateString);
 
 	// Bind values
 	stmt_bind_value(colorstmt, 0, DB::TYPE_ARRAY, ObjectData[index][oColorIndex], MAX_MATERIALS);
 	stmt_bind_value(colorstmt, 1, DB::TYPE_INT, index);
 
 	// Execute stmt
-    stmt_execute(colorstmt);
+	stmt_execute(colorstmt);
 	stmt_close(colorstmt);
 
 	return 1;
@@ -691,7 +691,7 @@ sqlite_UpdateObjectPos(index)
 			"WHERE `IndexID` = ?"
 		);
 	}
-    posupdatestmt = db_prepare(EditMap, PosUpdateString);
+	posupdatestmt = db_prepare(EditMap, PosUpdateString);
 
 	// Bind values
 	stmt_bind_value(posupdatestmt, 0, DB::TYPE_FLOAT, ObjectData[index][oX]);
@@ -703,7 +703,7 @@ sqlite_UpdateObjectPos(index)
 	stmt_bind_value(posupdatestmt, 6, DB::TYPE_INT, index);
 
 	// Execute stmt
-    stmt_execute(posupdatestmt);
+	stmt_execute(posupdatestmt);
 	stmt_close(posupdatestmt);
 
 	foreach(new i : Player)
@@ -711,7 +711,7 @@ sqlite_UpdateObjectPos(index)
 		if(CurrObject[i] == index) OnObjectUpdatePos(i, index);
 	}
 
-    return 1;
+	return 1;
 }
 
 new DBStatement:ddupdatestmt;
@@ -731,17 +731,17 @@ sqlite_UpdateObjectDD(index)
 			"WHERE `IndexID` = ?"
 		);
 	}
-    ddupdatestmt = db_prepare(EditMap, DDUpdateString);
+	ddupdatestmt = db_prepare(EditMap, DDUpdateString);
 
 	// Bind values
 	stmt_bind_value(ddupdatestmt, 0, DB::TYPE_FLOAT, ObjectData[index][oDD]);
 	stmt_bind_value(ddupdatestmt, 1, DB::TYPE_INT, index);
 
 	// Execute stmt
-    stmt_execute(ddupdatestmt);
+	stmt_execute(ddupdatestmt);
 	stmt_close(ddupdatestmt);
 
-    return 1;
+	return 1;
 }
 
 
@@ -814,7 +814,7 @@ sqlite_ObjUseText(index)
 	stmt_bind_value(usetextupdatestmt, 1, DB::TYPE_INT, index);
 
 	// Execute stmt
-    stmt_execute(usetextupdatestmt);
+	stmt_execute(usetextupdatestmt);
 	stmt_close(usetextupdatestmt);
 	return 1;
 }
@@ -843,7 +843,7 @@ sqlite_ObjFontFace(index)
 	stmt_bind_value(fontfaceupdatestmt, 1, DB::TYPE_INT, index);
 
 	// Execute stmt
-    stmt_execute(fontfaceupdatestmt);
+	stmt_execute(fontfaceupdatestmt);
 	stmt_close(fontfaceupdatestmt);
 	return 1;
 }
@@ -871,7 +871,7 @@ sqlite_ObjFontSize(index)
 	stmt_bind_value(fontsizeupdatestmt, 1, DB::TYPE_INT, index);
 
 	// Execute stmt
-    stmt_execute(fontsizeupdatestmt);
+	stmt_execute(fontsizeupdatestmt);
 	stmt_close(fontsizeupdatestmt);
 	return 1;
 }
@@ -902,7 +902,7 @@ sqlite_ObjFontBold(index)
 	stmt_bind_value(fontboldupdatestmt, 1, DB::TYPE_INT, index);
 
 	// Execute stmt
-    stmt_execute(fontboldupdatestmt);
+	stmt_execute(fontboldupdatestmt);
 	stmt_close(fontboldupdatestmt);
 	return 1;
 }
@@ -931,7 +931,7 @@ sqlite_ObjFontColor(index)
 	stmt_bind_value(fontcolorupdatestmt, 1, DB::TYPE_INT, index);
 
 	// Execute stmt
-    stmt_execute(fontcolorupdatestmt);
+	stmt_execute(fontcolorupdatestmt);
 	stmt_close(fontcolorupdatestmt);
 	return 1;
 }
@@ -960,7 +960,7 @@ sqlite_ObjBackColor(index)
 	stmt_bind_value(backcolorupdatestmt, 1, DB::TYPE_INT, index);
 
 	// Execute stmt
-    stmt_execute(backcolorupdatestmt);
+	stmt_execute(backcolorupdatestmt);
 	stmt_close(backcolorupdatestmt);
 	return 1;
 }
@@ -990,7 +990,7 @@ sqlite_ObjAlignment(index)
 	stmt_bind_value(alignmentupdatestmt, 1, DB::TYPE_INT, index);
 
 	// Execute stmt
-    stmt_execute(alignmentupdatestmt);
+	stmt_execute(alignmentupdatestmt);
 	stmt_close(alignmentupdatestmt);
 	return 1;
 }
@@ -1019,7 +1019,7 @@ sqlite_ObjFontTextSize(index)
 	stmt_bind_value(textsizeupdatestmt, 1, DB::TYPE_INT, index);
 
 	// Execute stmt
-    stmt_execute(textsizeupdatestmt);
+	stmt_execute(textsizeupdatestmt);
 	stmt_close(textsizeupdatestmt);
 	return 1;
 }
@@ -1048,7 +1048,7 @@ sqlite_ObjObjectText(index)
 	stmt_bind_value(objecttextupdatestmt, 1, DB::TYPE_INT, index);
 
 	// Execute stmt
-    stmt_execute(objecttextupdatestmt);
+	stmt_execute(objecttextupdatestmt);
 	stmt_close(objecttextupdatestmt);
 	return 1;
 }
@@ -1077,7 +1077,7 @@ sqlite_ObjGroup(index)
 	stmt_bind_value(objectgroupupdatestmt, 1, DB::TYPE_INT, index);
 
 	// Execute stmt
-    stmt_execute(objectgroupupdatestmt);
+	stmt_execute(objectgroupupdatestmt);
 	stmt_close(objectgroupupdatestmt);
 	return 1;
 }
@@ -1106,7 +1106,7 @@ sqlite_ObjModel(index)
 	stmt_bind_value(objectmodelupdatestmt, 1, DB::TYPE_INT, index);
 
 	// Execute stmt
-    stmt_execute(objectmodelupdatestmt);
+	stmt_execute(objectmodelupdatestmt);
 	stmt_close(objectmodelupdatestmt);
 	return 1;
 }
@@ -1134,7 +1134,7 @@ sqlite_ObjNote(index)
 	stmt_bind_value(objectnoteupdatestmt, 1, DB::TYPE_INT, index);
 
 	// Execute stmt
-    stmt_execute(objectnoteupdatestmt);
+	stmt_execute(objectnoteupdatestmt);
 	stmt_close(objectnoteupdatestmt);
 	return 1;
 }
@@ -1154,20 +1154,20 @@ sqlite_InsertRemoveBuilding(index)
 			InsertRemoveBuildingString,
 			sizeof(InsertRemoveBuildingString),
 			"INSERT INTO `RemovedBuildings`",
-	        "VALUES(?, ?, ?, ?, ?)"
+			"VALUES(?, ?, ?, ?, ?)"
 		);
 		// Prepare data base for writing
 	}
 	insertremovebuldingstmt = db_prepare(EditMap, InsertRemoveBuildingString);
 
 	// Bind our results
-    stmt_bind_value(insertremovebuldingstmt, 0, DB::TYPE_INT, RemoveData[index][rModel]);
-    stmt_bind_value(insertremovebuldingstmt, 1, DB::TYPE_FLOAT, RemoveData[index][rX]);
-    stmt_bind_value(insertremovebuldingstmt, 2, DB::TYPE_FLOAT, RemoveData[index][rY]);
-    stmt_bind_value(insertremovebuldingstmt, 3, DB::TYPE_FLOAT, RemoveData[index][rZ]);
-    stmt_bind_value(insertremovebuldingstmt, 4, DB::TYPE_FLOAT, RemoveData[index][rRange]);
+	stmt_bind_value(insertremovebuldingstmt, 0, DB::TYPE_INT, RemoveData[index][rModel]);
+	stmt_bind_value(insertremovebuldingstmt, 1, DB::TYPE_FLOAT, RemoveData[index][rX]);
+	stmt_bind_value(insertremovebuldingstmt, 2, DB::TYPE_FLOAT, RemoveData[index][rY]);
+	stmt_bind_value(insertremovebuldingstmt, 3, DB::TYPE_FLOAT, RemoveData[index][rZ]);
+	stmt_bind_value(insertremovebuldingstmt, 4, DB::TYPE_FLOAT, RemoveData[index][rRange]);
 
-    stmt_execute(insertremovebuldingstmt);
+	stmt_execute(insertremovebuldingstmt);
 	stmt_close(insertremovebuldingstmt);
 }
 
@@ -1191,24 +1191,24 @@ sqlite_UpdateSettings()
 			"`SpawnZ` = ?,",
 			"`Interior` = ?,",
 			"`VirtualWorld` = ?",
-            // Hacky way to change all of the data without a unique, pointless column
+			// Hacky way to change all of the data without a unique, pointless column
 			"WHERE `Version` in (SELECT `Version` FROM Settings LIMIT 1)"
 		);
 	}
 	updatesettingstmt = db_prepare(EditMap, InsertSettingsString);
-    
+	
 	// Bind our results
-    stmt_bind_value(updatesettingstmt, 0, DB::TYPE_INT, TS_VERSION);
-    stmt_bind_value(updatesettingstmt, 1, DB::TYPE_INT, gettime());
-    stmt_bind_value(updatesettingstmt, 2, DB::TYPE_STRING, MapSetting[mAuthor]);
-    stmt_bind_value(updatesettingstmt, 3, DB::TYPE_FLOAT, MapSetting[mSpawn][xPos]);
-    stmt_bind_value(updatesettingstmt, 4, DB::TYPE_FLOAT, MapSetting[mSpawn][yPos]);
-    stmt_bind_value(updatesettingstmt, 5, DB::TYPE_FLOAT, MapSetting[mSpawn][zPos]);
-    stmt_bind_value(updatesettingstmt, 6, DB::TYPE_INT, MapSetting[mInterior]);
-    stmt_bind_value(updatesettingstmt, 7, DB::TYPE_INT, MapSetting[mVirtualWorld]);
+	stmt_bind_value(updatesettingstmt, 0, DB::TYPE_INT, TS_VERSION);
+	stmt_bind_value(updatesettingstmt, 1, DB::TYPE_INT, gettime());
+	stmt_bind_value(updatesettingstmt, 2, DB::TYPE_STRING, MapSetting[mAuthor]);
+	stmt_bind_value(updatesettingstmt, 3, DB::TYPE_FLOAT, MapSetting[mSpawn][xPos]);
+	stmt_bind_value(updatesettingstmt, 4, DB::TYPE_FLOAT, MapSetting[mSpawn][yPos]);
+	stmt_bind_value(updatesettingstmt, 5, DB::TYPE_FLOAT, MapSetting[mSpawn][zPos]);
+	stmt_bind_value(updatesettingstmt, 6, DB::TYPE_INT, MapSetting[mInterior]);
+	stmt_bind_value(updatesettingstmt, 7, DB::TYPE_INT, MapSetting[mVirtualWorld]);
 
-    // Execute statement
-    stmt_execute(updatesettingstmt);
+	// Execute statement
+	stmt_execute(updatesettingstmt);
 	stmt_close(updatesettingstmt);
 }
 
@@ -1222,27 +1222,27 @@ sqlite_LoadRemoveBuildings()
 	loadremovebuldingstmt = db_prepare(EditMap, "SELECT * FROM `RemovedBuildings`");
 
 	// Bind our results
-    stmt_bind_result_field(loadremovebuldingstmt, 0, DB::TYPE_INT, tmpremove[rModel]);
-    stmt_bind_result_field(loadremovebuldingstmt, 1, DB::TYPE_FLOAT, tmpremove[rX]);
-    stmt_bind_result_field(loadremovebuldingstmt, 2, DB::TYPE_FLOAT, tmpremove[rY]);
-    stmt_bind_result_field(loadremovebuldingstmt, 3, DB::TYPE_FLOAT, tmpremove[rZ]);
-    stmt_bind_result_field(loadremovebuldingstmt, 4, DB::TYPE_FLOAT, tmpremove[rRange]);
+	stmt_bind_result_field(loadremovebuldingstmt, 0, DB::TYPE_INT, tmpremove[rModel]);
+	stmt_bind_result_field(loadremovebuldingstmt, 1, DB::TYPE_FLOAT, tmpremove[rX]);
+	stmt_bind_result_field(loadremovebuldingstmt, 2, DB::TYPE_FLOAT, tmpremove[rY]);
+	stmt_bind_result_field(loadremovebuldingstmt, 3, DB::TYPE_FLOAT, tmpremove[rZ]);
+	stmt_bind_result_field(loadremovebuldingstmt, 4, DB::TYPE_FLOAT, tmpremove[rRange]);
 
 	// Execute query
-    if(stmt_execute(loadremovebuldingstmt))
-    {
+	if(stmt_execute(loadremovebuldingstmt))
+	{
 		new count;
-        while(stmt_fetch_row(loadremovebuldingstmt))
-        {
+		while(stmt_fetch_row(loadremovebuldingstmt))
+		{
 			// Add the removed building
 			AddRemoveBuilding(tmpremove[rModel], tmpremove[rX], tmpremove[rY], tmpremove[rZ], tmpremove[rRange], false);
 			count++;
-        }
+		}
 		stmt_close(loadremovebuldingstmt);
-        return count;
-    }
+		return count;
+	}
 	stmt_close(loadremovebuldingstmt);
-    return 0;
+	return 0;
 }
 
 // Load settings
@@ -1250,35 +1250,35 @@ new DBStatement:loadsettingstmt;
 
 sqlite_LoadSettings()
 {
-    new tmpsetting[MAPOPTIONS];
+	new tmpsetting[MAPOPTIONS];
 
 	loadsettingstmt = db_prepare(EditMap, "SELECT * FROM `Settings`");
 
 	// Bind our results
-    stmt_bind_result_field(loadsettingstmt, 0, DB::TYPE_INT, tmpsetting[mVersion]);
-    stmt_bind_result_field(loadsettingstmt, 1, DB::TYPE_INT, tmpsetting[mLastEdit]);
-    stmt_bind_result_field(loadsettingstmt, 2, DB::TYPE_STRING, tmpsetting[mAuthor], MAX_PLAYER_NAME);
-    stmt_bind_result_field(loadsettingstmt, 3, DB::TYPE_FLOAT, tmpsetting[mSpawn][xPos]);
-    stmt_bind_result_field(loadsettingstmt, 4, DB::TYPE_FLOAT, tmpsetting[mSpawn][yPos]);
-    stmt_bind_result_field(loadsettingstmt, 5, DB::TYPE_FLOAT, tmpsetting[mSpawn][zPos]);
-    stmt_bind_result_field(loadsettingstmt, 6, DB::TYPE_INT, tmpsetting[mInterior]);
-    stmt_bind_result_field(loadsettingstmt, 7, DB::TYPE_INT, tmpsetting[mVirtualWorld]);
-    
-    // Set to default
-    //ResetSettings();
+	stmt_bind_result_field(loadsettingstmt, 0, DB::TYPE_INT, tmpsetting[mVersion]);
+	stmt_bind_result_field(loadsettingstmt, 1, DB::TYPE_INT, tmpsetting[mLastEdit]);
+	stmt_bind_result_field(loadsettingstmt, 2, DB::TYPE_STRING, tmpsetting[mAuthor], MAX_PLAYER_NAME);
+	stmt_bind_result_field(loadsettingstmt, 3, DB::TYPE_FLOAT, tmpsetting[mSpawn][xPos]);
+	stmt_bind_result_field(loadsettingstmt, 4, DB::TYPE_FLOAT, tmpsetting[mSpawn][yPos]);
+	stmt_bind_result_field(loadsettingstmt, 5, DB::TYPE_FLOAT, tmpsetting[mSpawn][zPos]);
+	stmt_bind_result_field(loadsettingstmt, 6, DB::TYPE_INT, tmpsetting[mInterior]);
+	stmt_bind_result_field(loadsettingstmt, 7, DB::TYPE_INT, tmpsetting[mVirtualWorld]);
+	
+	// Set to default
+	//ResetSettings();
 
 	// Execute query
-    if(stmt_execute(loadsettingstmt))
-    {
-        if(stmt_fetch_row(loadsettingstmt))
-        {
-            // Set to loaded data
-            MapSetting = tmpsetting;
+	if(stmt_execute(loadsettingstmt))
+	{
+		if(stmt_fetch_row(loadsettingstmt))
+		{
+			// Set to loaded data
+			MapSetting = tmpsetting;
 			return 1;
-        }
-    }
+		}
+	}
 	stmt_close(loadsettingstmt);
-    return 0;
+	return 0;
 }
 
 
@@ -1313,7 +1313,7 @@ UpdateMaterial(index)
 // Highlights a object
 HighlightObject(index)
 {
-    for(new i = 0; i < MAX_MATERIALS; i++) SetDynamicObjectMaterial(ObjectData[index][oID], i, -1, "none", "none", HIGHLIGHT_OBJECT_COLOR);
+	for(new i = 0; i < MAX_MATERIALS; i++) SetDynamicObjectMaterial(ObjectData[index][oID], i, -1, "none", "none", HIGHLIGHT_OBJECT_COLOR);
 	return 1;
 }
 
@@ -1324,7 +1324,7 @@ UpdateObjectText(index)
 	// Dialogs return literal values this will fix that issue to display correctly
 	new tmptext[MAX_TEXT_LENGTH];
 	strcat(tmptext, ObjectData[index][oObjectText], MAX_TEXT_LENGTH);
-    FixText(tmptext);
+	FixText(tmptext);
 
 	if(ObjectData[index][ousetext])
 	{
@@ -1354,27 +1354,27 @@ FixText(text[])
 			if(text[i] == 92)
 			{
 				// New line
-			    if(text[i+1] == 'n')
-			    {
+				if(text[i+1] == 'n')
+				{
 					text[i] = '\n';
 					for(new j = i+1; j < len; j++) text[j] = text[j+1], text[j+1] = 0;
 					continue;
-			    }
+				}
 
 				// Tab
-			    if(text[i+1] == 't')
-			    {
+				if(text[i+1] == 't')
+				{
 					text[i] = '\t';
 					for(new j = i+1; j < len-1; j++) text[j] = text[j+1], text[j+1] = 0;
 					continue;
-			    }
+				}
 
 				// Literal
-			    if(text[i+1] == 92)
-			    {
+				if(text[i+1] == 92)
+				{
 					text[i] = 92;
 					for(new j = i+1; j < len-1; j++) text[j] = text[j+1], text[j+1] = 0;
-			    }
+				}
 			}
 		}
 	}
@@ -1385,14 +1385,14 @@ FixText(text[])
 Edit_SetObjectPos(index, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz, bool:save)
 {
 
-    SaveUndoInfo(index, UNDO_TYPE_EDIT);
+	SaveUndoInfo(index, UNDO_TYPE_EDIT);
 
 	ObjectData[index][oX] = x;
-    ObjectData[index][oY] = y;
-    ObjectData[index][oZ] = z;
-    ObjectData[index][oRX] = rx;
-    ObjectData[index][oRY] = ry;
-    ObjectData[index][oRZ] = rz;
+	ObjectData[index][oY] = y;
+	ObjectData[index][oZ] = z;
+	ObjectData[index][oRX] = rx;
+	ObjectData[index][oRY] = ry;
+	ObjectData[index][oRZ] = rz;
 
 	SetDynamicObjectPos(ObjectData[index][oID], ObjectData[index][oX], ObjectData[index][oY], ObjectData[index][oZ]);
 	SetDynamicObjectRot(ObjectData[index][oID], ObjectData[index][oRX], ObjectData[index][oRY], ObjectData[index][oRZ]);
@@ -1403,7 +1403,7 @@ Edit_SetObjectPos(index, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz
 		UpdateObject3DText(index);
 
 		// Update the database
-	    sqlite_UpdateObjectPos(index);
+		sqlite_UpdateObjectPos(index);
 	}
 
 	return 1;
@@ -1415,25 +1415,25 @@ UpdateObject3DText(index, bool:newobject=false)
 
 	if(!newobject) DestroyDynamic3DTextLabel(ObjectData[index][oTextID]);
 
-    if(!TextOption[tShowText] && !TextOption[tAlwaysShowNew] && newobject)
-        return 1;
-    
+	if(!TextOption[tShowText] && !TextOption[tAlwaysShowNew] && newobject)
+		return 1;
+	
 	// 3D Text Label (To identify objects)
 	new line[128];
 	format(line, sizeof(line), "Ind: {33DD11}%i%s", index,
-        (TextOption[tShowGroup] ? sprintf(" {FF8800}Grp:{33DD11} %i", ObjectData[index][oGroup]) : ("")));
-    
-    // Append note
-    if(TextOption[tShowModel])
-    {
-        strcat(line, sprintf("\n{FF8800}Model: {33DD11}%i\n{FF8800}Name: {33DD11}%s", ObjectData[index][oModel], GetModelName(ObjectData[index][oModel])));
-    }
-    
-    // Append note
-    if(TextOption[tShowNote] && strlen(ObjectData[index][oNote]))
-    {
-        strcat(line, sprintf("\n{FF8800}Note: {33DD11}%s", ObjectData[index][oNote]));
-    }
+		(TextOption[tShowGroup] ? sprintf(" {FF8800}Grp:{33DD11} %i", ObjectData[index][oGroup]) : ("")));
+	
+	// Append note
+	if(TextOption[tShowModel])
+	{
+		strcat(line, sprintf("\n{FF8800}Model: {33DD11}%i\n{FF8800}Name: {33DD11}%s", ObjectData[index][oModel], GetModelName(ObjectData[index][oModel])));
+	}
+	
+	// Append note
+	if(TextOption[tShowNote] && strlen(ObjectData[index][oNote]))
+	{
+		strcat(line, sprintf("\n{FF8800}Note: {33DD11}%s", ObjectData[index][oNote]));
+	}
 
 	// Shows the models index
 	if(ObjectData[index][oAttachedVehicle] > -1)
@@ -1446,7 +1446,7 @@ UpdateObject3DText(index, bool:newobject=false)
 	// Update the streamer
 	foreach(new i : Player)
 	{
-	    if(IsPlayerInRangeOfPoint(i, 300.0, ObjectData[index][oX], ObjectData[index][oY], ObjectData[index][oZ])) Streamer_Update(i);
+		if(IsPlayerInRangeOfPoint(i, 300.0, ObjectData[index][oX], ObjectData[index][oY], ObjectData[index][oZ])) Streamer_Update(i);
 	}
 
 	return 1;
@@ -1457,107 +1457,107 @@ UpdateObject3DText(index, bool:newobject=false)
 // Calculates group object / whole map rotations
 AttachObjectToPoint(objectid, Float:px, Float:py, Float:pz, Float:prx, Float:pry, Float:prz, &Float:RetX, &Float:RetY, &Float:RetZ, &Float:RetRX, &Float:RetRY, &Float:RetRZ, sync_rotation = 1)
 {
-    new
-        Float:g_sin[3],
-        Float:g_cos[3],
+	new
+		Float:g_sin[3],
+		Float:g_cos[3],
 
-        Float:off_x,
-        Float:off_y,
-        Float:off_z;
+		Float:off_x,
+		Float:off_y,
+		Float:off_z;
 
-    EDIT_FloatEulerFix(prx, pry, prz);
+	EDIT_FloatEulerFix(prx, pry, prz);
 
 
-    off_x = ObjectData[objectid][oX] - px; // static offset
-    off_y = ObjectData[objectid][oY] - py; // static offset
-    off_z = ObjectData[objectid][oZ] - pz; // static offset
+	off_x = ObjectData[objectid][oX] - px; // static offset
+	off_y = ObjectData[objectid][oY] - py; // static offset
+	off_z = ObjectData[objectid][oZ] - pz; // static offset
 
-    // Calculate the new position
-    EDIT_FloatConvertValue(prx, pry, prz, g_sin, g_cos);
-    RetX = px + off_x * g_cos[1] * g_cos[2] - off_x * g_sin[0] * g_sin[1] * g_sin[2] - off_y * g_cos[0] * g_sin[2] + off_z * g_sin[1] * g_cos[2] + off_z * g_sin[0] * g_cos[1] * g_sin[2];
-    RetY = py + off_x * g_cos[1] * g_sin[2] + off_x * g_sin[0] * g_sin[1] * g_cos[2] + off_y * g_cos[0] * g_cos[2] + off_z * g_sin[1] * g_sin[2] - off_z * g_sin[0] * g_cos[1] * g_cos[2];
-    RetZ = pz - off_x * g_cos[0] * g_sin[1] + off_y * g_sin[0] + off_z * g_cos[0] * g_cos[1];
+	// Calculate the new position
+	EDIT_FloatConvertValue(prx, pry, prz, g_sin, g_cos);
+	RetX = px + off_x * g_cos[1] * g_cos[2] - off_x * g_sin[0] * g_sin[1] * g_sin[2] - off_y * g_cos[0] * g_sin[2] + off_z * g_sin[1] * g_cos[2] + off_z * g_sin[0] * g_cos[1] * g_sin[2];
+	RetY = py + off_x * g_cos[1] * g_sin[2] + off_x * g_sin[0] * g_sin[1] * g_cos[2] + off_y * g_cos[0] * g_cos[2] + off_z * g_sin[1] * g_sin[2] - off_z * g_sin[0] * g_cos[1] * g_cos[2];
+	RetZ = pz - off_x * g_cos[0] * g_sin[1] + off_y * g_sin[0] + off_z * g_cos[0] * g_cos[1];
 
-    if (sync_rotation)
-    {
-        // Calculate the new rotation
-        EDIT_FloatConvertValue(asin(g_cos[0] * g_cos[1]), atan2(g_sin[0], g_cos[0] * g_sin[1]) + ObjectData[objectid][oRZ], atan2(g_cos[1] * g_cos[2] * g_sin[0] - g_sin[1] * g_sin[2], g_cos[2] * g_sin[1] - g_cos[1] * g_sin[0] * -g_sin[2]), g_sin, g_cos);
- 	  	EDIT_FloatConvertValue(asin(g_cos[0] * g_sin[1]), atan2(g_cos[0] * g_cos[1], g_sin[0]), atan2(g_cos[2] * g_sin[0] * g_sin[1] - g_cos[1] * g_sin[2], g_cos[1] * g_cos[2] + g_sin[0] * g_sin[1] * g_sin[2]), g_sin, g_cos);
-        EDIT_FloatConvertValue(atan2(g_sin[0], g_cos[0] * g_cos[1]) + ObjectData[objectid][oRX], asin(g_cos[0] * g_sin[1]), atan2(g_cos[2] * g_sin[0] * g_sin[1] + g_cos[1] * g_sin[2], g_cos[1] * g_cos[2] - g_sin[0] * g_sin[1] * g_sin[2]), g_sin, g_cos);
+	if (sync_rotation)
+	{
+		// Calculate the new rotation
+		EDIT_FloatConvertValue(asin(g_cos[0] * g_cos[1]), atan2(g_sin[0], g_cos[0] * g_sin[1]) + ObjectData[objectid][oRZ], atan2(g_cos[1] * g_cos[2] * g_sin[0] - g_sin[1] * g_sin[2], g_cos[2] * g_sin[1] - g_cos[1] * g_sin[0] * -g_sin[2]), g_sin, g_cos);
+		EDIT_FloatConvertValue(asin(g_cos[0] * g_sin[1]), atan2(g_cos[0] * g_cos[1], g_sin[0]), atan2(g_cos[2] * g_sin[0] * g_sin[1] - g_cos[1] * g_sin[2], g_cos[1] * g_cos[2] + g_sin[0] * g_sin[1] * g_sin[2]), g_sin, g_cos);
+		EDIT_FloatConvertValue(atan2(g_sin[0], g_cos[0] * g_cos[1]) + ObjectData[objectid][oRX], asin(g_cos[0] * g_sin[1]), atan2(g_cos[2] * g_sin[0] * g_sin[1] + g_cos[1] * g_sin[2], g_cos[1] * g_cos[2] - g_sin[0] * g_sin[1] * g_sin[2]), g_sin, g_cos);
 
-   	    RetRX = asin(g_cos[1] * g_sin[0]);
+		RetRX = asin(g_cos[1] * g_sin[0]);
 		RetRY = atan2(g_sin[1], g_cos[0] * g_cos[1]) + ObjectData[objectid][oRY];
 		RetRZ = atan2(g_cos[0] * g_sin[2] - g_cos[2] * g_sin[0] * g_sin[1], g_cos[0] * g_cos[2] + g_sin[0] * g_sin[1] * g_sin[2]);
-    }
+	}
 }
 
 AttachObjectToPoint_GroupEdit(objectid, Float:offx, Float:offy, Float:offz, Float:px, Float:py, Float:pz, Float:prx, Float:pry, Float:prz, &Float:RetX, &Float:RetY, &Float:RetZ, &Float:RetRX, &Float:RetRY, &Float:RetRZ, sync_rotation = 1)
 {
-    new
-        Float:g_sin[3],
-        Float:g_cos[3],
-        Float:off_x,
-        Float:off_y,
-        Float:off_z;
+	new
+		Float:g_sin[3],
+		Float:g_cos[3],
+		Float:off_x,
+		Float:off_y,
+		Float:off_z;
 
-    EDIT_FloatEulerFix(prx, pry, prz);
+	EDIT_FloatEulerFix(prx, pry, prz);
 
-    off_x = offx - px; // static offset
-    off_y = offy - py; // static offset
-    off_z = offz - pz; // static offset
+	off_x = offx - px; // static offset
+	off_y = offy - py; // static offset
+	off_z = offz - pz; // static offset
 
-    // Calculate the new position
-    EDIT_FloatConvertValue(prx, pry, prz, g_sin, g_cos);
-    RetX = px + off_x * g_cos[1] * g_cos[2] - off_x * g_sin[0] * g_sin[1] * g_sin[2] - off_y * g_cos[0] * g_sin[2] + off_z * g_sin[1] * g_cos[2] + off_z * g_sin[0] * g_cos[1] * g_sin[2];
-    RetY = py + off_x * g_cos[1] * g_sin[2] + off_x * g_sin[0] * g_sin[1] * g_cos[2] + off_y * g_cos[0] * g_cos[2] + off_z * g_sin[1] * g_sin[2] - off_z * g_sin[0] * g_cos[1] * g_cos[2];
-    RetZ = pz - off_x * g_cos[0] * g_sin[1] + off_y * g_sin[0] + off_z * g_cos[0] * g_cos[1];
+	// Calculate the new position
+	EDIT_FloatConvertValue(prx, pry, prz, g_sin, g_cos);
+	RetX = px + off_x * g_cos[1] * g_cos[2] - off_x * g_sin[0] * g_sin[1] * g_sin[2] - off_y * g_cos[0] * g_sin[2] + off_z * g_sin[1] * g_cos[2] + off_z * g_sin[0] * g_cos[1] * g_sin[2];
+	RetY = py + off_x * g_cos[1] * g_sin[2] + off_x * g_sin[0] * g_sin[1] * g_cos[2] + off_y * g_cos[0] * g_cos[2] + off_z * g_sin[1] * g_sin[2] - off_z * g_sin[0] * g_cos[1] * g_cos[2];
+	RetZ = pz - off_x * g_cos[0] * g_sin[1] + off_y * g_sin[0] + off_z * g_cos[0] * g_cos[1];
 
-    if (sync_rotation)
-    {
-        // Calculate the new rotation
-        EDIT_FloatConvertValue(asin(g_cos[0] * g_cos[1]), atan2(g_sin[0], g_cos[0] * g_sin[1]) + ObjectData[objectid][oRZ], atan2(g_cos[1] * g_cos[2] * g_sin[0] - g_sin[1] * g_sin[2], g_cos[2] * g_sin[1] - g_cos[1] * g_sin[0] * -g_sin[2]), g_sin, g_cos);
- 	  	EDIT_FloatConvertValue(asin(g_cos[0] * g_sin[1]), atan2(g_cos[0] * g_cos[1], g_sin[0]), atan2(g_cos[2] * g_sin[0] * g_sin[1] - g_cos[1] * g_sin[2], g_cos[1] * g_cos[2] + g_sin[0] * g_sin[1] * g_sin[2]), g_sin, g_cos);
-        EDIT_FloatConvertValue(atan2(g_sin[0], g_cos[0] * g_cos[1]) + ObjectData[objectid][oRX], asin(g_cos[0] * g_sin[1]), atan2(g_cos[2] * g_sin[0] * g_sin[1] + g_cos[1] * g_sin[2], g_cos[1] * g_cos[2] - g_sin[0] * g_sin[1] * g_sin[2]), g_sin, g_cos);
+	if (sync_rotation)
+	{
+		// Calculate the new rotation
+		EDIT_FloatConvertValue(asin(g_cos[0] * g_cos[1]), atan2(g_sin[0], g_cos[0] * g_sin[1]) + ObjectData[objectid][oRZ], atan2(g_cos[1] * g_cos[2] * g_sin[0] - g_sin[1] * g_sin[2], g_cos[2] * g_sin[1] - g_cos[1] * g_sin[0] * -g_sin[2]), g_sin, g_cos);
+		EDIT_FloatConvertValue(asin(g_cos[0] * g_sin[1]), atan2(g_cos[0] * g_cos[1], g_sin[0]), atan2(g_cos[2] * g_sin[0] * g_sin[1] - g_cos[1] * g_sin[2], g_cos[1] * g_cos[2] + g_sin[0] * g_sin[1] * g_sin[2]), g_sin, g_cos);
+		EDIT_FloatConvertValue(atan2(g_sin[0], g_cos[0] * g_cos[1]) + ObjectData[objectid][oRX], asin(g_cos[0] * g_sin[1]), atan2(g_cos[2] * g_sin[0] * g_sin[1] + g_cos[1] * g_sin[2], g_cos[1] * g_cos[2] - g_sin[0] * g_sin[1] * g_sin[2]), g_sin, g_cos);
 
-   	    RetRX = asin(g_cos[1] * g_sin[0]);
+		RetRX = asin(g_cos[1] * g_sin[0]);
 		RetRY = atan2(g_sin[1], g_cos[0] * g_cos[1]) + ObjectData[objectid][oRY];
 		RetRZ = atan2(g_cos[0] * g_sin[2] - g_cos[2] * g_sin[0] * g_sin[1], g_cos[0] * g_cos[2] + g_sin[0] * g_sin[1] * g_sin[2]);
-    }
+	}
 }
 
 
 AttachPoint(Float:offx, Float:offy, Float:offz, Float:offrx, Float:offry, Float:offrz, Float:px, Float:py, Float:pz, Float:prx, Float:pry, Float:prz, &Float:RetX, &Float:RetY, &Float:RetZ, &Float:RetRX, &Float:RetRY, &Float:RetRZ, sync_rotation = 1)
 {
-    new
-        Float:g_sin[3],
-        Float:g_cos[3],
-        Float:off_x,
-        Float:off_y,
-        Float:off_z;
+	new
+		Float:g_sin[3],
+		Float:g_cos[3],
+		Float:off_x,
+		Float:off_y,
+		Float:off_z;
 
-    EDIT_FloatEulerFix(prx, pry, prz);
+	EDIT_FloatEulerFix(prx, pry, prz);
 
-    off_x = offx - px; // static offset
-    off_y = offy - py; // static offset
-    off_z = offz - pz; // static offset
+	off_x = offx - px; // static offset
+	off_y = offy - py; // static offset
+	off_z = offz - pz; // static offset
 
-    // Calculate the new position
-    EDIT_FloatConvertValue(prx, pry, prz, g_sin, g_cos);
-    RetX = px + off_x * g_cos[1] * g_cos[2] - off_x * g_sin[0] * g_sin[1] * g_sin[2] - off_y * g_cos[0] * g_sin[2] + off_z * g_sin[1] * g_cos[2] + off_z * g_sin[0] * g_cos[1] * g_sin[2];
-    RetY = py + off_x * g_cos[1] * g_sin[2] + off_x * g_sin[0] * g_sin[1] * g_cos[2] + off_y * g_cos[0] * g_cos[2] + off_z * g_sin[1] * g_sin[2] - off_z * g_sin[0] * g_cos[1] * g_cos[2];
-    RetZ = pz - off_x * g_cos[0] * g_sin[1] + off_y * g_sin[0] + off_z * g_cos[0] * g_cos[1];
+	// Calculate the new position
+	EDIT_FloatConvertValue(prx, pry, prz, g_sin, g_cos);
+	RetX = px + off_x * g_cos[1] * g_cos[2] - off_x * g_sin[0] * g_sin[1] * g_sin[2] - off_y * g_cos[0] * g_sin[2] + off_z * g_sin[1] * g_cos[2] + off_z * g_sin[0] * g_cos[1] * g_sin[2];
+	RetY = py + off_x * g_cos[1] * g_sin[2] + off_x * g_sin[0] * g_sin[1] * g_cos[2] + off_y * g_cos[0] * g_cos[2] + off_z * g_sin[1] * g_sin[2] - off_z * g_sin[0] * g_cos[1] * g_cos[2];
+	RetZ = pz - off_x * g_cos[0] * g_sin[1] + off_y * g_sin[0] + off_z * g_cos[0] * g_cos[1];
 
-    if (sync_rotation)
-    {
-        // Calculate the new rotation
-        EDIT_FloatConvertValue(asin(g_cos[0] * g_cos[1]), atan2(g_sin[0], g_cos[0] * g_sin[1]) + offrz, atan2(g_cos[1] * g_cos[2] * g_sin[0] - g_sin[1] * g_sin[2], g_cos[2] * g_sin[1] - g_cos[1] * g_sin[0] * -g_sin[2]), g_sin, g_cos);
- 	  	EDIT_FloatConvertValue(asin(g_cos[0] * g_sin[1]), atan2(g_cos[0] * g_cos[1], g_sin[0]), atan2(g_cos[2] * g_sin[0] * g_sin[1] - g_cos[1] * g_sin[2], g_cos[1] * g_cos[2] + g_sin[0] * g_sin[1] * g_sin[2]), g_sin, g_cos);
-        EDIT_FloatConvertValue(atan2(g_sin[0], g_cos[0] * g_cos[1]) + offrx, asin(g_cos[0] * g_sin[1]), atan2(g_cos[2] * g_sin[0] * g_sin[1] + g_cos[1] * g_sin[2], g_cos[1] * g_cos[2] - g_sin[0] * g_sin[1] * g_sin[2]), g_sin, g_cos);
+	if (sync_rotation)
+	{
+		// Calculate the new rotation
+		EDIT_FloatConvertValue(asin(g_cos[0] * g_cos[1]), atan2(g_sin[0], g_cos[0] * g_sin[1]) + offrz, atan2(g_cos[1] * g_cos[2] * g_sin[0] - g_sin[1] * g_sin[2], g_cos[2] * g_sin[1] - g_cos[1] * g_sin[0] * -g_sin[2]), g_sin, g_cos);
+		EDIT_FloatConvertValue(asin(g_cos[0] * g_sin[1]), atan2(g_cos[0] * g_cos[1], g_sin[0]), atan2(g_cos[2] * g_sin[0] * g_sin[1] - g_cos[1] * g_sin[2], g_cos[1] * g_cos[2] + g_sin[0] * g_sin[1] * g_sin[2]), g_sin, g_cos);
+		EDIT_FloatConvertValue(atan2(g_sin[0], g_cos[0] * g_cos[1]) + offrx, asin(g_cos[0] * g_sin[1]), atan2(g_cos[2] * g_sin[0] * g_sin[1] + g_cos[1] * g_sin[2], g_cos[1] * g_cos[2] - g_sin[0] * g_sin[1] * g_sin[2]), g_sin, g_cos);
 
-   	    RetRX = asin(g_cos[1] * g_sin[0]);
+		RetRX = asin(g_cos[1] * g_sin[0]);
 		RetRY = atan2(g_sin[1], g_cos[0] * g_cos[1]) + offry;
 		RetRZ = atan2(g_cos[0] * g_sin[2] - g_cos[2] * g_sin[0] * g_sin[1], g_cos[0] * g_cos[2] + g_sin[0] * g_sin[1] * g_sin[2]);
-    }
+	}
 }
 
 
@@ -1566,13 +1566,13 @@ AttachPoint(Float:offx, Float:offy, Float:offz, Float:offrx, Float:offry, Float:
 
 EDIT_FloatConvertValue(Float:rot_x, Float:rot_y, Float:rot_z, Float:sin[3], Float:cos[3])
 {
-    sin[0] = floatsin(rot_x, degrees);
-    sin[1] = floatsin(rot_y, degrees);
-    sin[2] = floatsin(rot_z, degrees);
-    cos[0] = floatcos(rot_x, degrees);
-    cos[1] = floatcos(rot_y, degrees);
-    cos[2] = floatcos(rot_z, degrees);
-    return 1;
+	sin[0] = floatsin(rot_x, degrees);
+	sin[1] = floatsin(rot_y, degrees);
+	sin[2] = floatsin(rot_z, degrees);
+	cos[0] = floatcos(rot_x, degrees);
+	cos[1] = floatcos(rot_y, degrees);
+	cos[2] = floatcos(rot_z, degrees);
+	return 1;
 }
 
 /*
@@ -1581,40 +1581,40 @@ EDIT_FloatConvertValue(Float:rot_x, Float:rot_y, Float:rot_z, Float:sin[3], Floa
  */
 EDIT_FloatEulerFix(&Float:rot_x, &Float:rot_y, &Float:rot_z)
 {
-    EDIT_FloatGetRemainder(rot_x, rot_y, rot_z);
-    if((!floatcmp(rot_x, 0.0) || !floatcmp(rot_x, 360.0))
-    && (!floatcmp(rot_y, 0.0) || !floatcmp(rot_y, 360.0)))
-    {
-        rot_y = 0.00000002;
-    }
-    return 1;
+	EDIT_FloatGetRemainder(rot_x, rot_y, rot_z);
+	if((!floatcmp(rot_x, 0.0) || !floatcmp(rot_x, 360.0))
+	&& (!floatcmp(rot_y, 0.0) || !floatcmp(rot_y, 360.0)))
+	{
+		rot_y = 0.00000002;
+	}
+	return 1;
 }
 
 EDIT_FloatGetRemainder(&Float:rot_x, &Float:rot_y, &Float:rot_z)
 {
-    EDIT_FloatRemainder(rot_x, 360.0);
-    EDIT_FloatRemainder(rot_y, 360.0);
-    EDIT_FloatRemainder(rot_z, 360.0);
-    return 1;
+	EDIT_FloatRemainder(rot_x, 360.0);
+	EDIT_FloatRemainder(rot_y, 360.0);
+	EDIT_FloatRemainder(rot_z, 360.0);
+	return 1;
 }
 
 EDIT_FloatRemainder(&Float:remainder, Float:value)
 {
-    if(remainder >= value)
-    {
-        while(remainder >= value)
-        {
-            remainder = remainder - value;
-        }
-    }
-    else if(remainder < 0.0)
-    {
-        while(remainder < 0.0)
-        {
-            remainder = remainder + value;
-        }
-    }
-    return 1;
+	if(remainder >= value)
+	{
+		while(remainder >= value)
+		{
+			remainder = remainder - value;
+		}
+	}
+	else if(remainder < 0.0)
+	{
+		while(remainder < 0.0)
+		{
+			remainder = remainder + value;
+		}
+	}
+	return 1;
 }
 
 // Gets the center of the map
@@ -1674,7 +1674,7 @@ AddDynamicObject(modelid, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:r
 		// Update the streamer
 		foreach(new i : Player)
 		{
-		    if(IsPlayerInRangeOfPoint(i, 300.0, x, y, z)) Streamer_Update(i);
+			if(IsPlayerInRangeOfPoint(i, 300.0, x, y, z)) Streamer_Update(i);
 		}
 
 		ObjectData[index][oModel] = modelid;
@@ -1690,15 +1690,15 @@ AddDynamicObject(modelid, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:r
 
 		if(sqlsave)
 		{
-	   		ObjectData[index][ousetext] = 0;
-	    	ObjectData[index][oFontFace] = 0;
-	    	ObjectData[index][oFontSize] = 0;
-	    	ObjectData[index][oFontBold] = 0;
-	    	ObjectData[index][oFontColor] = 0;
-	    	ObjectData[index][oBackColor] = 0;
-	    	ObjectData[index][oAlignment] = 0;
-	    	ObjectData[index][oTextFontSize] = 20;
-	    	ObjectData[index][oGroup] = 0;
+			ObjectData[index][ousetext] = 0;
+			ObjectData[index][oFontFace] = 0;
+			ObjectData[index][oFontSize] = 0;
+			ObjectData[index][oFontBold] = 0;
+			ObjectData[index][oFontColor] = 0;
+			ObjectData[index][oBackColor] = 0;
+			ObjectData[index][oAlignment] = 0;
+			ObjectData[index][oTextFontSize] = 20;
+			ObjectData[index][oGroup] = 0;
 
 			format(ObjectData[index][oObjectText], MAX_TEXT_LENGTH, "%s", "None");
 
@@ -1720,10 +1720,10 @@ DeleteDynamicObject(index, bool:sqlsave = true)
 	{
 		if(ObjectData[index][oAttachedVehicle] > -1) UpdateAttachedObjectRef(ObjectData[index][oAttachedVehicle], index);
 
-	    DestroyDynamicObject(ObjectData[index][oID]);
-	    DestroyDynamic3DTextLabel(ObjectData[index][oTextID]);
+		DestroyDynamicObject(ObjectData[index][oID]);
+		DestroyDynamic3DTextLabel(ObjectData[index][oTextID]);
 
-	    Iter_SafeRemove(Objects, index, next);
+		Iter_SafeRemove(Objects, index, next);
 
 		ResetObjectIndex(index);
 
@@ -1745,17 +1745,17 @@ CloneObject(index, grouptask=0)
 {
 	if(Iter_Contains(Objects, index))
 	{
-    	new cindex = AddDynamicObject(ObjectData[index][oModel], ObjectData[index][oX], ObjectData[index][oY], ObjectData[index][oZ], ObjectData[index][oRX], ObjectData[index][oRY], ObjectData[index][oRZ], .dd = ObjectData[index][oDD]);
+		new cindex = AddDynamicObject(ObjectData[index][oModel], ObjectData[index][oX], ObjectData[index][oY], ObjectData[index][oZ], ObjectData[index][oRX], ObjectData[index][oRY], ObjectData[index][oRZ], .dd = ObjectData[index][oDD]);
 
-  		ObjectData[cindex][ousetext] = ObjectData[index][ousetext];
-	   	ObjectData[cindex][oFontFace] = ObjectData[index][oFontFace];
-	   	ObjectData[cindex][oFontSize] = ObjectData[index][oFontSize];
-	   	ObjectData[cindex][oFontBold] = ObjectData[index][oFontBold];
-	   	ObjectData[cindex][oFontColor] = ObjectData[index][oFontColor];
-	   	ObjectData[cindex][oBackColor] = ObjectData[index][oBackColor];
-	   	ObjectData[cindex][oAlignment] = ObjectData[index][oAlignment];
-	   	ObjectData[cindex][oTextFontSize] = ObjectData[index][oTextFontSize];
-	   	ObjectData[cindex][oGroup] = ObjectData[index][oGroup];
+		ObjectData[cindex][ousetext] = ObjectData[index][ousetext];
+		ObjectData[cindex][oFontFace] = ObjectData[index][oFontFace];
+		ObjectData[cindex][oFontSize] = ObjectData[index][oFontSize];
+		ObjectData[cindex][oFontBold] = ObjectData[index][oFontBold];
+		ObjectData[cindex][oFontColor] = ObjectData[index][oFontColor];
+		ObjectData[cindex][oBackColor] = ObjectData[index][oBackColor];
+		ObjectData[cindex][oAlignment] = ObjectData[index][oAlignment];
+		ObjectData[cindex][oTextFontSize] = ObjectData[index][oTextFontSize];
+		ObjectData[cindex][oGroup] = ObjectData[index][oGroup];
 
 		for(new i = 0; i < MAX_MATERIALS; i++)
 		{
@@ -1763,7 +1763,7 @@ CloneObject(index, grouptask=0)
 			ObjectData[cindex][oColorIndex][i] = ObjectData[index][oColorIndex][i];
 		}
 
-	   	format(ObjectData[cindex][oNote], 64, "%s", ObjectData[index][oNote]);
+		format(ObjectData[cindex][oNote], 64, "%s", ObjectData[index][oNote]);
 		format(ObjectData[cindex][oObjectText], MAX_TEXT_LENGTH, "%s", ObjectData[index][oObjectText]);
 
 		// Update the materials
@@ -1788,7 +1788,7 @@ CloneObject(index, grouptask=0)
 		else SaveUndoInfo(cindex, UNDO_TYPE_CREATED);
 
 		return cindex;
-  	}
+	}
 	printf("ERROR: Tried to clone a non-existant object");
 	return -1;
 }
@@ -1827,13 +1827,13 @@ AddRemoveBuilding(model, Float:x, Float:y, Float:z, Float:range, savesql = true)
 {
 	for(new i = 0; i < MAX_REMOVE_BUILDING; i++)
 	{
-	    if(RemoveData[i][rModel] == 0)
-	    {
-	        RemoveData[i][rModel] = model;
-	        RemoveData[i][rX] = x;
-	        RemoveData[i][rY] = y;
-	        RemoveData[i][rZ] = z;
-	        RemoveData[i][rRange] = range;
+		if(RemoveData[i][rModel] == 0)
+		{
+			RemoveData[i][rModel] = model;
+			RemoveData[i][rX] = x;
+			RemoveData[i][rY] = y;
+			RemoveData[i][rZ] = z;
+			RemoveData[i][rRange] = range;
 
 			if(savesql) sqlite_InsertRemoveBuilding(i);
 
@@ -1842,7 +1842,7 @@ AddRemoveBuilding(model, Float:x, Float:y, Float:z, Float:range, savesql = true)
 				RemoveBuildingForPlayer(j, model, x, y, z, range);
 			}
 			return 1;
-	    }
+		}
 	}
 	return 0;
 }
@@ -1854,8 +1854,8 @@ ClearRemoveBuildings()
 	{
 		if(RemoveData[i][rModel] != 0)
 		{
-		    RemoveData[i][rModel] = 0;
-		    count++;
+			RemoveData[i][rModel] = 0;
+			count++;
 		}
 	}
 	if(count)
@@ -1871,10 +1871,10 @@ RemoveAllBuildings(playerid)
 {
 	for(new i = 0; i < MAX_REMOVE_BUILDING; i++)
 	{
-	    if(RemoveData[i][rModel] != 0)
-	    {
+		if(RemoveData[i][rModel] != 0)
+		{
 			RemoveBuildingForPlayer(playerid, RemoveData[i][rModel], RemoveData[i][rX], RemoveData[i][rY], RemoveData[i][rZ], RemoveData[i][rRange]);
-	    }
+		}
 	}
 }
 
@@ -1902,7 +1902,7 @@ GetPosFaInFrontOfPlayer(playerid, Float:OffDist, &Float:Pxx, &Float:Pyy, &Float:
 {
 	if(!IsPlayerConnected(playerid)) return 0;
 	new
-	    Float:playerpos[3],
+		Float:playerpos[3],
 		Float:FacingA;
 	GetPlayerPos(playerid, playerpos[0], playerpos[1], playerpos[2]);
 	GetPlayerFacingAngle(playerid, FacingA);
@@ -1954,33 +1954,33 @@ YCMD:loadmap(playerid, arg[], help)
 	if(MapOpen)
 	{
 		// Confirm open map
-	    inline Confirm(cpid, cdialogid, cresponse, clistitem, string:ctext[])
+		inline Confirm(cpid, cdialogid, cresponse, clistitem, string:ctext[])
 		{
 			#pragma unused clistitem, cdialogid, cpid, ctext
 
 			// Open a map
-		    if(cresponse)
+			if(cresponse)
 			{
-                // Update map settings
-                sqlite_UpdateSettings();
-                
-                // Close map
+				// Update map settings
+				sqlite_UpdateSettings();
+				
+				// Close map
 				db_free_persistent(EditMap);
 
 				// Delete all map objects
-                DeleteMapObjects(false);
+				DeleteMapObjects(false);
 
 				// Clear all removed buildings
 				ClearRemoveBuildings();
-                
-                // Reset settings
-                ResetSettings();
+				
+				// Reset settings
+				ResetSettings();
 
 				// Clean up vehicles
 				ClearVehicles();
 
 				// Clear copy buffer
-	            foreach(new i : Player)
+				foreach(new i : Player)
 				{
 					ClearCopyBuffer(i);
 				}
@@ -1998,15 +1998,15 @@ YCMD:loadmap(playerid, arg[], help)
 // Resets settings array
 ResetSettings()
 {
-    MapSetting[mVersion] = 0;
-    format(MapSetting[mAuthor], MAX_PLAYER_NAME, "Creator");
-    MapSetting[mLastEdit] = 0;
-    MapSetting[mInterior] = -1;
-    MapSetting[mVirtualWorld] = -1;
-    MapSetting[mSpawn][xPos] = 0.0;
-    MapSetting[mSpawn][yPos] = 0.0;
-    MapSetting[mSpawn][zPos] = 0.0;
-    return 1;
+	MapSetting[mVersion] = 0;
+	format(MapSetting[mAuthor], MAX_PLAYER_NAME, "Creator");
+	MapSetting[mLastEdit] = 0;
+	MapSetting[mInterior] = -1;
+	MapSetting[mVirtualWorld] = -1;
+	MapSetting[mSpawn][xPos] = 0.0;
+	MapSetting[mSpawn][yPos] = 0.0;
+	MapSetting[mSpawn][zPos] = 0.0;
+	return 1;
 }
 
 // Load map function call
@@ -2026,8 +2026,8 @@ LoadMap(playerid)
 	// Create a load list
 	while(dir_list(dHandle, item, type))
 	{
-   		if(type != FM_DIR)
-	    {
+		if(type != FM_DIR)
+		{
 			// We need to check extension
 			if(strlen(item) > 3)
 			{
@@ -2040,7 +2040,7 @@ LoadMap(playerid)
 					fcount++;
 				}
 			}
-	    }
+		}
 	}
 
 	//sort the maps alphabetically
@@ -2057,7 +2057,7 @@ LoadMap(playerid)
 		{
 			NewMap(playerid);
 		}
-	    return 1;
+		return 1;
 	}
 
 	//loop infinitely so we can easily re-show the dialog with pagination
@@ -2097,25 +2097,25 @@ LoadMap(playerid)
 		format(MapName, sizeof(MapName), "tstudio/SavedMaps/%s", response[E_DIALOG_RESPONSE_InputText]);
 
 		// Map is now open
-        EditMap = db_open_persistent(MapName);
+		EditMap = db_open_persistent(MapName);
 
-        // Load the maps settings
-        sqlite_LoadSettings();
-        
+		// Load the maps settings
+		sqlite_LoadSettings();
+		
 		// Perform any version updates
 		sqlite_UpdateDB();
 
 		// Load the maps remove buildings
-	    new rmcount = sqlite_LoadRemoveBuildings();
+		new rmcount = sqlite_LoadRemoveBuildings();
 
-        // Load the maps objects
-        new ocount = sqlite_LoadMapObjects();
+		// Load the maps objects
+		new ocount = sqlite_LoadMapObjects();
 
 		// Load any vehicles
-	    sqlite_LoadCars();
+		sqlite_LoadCars();
 
 		// Map is now open
-        MapOpen = true;
+		MapOpen = true;
 
 		// Default editing mode
 		EditingMode[playerid] = false;
@@ -2123,20 +2123,20 @@ LoadMap(playerid)
 
 		SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 		SendClientMessage(playerid, STEALTH_GREEN, sprintf("You have loaded a map with %i objects and %i removed buildings.", ocount, rmcount));
-        
-        new DBResult:timeResult = db_query(EditMap, sprintf("SELECT datetime(%i, 'unixepoch', 'localtime')", MapSetting[mLastEdit]));
-        new timestr[64];
-        db_get_field(timeResult, 0, timestr, 64);
-        db_free_result(timeResult);
-        
-        if(MapSetting[mLastEdit])
-		{
-            SendClientMessage(playerid, STEALTH_GREEN, sprintf("This map was created by %s.", MapSetting[mAuthor]));
-            SendClientMessage(playerid, STEALTH_GREEN, sprintf("This map was last edited on %s.", timestr)); // by %s
-        }
 		
-        // Update the maps settings, so the last edit time updates
-        sqlite_UpdateSettings();
+		new DBResult:timeResult = db_query(EditMap, sprintf("SELECT datetime(%i, 'unixepoch', 'localtime')", MapSetting[mLastEdit]));
+		new timestr[64];
+		db_get_field(timeResult, 0, timestr, 64);
+		db_free_result(timeResult);
+		
+		if(MapSetting[mLastEdit])
+		{
+			SendClientMessage(playerid, STEALTH_GREEN, sprintf("This map was created by %s.", MapSetting[mAuthor]));
+			SendClientMessage(playerid, STEALTH_GREEN, sprintf("This map was last edited on %s.", timestr)); // by %s
+		}
+		
+		// Update the maps settings, so the last edit time updates
+		sqlite_UpdateSettings();
 		break;
 	}
 	list_delete(maps);
@@ -2272,12 +2272,12 @@ YCMD:newmap(playerid, arg[], help)
 	if(MapOpen)
 	{
 		// Confirm open map
-	    inline Confirm(cpid, cdialogid, cresponse, clistitem, string:ctext[])
+		inline Confirm(cpid, cdialogid, cresponse, clistitem, string:ctext[])
 		{
 			#pragma unused clistitem, cdialogid, cpid, ctext
 
 			// Open a map
-		    if(cresponse)
+			if(cresponse)
 			{
 				// Close map
 				db_free_persistent(EditMap);
@@ -2285,7 +2285,7 @@ YCMD:newmap(playerid, arg[], help)
 				ClearAllUndoInfo();
 
 				// Delete all map objects
-                DeleteMapObjects(false);
+				DeleteMapObjects(false);
 
 				// Clear all removed buildings
 				ClearRemoveBuildings();
@@ -2294,7 +2294,7 @@ YCMD:newmap(playerid, arg[], help)
 				ClearVehicles();
 
 				// No map open
-                MapOpen = false;
+				MapOpen = false;
 
 				// Load map
 				NewMap(playerid);
@@ -2302,10 +2302,10 @@ YCMD:newmap(playerid, arg[], help)
 				// Reset player variables
 				foreach(new i : Player)
 				{
-                    CancelEdit(i);
+					CancelEdit(i);
 					EditingMode[i] = false;
-                    SetCurrObject(playerid, -1);
-                    ClearCopyBuffer(i);
+					SetCurrObject(playerid, -1);
+					ClearCopyBuffer(i);
 				}
 			}
 		}
@@ -2318,11 +2318,11 @@ YCMD:newmap(playerid, arg[], help)
 // New map function call
 NewMap(playerid)
 {
-    inline CreateMap(cpid, cdialogid, cresponse, clistitem, string:ctext[])
+	inline CreateMap(cpid, cdialogid, cresponse, clistitem, string:ctext[])
 	{
-	    #pragma unused clistitem, cdialogid, cpid
+		#pragma unused clistitem, cdialogid, cpid
 		if(cresponse)
-	    {
+		{
 			if(!isnull(ctext))
 			{
 				format(MapName, sizeof(MapName), "tstudio/SavedMaps/%s.db", ctext);
@@ -2330,26 +2330,26 @@ NewMap(playerid)
 				if(!fexist(MapName))
 				{
 					// Open the map for editing
-		            EditMap = db_open_persistent(MapName);
+					EditMap = db_open_persistent(MapName);
 
 					// Create new table for map
-		            sqlite_CreateNewMap();
-                    
+					sqlite_CreateNewMap();
+					
 					// Map is now open
-		            MapOpen = true;
+					MapOpen = true;
 
-                    // Set map default settings
-                    MapSetting[mVersion] = TS_VERSION;
-                    MapSetting[mLastEdit] = gettime();
+					// Set map default settings
+					MapSetting[mVersion] = TS_VERSION;
+					MapSetting[mLastEdit] = gettime();
 					GetPlayerName(playerid, MapSetting[mAuthor], MAX_PLAYER_NAME);
-                    MapSetting[mSpawn][xPos] = 0.0;
-                    MapSetting[mSpawn][yPos] = 0.0;
-                    MapSetting[mSpawn][zPos] = 0.0;
-                    MapSetting[mInterior] = -1;
-                    MapSetting[mVirtualWorld] = -1;
-    
-                    // Update the map settings, to set the last edit time and insert the player name
-                    sqlite_UpdateSettings();
+					MapSetting[mSpawn][xPos] = 0.0;
+					MapSetting[mSpawn][yPos] = 0.0;
+					MapSetting[mSpawn][zPos] = 0.0;
+					MapSetting[mInterior] = -1;
+					MapSetting[mVirtualWorld] = -1;
+	
+					// Update the map settings, to set the last edit time and insert the player name
+					sqlite_UpdateSettings();
 
 					SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 					SendClientMessage(playerid, STEALTH_GREEN, "You have created a new map");
@@ -2367,7 +2367,7 @@ NewMap(playerid)
 				SendClientMessage(playerid, STEALTH_YELLOW, "You must give your new map a filename");
 				NewMap(playerid);
 			}
-	    }
+		}
 	}
 	Dialog_ShowCallback(playerid, using inline CreateMap, DIALOG_STYLE_INPUT, "Texture Studio", "Enter a new map name", "Ok", "Cancel");
 }
@@ -2388,12 +2388,12 @@ YCMD:importmap(playerid, arg[], help)
 		if(Iter_Count(Objects))
 		{
 			// Ask to load more objects
-		    inline Import(ipid, idialogid, iresponse, ilistitem, string:itext[])
+			inline Import(ipid, idialogid, iresponse, ilistitem, string:itext[])
 			{
 				#pragma unused ilistitem, idialogid, ipid, itext
 				if(iresponse) ImportMap(playerid);
 			}
-	        Dialog_ShowCallback(playerid, using inline Import, DIALOG_STYLE_MSGBOX, "Texture Studio", "This map has objects are you import more objects?", "Ok", "Cancel");
+			Dialog_ShowCallback(playerid, using inline Import, DIALOG_STYLE_MSGBOX, "Texture Studio", "This map has objects are you import more objects?", "Ok", "Cancel");
 		}
 		// No map loaded import a new map
 		else ImportMap(playerid);
@@ -2423,22 +2423,22 @@ ImportMap(playerid)
 	// Create a load list
 	while(dir_list(dHandle, item, itype))
 	{
-   		if(itype != FM_DIR)
-	    {
+		if(itype != FM_DIR)
+		{
 			format(line, sizeof(line), "%s\n%s", item, line);
 			fcount++;
-	    }
+		}
 	}
 
 	// Found import files
 	if(fcount > 0)
 	{
-        inline Select(spid, sdialogid, sresponse, slistitem, string:stext[])
-        {
-            #pragma unused slistitem, sdialogid, spid
+		inline Select(spid, sdialogid, sresponse, slistitem, string:stext[])
+		{
+			#pragma unused slistitem, sdialogid, spid
 			// Selected a file
-            if(sresponse)
-            {
+			if(sresponse)
+			{
 				SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 				SendClientMessage(playerid, STEALTH_GREEN, "Map importing has started, this make a while depending on map size");
 
@@ -2455,13 +2455,13 @@ ImportMap(playerid)
 					strtrim(templine);
 				
 					new type;
-			  		if(strfind(templine, "CreateObject(", true) != -1) type = 1;
-			        else if(strfind(templine, "CreateDynamicObject(", true) != -1) type = 1;
-			        else if(strfind(templine, "RemoveBuildingForPlayer(", true) != -1) type = 2;
-			        else if(strfind(templine, "SetObjectMaterial(", true) != -1) type = 3;
-			        else if(strfind(templine, "SetDynamicObjectMaterial(", true) != -1) type = 3;
-			        else if(strfind(templine, "SetObjectMaterialText(", true) != -1) type = 4;
-			        else if(strfind(templine, "SetDynamicObjectMaterialText(", true) != -1) type = 4;
+					if(strfind(templine, "CreateObject(", true) != -1) type = 1;
+					else if(strfind(templine, "CreateDynamicObject(", true) != -1) type = 1;
+					else if(strfind(templine, "RemoveBuildingForPlayer(", true) != -1) type = 2;
+					else if(strfind(templine, "SetObjectMaterial(", true) != -1) type = 3;
+					else if(strfind(templine, "SetDynamicObjectMaterial(", true) != -1) type = 3;
+					else if(strfind(templine, "SetObjectMaterialText(", true) != -1) type = 4;
+					else if(strfind(templine, "SetDynamicObjectMaterialText(", true) != -1) type = 4;
 					else continue;
 					
 					new assignment = strfind(templine, "="); 
@@ -2478,8 +2478,8 @@ ImportMap(playerid)
 							continue;
 						
 						// Create the new object
-				        templast = AddDynamicObject(tmpobject[oModel], tmpobject[oX], tmpobject[oY], tmpobject[oZ], tmpobject[oRX], tmpobject[oRY], tmpobject[oRZ]);
-	                    icount++;
+						templast = AddDynamicObject(tmpobject[oModel], tmpobject[oX], tmpobject[oY], tmpobject[oZ], tmpobject[oRX], tmpobject[oRY], tmpobject[oRZ]);
+						icount++;
 					}
 					else if(type == 2)
 					{
@@ -2489,7 +2489,7 @@ ImportMap(playerid)
 						// Delete building
 						AddRemoveBuilding(tmpremove[rModel], tmpremove[rX], tmpremove[rY], tmpremove[rZ], tmpremove[rRange], true);
 
-					    rcount++;
+						rcount++;
 					}
 					else if(type == 3)
 					{
@@ -2511,21 +2511,21 @@ ImportMap(playerid)
 								break;
 							}
 						}
-                        
-                        sqlite_SaveMaterialIndex(templast);
-                        sqlite_SaveColorIndex(templast);
+						
+						sqlite_SaveMaterialIndex(templast);
+						sqlite_SaveColorIndex(templast);
 			
-                        UpdateMaterial(templast);
+						UpdateMaterial(templast);
 					}
 					else if(type == 4)
 					{
 						//SetObjectMaterialText(tmp, text[], index, mat_size, fontface[], fontsize, bold, color, backcolor, alignment)
-                        
-                        // start by extracting text[], removing it from the parameters
-                        // then sscanf all other params separate
+						
+						// start by extracting text[], removing it from the parameters
+						// then sscanf all other params separate
 					}
-                    
-                    UpdateObject3DText(templast, true);
+					
+					UpdateObject3DText(templast, true);
 				}
 				db_end_transaction(EditMap);
 
@@ -2534,9 +2534,9 @@ ImportMap(playerid)
 
 				// Were done importing
 				fclose(f);
-            }
+			}
 		}
-        Dialog_ShowCallback(playerid, using inline Select, DIALOG_STYLE_LIST, "Texture Studio (Import Map)", line, "Ok", "Cancel");
+		Dialog_ShowCallback(playerid, using inline Select, DIALOG_STYLE_LIST, "Texture Studio (Import Map)", line, "Ok", "Cancel");
 	}
 	else
 	{
@@ -2560,16 +2560,16 @@ YCMD:export(playerid, arg[], help)
 
 	inline Export(epid, edialogid, eresponse, elistitem, string:etext[])
 	{
-        #pragma unused elistitem, edialogid, epid, etext
+		#pragma unused elistitem, edialogid, epid, etext
 		if(eresponse)
 		{
-		    switch(elistitem)
-		    {
-		        case 0: BroadcastCommand(playerid, "/exportmap");
+			switch(elistitem)
+			{
+				case 0: BroadcastCommand(playerid, "/exportmap");
 				case 1: BroadcastCommand(playerid, "/exportallmap");
-		        case 2: BroadcastCommand(playerid, "/avexport");
-		        case 3: BroadcastCommand(playerid, "/avexportall");
-		    }
+				case 2: BroadcastCommand(playerid, "/avexport");
+				case 3: BroadcastCommand(playerid, "/avexportall");
+			}
 		}
 	}
 
@@ -2593,30 +2593,30 @@ YCMD:exportmap(playerid, arg[], help)
 	// Ask for a map name
 	inline ExportMap(epid, edialogid, eresponse, elistitem, string:etext[])
 	{
-	    #pragma unused elistitem, edialogid, epid
-	    if(eresponse)
-	    {
+		#pragma unused elistitem, edialogid, epid
+		if(eresponse)
+		{
 			// Was a map name supplied ?
 			if(!isnull(etext))
 			{
 				// Get the draw distance
-	            inline DrawDist(dpid, ddialogid, dresponse, dlistitem, string:dtext[])
-	            {
-	                #pragma unused dlistitem, ddialogid, dpid
+				inline DrawDist(dpid, ddialogid, dresponse, dlistitem, string:dtext[])
+				{
+					#pragma unused dlistitem, ddialogid, dpid
 					new Float:dist;
 
 					// Set the drawdistance
 					if(dresponse)
 					{
-                        if(sscanf(dtext, "f", dist)) dist = 300.0;
-                        /*else foreach(new i : Objects)
-                        {
-                            if(ObjectData[i][oDD] == 300.0) // Default oDD
-                                ObjectData[i][oDD] = dist;
-                        }*/
+						if(sscanf(dtext, "f", dist)) dist = 300.0;
+						/*else foreach(new i : Objects)
+						{
+							if(ObjectData[i][oDD] == 300.0) // Default oDD
+								ObjectData[i][oDD] = dist;
+						}*/
 					}
 					else dist = 300.0;
-                    
+					
 
 					new exportmap[256];
 
@@ -2632,25 +2632,25 @@ YCMD:exportmap(playerid, arg[], help)
 					format(exportmap, sizeof(exportmap), "tstudio/ExportMaps/%s.txt", etext);
 
 					// Map exists ask to remove
-				    if(fexist(exportmap))
+					if(fexist(exportmap))
 					{
 						inline RemoveMap(rpid, rdialogid, rresponse, rlistitem, string:rtext[])
 						{
-					        #pragma unused rlistitem, rdialogid, rpid, rtext
+							#pragma unused rlistitem, rdialogid, rpid, rtext
 
 							// Remove map and export
-					        if(rresponse)
-					        {
-					            fremove(exportmap);
-					            MapExport(playerid, exportmap, dist);
-					        }
+							if(rresponse)
+							{
+								fremove(exportmap);
+								MapExport(playerid, exportmap, dist);
+							}
 						}
 						Dialog_ShowCallback(playerid, using inline RemoveMap, DIALOG_STYLE_MSGBOX, "Texture Studio (Export Map)", "A export exists with this name replace?", "Ok", "Cancel");
 					}
 					// We can start the export
 					else MapExport(playerid, exportmap, dist);
 				}
-            	Dialog_ShowCallback(playerid, using inline DrawDist, DIALOG_STYLE_INPUT, "Texture Studio (Map Export)", "Enter the draw distance for objects\n(Note: Default draw distance is 300.0)", "Ok", "Cancel");
+				Dialog_ShowCallback(playerid, using inline DrawDist, DIALOG_STYLE_INPUT, "Texture Studio (Map Export)", "Enter the draw distance for objects\n(Note: Default draw distance is 300.0)", "Ok", "Cancel");
 			}
 			else
 			{
@@ -2672,8 +2672,8 @@ MapExport(playerid, mapname[], Float:drawdist)
 
 	format(exportmap, sizeof(exportmap), "%s", mapname);
 
-    inline ExportType(epid, edialogid, eresponse, elistitem, string:etext[])
-    {
+	inline ExportType(epid, edialogid, eresponse, elistitem, string:etext[])
+	{
 		#pragma unused edialogid, epid, etext
 		if(eresponse)
 		{
@@ -2687,29 +2687,29 @@ MapExport(playerid, mapname[], Float:drawdist)
 			fwrite(f,"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////\r\n");
 
 			fwrite(f,"\r\n//Map Information////////////////////////////////////////////////////////////////////////////////////////////////\r\n");
-            
-            new DBResult:timeResult = db_query(EditMap, sprintf("SELECT datetime(%i, 'unixepoch', 'localtime')", gettime()));
-            new timestr[64];
-            db_get_field(timeResult, 0, timestr, 64);
-            db_free_result(timeResult);
-            
-            fwrite(f,"/*\r\n");
-            fwrite(f,sprintf("\tExported on \"%s\" by \"%s\"\r\n", timestr, ReturnPlayerName(playerid)));
-            fwrite(f,sprintf("\tCreated by \"%s\"\r\n", MapSetting[mAuthor]));
-            if(MapSetting[mSpawn][xPos])
-                fwrite(f,sprintf("\tSpawn Position: %f, %f, %f\r\n", MapSetting[mSpawn][xPos], MapSetting[mSpawn][yPos], MapSetting[mSpawn][zPos]));
-            fwrite(f,"*/");
 			
-            fwrite(f,"\r\n/////////////////////////////////////////////////////////////////////////////////////////////////////////////////\r\n");
+			new DBResult:timeResult = db_query(EditMap, sprintf("SELECT datetime(%i, 'unixepoch', 'localtime')", gettime()));
+			new timestr[64];
+			db_get_field(timeResult, 0, timestr, 64);
+			db_free_result(timeResult);
+			
+			fwrite(f,"/*\r\n");
+			fwrite(f,sprintf("\tExported on \"%s\" by \"%s\"\r\n", timestr, ReturnPlayerName(playerid)));
+			fwrite(f,sprintf("\tCreated by \"%s\"\r\n", MapSetting[mAuthor]));
+			if(MapSetting[mSpawn][xPos])
+				fwrite(f,sprintf("\tSpawn Position: %f, %f, %f\r\n", MapSetting[mSpawn][xPos], MapSetting[mSpawn][yPos], MapSetting[mSpawn][zPos]));
+			fwrite(f,"*/");
+			
+			fwrite(f,"\r\n/////////////////////////////////////////////////////////////////////////////////////////////////////////////////\r\n");
 
 			if(RemoveData[0][rModel] != 0) fwrite(f,"\r\n//Remove Buildings///////////////////////////////////////////////////////////////////////////////////////////////\r\n");
 
 			for(new i = 0; i < MAX_REMOVE_BUILDING; i++)
 			{
-			    if(RemoveData[i][rModel] != 0)
-			    {
+				if(RemoveData[i][rModel] != 0)
+				{
 					format(templine, sizeof(templine), "RemoveBuildingForPlayer(playerid, %i, %.3f, %.3f, %.3f, %.3f);\r\n", RemoveData[i][rModel], RemoveData[i][rX], RemoveData[i][rY], RemoveData[i][rZ], RemoveData[i][rRange]);
-                    fwrite(f,templine);
+					fwrite(f,templine);
 				}
 			}
 
@@ -2722,15 +2722,15 @@ MapExport(playerid, mapname[], Float:drawdist)
 			// Write all objects with materials first
 			foreach(new i : Objects)
 			{
-			    if(ObjectData[i][oAttachedVehicle] > -1) continue;
+				if(ObjectData[i][oAttachedVehicle] > -1) continue;
 
 				new bool:writeobject, Float:odd = (ObjectData[i][oDD] != 300.0 ? ObjectData[i][oDD] : drawdist);
 
 				// Does the object have materials?
-		        for(new j = 0; j < MAX_MATERIALS; j++)
-		        {
-		            if(ObjectData[i][oTexIndex][j] != 0 || ObjectData[i][oColorIndex][j] != 0 || ObjectData[i][ousetext])
-		            {
+				for(new j = 0; j < MAX_MATERIALS; j++)
+				{
+					if(ObjectData[i][oTexIndex][j] != 0 || ObjectData[i][oColorIndex][j] != 0 || ObjectData[i][ousetext])
+					{
 						writeobject = true;
 						break;
 					}
@@ -2744,31 +2744,31 @@ MapExport(playerid, mapname[], Float:drawdist)
 					// Write the create object line
 					if(elistitem == 0)
 					{
-				        format(templine,sizeof(templine),"tmpobjid = CreateObject(%i, %f, %f, %f, %f, %f, %f, %.2f); %s\r\n",ObjectData[i][oModel],ObjectData[i][oX],ObjectData[i][oY],ObjectData[i][oZ],ObjectData[i][oRX],ObjectData[i][oRY],ObjectData[i][oRZ],odd,
-                            strlen(ObjectData[i][oNote]) ? sprintf("// %s", ObjectData[i][oNote]) : (""));
-				        fwrite(f,templine);
+						format(templine,sizeof(templine),"tmpobjid = CreateObject(%i, %f, %f, %f, %f, %f, %f, %.2f); %s\r\n",ObjectData[i][oModel],ObjectData[i][oX],ObjectData[i][oY],ObjectData[i][oZ],ObjectData[i][oRX],ObjectData[i][oRY],ObjectData[i][oRZ],odd,
+							strlen(ObjectData[i][oNote]) ? sprintf("// %s", ObjectData[i][oNote]) : (""));
+						fwrite(f,templine);
 					}
 
 					// Write the create dynamic object line
 					else if(elistitem == 1)
 					{
 						format(templine,sizeof(templine),"tmpobjid = CreateDynamicObjectEx(%i, %f, %f, %f, %f, %f, %f, %.2f, %.2f); %s\r\n",ObjectData[i][oModel],ObjectData[i][oX],ObjectData[i][oY],ObjectData[i][oZ],ObjectData[i][oRX],ObjectData[i][oRY],ObjectData[i][oRZ],odd,odd,
-                            strlen(ObjectData[i][oNote]) ? sprintf("// %s", ObjectData[i][oNote]) : (""));
-				        fwrite(f,templine);
+							strlen(ObjectData[i][oNote]) ? sprintf("// %s", ObjectData[i][oNote]) : (""));
+						fwrite(f,templine);
 					}
 					else if(elistitem  == 2)
 					{
 						format(templine,sizeof(templine),"tmpobjid = CreateDynamicObject(%i, %f, %f, %f, %f, %f, %f, -1, -1, -1, %.2f, %.2f); %s\r\n",ObjectData[i][oModel],ObjectData[i][oX],ObjectData[i][oY],ObjectData[i][oZ],ObjectData[i][oRX],ObjectData[i][oRY],ObjectData[i][oRZ],odd,odd,
-                            strlen(ObjectData[i][oNote]) ? sprintf("// %s", ObjectData[i][oNote]) : (""));
-				        fwrite(f,templine);
+							strlen(ObjectData[i][oNote]) ? sprintf("// %s", ObjectData[i][oNote]) : (""));
+						fwrite(f,templine);
 					}
 
 					// Write all materials and colors
-		  			for(new j = 0; j < MAX_MATERIALS; j++)
-		        	{
+					for(new j = 0; j < MAX_MATERIALS; j++)
+					{
 						// Does object have a texture set?
-			            if(ObjectData[i][oTexIndex][j] != 0)
-			            {
+						if(ObjectData[i][oTexIndex][j] != 0)
+						{
 							if(elistitem == 0)
 							{
 								format(templine,sizeof(templine),"SetObjectMaterial(tmpobjid, %i, %i, %c%s%c, %c%s%c, 0x%X);\r\n", j, GetTModel(ObjectData[i][oTexIndex][j]), 34, GetTXDName(ObjectData[i][oTexIndex][j]), 34, 34,GetTextureName(ObjectData[i][oTexIndex][j]), 34, ObjectData[i][oColorIndex][j]);
@@ -2779,10 +2779,10 @@ MapExport(playerid, mapname[], Float:drawdist)
 								format(templine,sizeof(templine),"SetDynamicObjectMaterial(tmpobjid, %i, %i, %c%s%c, %c%s%c, 0x%X);\r\n", j, GetTModel(ObjectData[i][oTexIndex][j]), 34, GetTXDName(ObjectData[i][oTexIndex][j]), 34, 34,GetTextureName(ObjectData[i][oTexIndex][j]), 34, ObjectData[i][oColorIndex][j]);
 								fwrite(f,templine);
 							}
-			            }
-			            // No texture how about a color?
-			            else if(ObjectData[i][oColorIndex][j] != 0)
-			            {
+						}
+						// No texture how about a color?
+						else if(ObjectData[i][oColorIndex][j] != 0)
+						{
 							if(elistitem == 0)
 							{
 								format(templine,sizeof(templine),"SetObjectMaterial(tmpobjid, %i, -1, %c%s%c, %c%s%c, 0x%X);\r\n", j, 34, "none", 34, 34,"none", 34, ObjectData[i][oColorIndex][j]);
@@ -2840,16 +2840,16 @@ MapExport(playerid, mapname[], Float:drawdist)
 			// We need to write all of the objects that didn't have materials set now
 			foreach(new i : Objects)
 			{
-			    if(ObjectData[i][oAttachedVehicle] > -1) continue;
+				if(ObjectData[i][oAttachedVehicle] > -1) continue;
 
 				new bool:writeobject = true, Float:odd = (ObjectData[i][oDD] != 300.0 ? ObjectData[i][oDD] : drawdist);
 
 				// Does the object have materials?
-		        for(new j = 0; j < MAX_MATERIALS; j++)
-		        {
+				for(new j = 0; j < MAX_MATERIALS; j++)
+				{
 					// This object has already been written
-		            if(ObjectData[i][oTexIndex][j] != 0 || ObjectData[i][oColorIndex][j] != 0 || ObjectData[i][ousetext])
-		            {
+					if(ObjectData[i][oTexIndex][j] != 0 || ObjectData[i][oColorIndex][j] != 0 || ObjectData[i][ousetext])
+					{
 						writeobject = false;
 						break;
 					}
@@ -2860,21 +2860,21 @@ MapExport(playerid, mapname[], Float:drawdist)
 				{
 					if(elistitem == 0)
 					{
-				        format(templine,sizeof(templine),"tmpobjid = CreateObject(%i, %f, %f, %f, %f, %f, %f, %.2f); %s\r\n",ObjectData[i][oModel],ObjectData[i][oX],ObjectData[i][oY],ObjectData[i][oZ],ObjectData[i][oRX],ObjectData[i][oRY],ObjectData[i][oRZ],odd,
-				            strlen(ObjectData[i][oNote]) ? sprintf("// %s", ObjectData[i][oNote]) : (""));
-				        fwrite(f,templine);
+						format(templine,sizeof(templine),"tmpobjid = CreateObject(%i, %f, %f, %f, %f, %f, %f, %.2f); %s\r\n",ObjectData[i][oModel],ObjectData[i][oX],ObjectData[i][oY],ObjectData[i][oZ],ObjectData[i][oRX],ObjectData[i][oRY],ObjectData[i][oRZ],odd,
+							strlen(ObjectData[i][oNote]) ? sprintf("// %s", ObjectData[i][oNote]) : (""));
+						fwrite(f,templine);
 					}
 					else if(elistitem == 1)
 					{
-				        format(templine,sizeof(templine),"tmpobjid = CreateDynamicObjectEx(%i, %f, %f, %f, %f, %f, %f, %.2f, %.2f); %s\r\n",ObjectData[i][oModel],ObjectData[i][oX],ObjectData[i][oY],ObjectData[i][oZ],ObjectData[i][oRX],ObjectData[i][oRY],ObjectData[i][oRZ],odd,odd,
-				            strlen(ObjectData[i][oNote]) ? sprintf("// %s", ObjectData[i][oNote]) : (""));
-				        fwrite(f,templine);
+						format(templine,sizeof(templine),"tmpobjid = CreateDynamicObjectEx(%i, %f, %f, %f, %f, %f, %f, %.2f, %.2f); %s\r\n",ObjectData[i][oModel],ObjectData[i][oX],ObjectData[i][oY],ObjectData[i][oZ],ObjectData[i][oRX],ObjectData[i][oRY],ObjectData[i][oRZ],odd,odd,
+							strlen(ObjectData[i][oNote]) ? sprintf("// %s", ObjectData[i][oNote]) : (""));
+						fwrite(f,templine);
 					}
 					else if(elistitem == 2)
 					{
 						format(templine,sizeof(templine),"tmpobjid = CreateDynamicObject(%i, %f, %f, %f, %f, %f, %f, -1, -1, -1, %.2f, %.2f); %s\r\n",ObjectData[i][oModel],ObjectData[i][oX],ObjectData[i][oY],ObjectData[i][oZ],ObjectData[i][oRX],ObjectData[i][oRY],ObjectData[i][oRZ],odd,odd,
-				            strlen(ObjectData[i][oNote]) ? sprintf("// %s", ObjectData[i][oNote]) : (""));
-				        fwrite(f,templine);
+							strlen(ObjectData[i][oNote]) ? sprintf("// %s", ObjectData[i][oNote]) : (""));
+						fwrite(f,templine);
 					}
 				}
 			}
@@ -2886,7 +2886,7 @@ MapExport(playerid, mapname[], Float:drawdist)
 
 		}
 	}
-    Dialog_ShowCallback(playerid, using inline ExportType, DIALOG_STYLE_LIST, "Texture Studio (Export Map)", "Type 1 - CreateObject()\nType 2 - CreateDynamicObjectEx()\nType 3 - CreateDyanmicObject", "Ok", "Cancel");
+	Dialog_ShowCallback(playerid, using inline ExportType, DIALOG_STYLE_LIST, "Texture Studio (Export Map)", "Type 1 - CreateObject()\nType 2 - CreateDynamicObjectEx()\nType 3 - CreateDyanmicObject", "Ok", "Cancel");
 
 	return 1;
 }
@@ -2906,22 +2906,22 @@ YCMD:exportallmap(playerid, arg[], help)
 	// Ask for a map name
 	inline ExportMap(epid, edialogid, eresponse, elistitem, string:etext[])
 	{
-	    #pragma unused elistitem, edialogid, epid
-	    if(eresponse)
-	    {
+		#pragma unused elistitem, edialogid, epid
+		if(eresponse)
+		{
 			// Was a map name supplied ?
 			if(!isnull(etext))
 			{
 				// Get the draw distance
-	            inline DrawDist(dpid, ddialogid, dresponse, dlistitem, string:dtext[])
-	            {
-	                #pragma unused dlistitem, ddialogid, dpid
+				inline DrawDist(dpid, ddialogid, dresponse, dlistitem, string:dtext[])
+				{
+					#pragma unused dlistitem, ddialogid, dpid
 					new Float:dist;
 
 					// Set the drawdistance
 					if(dresponse)
 					{
-                        if(sscanf(dtext, "f", dist)) dist = 300.0;
+						if(sscanf(dtext, "f", dist)) dist = 300.0;
 					}
 					else dist = 300.0;
 
@@ -2939,25 +2939,25 @@ YCMD:exportallmap(playerid, arg[], help)
 					format(exportmap, sizeof(exportmap), "tstudio/ExportMaps/%s.pwn", etext);
 
 					// Map exists ask to remove
-				    if(fexist(exportmap))
+					if(fexist(exportmap))
 					{
 						inline RemoveMap(rpid, rdialogid, rresponse, rlistitem, string:rtext[])
 						{
-					        #pragma unused rlistitem, rdialogid, rpid, rtext
+							#pragma unused rlistitem, rdialogid, rpid, rtext
 
 							// Remove map and export
-					        if(rresponse)
-					        {
-					            fremove(exportmap);
-					            MapExportAll(playerid, exportmap, dist);
-					        }
+							if(rresponse)
+							{
+								fremove(exportmap);
+								MapExportAll(playerid, exportmap, dist);
+							}
 						}
 						Dialog_ShowCallback(playerid, using inline RemoveMap, DIALOG_STYLE_MSGBOX, "Texture Studio (Export Map)", "A export exists with this name replace?", "Ok", "Cancel");
 					}
 					// We can start the export
 					else MapExportAll(playerid, exportmap, dist);
 				}
-            	Dialog_ShowCallback(playerid, using inline DrawDist, DIALOG_STYLE_INPUT, "Texture Studio (Map Export)", "Enter the draw distance for objects\n(Note: Default draw distance is 300.0)", "Ok", "Cancel");
+				Dialog_ShowCallback(playerid, using inline DrawDist, DIALOG_STYLE_INPUT, "Texture Studio (Map Export)", "Enter the draw distance for objects\n(Note: Default draw distance is 300.0)", "Ok", "Cancel");
 			}
 			else
 			{
@@ -2982,21 +2982,21 @@ static MapExportAll(playerid, name[], Float:drawdist)
 	fwrite(f,"///////////////////////////////////////////////////////////and Crayder///////////////////////////////////////////\r\n");
 	fwrite(f,"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////\r\n");
 
-    fwrite(f,"\r\n//Map Information////////////////////////////////////////////////////////////////////////////////////////////////\r\n");
-    
-    new DBResult:timeResult = db_query(EditMap, sprintf("SELECT datetime(%i, 'unixepoch', 'localtime')", gettime()));
-    new timestr[64];
-    db_get_field(timeResult, 0, timestr, 64);
-    db_free_result(timeResult);
-    fwrite(f,"/*\r\n");
-    fwrite(f,sprintf("\tExported on \"%s\" by \"%s\"\r\n", timestr, ReturnPlayerName(playerid)));
-    fwrite(f,sprintf("\tCreated by \"%s\"\r\n", MapSetting[mAuthor]));
-    if(MapSetting[mSpawn][xPos])
-        fwrite(f,sprintf("\tSpawn Position: %f, %f, %f\r\n", MapSetting[mSpawn][xPos], MapSetting[mSpawn][yPos], MapSetting[mSpawn][zPos]));
-    fwrite(f,"*/");
-    
-    fwrite(f,"\r\n/////////////////////////////////////////////////////////////////////////////////////////////////////////////////\r\n\r\n");
-    
+	fwrite(f,"\r\n//Map Information////////////////////////////////////////////////////////////////////////////////////////////////\r\n");
+	
+	new DBResult:timeResult = db_query(EditMap, sprintf("SELECT datetime(%i, 'unixepoch', 'localtime')", gettime()));
+	new timestr[64];
+	db_get_field(timeResult, 0, timestr, 64);
+	db_free_result(timeResult);
+	fwrite(f,"/*\r\n");
+	fwrite(f,sprintf("\tExported on \"%s\" by \"%s\"\r\n", timestr, ReturnPlayerName(playerid)));
+	fwrite(f,sprintf("\tCreated by \"%s\"\r\n", MapSetting[mAuthor]));
+	if(MapSetting[mSpawn][xPos])
+		fwrite(f,sprintf("\tSpawn Position: %f, %f, %f\r\n", MapSetting[mSpawn][xPos], MapSetting[mSpawn][yPos], MapSetting[mSpawn][zPos]));
+	fwrite(f,"*/");
+	
+	fwrite(f,"\r\n/////////////////////////////////////////////////////////////////////////////////////////////////////////////////\r\n\r\n");
+	
 	// Includes
 	fwrite(f, "#include <a_samp>\r\n");
 	fwrite(f, "#include <streamer>\r\n\n");
@@ -3014,86 +3014,86 @@ static MapExportAll(playerid, name[], Float:drawdist)
 	fwrite(f, "\n");
 
 	// Init script
-    fwrite(f, "public OnFilterScriptInit()\r\n");
-    fwrite(f, "{ \r\n");
-    fwrite(f,"    new tmpobjid;\r\n\n");
+	fwrite(f, "public OnFilterScriptInit()\r\n");
+	fwrite(f, "{ \r\n");
+	fwrite(f,"    new tmpobjid;\r\n\n");
 
 	foreach(new i : Cars)
 	{
 		format(templine, sizeof(templine), "    carvid_%i = CreateVehicle(%i,%.3f,%.3f,%.3f,%.3f,%i,%i,-1);\r\n",
-	        CurrCar++, CarData[i][CarModel], CarData[i][CarSpawnX], CarData[i][CarSpawnY], CarData[i][CarSpawnZ], CarData[i][CarSpawnFA], CarData[i][CarColor1], CarData[i][CarColor2]
+			CurrCar++, CarData[i][CarModel], CarData[i][CarSpawnX], CarData[i][CarSpawnY], CarData[i][CarSpawnZ], CarData[i][CarSpawnFA], CarData[i][CarColor1], CarData[i][CarColor2]
 		);
-        fwrite(f, templine);
+		fwrite(f, templine);
 	}
 
 	CurrCar = 0;
 
-    fwrite(f, "\n");
+	fwrite(f, "\n");
 
 	foreach(new i : Cars)
 	{
 		// Mod components
 		for(new j = 0; j < MAX_CAR_COMPONENTS; j++)
 		{
-		    if(CarData[i][CarComponents][j] > 0)
-		    {
-		        format(templine, sizeof(templine), "    AddVehicleComponent(carvid_%i, %i);\r\n", CurrCar, CarData[i][CarComponents][j]);
+			if(CarData[i][CarComponents][j] > 0)
+			{
+				format(templine, sizeof(templine), "    AddVehicleComponent(carvid_%i, %i);\r\n", CurrCar, CarData[i][CarComponents][j]);
 				fwrite(f, templine);
-		    }
+			}
 		}
 		CurrCar++;
 	}
 
-    CurrCar = 0;
+	CurrCar = 0;
 
-    fwrite(f, "\n");
+	fwrite(f, "\n");
 
 	foreach(new i : Cars)
 	{
 		// Paintjob
 		if(CarData[i][CarPaintJob] < 3)
 		{
-	        format(templine, sizeof(templine), "    ChangeVehiclePaintjob(carvid_%i, %i);\r\n", CurrCar, CarData[i][CarPaintJob]);
+			format(templine, sizeof(templine), "    ChangeVehiclePaintjob(carvid_%i, %i);\r\n", CurrCar, CarData[i][CarPaintJob]);
 			fwrite(f, templine);
 		}
 		CurrCar++;
 	}
 
-    CurrCar = 0;
+	CurrCar = 0;
 
-    fwrite(f, "\n");
+	fwrite(f, "\n");
 
 	foreach(new i : Cars)
 	{
 		// Objects
-	    for(new j = 0; j < MAX_CAR_OBJECTS; j++)
-	    {
+		for(new j = 0; j < MAX_CAR_OBJECTS; j++)
+		{
 			// No object
-	        if(CarData[i][CarObjectRef][j] == -1) continue;
-	        new oindex = CarData[i][CarObjectRef][j];
+			if(CarData[i][CarObjectRef][j] == -1) continue;
+			new oindex = CarData[i][CarObjectRef][j];
 
 			// Create object
 			format(templine,sizeof(templine),"    tmpobjid = CreateDynamicObject(%i,0.0,0.0,-1000.0,0.0,0.0,0.0,-1,-1,-1,300.0,300.0); %s\r\n",ObjectData[oindex][oModel],
-	            strlen(ObjectData[i][oNote]) ? sprintf("// %s", ObjectData[i][oNote]) : (""));
-            fwrite(f,templine);
+				strlen(ObjectData[i][oNote]) ? sprintf("// %s", ObjectData[i][oNote]) : (""));
+			fwrite(f,templine);
 
 
 			// Write all materials and colors
 			for(new k = 0; k < MAX_MATERIALS; k++)
-	    	{
+			{
 				// Does object have a texture set?
-	            if(ObjectData[oindex][oTexIndex][k] != 0)
-	            {
+				if(ObjectData[oindex][oTexIndex][k] != 0)
+				{
 					format(templine,sizeof(templine),"    SetDynamicObjectMaterial(tmpobjid, %i, %i, %c%s%c, %c%s%c, 0x%X);\r\n",
 						k, GetTModel(ObjectData[oindex][oTexIndex][k]), 34, GetTXDName(ObjectData[oindex][oTexIndex][k]), 34, 34,GetTextureName(ObjectData[oindex][oTexIndex][k]), 34, ObjectData[oindex][oColorIndex][k]
 					);
 
 					fwrite(f,templine);
-	            }
+				}
 
-	            // No texture how about a color?
-	            else if(ObjectData[oindex][oColorIndex][k] != 0)
-	            {
+				// No texture how about a color?
+				else if(ObjectData[oindex][oColorIndex][k] != 0)
+				{
 					format(templine,sizeof(templine),"    SetDynamicObjectMaterial(tmpobjid, %i, -1, %c%s%c, %c%s%c, 0x%X);\r\n", j, 34, "none", 34, 34,"none", 34, ObjectData[oindex][oColorIndex][k]);
 					fwrite(f,templine);
 				}
@@ -3132,15 +3132,15 @@ static MapExportAll(playerid, name[], Float:drawdist)
 	// Write all objects with materials first
 	foreach(new i : Objects)
 	{
-	    if(ObjectData[i][oAttachedVehicle] > -1) continue;
+		if(ObjectData[i][oAttachedVehicle] > -1) continue;
 
-        new bool:writeobject, Float:odd = (ObjectData[i][oDD] != 300.0 ? ObjectData[i][oDD] : drawdist);
+		new bool:writeobject, Float:odd = (ObjectData[i][oDD] != 300.0 ? ObjectData[i][oDD] : drawdist);
 
 		// Does the object have materials?
-        for(new j = 0; j < MAX_MATERIALS; j++)
-        {
-            if(ObjectData[i][oTexIndex][j] != 0 || ObjectData[i][oColorIndex][j] != 0 || ObjectData[i][ousetext])
-            {
+		for(new j = 0; j < MAX_MATERIALS; j++)
+		{
+			if(ObjectData[i][oTexIndex][j] != 0 || ObjectData[i][oColorIndex][j] != 0 || ObjectData[i][ousetext])
+			{
 				writeobject = true;
 				break;
 			}
@@ -3152,21 +3152,21 @@ static MapExportAll(playerid, name[], Float:drawdist)
 			mobjects++;
 
 			format(templine,sizeof(templine),"    tmpobjid = CreateDynamicObject(%i, %f, %f, %f, %f, %f, %f, -1, -1, -1, %.2f, %.2f); %s\r\n",ObjectData[i][oModel],ObjectData[i][oX],ObjectData[i][oY],ObjectData[i][oZ],ObjectData[i][oRX],ObjectData[i][oRY],ObjectData[i][oRZ],odd,odd,
-	            strlen(ObjectData[i][oNote]) ? sprintf("// %s", ObjectData[i][oNote]) : (""));
+				strlen(ObjectData[i][oNote]) ? sprintf("// %s", ObjectData[i][oNote]) : (""));
 			fwrite(f,templine);
 
 			// Write all materials and colors
-  			for(new j = 0; j < MAX_MATERIALS; j++)
-        	{
+			for(new j = 0; j < MAX_MATERIALS; j++)
+			{
 				// Does object have a texture set?
-	            if(ObjectData[i][oTexIndex][j] != 0)
-	            {
+				if(ObjectData[i][oTexIndex][j] != 0)
+				{
 					format(templine,sizeof(templine),"    SetDynamicObjectMaterial(tmpobjid, %i, %i, %c%s%c, %c%s%c, 0x%X);\r\n", j, GetTModel(ObjectData[i][oTexIndex][j]), 34, GetTXDName(ObjectData[i][oTexIndex][j]), 34, 34,GetTextureName(ObjectData[i][oTexIndex][j]), 34, ObjectData[i][oColorIndex][j]);
 					fwrite(f,templine);
-	            }
-	            // No texture how about a color?
-	            else if(ObjectData[i][oColorIndex][j] != 0)
-	            {
+				}
+				// No texture how about a color?
+				else if(ObjectData[i][oColorIndex][j] != 0)
+				{
 					format(templine,sizeof(templine),"    SetDynamicObjectMaterial(tmpobjid, %i, -1, %c%s%c, %c%s%c, 0x%X);\r\n", j, 34, "none", 34, 34,"none", 34, ObjectData[i][oColorIndex][j]);
 					fwrite(f,templine);
 				}
@@ -3193,16 +3193,16 @@ static MapExportAll(playerid, name[], Float:drawdist)
 	// We need to write all of the objects that didn't have materials set now
 	foreach(new i : Objects)
 	{
-	    if(ObjectData[i][oAttachedVehicle] > -1) continue;
+		if(ObjectData[i][oAttachedVehicle] > -1) continue;
 
-        new bool:writeobject = true, Float:odd = (ObjectData[i][oDD] != 300.0 ? ObjectData[i][oDD] : drawdist);
+		new bool:writeobject = true, Float:odd = (ObjectData[i][oDD] != 300.0 ? ObjectData[i][oDD] : drawdist);
 
 		// Does the object have materials?
-        for(new j = 0; j < MAX_MATERIALS; j++)
-        {
+		for(new j = 0; j < MAX_MATERIALS; j++)
+		{
 			// This object has already been written
-            if(ObjectData[i][oTexIndex][j] != 0 || ObjectData[i][oColorIndex][j] != 0 || ObjectData[i][ousetext])
-            {
+			if(ObjectData[i][oTexIndex][j] != 0 || ObjectData[i][oColorIndex][j] != 0 || ObjectData[i][ousetext])
+			{
 				writeobject = false;
 				break;
 			}
@@ -3212,7 +3212,7 @@ static MapExportAll(playerid, name[], Float:drawdist)
 		if(writeobject)
 		{
 			format(templine,sizeof(templine),"    tmpobjid = CreateDynamicObject(%i, %f, %f, %f, %f, %f, %f, -1, -1, -1, %.2f, %.2f); %s\r\n",ObjectData[i][oModel],ObjectData[i][oX],ObjectData[i][oY],ObjectData[i][oZ],ObjectData[i][oRX],ObjectData[i][oRY],ObjectData[i][oRZ],odd,odd,
-	            strlen(ObjectData[i][oNote]) ? sprintf("// %s", ObjectData[i][oNote]) : (""));
+				strlen(ObjectData[i][oNote]) ? sprintf("// %s", ObjectData[i][oNote]) : (""));
 			fwrite(f,templine);
 		}
 	}
@@ -3220,82 +3220,82 @@ static MapExportAll(playerid, name[], Float:drawdist)
 	fwrite(f, "\r\n");
 
 	fwrite(f, "    for(new i = 0; i < MAX_PLAYERS; i++)\r\n");
-    fwrite(f, "    { \r\n");
-    fwrite(f, "        if(!IsPlayerConnected(i)) continue; \r\n");
-    fwrite(f, "        OnPlayerConnect(i); \r\n");
+	fwrite(f, "    { \r\n");
+	fwrite(f, "        if(!IsPlayerConnected(i)) continue; \r\n");
+	fwrite(f, "        OnPlayerConnect(i); \r\n");
 	fwrite(f, "    } \r\n\n");
 	fwrite(f, "    return 1; \r\n\n");
-    fwrite(f, "} \r\n\n");
+	fwrite(f, "} \r\n\n");
 
 	CurrCar = 0;
 
 	// Exit script
-    fwrite(f, "public OnFilterScriptExit()\r\n");
-    fwrite(f, "{ \r\n");
+	fwrite(f, "public OnFilterScriptExit()\r\n");
+	fwrite(f, "{ \r\n");
 
 	foreach(new i : Cars)
 	{
 		format(templine, sizeof(templine), "    DestroyVehicle(carvid_%i);\r\n", CurrCar);
-    	fwrite(f, templine);
-        CurrCar++;
+		fwrite(f, templine);
+		CurrCar++;
 	}
 
-    fwrite(f, "} \r\n\n");
+	fwrite(f, "} \r\n\n");
 
 	// Remove building script
-    fwrite(f, "public OnPlayerConnect(playerid)\r\n");
-    fwrite(f, "{ \r\n");
+	fwrite(f, "public OnPlayerConnect(playerid)\r\n");
+	fwrite(f, "{ \r\n");
 
 	for(new i = 0; i < MAX_REMOVE_BUILDING; i++)
 	{
-	    if(RemoveData[i][rModel] != 0)
-	    {
+		if(RemoveData[i][rModel] != 0)
+		{
 			format(templine, sizeof(templine), "	RemoveBuildingForPlayer(playerid, %i, %.3f, %.3f, %.3f, %.3f);\r\n", RemoveData[i][rModel], RemoveData[i][rX], RemoveData[i][rY], RemoveData[i][rZ], RemoveData[i][rRange]);
-            fwrite(f,templine);
+			fwrite(f,templine);
 		}
 	}
 
-    fwrite(f, "} \r\n\n");
+	fwrite(f, "} \r\n\n");
 
-    CurrCar = 0;
+	CurrCar = 0;
 
 	// Vehicle respawn
-    fwrite(f, "public OnVehicleSpawn(vehicleid)\r\n");
+	fwrite(f, "public OnVehicleSpawn(vehicleid)\r\n");
 
-    fwrite(f, "{ \r\n");
-    foreach(new i : Cars)
-    {
+	fwrite(f, "{ \r\n");
+	foreach(new i : Cars)
+	{
 		if(CurrCar == 0) format(templine, sizeof(templine), "    if(vehicleid == carvid_%i)\r\n", CurrCar);
 		else format(templine, sizeof(templine), "    else if(vehicleid == carvid_%i)\r\n", CurrCar);
-        fwrite(f, templine);
+		fwrite(f, templine);
 
 		fwrite(f, "    {\r\n");
 
 		// Mod components
 		for(new j = 0; j < MAX_CAR_COMPONENTS; j++)
 		{
-		    if(CarData[i][CarComponents][j] > 0)
-		    {
-		        format(templine, sizeof(templine), "        AddVehicleComponent(carvid_%i, %i);\r\n", CurrCar, CarData[i][CarComponents][i]);
+			if(CarData[i][CarComponents][j] > 0)
+			{
+				format(templine, sizeof(templine), "        AddVehicleComponent(carvid_%i, %i);\r\n", CurrCar, CarData[i][CarComponents][i]);
 				fwrite(f, templine);
-		    }
+			}
 		}
 
 		// Paintjob
 		if(CarData[i][CarPaintJob] < 3)
 		{
-	        format(templine, sizeof(templine), "        ChangeVehiclePaintjob(carvid_%i, %i);\r\n", CurrCar, CarData[i][CarPaintJob]);
+			format(templine, sizeof(templine), "        ChangeVehiclePaintjob(carvid_%i, %i);\r\n", CurrCar, CarData[i][CarPaintJob]);
 			fwrite(f, templine);
 		}
 
-	    fwrite(f, "    }\r\n");
+		fwrite(f, "    }\r\n");
 
-        CurrCar++;
+		CurrCar++;
 	}
 
-    fwrite(f, "} \r\n");
+	fwrite(f, "} \r\n");
 
-    fclose(f);
+	fclose(f);
 
 	format(templine, sizeof(templine), "Exported vehicles to filterscript %s", name);
 
@@ -3317,7 +3317,7 @@ YCMD:sel(playerid, arg[], help)
 
 	NoEditingMode(playerid);
 
-    MapOpenCheck();
+	MapOpenCheck();
 
 	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 	if(isnull(arg)) return SendClientMessage(playerid, STEALTH_YELLOW, "Usage: /sel <index> selects a object to edit");
@@ -3327,12 +3327,12 @@ YCMD:sel(playerid, arg[], help)
 	if(Iter_Contains(Objects, index))
 	{
 		if(SetCurrObject(playerid, index)) {
-            new line[128];
-            format(line, sizeof(line), "You have selected object index %i for editing", index);
-            SendClientMessage(playerid, STEALTH_GREEN, line);
-        }
-        else
-            SendClientMessage(playerid, STEALTH_YELLOW, "You can not select objects in this object's group");
+			new line[128];
+			format(line, sizeof(line), "You have selected object index %i for editing", index);
+			SendClientMessage(playerid, STEALTH_GREEN, line);
+		}
+		else
+			SendClientMessage(playerid, STEALTH_YELLOW, "You can not select objects in this object's group");
 	}
 	else SendClientMessage(playerid, STEALTH_YELLOW, "That object does not exist!");
 	return 1;
@@ -3347,14 +3347,14 @@ YCMD:dsel(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 	EditCheck(playerid);
 	NoEditingMode(playerid);
 
-    SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 	SendClientMessage(playerid, STEALTH_GREEN, "Selection has been deselected");
 
-    SetCurrObject(playerid, -1);
+	SetCurrObject(playerid, -1);
 
 	return 1;
 }
@@ -3370,24 +3370,24 @@ YCMD:scsel(playerid, arg[], help)
 	}
 
 	NoEditingMode(playerid);
-    MapOpenCheck();
+	MapOpenCheck();
 
 	new Float:dist = 9999999.0, Float:tmpdist, index = -1;
 
 	foreach(new i : Objects)
 	{
-        if(!CanSelectObject(playerid, i))
-            continue;
-        
+		if(!CanSelectObject(playerid, i))
+			continue;
+		
 		tmpdist = GetPlayerDistanceFromPoint(playerid, ObjectData[i][oX], ObjectData[i][oY], ObjectData[i][oZ]);
 		if(tmpdist < dist)
 		{
-		    dist = tmpdist;
-		    index = i;
+			dist = tmpdist;
+			index = i;
 		}
 	}
 
-    SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 	if(index > -1)
 	{
 		SetCurrObject(playerid, index);
@@ -3411,24 +3411,24 @@ YCMD:dcsel(playerid, arg[], help)
 	}
 
 	NoEditingMode(playerid);
-    MapOpenCheck();
+	MapOpenCheck();
 
 	new Float:dist = 9999999.0, Float:tmpdist, index = -1;
 
 	foreach(new i : Objects)
 	{
 		if(!CanSelectObject(playerid, i))
-            continue;
-        
+			continue;
+		
 		tmpdist = GetPlayerDistanceFromPoint(playerid, ObjectData[i][oX], ObjectData[i][oY], ObjectData[i][oZ]);
 		if(tmpdist < dist)
 		{
-		    dist = tmpdist;
-		    index = i;
+			dist = tmpdist;
+			index = i;
 		}
 	}
 
-    SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 	if(index > -1)
 	{
 		SaveUndoInfo(index, UNDO_TYPE_DELETED);
@@ -3440,7 +3440,7 @@ YCMD:dcsel(playerid, arg[], help)
 			if(i == playerid) continue;
 			if(CurrObject[index] == CurrObject[i]) SetCurrObject(i, -1);
 		}
-        SetCurrObject(playerid, -1);
+		SetCurrObject(playerid, -1);
 
 		new line[128];
 		format(line, sizeof(line), "You have deleted object index %i", index);
@@ -3464,9 +3464,9 @@ YCMD:csel(playerid, arg[], help)
 		return 1;
 	}
 
-    NoEditingMode(playerid);
+	NoEditingMode(playerid);
 
-    MapOpenCheck();
+	MapOpenCheck();
 
 	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 
@@ -3492,7 +3492,7 @@ YCMD:mtset(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 
 	EditCheck(playerid);
 
@@ -3512,14 +3512,14 @@ YCMD:mtset(playerid, arg[], help)
 
 		UpdateObjectText(index);
 
-        UpdateTextureSlot(playerid, mindex);
+		UpdateTextureSlot(playerid, mindex);
 
-       	if(ObjectData[index][oAttachedVehicle] > -1) UpdateAttachedVehicleObject(ObjectData[index][oAttachedVehicle], index, VEHICLE_REATTACH_UPDATE);
+		if(ObjectData[index][oAttachedVehicle] > -1) UpdateAttachedVehicleObject(ObjectData[index][oAttachedVehicle], index, VEHICLE_REATTACH_UPDATE);
 
 		// Update the streamer
 		foreach(new i : Player)
 		{
-		    if(IsPlayerInRangeOfPoint(i, 300.0, ObjectData[index][oX], ObjectData[index][oY], ObjectData[index][oZ])) Streamer_Update(i);
+			if(IsPlayerInRangeOfPoint(i, 300.0, ObjectData[index][oX], ObjectData[index][oY], ObjectData[index][oZ])) Streamer_Update(i);
 		}
 
 		SendClientMessage(playerid, STEALTH_GREEN, "Changed Material");
@@ -3537,7 +3537,7 @@ YCMD:mtsetall(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 
 	EditCheck(playerid);
 
@@ -3559,16 +3559,16 @@ YCMD:mtsetall(playerid, arg[], help)
 				SetMaterials(i, mindex, tref);
 				UpdateObjectText(i);
 
-	        	if(ObjectData[i][oAttachedVehicle] > -1) UpdateAttachedVehicleObject(ObjectData[i][oAttachedVehicle], i, VEHICLE_REATTACH_UPDATE);
+				if(ObjectData[i][oAttachedVehicle] > -1) UpdateAttachedVehicleObject(ObjectData[i][oAttachedVehicle], i, VEHICLE_REATTACH_UPDATE);
 			}
 		}
 		db_end_transaction(EditMap);
 
-        SendClientMessage(playerid, STEALTH_GREEN, "Changed All Materials");
+		SendClientMessage(playerid, STEALTH_GREEN, "Changed All Materials");
 
 		foreach(new i : Player)
 		{
-  			if(IsPlayerInRangeOfPoint(i, 300.0, ObjectData[index][oX], ObjectData[index][oY], ObjectData[index][oZ])) Streamer_Update(i);
+			if(IsPlayerInRangeOfPoint(i, 300.0, ObjectData[index][oX], ObjectData[index][oY], ObjectData[index][oZ])) Streamer_Update(i);
 		}
 		UpdateTextureSlot(playerid, mindex);
 	}
@@ -3584,26 +3584,26 @@ YCMD:ogroup(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 
 	EditCheck(playerid);
 
 	NoEditingMode(playerid);
 
-    new index = CurrObject[playerid];
+	new index = CurrObject[playerid];
 
 	SaveUndoInfo(index, UNDO_TYPE_EDIT);
 
-    ObjectData[index][oGroup] = strval(arg);
+	ObjectData[index][oGroup] = strval(arg);
 
-    sqlite_ObjGroup(index);
+	sqlite_ObjGroup(index);
 
-    UpdateObject3DText(index);
+	UpdateObject3DText(index);
 
-    SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 	new line[128];
-    format(line, sizeof(line), "You have changed the group ID of this object to: %i", ObjectData[index][oGroup]);
-    SendClientMessage(playerid, STEALTH_GREEN, line);
+	format(line, sizeof(line), "You have changed the group ID of this object to: %i", ObjectData[index][oGroup]);
+	SendClientMessage(playerid, STEALTH_GREEN, line);
 
 	return 1;
 }
@@ -3619,18 +3619,18 @@ ColumnExists(DB:database, const table[], const columnname[])
 	new Field[64];
 	if(db_num_rows(r))
 	{
-	    for(new i = 0; i < db_num_rows(r); i++)
-	    {
-	        db_get_field_assoc(r, "name", Field, 64);
-	        if(!strcmp(Field, columnname))
-	        {
-	            db_free_result(r);
-	            return 1;
-	        }
+		for(new i = 0; i < db_num_rows(r); i++)
+		{
+			db_get_field_assoc(r, "name", Field, 64);
+			if(!strcmp(Field, columnname))
+			{
+				db_free_result(r);
+				return 1;
+			}
 			db_next_row(r);
-	    }
+		}
 	}
-    db_free_result(r);
+	db_free_result(r);
 	return 0;
 }
 
@@ -3644,7 +3644,7 @@ YCMD:clone(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 
 	EditCheck(playerid);
 
@@ -3667,26 +3667,26 @@ YCMD:copy(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 
 	EditCheck(playerid);
 
 	NoEditingMode(playerid);
 
-    CopyCopyBuffer(playerid, CurrObject[playerid]);
+	CopyCopyBuffer(playerid, CurrObject[playerid]);
 
 	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 	SendClientMessage(playerid, STEALTH_GREEN, "Copied object textures/color/text to buffer");
 
 
-    return 1;
+	return 1;
 
 }
 
 CopyCopyBuffer(playerid, index)
 {
-    for(new i = 0; i < MAX_MATERIALS; i++)
-    {
+	for(new i = 0; i < MAX_MATERIALS; i++)
+	{
 		CopyBuffer[playerid][cTexIndex][i] = ObjectData[index][oTexIndex][i];
 		CopyBuffer[playerid][cColorIndex][i] = ObjectData[index][oColorIndex][i];
 		CopyBuffer[playerid][cusetext] = ObjectData[index][ousetext];
@@ -3698,8 +3698,8 @@ CopyCopyBuffer(playerid, index)
 		CopyBuffer[playerid][cAlignment] = ObjectData[index][oAlignment];
 		CopyBuffer[playerid][cTextFontSize] = ObjectData[index][oTextFontSize];
 		strcat((CopyBuffer[playerid][cObjectText][0] = '\0', CopyBuffer[playerid][cObjectText]), ObjectData[index][oObjectText], MAX_TEXT_LENGTH);
-    }
-    return 1;
+	}
+	return 1;
 }
 
 YCMD:clear(playerid, arg[], help)
@@ -3711,8 +3711,8 @@ YCMD:clear(playerid, arg[], help)
 		return 1;
 	}
 
-    ClearCopyBuffer(playerid);
-    SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+	ClearCopyBuffer(playerid);
+	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 	SendClientMessage(playerid, STEALTH_GREEN, "Cleared your copy buffer");
 	return 1;
 }
@@ -3726,14 +3726,14 @@ YCMD:paste(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 
 	EditCheck(playerid);
 
 	NoEditingMode(playerid);
 
 	PasteCopyBuffer(playerid, CurrObject[playerid]);
-    SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 	SendClientMessage(playerid, STEALTH_GREEN, "Pasted your copy buffer to object");
 
 	return 1;
@@ -3741,11 +3741,11 @@ YCMD:paste(playerid, arg[], help)
 
 PasteCopyBuffer(playerid, index)
 {
-    for(new i = 0; i < MAX_MATERIALS; i++)
-    {
+	for(new i = 0; i < MAX_MATERIALS; i++)
+	{
 		ObjectData[index][oTexIndex][i] = CopyBuffer[playerid][cTexIndex][i];
 		ObjectData[index][oColorIndex][i] = CopyBuffer[playerid][cColorIndex][i];
-    }
+	}
 
 	ObjectData[index][ousetext] = CopyBuffer[playerid][cusetext];
 	ObjectData[index][oFontFace] = CopyBuffer[playerid][cFontFace];
@@ -3757,8 +3757,8 @@ PasteCopyBuffer(playerid, index)
 	ObjectData[index][oTextFontSize] = CopyBuffer[playerid][cTextFontSize];
 	strcat((ObjectData[index][oObjectText][0] = '\0', ObjectData[index][oObjectText]), CopyBuffer[playerid][cObjectText], MAX_TEXT_LENGTH);
 
-    // Destroy the object
-    DestroyDynamicObject(ObjectData[index][oID]);
+	// Destroy the object
+	DestroyDynamicObject(ObjectData[index][oID]);
 
 	// Re-create object
 	ObjectData[index][oID] = CreateDynamicObject(ObjectData[index][oModel], ObjectData[index][oX], ObjectData[index][oY], ObjectData[index][oZ], ObjectData[index][oRX], ObjectData[index][oRY], ObjectData[index][oRZ], MapSetting[mVirtualWorld], MapSetting[mInterior], -1, 300.0);
@@ -3767,7 +3767,7 @@ PasteCopyBuffer(playerid, index)
 	// Update the streamer
 	foreach(new i : Player)
 	{
-	    if(IsPlayerInRangeOfPoint(i, 300.0, ObjectData[index][oX], ObjectData[index][oY], ObjectData[index][oZ])) Streamer_Update(i);
+		if(IsPlayerInRangeOfPoint(i, 300.0, ObjectData[index][oX], ObjectData[index][oY], ObjectData[index][oZ])) Streamer_Update(i);
 	}
 
 	// Update the materials
@@ -3776,7 +3776,7 @@ PasteCopyBuffer(playerid, index)
 	// Update object text
 	UpdateObjectText(index);
 
-   	if(ObjectData[index][oAttachedVehicle] > -1) UpdateAttachedVehicleObject(ObjectData[index][oAttachedVehicle], index, VEHICLE_REATTACH_UPDATE);
+	if(ObjectData[index][oAttachedVehicle] > -1) UpdateAttachedVehicleObject(ObjectData[index][oAttachedVehicle], index, VEHICLE_REATTACH_UPDATE);
 
 	// Save materials to material database
 	sqlite_SaveMaterialIndex(index);
@@ -3792,8 +3792,8 @@ PasteCopyBuffer(playerid, index)
 
 ClearCopyBuffer(playerid)
 {
-    for(new i = 0; i < MAX_MATERIALS; i++)
-    {
+	for(new i = 0; i < MAX_MATERIALS; i++)
+	{
 		CopyBuffer[playerid][cTexIndex][i] = 0;
 		CopyBuffer[playerid][cColorIndex][i] = 0;
 		CopyBuffer[playerid][cusetext] = 0;
@@ -3805,7 +3805,7 @@ ClearCopyBuffer(playerid)
 		CopyBuffer[playerid][cAlignment] = 0;
 		CopyBuffer[playerid][cTextFontSize] = 20;
 		format(CopyBuffer[playerid][cObjectText], MAX_TEXT_LENGTH, "None");
-    }
+	}
 	return 1;
 }
 
@@ -3820,7 +3820,7 @@ GetMaterials(playerid, const arg[], &mindex, &tref)
 
 	if(mindex < 0 || mindex > MAX_MATERIALS - 1)
 	{
-	    new line[128];
+		new line[128];
 		format(line, sizeof(line), "The material selection must be between <0 - %i>", MAX_MATERIALS - 1);
 		SendClientMessage(playerid, STEALTH_YELLOW, line);
 		return 0;
@@ -3843,7 +3843,7 @@ SetMaterials(index, mindex, tref)
 	ObjectData[index][oTexIndex][mindex] = tref;
 
 	// Destroy the object
-    DestroyDynamicObject(ObjectData[index][oID]);
+	DestroyDynamicObject(ObjectData[index][oID]);
 
 	// Re-create object
 	ObjectData[index][oID] = CreateDynamicObject(ObjectData[index][oModel], ObjectData[index][oX], ObjectData[index][oY], ObjectData[index][oZ], ObjectData[index][oRX], ObjectData[index][oRY], ObjectData[index][oRZ], MapSetting[mVirtualWorld], MapSetting[mInterior], -1, 300.0);
@@ -3870,7 +3870,7 @@ YCMD:ogoto(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 
 	NoEditingMode(playerid);
 
@@ -3882,17 +3882,17 @@ YCMD:ogoto(playerid, arg[], help)
 		return SendClientMessage(playerid, STEALTH_GREEN, "Invalid object. Enter the object index you'd like to teleport to, or enter no params to teleport to an object you're currently editing.");
 	}
 
-   	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
-   	SendClientMessage(playerid, STEALTH_GREEN, sprintf("Moved to object %i.", objectindex));
+	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+	SendClientMessage(playerid, STEALTH_GREEN, sprintf("Moved to object %i.", objectindex));
 
-   	if(IsFlyMode(playerid))
-   	{
-   		SetFlyModePos(playerid, ObjectData[objectindex][oX], ObjectData[objectindex][oY], ObjectData[objectindex][oZ]);
-   	}
-   	else
-   	{
-   		SetPlayerPos(playerid, ObjectData[objectindex][oX], ObjectData[objectindex][oY], ObjectData[objectindex][oZ] + 1.5);
-   	}
+	if(IsFlyMode(playerid))
+	{
+		SetFlyModePos(playerid, ObjectData[objectindex][oX], ObjectData[objectindex][oY], ObjectData[objectindex][oZ]);
+	}
+	else
+	{
+		SetPlayerPos(playerid, ObjectData[objectindex][oX], ObjectData[objectindex][oY], ObjectData[objectindex][oZ] + 1.5);
+	}
 	return 1;
 }
 
@@ -3959,13 +3959,13 @@ YCMD:mtcolor(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 
 	EditCheck(playerid);
 
 	if(GetEditMode(playerid) != EDIT_MODE_TEXTURING) NoEditingMode(playerid);
 
-   	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 
 	new index = CurrObject[playerid];
 
@@ -3976,7 +3976,7 @@ YCMD:mtcolor(playerid, arg[], help)
 
 	if(mindex < 0 || mindex > MAX_MATERIALS - 1)
 	{
-	    new line[128];
+		new line[128];
 		format(line, sizeof(line), "The material selection must be between <0 - %i>", MAX_MATERIALS - 1);
 		return SendClientMessage(playerid, STEALTH_YELLOW, line);
 	}
@@ -3986,10 +3986,10 @@ YCMD:mtcolor(playerid, arg[], help)
 		SaveUndoInfo(index, UNDO_TYPE_EDIT);
 
 		// Set the color
-        sscanf(HexColor, "h", ObjectData[index][oColorIndex][mindex]);
+		sscanf(HexColor, "h", ObjectData[index][oColorIndex][mindex]);
 
 		// Destroy the object
-	    DestroyDynamicObject(ObjectData[index][oID]);
+		DestroyDynamicObject(ObjectData[index][oID]);
 
 		// Re-create object
 		ObjectData[index][oID] = CreateDynamicObject(ObjectData[index][oModel], ObjectData[index][oX], ObjectData[index][oY], ObjectData[index][oZ], ObjectData[index][oRX], ObjectData[index][oRY], ObjectData[index][oRZ], MapSetting[mVirtualWorld], MapSetting[mInterior], -1, 300.0);
@@ -4000,18 +4000,18 @@ YCMD:mtcolor(playerid, arg[], help)
 
 		UpdateObjectText(index);
 
-       	if(ObjectData[index][oAttachedVehicle] > -1) UpdateAttachedVehicleObject(ObjectData[index][oAttachedVehicle], index, VEHICLE_REATTACH_UPDATE);
+		if(ObjectData[index][oAttachedVehicle] > -1) UpdateAttachedVehicleObject(ObjectData[index][oAttachedVehicle], index, VEHICLE_REATTACH_UPDATE);
 
 		// Save this material index to the data base
 		sqlite_SaveColorIndex(index);
 
 		// Update texture tool
-        UpdateTextureSlot(playerid, mindex);
+		UpdateTextureSlot(playerid, mindex);
 
 		// Update the streamer
 		foreach(new i : Player)
 		{
-		    if(IsPlayerInRangeOfPoint(i, 300.0, ObjectData[index][oX], ObjectData[index][oY], ObjectData[index][oZ])) Streamer_Update(i);
+			if(IsPlayerInRangeOfPoint(i, 300.0, ObjectData[index][oX], ObjectData[index][oY], ObjectData[index][oZ])) Streamer_Update(i);
 		}
 
 		SendClientMessage(playerid, STEALTH_GREEN, "Changed Color");
@@ -4019,8 +4019,8 @@ YCMD:mtcolor(playerid, arg[], help)
 	}
 	else
 	{
-	    SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
-	    SendClientMessage(playerid, STEALTH_YELLOW, "Invalid hex color.");
+		SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+		SendClientMessage(playerid, STEALTH_YELLOW, "Invalid hex color.");
 	}
 
 	return 1;
@@ -4036,11 +4036,11 @@ YCMD:mtcolorall(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 
 	EditCheck(playerid);
 
-   	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 
 	new index = CurrObject[playerid];
 
@@ -4051,7 +4051,7 @@ YCMD:mtcolorall(playerid, arg[], help)
 
 	if(mindex < 0 || mindex > MAX_MATERIALS - 1)
 	{
-	    new line[128];
+		new line[128];
 		format(line, sizeof(line), "The material selection must be between <0 - %i>", MAX_MATERIALS - 1);
 		return SendClientMessage(playerid, STEALTH_YELLOW, line);
 	}
@@ -4066,14 +4066,14 @@ YCMD:mtcolorall(playerid, arg[], help)
 		db_begin_transaction(EditMap);
 		foreach(new i : Objects)
 		{
-		    if(ObjectData[i][oModel] == ObjectData[CurrObject[playerid]][oModel])
-		    {
+			if(ObjectData[i][oModel] == ObjectData[CurrObject[playerid]][oModel])
+			{
 				SaveUndoInfo(i, UNDO_TYPE_EDIT, time);
 
-		        ObjectData[i][oColorIndex][mindex] = hcolor;
+				ObjectData[i][oColorIndex][mindex] = hcolor;
 
 				// Destroy the object
-			    DestroyDynamicObject(ObjectData[i][oID]);
+				DestroyDynamicObject(ObjectData[i][oID]);
 
 				// Re-create object
 				ObjectData[i][oID] = CreateDynamicObject(ObjectData[i][oModel], ObjectData[i][oX], ObjectData[i][oY], ObjectData[i][oZ], ObjectData[i][oRX], ObjectData[i][oRY], ObjectData[i][oRZ], MapSetting[mVirtualWorld], MapSetting[mInterior], -1, 300.0);
@@ -4084,11 +4084,11 @@ YCMD:mtcolorall(playerid, arg[], help)
 
 				UpdateObjectText(i);
 
-	        	if(ObjectData[i][oAttachedVehicle] > -1) UpdateAttachedVehicleObject(ObjectData[i][oAttachedVehicle], i, VEHICLE_REATTACH_UPDATE);
+				if(ObjectData[i][oAttachedVehicle] > -1) UpdateAttachedVehicleObject(ObjectData[i][oAttachedVehicle], i, VEHICLE_REATTACH_UPDATE);
 
 				// Save this material index to the data base
 				sqlite_SaveColorIndex(i);
-		    }
+			}
 
 		}
 		db_end_transaction(EditMap);
@@ -4096,7 +4096,7 @@ YCMD:mtcolorall(playerid, arg[], help)
 		// Update the streamer
 		foreach(new i : Player)
 		{
-		    if(IsPlayerInRangeOfPoint(i, 300.0, ObjectData[index][oX], ObjectData[index][oY], ObjectData[index][oZ])) Streamer_Update(i);
+			if(IsPlayerInRangeOfPoint(i, 300.0, ObjectData[index][oX], ObjectData[index][oY], ObjectData[index][oZ])) Streamer_Update(i);
 		}
 
 		SendClientMessage(playerid, STEALTH_GREEN, "Changed All Color");
@@ -4104,8 +4104,8 @@ YCMD:mtcolorall(playerid, arg[], help)
 	}
 	else
 	{
-	    SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
-	    SendClientMessage(playerid, STEALTH_YELLOW, "Invalid hex color.");
+		SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+		SendClientMessage(playerid, STEALTH_YELLOW, "Invalid hex color.");
 	}
 
 	return 1;
@@ -4120,22 +4120,22 @@ YCMD:oswap(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 
 	EditCheck(playerid);
 
-   	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 
 	new id = strval(arg);
 	if(id > 0 && id < 20000)
 	{
 		new index = CurrObject[playerid];
-        ObjectData[index][oModel] = id;
+		ObjectData[index][oModel] = id;
 
-        SaveUndoInfo(index, UNDO_TYPE_EDIT);
+		SaveUndoInfo(index, UNDO_TYPE_EDIT);
 
 		// Destroy the object
-	    DestroyDynamicObject(ObjectData[index][oID]);
+		DestroyDynamicObject(ObjectData[index][oID]);
 
 		// Re-create object
 		ObjectData[index][oID] = CreateDynamicObject(ObjectData[index][oModel], ObjectData[index][oX], ObjectData[index][oY], ObjectData[index][oZ], ObjectData[index][oRX], ObjectData[index][oRY], ObjectData[index][oRZ], MapSetting[mVirtualWorld], MapSetting[mInterior], -1, 300.0);
@@ -4167,26 +4167,26 @@ YCMD:mtreset(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 
 	EditCheck(playerid);
 
-   	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 
 	new index = CurrObject[playerid];
 
 	SaveUndoInfo(index, UNDO_TYPE_EDIT);
 
-   	for(new i = 0; i < MAX_MATERIALS; i++)
+	for(new i = 0; i < MAX_MATERIALS; i++)
 	{
 		ObjectData[index][oTexIndex][i] = 0;
 		ObjectData[index][oColorIndex][i] = 0;
-	    UpdateTextureSlot(playerid, i);
+		UpdateTextureSlot(playerid, i);
 	}
-    UpdateMaterial(index);
+	UpdateMaterial(index);
 
-  	sqlite_SaveMaterialIndex(index);
-    sqlite_SaveColorIndex(index);
+	sqlite_SaveMaterialIndex(index);
+	sqlite_SaveColorIndex(index);
 
 	return 1;
 }
@@ -4202,15 +4202,15 @@ YCMD:editobject(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 
 	EditCheck(playerid);
 
-   	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 
-   	if(ObjectData[CurrObject[playerid]][oAttachedVehicle] > -1) return EditVehicleObject(playerid);
+	if(ObjectData[CurrObject[playerid]][oAttachedVehicle] > -1) return EditVehicleObject(playerid);
 
-   	if(!EditingMode[playerid])
+	if(!EditingMode[playerid])
 	{
 		EditingMode[playerid] = true;
 		SetEditMode(playerid, EDIT_MODE_OBJECT);
@@ -4237,14 +4237,14 @@ YCMD:cobject(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 	NoEditingMode(playerid);
 
- 	new modelid;
+	new modelid;
 	if(sscanf(arg, "i", modelid))
 	{
-	    SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
-        SendClientMessage(playerid, STEALTH_YELLOW, "Usage: /cobject <modelid>");
+		SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+		SendClientMessage(playerid, STEALTH_YELLOW, "Usage: /cobject <modelid>");
 		return 1;
 	}
 
@@ -4269,7 +4269,7 @@ YCMD:cobject(playerid, arg[], help)
 	if(CurrObject[playerid] != -1)
 	{
 		// Update the streamer for this player
-        Streamer_Update(playerid);
+		Streamer_Update(playerid);
 
 		SaveUndoInfo(CurrObject[playerid], UNDO_TYPE_CREATED);
 
@@ -4301,13 +4301,13 @@ YCMD:dobject(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
-    EditCheck(playerid);
-    NoEditingMode(playerid);
+	MapOpenCheck();
+	EditCheck(playerid);
+	NoEditingMode(playerid);
 
-    SaveUndoInfo(CurrObject[playerid], UNDO_TYPE_DELETED);
+	SaveUndoInfo(CurrObject[playerid], UNDO_TYPE_DELETED);
 
-    DeleteDynamicObject(CurrObject[playerid]);
+	DeleteDynamicObject(CurrObject[playerid]);
 
 	foreach(new i : Player)
 	{
@@ -4329,17 +4329,17 @@ YCMD:rotreset(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
-    EditCheck(playerid);
-    NoEditingMode(playerid);
+	MapOpenCheck();
+	EditCheck(playerid);
+	NoEditingMode(playerid);
 
-    ObjectData[CurrObject[playerid]][oRX] = 0.0;
-    ObjectData[CurrObject[playerid]][oRY] = 0.0;
-    ObjectData[CurrObject[playerid]][oRZ] = 0.0;
+	ObjectData[CurrObject[playerid]][oRX] = 0.0;
+	ObjectData[CurrObject[playerid]][oRY] = 0.0;
+	ObjectData[CurrObject[playerid]][oRZ] = 0.0;
 
-    SetDynamicObjectRot(ObjectData[CurrObject[playerid]][oID], ObjectData[CurrObject[playerid]][oRX], ObjectData[CurrObject[playerid]][oRY], ObjectData[CurrObject[playerid]][oRZ]);
+	SetDynamicObjectRot(ObjectData[CurrObject[playerid]][oID], ObjectData[CurrObject[playerid]][oRX], ObjectData[CurrObject[playerid]][oRY], ObjectData[CurrObject[playerid]][oRZ]);
 
-    sqlite_UpdateObjectPos(CurrObject[playerid]);
+	sqlite_UpdateObjectPos(CurrObject[playerid]);
 
 	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 	SendClientMessage(playerid, STEALTH_GREEN, "Your objects rotation has been reset");
@@ -4358,28 +4358,28 @@ YCMD:robject(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
-    EditCheck(playerid);
-    NoEditingMode(playerid);
+	MapOpenCheck();
+	EditCheck(playerid);
+	NoEditingMode(playerid);
 
-    new index = CurrObject[playerid];
+	new index = CurrObject[playerid];
 
 	for(new i = 0; i < MAX_MATERIALS; i++)
 	{
-        ObjectData[index][oTexIndex][i] = 0;
-        ObjectData[index][oColorIndex][i] = 0;
+		ObjectData[index][oTexIndex][i] = 0;
+		ObjectData[index][oColorIndex][i] = 0;
 	}
 
-    ObjectData[index][ousetext] = 0;
-    ObjectData[index][oFontFace] = 0;
-    ObjectData[index][oFontSize] = 0;
-    ObjectData[index][oFontBold] = 0;
-    ObjectData[index][oFontColor] = 0;
-    ObjectData[index][oBackColor] = 0;
-    ObjectData[index][oAlignment] = 0;
-    ObjectData[index][oTextFontSize] = 20;
+	ObjectData[index][ousetext] = 0;
+	ObjectData[index][oFontFace] = 0;
+	ObjectData[index][oFontSize] = 0;
+	ObjectData[index][oFontBold] = 0;
+	ObjectData[index][oFontColor] = 0;
+	ObjectData[index][oBackColor] = 0;
+	ObjectData[index][oAlignment] = 0;
+	ObjectData[index][oTextFontSize] = 20;
 
-    format(ObjectData[index][oObjectText], MAX_TEXT_LENGTH, "None");
+	format(ObjectData[index][oObjectText], MAX_TEXT_LENGTH, "None");
 
 	DestroyDynamicObject(ObjectData[index][oID]);
 
@@ -4401,7 +4401,7 @@ YCMD:robject(playerid, arg[], help)
 	// Update the streamer
 	foreach(new i : Player)
 	{
-	    if(IsPlayerInRangeOfPoint(i, 300.0, ObjectData[index][oX], ObjectData[index][oY], ObjectData[index][oZ])) Streamer_Update(i);
+		if(IsPlayerInRangeOfPoint(i, 300.0, ObjectData[index][oX], ObjectData[index][oY], ObjectData[index][oZ])) Streamer_Update(i);
 	}
 
 	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
@@ -4443,17 +4443,17 @@ YCMD:sindex(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
-    EditCheck(playerid);
+	MapOpenCheck();
+	EditCheck(playerid);
 //    NoEditingMode(playerid);
 
 	new size;
-    if(isnull(arg)) size = 20;
-    else size = strval(arg);
-    if(size < 0 || size > 200) size = 20;
+	if(isnull(arg)) size = 20;
+	else size = strval(arg);
+	if(size < 0 || size > 200) size = 20;
 
 	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
-    SendClientMessage(playerid, STEALTH_GREEN, "Labelling your objects with text corresponding to index (/rindex to turn off label)");
+	SendClientMessage(playerid, STEALTH_GREEN, "Labelling your objects with text corresponding to index (/rindex to turn off label)");
 
 	new line[8];
 
@@ -4485,14 +4485,14 @@ YCMD:rindex(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
-    EditCheck(playerid);
+	MapOpenCheck();
+	EditCheck(playerid);
 //    NoEditingMode(playerid);
 
 	new index = CurrObject[playerid];
 
 	// Destroy the object
-    DestroyDynamicObject(ObjectData[index][oID]);
+	DestroyDynamicObject(ObjectData[index][oID]);
 
 	// Re-create object
 	ObjectData[index][oID] = CreateDynamicObject(ObjectData[index][oModel], ObjectData[index][oX], ObjectData[index][oY], ObjectData[index][oZ], ObjectData[index][oRX], ObjectData[index][oRY], ObjectData[index][oRZ], MapSetting[mVirtualWorld], MapSetting[mInterior], -1, 300.0);
@@ -4501,7 +4501,7 @@ YCMD:rindex(playerid, arg[], help)
 	// Update the streamer
 	foreach(new i : Player)
 	{
-	    if(IsPlayerInRangeOfPoint(i, 300.0, ObjectData[index][oX], ObjectData[index][oY], ObjectData[index][oZ])) Streamer_Update(i);
+		if(IsPlayerInRangeOfPoint(i, 300.0, ObjectData[index][oX], ObjectData[index][oY], ObjectData[index][oZ])) Streamer_Update(i);
 	}
 
 	// Update the materials
@@ -4510,10 +4510,10 @@ YCMD:rindex(playerid, arg[], help)
 	// Update object text
 	UpdateObjectText(index);
 
-   	if(ObjectData[index][oAttachedVehicle] > -1) UpdateAttachedVehicleObject(ObjectData[index][oAttachedVehicle], index, VEHICLE_REATTACH_UPDATE);
+	if(ObjectData[index][oAttachedVehicle] > -1) UpdateAttachedVehicleObject(ObjectData[index][oAttachedVehicle], index, VEHICLE_REATTACH_UPDATE);
 
 	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
-    SendClientMessage(playerid, STEALTH_GREEN, "Reset current objects labels");
+	SendClientMessage(playerid, STEALTH_GREEN, "Reset current objects labels");
 
 	return 1;
 }
@@ -4572,8 +4572,8 @@ YCMD:pivot(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
-    NoEditingMode(playerid);
+	MapOpenCheck();
+	NoEditingMode(playerid);
 
 	new Float:x, Float:y, Float:z, Float:fa;
 	GetPosFaInFrontOfPlayer(playerid, 2.0, x, y, z, fa);
@@ -4592,7 +4592,7 @@ YCMD:pivot(playerid, arg[], help)
 	EditDynamicObject(playerid, PivotObject[playerid]);
 
 	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
-    SendClientMessage(playerid, STEALTH_GREEN, "Editing your pivot point");
+	SendClientMessage(playerid, STEALTH_GREEN, "Editing your pivot point");
 
 	return 1;
 }
@@ -4606,19 +4606,19 @@ YCMD:togpivot(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 
 	if(PivotPointOn[playerid])
 	{
-	    PivotPointOn[playerid] = false;
+		PivotPointOn[playerid] = false;
 		SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
-	    SendClientMessage(playerid, STEALTH_GREEN, "Pivot point turned off");
+		SendClientMessage(playerid, STEALTH_GREEN, "Pivot point turned off");
 	}
 	else
 	{
-	    PivotPointOn[playerid] = true;
+		PivotPointOn[playerid] = true;
 		SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
-	    SendClientMessage(playerid, STEALTH_GREEN, "Pivot point turned on");
+		SendClientMessage(playerid, STEALTH_GREEN, "Pivot point turned on");
 	}
 
 	return 1;
@@ -4635,24 +4635,24 @@ YCMD:ox(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
-    EditCheck(playerid);
-    NoEditingMode(playerid);
+	MapOpenCheck();
+	EditCheck(playerid);
+	NoEditingMode(playerid);
 
 	new Float:dist;
 
 	dist = floatstr(arg);
 	if(dist == 0) dist = 1.0;
 
-    SaveUndoInfo(CurrObject[playerid], UNDO_TYPE_EDIT);
+	SaveUndoInfo(CurrObject[playerid], UNDO_TYPE_EDIT);
 
-    ObjectData[CurrObject[playerid]][oX] += dist;
+	ObjectData[CurrObject[playerid]][oX] += dist;
 
-    SetDynamicObjectPos(ObjectData[CurrObject[playerid]][oID], ObjectData[CurrObject[playerid]][oX], ObjectData[CurrObject[playerid]][oY], ObjectData[CurrObject[playerid]][oZ]);
+	SetDynamicObjectPos(ObjectData[CurrObject[playerid]][oID], ObjectData[CurrObject[playerid]][oX], ObjectData[CurrObject[playerid]][oY], ObjectData[CurrObject[playerid]][oZ]);
 
 	UpdateObject3DText(CurrObject[playerid]);
 
-    sqlite_UpdateObjectPos(CurrObject[playerid]);
+	sqlite_UpdateObjectPos(CurrObject[playerid]);
 
 	return 1;
 }
@@ -4667,24 +4667,24 @@ YCMD:oy(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
-    EditCheck(playerid);
-    NoEditingMode(playerid);
+	MapOpenCheck();
+	EditCheck(playerid);
+	NoEditingMode(playerid);
 
 	new Float:dist;
 
 	dist = floatstr(arg);
 	if(dist == 0) dist = 1.0;
 
-    SaveUndoInfo(CurrObject[playerid], UNDO_TYPE_EDIT);
+	SaveUndoInfo(CurrObject[playerid], UNDO_TYPE_EDIT);
 
-    ObjectData[CurrObject[playerid]][oY] += dist;
+	ObjectData[CurrObject[playerid]][oY] += dist;
 
-    SetDynamicObjectPos(ObjectData[CurrObject[playerid]][oID], ObjectData[CurrObject[playerid]][oX], ObjectData[CurrObject[playerid]][oY], ObjectData[CurrObject[playerid]][oZ]);
+	SetDynamicObjectPos(ObjectData[CurrObject[playerid]][oID], ObjectData[CurrObject[playerid]][oX], ObjectData[CurrObject[playerid]][oY], ObjectData[CurrObject[playerid]][oZ]);
 
 	UpdateObject3DText(CurrObject[playerid]);
 
-    sqlite_UpdateObjectPos(CurrObject[playerid]);
+	sqlite_UpdateObjectPos(CurrObject[playerid]);
 
 	return 1;
 }
@@ -4699,24 +4699,24 @@ YCMD:oz(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
-    EditCheck(playerid);
-    NoEditingMode(playerid);
+	MapOpenCheck();
+	EditCheck(playerid);
+	NoEditingMode(playerid);
 
 	new Float:dist;
 
 	dist = floatstr(arg);
 	if(dist == 0) dist = 1.0;
 
-    SaveUndoInfo(CurrObject[playerid], UNDO_TYPE_EDIT);
+	SaveUndoInfo(CurrObject[playerid], UNDO_TYPE_EDIT);
 
-    ObjectData[CurrObject[playerid]][oZ] += dist;
+	ObjectData[CurrObject[playerid]][oZ] += dist;
 
-    SetDynamicObjectPos(ObjectData[CurrObject[playerid]][oID], ObjectData[CurrObject[playerid]][oX], ObjectData[CurrObject[playerid]][oY], ObjectData[CurrObject[playerid]][oZ]);
+	SetDynamicObjectPos(ObjectData[CurrObject[playerid]][oID], ObjectData[CurrObject[playerid]][oX], ObjectData[CurrObject[playerid]][oY], ObjectData[CurrObject[playerid]][oZ]);
 
 	UpdateObject3DText(CurrObject[playerid]);
 
-    sqlite_UpdateObjectPos(CurrObject[playerid]);
+	sqlite_UpdateObjectPos(CurrObject[playerid]);
 
 	return 1;
 }
@@ -4731,16 +4731,16 @@ YCMD:rx(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
-    EditCheck(playerid);
-    NoEditingMode(playerid);
+	MapOpenCheck();
+	EditCheck(playerid);
+	NoEditingMode(playerid);
 
 	new Float:rot;
 
 	rot = floatstr(arg);
 	if(rot == 0) rot = 5.0;
 
-    SaveUndoInfo(CurrObject[playerid], UNDO_TYPE_EDIT);
+	SaveUndoInfo(CurrObject[playerid], UNDO_TYPE_EDIT);
 
 	if(PivotPointOn[playerid])
 	{
@@ -4752,11 +4752,11 @@ YCMD:rx(playerid, arg[], help)
 	}
 	else
 	{
-	    ObjectData[CurrObject[playerid]][oRX] += rot;
-	    SetDynamicObjectRot(ObjectData[CurrObject[playerid]][oID], ObjectData[CurrObject[playerid]][oRX], ObjectData[CurrObject[playerid]][oRY], ObjectData[CurrObject[playerid]][oRZ]);
+		ObjectData[CurrObject[playerid]][oRX] += rot;
+		SetDynamicObjectRot(ObjectData[CurrObject[playerid]][oID], ObjectData[CurrObject[playerid]][oRX], ObjectData[CurrObject[playerid]][oRY], ObjectData[CurrObject[playerid]][oRZ]);
 	}
 
-    sqlite_UpdateObjectPos(CurrObject[playerid]);
+	sqlite_UpdateObjectPos(CurrObject[playerid]);
 
 	return 1;
 }
@@ -4771,9 +4771,9 @@ YCMD:ry(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
-    EditCheck(playerid);
-    NoEditingMode(playerid);
+	MapOpenCheck();
+	EditCheck(playerid);
+	NoEditingMode(playerid);
 
 	new Float:rot;
 
@@ -4792,11 +4792,11 @@ YCMD:ry(playerid, arg[], help)
 	}
 	else
 	{
-	    ObjectData[CurrObject[playerid]][oRY] += rot;
-	    SetDynamicObjectRot(ObjectData[CurrObject[playerid]][oID], ObjectData[CurrObject[playerid]][oRX], ObjectData[CurrObject[playerid]][oRY], ObjectData[CurrObject[playerid]][oRZ]);
+		ObjectData[CurrObject[playerid]][oRY] += rot;
+		SetDynamicObjectRot(ObjectData[CurrObject[playerid]][oID], ObjectData[CurrObject[playerid]][oRX], ObjectData[CurrObject[playerid]][oRY], ObjectData[CurrObject[playerid]][oRZ]);
 	}
 
-    sqlite_UpdateObjectPos(CurrObject[playerid]);
+	sqlite_UpdateObjectPos(CurrObject[playerid]);
 
 	return 1;
 }
@@ -4811,16 +4811,16 @@ YCMD:rz(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
-    EditCheck(playerid);
-    NoEditingMode(playerid);
+	MapOpenCheck();
+	EditCheck(playerid);
+	NoEditingMode(playerid);
 
 	new Float:rot;
 
 	rot = floatstr(arg);
 	if(rot == 0) rot = 5.0;
 
-    SaveUndoInfo(CurrObject[playerid], UNDO_TYPE_EDIT);
+	SaveUndoInfo(CurrObject[playerid], UNDO_TYPE_EDIT);
 
 	if(PivotPointOn[playerid])
 	{
@@ -4832,11 +4832,11 @@ YCMD:rz(playerid, arg[], help)
 	}
 	else
 	{
-	    ObjectData[CurrObject[playerid]][oRZ] += rot;
-	    SetDynamicObjectRot(ObjectData[CurrObject[playerid]][oID], ObjectData[CurrObject[playerid]][oRX], ObjectData[CurrObject[playerid]][oRY], ObjectData[CurrObject[playerid]][oRZ]);
+		ObjectData[CurrObject[playerid]][oRZ] += rot;
+		SetDynamicObjectRot(ObjectData[CurrObject[playerid]][oID], ObjectData[CurrObject[playerid]][oRX], ObjectData[CurrObject[playerid]][oRY], ObjectData[CurrObject[playerid]][oRZ]);
 	}
 
-    sqlite_UpdateObjectPos(CurrObject[playerid]);
+	sqlite_UpdateObjectPos(CurrObject[playerid]);
 
 	return 1;
 }
@@ -4851,8 +4851,8 @@ YCMD:dox(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
-    NoEditingMode(playerid);
+	MapOpenCheck();
+	NoEditingMode(playerid);
 
 	new Float:dist, time;
 	time = GetTickCount();
@@ -4865,13 +4865,13 @@ YCMD:dox(playerid, arg[], help)
 	{
 		SaveUndoInfo(i, UNDO_TYPE_EDIT, time);
 
-	    ObjectData[i][oX] += dist;
+		ObjectData[i][oX] += dist;
 
-	    SetDynamicObjectPos(ObjectData[i][oID], ObjectData[i][oX], ObjectData[i][oY], ObjectData[i][oZ]);
+		SetDynamicObjectPos(ObjectData[i][oID], ObjectData[i][oX], ObjectData[i][oY], ObjectData[i][oZ]);
 
 		UpdateObject3DText(i);
 
-	    sqlite_UpdateObjectPos(i);
+		sqlite_UpdateObjectPos(i);
 	}
 	db_end_transaction(EditMap);
 
@@ -4888,8 +4888,8 @@ YCMD:doy(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
-    NoEditingMode(playerid);
+	MapOpenCheck();
+	NoEditingMode(playerid);
 
 	new Float:dist, time;
 	time = GetTickCount();
@@ -4902,13 +4902,13 @@ YCMD:doy(playerid, arg[], help)
 	{
 		SaveUndoInfo(i, UNDO_TYPE_EDIT, time);
 
-	    ObjectData[i][oY] += dist;
+		ObjectData[i][oY] += dist;
 
-	    SetDynamicObjectPos(ObjectData[i][oID], ObjectData[i][oX], ObjectData[i][oY], ObjectData[i][oZ]);
+		SetDynamicObjectPos(ObjectData[i][oID], ObjectData[i][oX], ObjectData[i][oY], ObjectData[i][oZ]);
 
 		UpdateObject3DText(i);
 
-	    sqlite_UpdateObjectPos(i);
+		sqlite_UpdateObjectPos(i);
 	}
 	db_end_transaction(EditMap);
 
@@ -4925,8 +4925,8 @@ YCMD:doz(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
-    NoEditingMode(playerid);
+	MapOpenCheck();
+	NoEditingMode(playerid);
 
 	new Float:dist, time;
 	time = GetTickCount();
@@ -4939,13 +4939,13 @@ YCMD:doz(playerid, arg[], help)
 	{
 		SaveUndoInfo(i, UNDO_TYPE_EDIT, time);
 
-	    ObjectData[i][oZ] += dist;
+		ObjectData[i][oZ] += dist;
 
-	    SetDynamicObjectPos(ObjectData[i][oID], ObjectData[i][oX], ObjectData[i][oY], ObjectData[i][oZ]);
+		SetDynamicObjectPos(ObjectData[i][oID], ObjectData[i][oX], ObjectData[i][oY], ObjectData[i][oZ]);
 
 		UpdateObject3DText(i);
 
-	    sqlite_UpdateObjectPos(i);
+		sqlite_UpdateObjectPos(i);
 	}
 	db_end_transaction(EditMap);
 
@@ -4977,7 +4977,7 @@ YCMD:drx(playerid, arg[], help)
 
 	// We need to get the map center as the rotation node
 	new Float:mCenterX, Float:mCenterY, Float:mCenterZ;
-    if(GetMapCenter(mCenterX, mCenterY, mCenterZ))
+	if(GetMapCenter(mCenterX, mCenterY, mCenterZ))
 	{
 		// Loop through all objects and perform rotation calculations
 		db_begin_transaction(EditMap);
@@ -5032,7 +5032,7 @@ YCMD:dry(playerid, arg[], help)
 
 	// We need to get the map center as the rotation node
 	new Float:mCenterX, Float:mCenterY, Float:mCenterZ;
-    if(GetMapCenter(mCenterX, mCenterY, mCenterZ))
+	if(GetMapCenter(mCenterX, mCenterY, mCenterZ))
 	{
 		// Loop through all objects and perform rotation calculations
 		db_begin_transaction(EditMap);
@@ -5087,7 +5087,7 @@ YCMD:drz(playerid, arg[], help)
 
 	// We need to get the map center as the rotation node
 	new Float:mCenterX, Float:mCenterY, Float:mCenterZ;
-    if(GetMapCenter(mCenterX, mCenterY, mCenterZ))
+	if(GetMapCenter(mCenterX, mCenterY, mCenterZ))
 	{
 		// Loop through all objects and perform rotation calculations
 		db_begin_transaction(EditMap);
@@ -5126,25 +5126,25 @@ YCMD:odd(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
-    EditCheck(playerid);
-    NoEditingMode(playerid);
+	MapOpenCheck();
+	EditCheck(playerid);
+	NoEditingMode(playerid);
 
 	new Float:dd;
 	dd = floatstr(arg);
 	if(dd == 0.0) dd = 300.0;
 
-    SaveUndoInfo(CurrObject[playerid], UNDO_TYPE_EDIT);
+	SaveUndoInfo(CurrObject[playerid], UNDO_TYPE_EDIT);
 
-    ObjectData[CurrObject[playerid]][oDD] = dd;
-    Streamer_SetFloatData(STREAMER_TYPE_OBJECT, ObjectData[CurrObject[playerid]][oID], E_STREAMER_DRAW_DISTANCE, dd);
-    Streamer_SetFloatData(STREAMER_TYPE_OBJECT, ObjectData[CurrObject[playerid]][oID], E_STREAMER_STREAM_DISTANCE, dd);
+	ObjectData[CurrObject[playerid]][oDD] = dd;
+	Streamer_SetFloatData(STREAMER_TYPE_OBJECT, ObjectData[CurrObject[playerid]][oID], E_STREAMER_DRAW_DISTANCE, dd);
+	Streamer_SetFloatData(STREAMER_TYPE_OBJECT, ObjectData[CurrObject[playerid]][oID], E_STREAMER_STREAM_DISTANCE, dd);
 
-    sqlite_UpdateObjectDD(CurrObject[playerid]);
+	sqlite_UpdateObjectDD(CurrObject[playerid]);
 
-    SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
-    SendClientMessage(playerid, STEALTH_GREEN, sprintf("Objects draw distance set to %.2f", dd));
-    
+	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+	SendClientMessage(playerid, STEALTH_GREEN, sprintf("Objects draw distance set to %.2f", dd));
+	
 	return 1;
 }
 
@@ -5172,7 +5172,7 @@ YCMD:togtext3d(playerid, arg[], help)
 		if(streamdist <= 0.0) streamdist = 100.0;
 		TEXT3D_DRAW_DIST = streamdist;
 
-	    ShowGroupLabels(playerid);
+		ShowGroupLabels(playerid);
 		ShowObjectText();
 		SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 		SendClientMessage(playerid, STEALTH_GREEN, "All 3D Text labels shown");
@@ -5189,56 +5189,56 @@ YCMD:edittext3d(playerid, arg[], help)
 		SendClientMessage(playerid, STEALTH_GREEN, "Shows you a dialog with 3D text options.");
 		return 1;
 	}
-    
-    new optline[256];
-    
-    // Init the text menu
-    inline SelectOption(spid, sdialogid, sresponse, slistitem, string:stext[])
+	
+	new optline[256];
+	
+	// Init the text menu
+	inline SelectOption(spid, sdialogid, sresponse, slistitem, string:stext[])
 	{
 		#pragma unused slistitem, sdialogid, spid, stext
 		if(sresponse)
 		{
-            // Toggle the selected option
-            TextOption[TEXTOPTIONS:slistitem] = !TextOption[TEXTOPTIONS:slistitem];
-            
-            // Toggled text?
-            if(slistitem == 0)
-            {
-                if(TextOption[tShowText])
-                {
-                    ShowGroupLabels(playerid);
-                    ShowObjectText();
-                }
-                else
-                {
-                    HideGroupLabels(playerid);
-                    HideObjectText();
-                }
-            }
+			// Toggle the selected option
+			TextOption[TEXTOPTIONS:slistitem] = !TextOption[TEXTOPTIONS:slistitem];
+			
+			// Toggled text?
+			if(slistitem == 0)
+			{
+				if(TextOption[tShowText])
+				{
+					ShowGroupLabels(playerid);
+					ShowObjectText();
+				}
+				else
+				{
+					HideGroupLabels(playerid);
+					HideObjectText();
+				}
+			}
 	
-            // Show it again
-            format(optline, sizeof(optline), "{FFFF00}Text: %s\n{FFFF00}Object Note: %s\n{FFFF00}Model Info: %s\n{FFFF00}Group ID: %s\n{FFFF00}Grouped Text: %s\n{FFFF00}Always Show New Objects: %s\n",
-                (TextOption[tShowText] ? ("{00AA00}Enabled") : ("{FF3000}Disabled")),
-                (TextOption[tShowNote] ? ("{00AA00}Enabled") : ("{FF3000}Disabled")),
-                (TextOption[tShowModel] ? ("{00AA00}Enabled") : ("{FF3000}Disabled")),
-                (TextOption[tShowGroup] ? ("{00AA00}Enabled") : ("{FF3000}Disabled")),
-                (TextOption[tShowGrouped] ? ("{00AA00}Enabled") : ("{FF3000}Disabled")),
-                (TextOption[tAlwaysShowNew] ? ("{00AA00}Enabled") : ("{FF3000}Disabled"))
-            );
-            
-            Dialog_ShowCallback(playerid, using inline SelectOption, DIALOG_STYLE_LIST, "Texture Studio - 3D Text Editor", optline, "Ok", "Cancel");
+			// Show it again
+			format(optline, sizeof(optline), "{FFFF00}Text: %s\n{FFFF00}Object Note: %s\n{FFFF00}Model Info: %s\n{FFFF00}Group ID: %s\n{FFFF00}Grouped Text: %s\n{FFFF00}Always Show New Objects: %s\n",
+				(TextOption[tShowText] ? ("{00AA00}Enabled") : ("{FF3000}Disabled")),
+				(TextOption[tShowNote] ? ("{00AA00}Enabled") : ("{FF3000}Disabled")),
+				(TextOption[tShowModel] ? ("{00AA00}Enabled") : ("{FF3000}Disabled")),
+				(TextOption[tShowGroup] ? ("{00AA00}Enabled") : ("{FF3000}Disabled")),
+				(TextOption[tShowGrouped] ? ("{00AA00}Enabled") : ("{FF3000}Disabled")),
+				(TextOption[tAlwaysShowNew] ? ("{00AA00}Enabled") : ("{FF3000}Disabled"))
+			);
+			
+			Dialog_ShowCallback(playerid, using inline SelectOption, DIALOG_STYLE_LIST, "Texture Studio - 3D Text Editor", optline, "Ok", "Cancel");
 		}
 	}
 	
-    // Show the dialog
-    format(optline, sizeof(optline), "{FFFF00}Text: %s\n{FFFF00}Object Note: %s\n{FFFF00}Model Info: %s\n{FFFF00}Group ID: %s\n{FFFF00}Grouped Text: %s\n{FFFF00}Always Show New Objects: %s\n",
-        (TextOption[tShowText] ? ("{00AA00}Enabled") : ("{FF3000}Disabled")),
-        (TextOption[tShowNote] ? ("{00AA00}Enabled") : ("{FF3000}Disabled")),
-        (TextOption[tShowModel] ? ("{00AA00}Enabled") : ("{FF3000}Disabled")),
-        (TextOption[tShowGroup] ? ("{00AA00}Enabled") : ("{FF3000}Disabled")),
-        (TextOption[tShowGrouped] ? ("{00AA00}Enabled") : ("{FF3000}Disabled")),
-                (TextOption[tAlwaysShowNew] ? ("{00AA00}Enabled") : ("{FF3000}Disabled"))
-    );
+	// Show the dialog
+	format(optline, sizeof(optline), "{FFFF00}Text: %s\n{FFFF00}Object Note: %s\n{FFFF00}Model Info: %s\n{FFFF00}Group ID: %s\n{FFFF00}Grouped Text: %s\n{FFFF00}Always Show New Objects: %s\n",
+		(TextOption[tShowText] ? ("{00AA00}Enabled") : ("{FF3000}Disabled")),
+		(TextOption[tShowNote] ? ("{00AA00}Enabled") : ("{FF3000}Disabled")),
+		(TextOption[tShowModel] ? ("{00AA00}Enabled") : ("{FF3000}Disabled")),
+		(TextOption[tShowGroup] ? ("{00AA00}Enabled") : ("{FF3000}Disabled")),
+		(TextOption[tShowGrouped] ? ("{00AA00}Enabled") : ("{FF3000}Disabled")),
+				(TextOption[tAlwaysShowNew] ? ("{00AA00}Enabled") : ("{FF3000}Disabled"))
+	);
 
 	Dialog_ShowCallback(playerid, using inline SelectOption, DIALOG_STYLE_LIST, "Texture Studio - 3D Text Editor", optline, "Ok", "Cancel");
 	return 1;
@@ -5252,31 +5252,31 @@ YCMD:note(playerid, arg[], help)
 		SendClientMessage(playerid, STEALTH_GREEN, "Show or change an object's note.");
 		return 1;
 	}
-    
-    MapOpenCheck();
 	
- 	new index, note[64];
+	MapOpenCheck();
+	
+	new index, note[64];
 	if(sscanf(arg, "iS()[64]", index, note))
 	{
-	    SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
-        SendClientMessage(playerid, STEALTH_YELLOW, "Usage: /note <Index> <Optional: New Note>");
+		SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+		SendClientMessage(playerid, STEALTH_YELLOW, "Usage: /note <Index> <Optional: New Note>");
 		return 1;
 	}
-    
-    if(isnull(note) || !strlen(note))
-    {
-        SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
-        SendClientMessage(playerid, STEALTH_GREEN, sprintf("Object's note: %s", ObjectData[index][oNote]));
-    }
-    else
-    {
-        SaveUndoInfo(index, UNDO_TYPE_EDIT);
-        format(ObjectData[index][oNote], 64, "%s", note);
-        sqlite_ObjNote(index);
-        UpdateObject3DText(index);
-        SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
-        SendClientMessage(playerid, STEALTH_YELLOW, "Note changed");
-    }
+	
+	if(isnull(note) || !strlen(note))
+	{
+		SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+		SendClientMessage(playerid, STEALTH_GREEN, sprintf("Object's note: %s", ObjectData[index][oNote]));
+	}
+	else
+	{
+		SaveUndoInfo(index, UNDO_TYPE_EDIT);
+		format(ObjectData[index][oNote], 64, "%s", note);
+		sqlite_ObjNote(index);
+		UpdateObject3DText(index);
+		SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+		SendClientMessage(playerid, STEALTH_YELLOW, "Note changed");
+	}
 	return 1;
 }
 
@@ -5288,14 +5288,14 @@ YCMD:setspawn(playerid, arg[], help)
 		SendClientMessage(playerid, STEALTH_GREEN, "Set this map's spawn position to your current position.");
 		return 1;
 	}
-    
-    MapOpenCheck();
-    
-    GetPlayerPos(playerid, MapSetting[mSpawn][xPos], MapSetting[mSpawn][yPos], MapSetting[mSpawn][zPos]);
-    sqlite_UpdateSettings();
-    
-    SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
-    SendClientMessage(playerid, STEALTH_YELLOW, sprintf("You have set the map's spawn position to (%0.2f, %0.2f, %0.2f)", MapSetting[mSpawn][xPos], MapSetting[mSpawn][yPos], MapSetting[mSpawn][zPos]));
+	
+	MapOpenCheck();
+	
+	GetPlayerPos(playerid, MapSetting[mSpawn][xPos], MapSetting[mSpawn][yPos], MapSetting[mSpawn][zPos]);
+	sqlite_UpdateSettings();
+	
+	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+	SendClientMessage(playerid, STEALTH_YELLOW, sprintf("You have set the map's spawn position to (%0.2f, %0.2f, %0.2f)", MapSetting[mSpawn][xPos], MapSetting[mSpawn][yPos], MapSetting[mSpawn][zPos]));
 	return 1;
 }
 
@@ -5307,14 +5307,14 @@ YCMD:gotomap(playerid, arg[], help)
 		SendClientMessage(playerid, STEALTH_GREEN, "Sends you to this map's spawn position.");
 		return 1;
 	}
-    
-    if(MapSetting[mSpawn][xPos] == 0.0)
-        return SendClientMessage(playerid, STEALTH_YELLOW, "This map doesn't have a spawn position, set one with \"/setspawn\"");
-    
-    SetPlayerPos(playerid, MapSetting[mSpawn][xPos], MapSetting[mSpawn][yPos], MapSetting[mSpawn][zPos]);
-    
-    SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
-    SendClientMessage(playerid, STEALTH_YELLOW, "You've been teleported to the map's spawn position");
+	
+	if(MapSetting[mSpawn][xPos] == 0.0)
+		return SendClientMessage(playerid, STEALTH_YELLOW, "This map doesn't have a spawn position, set one with \"/setspawn\"");
+	
+	SetPlayerPos(playerid, MapSetting[mSpawn][xPos], MapSetting[mSpawn][yPos], MapSetting[mSpawn][zPos]);
+	
+	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+	SendClientMessage(playerid, STEALTH_YELLOW, "You've been teleported to the map's spawn position");
 	return 1;
 }
 
@@ -5322,7 +5322,7 @@ HideObjectText()
 {
 	foreach(new i : Objects)
 	{
-	    UpdateDynamic3DTextLabelText(ObjectData[i][oTextID], 0, "");
+		UpdateDynamic3DTextLabelText(ObjectData[i][oTextID], 0, "");
 	}
 	return 1;
 }
@@ -5331,7 +5331,7 @@ ShowObjectText()
 {
 	foreach(new i : Objects)
 	{
-	    UpdateObject3DText(i, false);
+		UpdateObject3DText(i, false);
 	}
 	return 1;
 }
@@ -5345,15 +5345,15 @@ YCMD:stopedit(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 
 	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 
 	if(EditingMode[playerid])
 	{
 		EditingMode[playerid] = false;
-        CancelEdit(playerid);
-        SendClientMessage(playerid, STEALTH_GREEN, "Editing mode reset.");
+		CancelEdit(playerid);
+		SendClientMessage(playerid, STEALTH_GREEN, "Editing mode reset.");
 	}
 	else SendClientMessage(playerid, STEALTH_YELLOW, "You're not editing.");
 

@@ -48,8 +48,8 @@ static bool:DeltaMapMovement[MAX_PLAYERS];
 // Main menu defines ///////////////////////////////////////////////////////////
 /*
 								   (0000)
- 						(0           0           00)
-                    Base Group - Sub Group - Elements
+						(0           0           00)
+					Base Group - Sub Group - Elements
 */
 ////////////////////////////////////////////////////////////////////////////////
 // Map commands
@@ -221,8 +221,8 @@ hook OnFilterScriptInit()
 		format(line, sizeof(line), "User Bind %i", i);
 		LoadGUIMenu(MainMenu,MenuButton,535.0, 270.0+inc, CLICK_BIND_1+i, E_INDEX);
 		GUISetPlayerText(MainMenu, E_INDEX[1], line);
-        GUISetPlayerText(MainMenu, E_INDEX[2], "LD_BEAT:square");
-        
+		GUISetPlayerText(MainMenu, E_INDEX[2], "LD_BEAT:square");
+		
 		BindElementIDS[i] = E_INDEX[1];
 		inc+=15.0;
 	}
@@ -253,7 +253,7 @@ hook OnFilterScriptInit()
 	GUISetPlayerText(ObjectMenu, E_INDEX[2], "LD_BEAT:square");
 
 
- 	// +x:0 +y:1 +z:2 +rx:3 +ry:4 +rz:5 -x:6 -y:7 -z:8 -rx:9 -ry:10 -rz:11
+	// +x:0 +y:1 +z:2 +rx:3 +ry:4 +rz:5 -x:6 -y:7 -z:8 -rx:9 -ry:10 -rz:11
 	LoadGUIMenu(ObjectMenu,MovementMenu,-100.0, 0.0, CLICK_MOVEMENT_MENU, E_INDEX);
 	for(new i = 0; i < 15; i++) { ObjectMovementIndex[i] = E_INDEX[i]; }
 
@@ -262,7 +262,7 @@ hook OnFilterScriptInit()
 
 	// Edit sub
 	LoadGUIMenu(ObjectSubMenu,SubMenuText,-200.0, 0.0, EXIT_GUI_MENU, E_INDEX);
-    GUISetPlayerText(ObjectSubMenu, E_INDEX[6], "Object Editor");
+	GUISetPlayerText(ObjectSubMenu, E_INDEX[6], "Object Editor");
 
 	LoadGUIMenu(ObjectSubMenu,MenuButton,335.0, 135.0, CLICK_OBJECTEDIT_COBJECT, E_INDEX);
 	GUISetPlayerText(ObjectSubMenu, E_INDEX[1], "Create Object");
@@ -325,50 +325,50 @@ hook OnFilterScriptInit()
 	GUISetPlayerText(SelectionSubMenu, E_INDEX[2], "LD_BEAT:square");
 
 	// Texture Sub
-    LoadGUIMenu(TextureSubMenu,SubMenuTexText,-200.0, 30.0, EXIT_GUI_MENU, E_INDEX);
-    GUISetPlayerText(TextureSubMenu, E_INDEX[6], "Textures");
-    
-   	LoadGUIMenu(TextureSubMenu,MenuButton,335.0, 165.0, CLICK_TEXTURE_TEXEDIT, E_INDEX);
+	LoadGUIMenu(TextureSubMenu,SubMenuTexText,-200.0, 30.0, EXIT_GUI_MENU, E_INDEX);
+	GUISetPlayerText(TextureSubMenu, E_INDEX[6], "Textures");
+	
+	LoadGUIMenu(TextureSubMenu,MenuButton,335.0, 165.0, CLICK_TEXTURE_TEXEDIT, E_INDEX);
 	GUISetPlayerText(TextureSubMenu, E_INDEX[1], "Texture Editor");
 	GUISetPlayerText(TextureSubMenu, E_INDEX[2], "LD_BEAT:square");
 
-   	LoadGUIMenu(TextureSubMenu,MenuButton,335.0, 180.0, CLICK_TEXTURE_TEXTEDIT, E_INDEX);
+	LoadGUIMenu(TextureSubMenu,MenuButton,335.0, 180.0, CLICK_TEXTURE_TEXTEDIT, E_INDEX);
 	GUISetPlayerText(TextureSubMenu, E_INDEX[1], "Text Editor");
 	GUISetPlayerText(TextureSubMenu, E_INDEX[2], "LD_BEAT:square");
 	
-   	LoadGUIMenu(TextureSubMenu,MenuButton,335.0, 195.0, CLICK_TEXTURE_SHOWINDEX, E_INDEX);
+	LoadGUIMenu(TextureSubMenu,MenuButton,335.0, 195.0, CLICK_TEXTURE_SHOWINDEX, E_INDEX);
 	GUISetPlayerText(TextureSubMenu, E_INDEX[1], "Show Indexes");
 	GUISetPlayerText(TextureSubMenu, E_INDEX[2], "LD_BEAT:square");
 
-   	LoadGUIMenu(TextureSubMenu,MenuButton,335.0, 210.0, CLICK_TEXTURE_HIDEINDEX, E_INDEX);
+	LoadGUIMenu(TextureSubMenu,MenuButton,335.0, 210.0, CLICK_TEXTURE_HIDEINDEX, E_INDEX);
 	GUISetPlayerText(TextureSubMenu, E_INDEX[1], "Hide Indexes");
 	GUISetPlayerText(TextureSubMenu, E_INDEX[2], "LD_BEAT:square");
 	
-   	LoadGUIMenu(TextureSubMenu,MenuButton,335.0, 225.0, CLICK_TEXTURE_COPY, E_INDEX);
+	LoadGUIMenu(TextureSubMenu,MenuButton,335.0, 225.0, CLICK_TEXTURE_COPY, E_INDEX);
 	GUISetPlayerText(TextureSubMenu, E_INDEX[1], "Copy Properties");
 	GUISetPlayerText(TextureSubMenu, E_INDEX[2], "LD_BEAT:square");
 
-   	LoadGUIMenu(TextureSubMenu,MenuButton,335.0, 240.0, CLICK_TEXTURE_CLEAR, E_INDEX);
+	LoadGUIMenu(TextureSubMenu,MenuButton,335.0, 240.0, CLICK_TEXTURE_CLEAR, E_INDEX);
 	GUISetPlayerText(TextureSubMenu, E_INDEX[1], "Clear Properties");
 	GUISetPlayerText(TextureSubMenu, E_INDEX[2], "LD_BEAT:square");
 
-   	LoadGUIMenu(TextureSubMenu,MenuButton,335.0, 255.0, CLICK_TEXTURE_PASTE, E_INDEX);
+	LoadGUIMenu(TextureSubMenu,MenuButton,335.0, 255.0, CLICK_TEXTURE_PASTE, E_INDEX);
 	GUISetPlayerText(TextureSubMenu, E_INDEX[1], "Paste Properties");
 	GUISetPlayerText(TextureSubMenu, E_INDEX[2], "LD_BEAT:square");
 	
-   	LoadGUIMenu(TextureSubMenu,MenuButton,335.0, 270.0, CLICK_TEXTURE_VIEWER, E_INDEX);
+	LoadGUIMenu(TextureSubMenu,MenuButton,335.0, 270.0, CLICK_TEXTURE_VIEWER, E_INDEX);
 	GUISetPlayerText(TextureSubMenu, E_INDEX[1], "Texture Viewer");
 	GUISetPlayerText(TextureSubMenu, E_INDEX[2], "LD_BEAT:square");
 
-   	LoadGUIMenu(TextureSubMenu,MenuButton,335.0, 285.0, CLICK_TEXTURE_THEMEV, E_INDEX);
+	LoadGUIMenu(TextureSubMenu,MenuButton,335.0, 285.0, CLICK_TEXTURE_THEMEV, E_INDEX);
 	GUISetPlayerText(TextureSubMenu, E_INDEX[1], "Theme Viewer");
 	GUISetPlayerText(TextureSubMenu, E_INDEX[2], "LD_BEAT:square");
 
-   	LoadGUIMenu(TextureSubMenu,MenuButton,335.0, 300.0, CLICK_TEXTURE_THEMET, E_INDEX);
+	LoadGUIMenu(TextureSubMenu,MenuButton,335.0, 300.0, CLICK_TEXTURE_THEMET, E_INDEX);
 	GUISetPlayerText(TextureSubMenu, E_INDEX[1], "Texture Themes");
 	GUISetPlayerText(TextureSubMenu, E_INDEX[2], "LD_BEAT:square");
 
-   	LoadGUIMenu(TextureSubMenu,MenuButton,335.0, 315.0, CLICK_TEXTURE_SEARCH, E_INDEX);
+	LoadGUIMenu(TextureSubMenu,MenuButton,335.0, 315.0, CLICK_TEXTURE_SEARCH, E_INDEX);
 	GUISetPlayerText(TextureSubMenu, E_INDEX[1], "Texture Search");
 	GUISetPlayerText(TextureSubMenu, E_INDEX[2], "LD_BEAT:square");
 
@@ -471,7 +471,7 @@ hook OnFilterScriptInit()
 
 	foreach(new i : Player)
 	{
-	    CreatePlayerMenus(i);
+		CreatePlayerMenus(i);
 	}
 
 	return Y_HOOKS_CONTINUE_RETURN_1;
@@ -491,39 +491,39 @@ static CreatePlayerMenus(playerid)
 	
 	// Main menu
 	PlayerMainMenu[playerid] = PlayerCreateGUI(playerid, "MainMenu");
-    PlayerLoadGUIMenu(playerid,PlayerMainMenu[playerid], MainMenuPlayerText, 0.0, 0.0, EXIT_GUI_MENU, E_PLAYERINDEX);
+	PlayerLoadGUIMenu(playerid,PlayerMainMenu[playerid], MainMenuPlayerText, 0.0, 0.0, EXIT_GUI_MENU, E_PLAYERINDEX);
 
 	// Bind menus
 	PlayerBindGUITextDraw(playerid, PlayerMainMenu[playerid], MainMenu);
 	
 	// Object menu
 	PlayerObjectMenu[playerid] = PlayerCreateGUI(playerid, "ObjectMenu");
-    PlayerLoadGUIMenu(playerid,PlayerObjectMenu[playerid], MainMenuPlayerText,-100.0, 0.0, EXIT_GUI_MENU, E_PLAYERINDEX);
-    PlayerGUISetPlayerText(playerid, PlayerObjectMenu[playerid], E_PLAYERINDEX[0], "Object Menu");
-    PlayerGUISetPlayerText(playerid, PlayerObjectMenu[playerid], E_PLAYERINDEX[2], "_");
-    PlayerGUISetSelectable(playerid, PlayerObjectMenu[playerid], E_PLAYERINDEX[2], 0);
+	PlayerLoadGUIMenu(playerid,PlayerObjectMenu[playerid], MainMenuPlayerText,-100.0, 0.0, EXIT_GUI_MENU, E_PLAYERINDEX);
+	PlayerGUISetPlayerText(playerid, PlayerObjectMenu[playerid], E_PLAYERINDEX[0], "Object Menu");
+	PlayerGUISetPlayerText(playerid, PlayerObjectMenu[playerid], E_PLAYERINDEX[2], "_");
+	PlayerGUISetSelectable(playerid, PlayerObjectMenu[playerid], E_PLAYERINDEX[2], 0);
 
-    PlayerLoadGUIMenu(playerid,PlayerObjectMenu[playerid], MovementInfo,-100.0, 0.0, EXIT_GUI_MENU, E_PLAYERINDEX);
+	PlayerLoadGUIMenu(playerid,PlayerObjectMenu[playerid], MovementInfo,-100.0, 0.0, EXIT_GUI_MENU, E_PLAYERINDEX);
 	for(new i = 0; i < 8; i++) { CurrObjectPosition[playerid][i] = E_PLAYERINDEX[i]; }
-    PlayerGUISetPlayerText(playerid, PlayerObjectMenu[playerid], E_PLAYERINDEX[6], "Off");
-    PlayerGUISetPlayerText(playerid, PlayerObjectMenu[playerid], E_PLAYERINDEX[7], "1.0");
-    PlayerGUISetPlayerText(playerid, PlayerObjectMenu[playerid], E_PLAYERINDEX[8], "5.0");
+	PlayerGUISetPlayerText(playerid, PlayerObjectMenu[playerid], E_PLAYERINDEX[6], "Off");
+	PlayerGUISetPlayerText(playerid, PlayerObjectMenu[playerid], E_PLAYERINDEX[7], "1.0");
+	PlayerGUISetPlayerText(playerid, PlayerObjectMenu[playerid], E_PLAYERINDEX[8], "5.0");
 
-   	// Group Menu
-   	PlayerGroupMenu[playerid] = PlayerCreateGUI(playerid, "GroupMenu");
-    PlayerLoadGUIMenu(playerid,PlayerGroupMenu[playerid], MainMenuPlayerText,-100.0, 0.0, EXIT_GUI_MENU, E_PLAYERINDEX);
-    PlayerGUISetPlayerText(playerid, PlayerGroupMenu[playerid], E_PLAYERINDEX[0], "Group Menu");
-    PlayerGUISetPlayerText(playerid, PlayerGroupMenu[playerid], E_PLAYERINDEX[2], "_");
-    PlayerGUISetSelectable(playerid, PlayerGroupMenu[playerid], E_PLAYERINDEX[2], 0);
+	// Group Menu
+	PlayerGroupMenu[playerid] = PlayerCreateGUI(playerid, "GroupMenu");
+	PlayerLoadGUIMenu(playerid,PlayerGroupMenu[playerid], MainMenuPlayerText,-100.0, 0.0, EXIT_GUI_MENU, E_PLAYERINDEX);
+	PlayerGUISetPlayerText(playerid, PlayerGroupMenu[playerid], E_PLAYERINDEX[0], "Group Menu");
+	PlayerGUISetPlayerText(playerid, PlayerGroupMenu[playerid], E_PLAYERINDEX[2], "_");
+	PlayerGUISetSelectable(playerid, PlayerGroupMenu[playerid], E_PLAYERINDEX[2], 0);
 
-    PlayerLoadGUIMenu(playerid,PlayerGroupMenu[playerid], MovementInfo,-100.0, 0.0, EXIT_GUI_MENU, E_PLAYERINDEX);
+	PlayerLoadGUIMenu(playerid,PlayerGroupMenu[playerid], MovementInfo,-100.0, 0.0, EXIT_GUI_MENU, E_PLAYERINDEX);
 	for(new i = 0; i < 8; i++) { CurrGroupPosition[playerid][i] = E_PLAYERINDEX[i]; }
 	PlayerGUISetPlayerText(playerid, PlayerGroupMenu[playerid], E_PLAYERINDEX[3], "------");
 	PlayerGUISetPlayerText(playerid, PlayerGroupMenu[playerid], E_PLAYERINDEX[4], "------");
 	PlayerGUISetPlayerText(playerid, PlayerGroupMenu[playerid], E_PLAYERINDEX[5], "------");
-    PlayerGUISetPlayerText(playerid, PlayerGroupMenu[playerid], E_PLAYERINDEX[6], "_");
-    PlayerGUISetPlayerText(playerid, PlayerGroupMenu[playerid], E_PLAYERINDEX[7], "1.0");
-    PlayerGUISetPlayerText(playerid, PlayerGroupMenu[playerid], E_PLAYERINDEX[8], "5.0");
+	PlayerGUISetPlayerText(playerid, PlayerGroupMenu[playerid], E_PLAYERINDEX[6], "_");
+	PlayerGUISetPlayerText(playerid, PlayerGroupMenu[playerid], E_PLAYERINDEX[7], "1.0");
+	PlayerGUISetPlayerText(playerid, PlayerGroupMenu[playerid], E_PLAYERINDEX[8], "5.0");
 
 
 	// Bind menus
@@ -545,13 +545,13 @@ static CreatePlayerMenus(playerid)
 
 	// Default rotation / movement
 	CurrMovementInc[playerid] = 1.0;
-   	CurrRotationInc[playerid] = 5.0;
+	CurrRotationInc[playerid] = 5.0;
 	CurrMovementGInc[playerid] = 1.0;
-   	CurrRotationGInc[playerid] = 5.0;
+	CurrRotationGInc[playerid] = 5.0;
 
 	// Default delta off
-   	DeltaMapMovement[playerid] = false;
-   	
+	DeltaMapMovement[playerid] = false;
+	
 
 
 	return 1;
@@ -561,10 +561,10 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
 	if( newkeys & KEY_NO || (IsFlyMode(playerid) && newkeys & KEY_JUMP) )
 	{
-	    if(!EditingMode[playerid])
-	    {
-            PlayerShowGUIMenu(playerid, PlayerMainMenu[playerid], true);
-            PlayerSelectGUITextDraw(playerid);
+		if(!EditingMode[playerid])
+		{
+			PlayerShowGUIMenu(playerid, PlayerMainMenu[playerid], true);
+			PlayerSelectGUITextDraw(playerid);
 			return Y_HOOKS_BREAK_RETURN_1;
 		}
 	}
@@ -574,7 +574,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
 HideGUIInterface(playerid)
 {
-    PlayerHideGUIMenu(playerid, PlayerSubMenu[playerid]);
+	PlayerHideGUIMenu(playerid, PlayerSubMenu[playerid]);
 	PlayerHideGUIMenu(playerid, PlayerObjectMenu[playerid]);
 	PlayerHideGUIMenu(playerid, PlayerMainMenu[playerid]);
 	PlayerCancelSelectGUITextDraw(playerid);
@@ -599,33 +599,33 @@ OnGUIClick:MainMenu(playerid, group, gindex, pindex)
 	switch(group)
 	{
 		// Map commands
-	    case CLICK_NEW_MAP: { BroadcastCommand(playerid, "/newmap"); }
-	    case CLICK_LOAD_MAP: { BroadcastCommand(playerid, "/loadmap"); }
-	    case CLICK_IMPORT_MAP: { BroadcastCommand(playerid, "/importmap"); }
-	    case CLICK_EXPORT_MAP: { BroadcastCommand(playerid, "/export"); }
+		case CLICK_NEW_MAP: { BroadcastCommand(playerid, "/newmap"); }
+		case CLICK_LOAD_MAP: { BroadcastCommand(playerid, "/loadmap"); }
+		case CLICK_IMPORT_MAP: { BroadcastCommand(playerid, "/importmap"); }
+		case CLICK_EXPORT_MAP: { BroadcastCommand(playerid, "/export"); }
 
 		// Mode commands
-	    case CLICK_OBJECT_MODE:
+		case CLICK_OBJECT_MODE:
 		{
 			MapOpenCheck();
 			PlayerHideGUIMenu(playerid, PlayerSubMenu[playerid]);
 			PlayerHideGUIMenu(playerid, PlayerGroupMenu[playerid]);
 			PlayerShowGUIMenu(playerid, PlayerObjectMenu[playerid], true);
 		}
-	    case CLICK_GROUP_MODE:
+		case CLICK_GROUP_MODE:
 		{
 			MapOpenCheck();
 			PlayerHideGUIMenu(playerid, PlayerSubMenu[playerid]);
 			PlayerHideGUIMenu(playerid, PlayerObjectMenu[playerid]);
 			PlayerShowGUIMenu(playerid, PlayerGroupMenu[playerid], true);
 		}
-	    case CLICK_FLY_MODE: { BroadcastCommand(playerid, "/flymode"); }
-	    case CLICK_BIND_1..CLICK_BIND_8:
-	    {
-	        new line[128];
-	        format(line, sizeof(line), "/runbind %i", group - CLICK_BIND_1);
-	        BroadcastCommand(playerid, line);
-	    }
+		case CLICK_FLY_MODE: { BroadcastCommand(playerid, "/flymode"); }
+		case CLICK_BIND_1..CLICK_BIND_8:
+		{
+			new line[128];
+			format(line, sizeof(line), "/runbind %i", group - CLICK_BIND_1);
+			BroadcastCommand(playerid, line);
+		}
 	}
 	return 1;
 }
@@ -634,7 +634,7 @@ OnGUIClick:MainMenu(playerid, group, gindex, pindex)
 OnPlayerGUIClose:MainMenu(playerid, group, gindex)
 {
 	// Always close the submenu
-    PlayerHideGUIMenu(playerid, PlayerObjectMenu[playerid]);
+	PlayerHideGUIMenu(playerid, PlayerObjectMenu[playerid]);
 	return 1;
 }
 
@@ -665,11 +665,11 @@ OnGUIClick:ObjectMenu(playerid, group, gindex, pindex)
 			PlayerHideAllGUIBindMenu(playerid, PlayerSubMenu[playerid]);
 
 			// Show the Sub object menu
-            ShowGUIMenu(playerid, ObjectSubMenu);
+			ShowGUIMenu(playerid, ObjectSubMenu);
 		}
 
 		// Map commands
-	    case CLICK_SELECTION_MENU:
+		case CLICK_SELECTION_MENU:
 		{
 			// Open the sub-menu controller (Don't show binds)
 			PlayerShowGUIMenu(playerid, PlayerSubMenu[playerid], true);
@@ -678,7 +678,7 @@ OnGUIClick:ObjectMenu(playerid, group, gindex, pindex)
 			PlayerHideAllGUIBindMenu(playerid, PlayerSubMenu[playerid]);
 
 			// Show the Sub selection menu
-            ShowGUIMenu(playerid, SelectionSubMenu);
+			ShowGUIMenu(playerid, SelectionSubMenu);
 		}
 		
 		// Texture commands
@@ -691,7 +691,7 @@ OnGUIClick:ObjectMenu(playerid, group, gindex, pindex)
 			PlayerHideAllGUIBindMenu(playerid, PlayerSubMenu[playerid]);
 
 			// Show the Sub texture menu
-            ShowGUIMenu(playerid, TextureSubMenu);
+			ShowGUIMenu(playerid, TextureSubMenu);
 		}
 		// Search object
 		case CLICK_SEARCH_MENU:
@@ -707,7 +707,7 @@ OnGUIClick:ObjectMenu(playerid, group, gindex, pindex)
 					BroadcastCommand(playerid, line);
 				}
 			}
-	        Dialog_ShowCallback(playerid, using inline SearchObject, DIALOG_STYLE_INPUT, "Texture Studio", "Input object search string", "Ok", "Cancel");
+			Dialog_ShowCallback(playerid, using inline SearchObject, DIALOG_STYLE_INPUT, "Texture Studio", "Input object search string", "Ok", "Cancel");
 		}
 		
 		case CLICK_PIVOT_MENU:
@@ -723,7 +723,7 @@ OnGUIClick:ObjectMenu(playerid, group, gindex, pindex)
 		case CLICK_MOVEMENT_MENU:
 		{
 			if(CurrObject[playerid] == -1) return 1;
-            // +x:0 +y:1 +z:2 +rx:3 +ry:4 +rz:5 -x:6 -y:7 -z:8 -rx:9 -ry:10 -rz:11
+			// +x:0 +y:1 +z:2 +rx:3 +ry:4 +rz:5 -x:6 -y:7 -z:8 -rx:9 -ry:10 -rz:11
 			new line[128];
 			if(ObjectMovementIndex[0] == pindex)
 			{
@@ -742,7 +742,7 @@ OnGUIClick:ObjectMenu(playerid, group, gindex, pindex)
 					if(DeltaMapMovement[playerid]) format(line, sizeof(line), "/doy %0.3f", CurrMovementInc[playerid]);
 					else format(line, sizeof(line), "/oy %0.3f", CurrMovementInc[playerid]);
 				}
-                else format(line, sizeof(line), "/avoy %0.3f", CurrMovementInc[playerid]);
+				else format(line, sizeof(line), "/avoy %0.3f", CurrMovementInc[playerid]);
 				BroadcastCommand(playerid, line);
 			}
 			else if(ObjectMovementIndex[2] == pindex)
@@ -850,13 +850,13 @@ OnGUIClick:ObjectMenu(playerid, group, gindex, pindex)
 			{
 				if(DeltaMapMovement[playerid])
 				{
-				    DeltaMapMovement[playerid] = false;
-				    PlayerGUISetPlayerText(playerid, PlayerObjectMenu[playerid], E_PLAYERINDEX[6], "Off");
+					DeltaMapMovement[playerid] = false;
+					PlayerGUISetPlayerText(playerid, PlayerObjectMenu[playerid], E_PLAYERINDEX[6], "Off");
 				}
 				else
 				{
-				    DeltaMapMovement[playerid] = true;
-				    PlayerGUISetPlayerText(playerid, PlayerObjectMenu[playerid], E_PLAYERINDEX[6], "On");
+					DeltaMapMovement[playerid] = true;
+					PlayerGUISetPlayerText(playerid, PlayerObjectMenu[playerid], E_PLAYERINDEX[6], "On");
 				}
 			}
 			// Set object position
@@ -868,14 +868,14 @@ OnGUIClick:ObjectMenu(playerid, group, gindex, pindex)
 					if(response)
 					{
 						new Float:tmp;
-					    if(sscanf(text, "f", tmp)) return SendClientMessage(playerid, STEALTH_YELLOW, "You must supply a increment value!");
-					    if(tmp < -100.0 || tmp > 100.0) return SendClientMessage(playerid, STEALTH_YELLOW, "Out of range increment! <-100.0 - 100.0>");
-					    CurrMovementInc[playerid] = tmp;
-					    format(line, sizeof(line), "%0.3f", tmp);
-					    PlayerGUISetPlayerText(playerid, PlayerObjectMenu[playerid], E_PLAYERINDEX[7], line);
+						if(sscanf(text, "f", tmp)) return SendClientMessage(playerid, STEALTH_YELLOW, "You must supply a increment value!");
+						if(tmp < -100.0 || tmp > 100.0) return SendClientMessage(playerid, STEALTH_YELLOW, "Out of range increment! <-100.0 - 100.0>");
+						CurrMovementInc[playerid] = tmp;
+						format(line, sizeof(line), "%0.3f", tmp);
+						PlayerGUISetPlayerText(playerid, PlayerObjectMenu[playerid], E_PLAYERINDEX[7], line);
 					}
 				}
-                Dialog_ShowCallback(playerid, using inline SetMovementInc, DIALOG_STYLE_INPUT, "Texture Studio", "Input object movement inc", "Ok", "Cancel");
+				Dialog_ShowCallback(playerid, using inline SetMovementInc, DIALOG_STYLE_INPUT, "Texture Studio", "Input object movement inc", "Ok", "Cancel");
 			}
 
 			else if(ObjectMovementIndex[14] == pindex)
@@ -886,14 +886,14 @@ OnGUIClick:ObjectMenu(playerid, group, gindex, pindex)
 					if(response)
 					{
 						new Float:tmp;
-					    if(sscanf(text, "f", tmp)) return SendClientMessage(playerid, STEALTH_YELLOW, "You must supply a increment value!");
-					    if(tmp < -100.0 || tmp > 100.0) return SendClientMessage(playerid, STEALTH_YELLOW, "Out of range increment! <-100.0 - 100.0>");
-					    CurrRotationInc[playerid] = tmp;
-					    format(line, sizeof(line), "%0.3f", tmp);
-					    PlayerGUISetPlayerText(playerid, PlayerObjectMenu[playerid], E_PLAYERINDEX[8], line);
+						if(sscanf(text, "f", tmp)) return SendClientMessage(playerid, STEALTH_YELLOW, "You must supply a increment value!");
+						if(tmp < -100.0 || tmp > 100.0) return SendClientMessage(playerid, STEALTH_YELLOW, "Out of range increment! <-100.0 - 100.0>");
+						CurrRotationInc[playerid] = tmp;
+						format(line, sizeof(line), "%0.3f", tmp);
+						PlayerGUISetPlayerText(playerid, PlayerObjectMenu[playerid], E_PLAYERINDEX[8], line);
 					}
 				}
-                Dialog_ShowCallback(playerid, using inline SetMovementRot, DIALOG_STYLE_INPUT, "Texture Studio", "Input object rotation inc", "Ok", "Cancel");
+				Dialog_ShowCallback(playerid, using inline SetMovementRot, DIALOG_STYLE_INPUT, "Texture Studio", "Input object rotation inc", "Ok", "Cancel");
 			}
 		}
 	}
@@ -914,8 +914,8 @@ OnGUIClick:SubObjectEdit(playerid, group, gindex, pindex)
 	// Exit
 	switch(group)
 	{
-	    case EXIT_GUI_MENU: { PlayerHideGUIMenu(playerid, PlayerSubMenu[playerid]); }
-	    case CLICK_OBJECTEDIT_COBJECT:
+		case EXIT_GUI_MENU: { PlayerHideGUIMenu(playerid, PlayerSubMenu[playerid]); }
+		case CLICK_OBJECTEDIT_COBJECT:
 		{
 			inline ChooseObject(pid, dialogid, response, listitem, string:text[])
 			{
@@ -926,11 +926,11 @@ OnGUIClick:SubObjectEdit(playerid, group, gindex, pindex)
 			}
 			Dialog_ShowCallback(playerid, using inline ChooseObject, DIALOG_STYLE_INPUT, "Texture Studio", "Input objectid to create", "Ok", "Cancel");
 		}
-	    case CLICK_OBJECTEDIT_RROT: { BroadcastCommand(playerid, "/rotreset"); }
-	    case CLICK_OBJECTEDIT_DOBJECT: { BroadcastCommand(playerid, "/dobject"); }
-	    case CLICK_OBJECTEDIT_CLONE: { BroadcastCommand(playerid, "/clone"); }
-	    case CLICK_OBJECTEDIT_GOTO: { BroadcastCommand(playerid, "/ogoto"); }
-	    case CLICK_OBJECTEDIT_EDIT:
+		case CLICK_OBJECTEDIT_RROT: { BroadcastCommand(playerid, "/rotreset"); }
+		case CLICK_OBJECTEDIT_DOBJECT: { BroadcastCommand(playerid, "/dobject"); }
+		case CLICK_OBJECTEDIT_CLONE: { BroadcastCommand(playerid, "/clone"); }
+		case CLICK_OBJECTEDIT_GOTO: { BroadcastCommand(playerid, "/ogoto"); }
+		case CLICK_OBJECTEDIT_EDIT:
 		{
 			// Force cancel
 			PlayerCancelSelectGUITextDraw(playerid, true);
@@ -960,8 +960,8 @@ OnGUIClick:SubMenuSel(playerid, group, gindex, pindex)
 	// Exit
 	switch(group)
 	{
-	    case EXIT_GUI_MENU: { PlayerHideGUIMenu(playerid, PlayerSubMenu[playerid]); }
-	    case CLICK_SELECT_OBJECT:
+		case EXIT_GUI_MENU: { PlayerHideGUIMenu(playerid, PlayerSubMenu[playerid]); }
+		case CLICK_SELECT_OBJECT:
 		{
 			inline ChooseSelection(pid, dialogid, response, listitem, string:text[])
 			{
@@ -1006,7 +1006,7 @@ OnGUIClick:SubMenuTex(playerid, group, gindex, pindex)
 	// Exit
 	switch(group)
 	{
-	    case EXIT_GUI_MENU: { PlayerHideGUIMenu(playerid, PlayerSubMenu[playerid]); }
+		case EXIT_GUI_MENU: { PlayerHideGUIMenu(playerid, PlayerSubMenu[playerid]); }
 		case CLICK_TEXTURE_TEXEDIT:
 		{
 			// Gets messy if we leave the submenu open
@@ -1034,15 +1034,15 @@ OnGUIClick:SubMenuTex(playerid, group, gindex, pindex)
 			inline ThemeMenu(pid, dialogid, response, listitem, string:text[])
 			{
 				#pragma unused listitem, dialogid, pid, text
-		        if(response)
-		        {
-		            switch(listitem)
-		            {
-		                case 0: { BroadcastCommand(playerid, "/savetheme"); }
-		                case 1: { BroadcastCommand(playerid, "/loadtheme"); }
-		                case 2: { BroadcastCommand(playerid, "/deletetheme"); }
-		            }
-		        }
+				if(response)
+				{
+					switch(listitem)
+					{
+						case 0: { BroadcastCommand(playerid, "/savetheme"); }
+						case 1: { BroadcastCommand(playerid, "/loadtheme"); }
+						case 2: { BroadcastCommand(playerid, "/deletetheme"); }
+					}
+				}
 			}
 			Dialog_ShowCallback(playerid, using inline ThemeMenu, DIALOG_STYLE_LIST, "Texture Studio", "Save Theme\nLoad Theme\nDelete Theme", "Ok", "Cancel");
 
@@ -1088,7 +1088,7 @@ OnGUIClick:GroupMenu(playerid, group, gindex, pindex)
 			PlayerHideAllGUIBindMenu(playerid, PlayerSubMenu[playerid]);
 
 			// Show the Sub object menu
-            ShowGUIMenu(playerid, GroupSelSubMenu);
+			ShowGUIMenu(playerid, GroupSelSubMenu);
 		}
 
 		// Edit objects
@@ -1101,7 +1101,7 @@ OnGUIClick:GroupMenu(playerid, group, gindex, pindex)
 			PlayerHideAllGUIBindMenu(playerid, PlayerSubMenu[playerid]);
 
 			// Show the Sub object menu
-            ShowGUIMenu(playerid, GroupPrefabMenu);
+			ShowGUIMenu(playerid, GroupPrefabMenu);
 		}
 
 		// Pivot
@@ -1121,17 +1121,17 @@ OnGUIClick:GroupMenu(playerid, group, gindex, pindex)
 			inline ZeroGroup(pid, dialogid, response, listitem, string:text[])
 			{
 				#pragma unused listitem, dialogid, pid, text
-		        if(response) BroadcastCommand(playerid, "/0group");
+				if(response) BroadcastCommand(playerid, "/0group");
 			}
 			Dialog_ShowCallback(playerid, using inline ZeroGroup, DIALOG_STYLE_MSGBOX, "Texture Studio", "This will set your currently grouped\nobjects to the 0,0,0 postion", "Ok", "Cancel");
 		}
 
 		// Objectmetry editor
-        case CLICK_OBJECTMETRY_MENU: { BroadcastCommand(playerid, "/obmedit"); }
+		case CLICK_OBJECTMETRY_MENU: { BroadcastCommand(playerid, "/obmedit"); }
 
 		case CLICK_MOVEMENTG_MENU:
 		{
-            // +x:0 +y:1 +z:2 +rx:3 +ry:4 +rz:5 -x:6 -y:7 -z:8 -rx:9 -ry:10 -rz:11
+			// +x:0 +y:1 +z:2 +rx:3 +ry:4 +rz:5 -x:6 -y:7 -z:8 -rx:9 -ry:10 -rz:11
 			new line[128];
 			if(ObjectGroupMovementIndex[0] == pindex)
 			{
@@ -1204,14 +1204,14 @@ OnGUIClick:GroupMenu(playerid, group, gindex, pindex)
 					if(response)
 					{
 						new Float:tmp;
-					    if(sscanf(text, "f", tmp)) return SendClientMessage(playerid, STEALTH_YELLOW, "You must supply a increment value!");
-					    if(tmp < -100.0 || tmp > 100.0) return SendClientMessage(playerid, STEALTH_YELLOW, "Out of range increment! <-100.0 - 100.0>");
-					    CurrMovementGInc[playerid] = tmp;
-					    format(line, sizeof(line), "%0.3f", tmp);
-					    PlayerGUISetPlayerText(playerid, PlayerGroupMenu[playerid], E_PLAYERINDEX[7], line);
+						if(sscanf(text, "f", tmp)) return SendClientMessage(playerid, STEALTH_YELLOW, "You must supply a increment value!");
+						if(tmp < -100.0 || tmp > 100.0) return SendClientMessage(playerid, STEALTH_YELLOW, "Out of range increment! <-100.0 - 100.0>");
+						CurrMovementGInc[playerid] = tmp;
+						format(line, sizeof(line), "%0.3f", tmp);
+						PlayerGUISetPlayerText(playerid, PlayerGroupMenu[playerid], E_PLAYERINDEX[7], line);
 					}
 				}
-                Dialog_ShowCallback(playerid, using inline SetMovementGInc, DIALOG_STYLE_INPUT, "Texture Studio", "Input group movement inc", "Ok", "Cancel");
+				Dialog_ShowCallback(playerid, using inline SetMovementGInc, DIALOG_STYLE_INPUT, "Texture Studio", "Input group movement inc", "Ok", "Cancel");
 			}
 
 			else if(ObjectGroupMovementIndex[14] == pindex)
@@ -1222,14 +1222,14 @@ OnGUIClick:GroupMenu(playerid, group, gindex, pindex)
 					if(response)
 					{
 						new Float:tmp;
-					    if(sscanf(text, "f", tmp)) return SendClientMessage(playerid, STEALTH_YELLOW, "You must supply a increment value!");
-					    if(tmp < -100.0 || tmp > 100.0) return SendClientMessage(playerid, STEALTH_YELLOW, "Out of range increment! <-100.0 - 100.0>");
-					    CurrRotationGInc[playerid] = tmp;
-					    format(line, sizeof(line), "%0.3f", tmp);
-					    PlayerGUISetPlayerText(playerid, PlayerGroupMenu[playerid], E_PLAYERINDEX[8], line);
+						if(sscanf(text, "f", tmp)) return SendClientMessage(playerid, STEALTH_YELLOW, "You must supply a increment value!");
+						if(tmp < -100.0 || tmp > 100.0) return SendClientMessage(playerid, STEALTH_YELLOW, "Out of range increment! <-100.0 - 100.0>");
+						CurrRotationGInc[playerid] = tmp;
+						format(line, sizeof(line), "%0.3f", tmp);
+						PlayerGUISetPlayerText(playerid, PlayerGroupMenu[playerid], E_PLAYERINDEX[8], line);
 					}
 				}
-                Dialog_ShowCallback(playerid, using inline SetMovementGRot, DIALOG_STYLE_INPUT, "Texture Studio", "Input group rotation inc", "Ok", "Cancel");
+				Dialog_ShowCallback(playerid, using inline SetMovementGRot, DIALOG_STYLE_INPUT, "Texture Studio", "Input group rotation inc", "Ok", "Cancel");
 			}
 		}
 	}
@@ -1241,7 +1241,7 @@ OnGUIClick:SubMenuGroupSel(playerid, group, gindex, pindex)
 {
 	switch(group)
 	{
-	    case EXIT_GUI_MENU: { PlayerHideGUIMenu(playerid, PlayerSubMenu[playerid]); }
+		case EXIT_GUI_MENU: { PlayerHideGUIMenu(playerid, PlayerSubMenu[playerid]); }
 		case CLICK_GROUP_CSEL:
 		{
 			// Force cancel
@@ -1332,7 +1332,7 @@ OnGUIClick:SubMenuGroupPF(playerid, group, gindex, pindex)
 {
 	switch(group)
 	{
-	    case EXIT_GUI_MENU: { PlayerHideGUIMenu(playerid, PlayerSubMenu[playerid]); }
+		case EXIT_GUI_MENU: { PlayerHideGUIMenu(playerid, PlayerSubMenu[playerid]); }
 		case CLICK_GROUP_GPREFAB: { BroadcastCommand(playerid, "/gprefab"); }
 		case CLICK_GROUP_LOADPF:
 		{
@@ -1345,8 +1345,8 @@ OnGUIClick:SubMenuGroupPF(playerid, group, gindex, pindex)
 			// Create a load list
 			while(dir_list(dHandle, item, type))
 			{
-			 	if(type != FM_DIR)
-			    {
+				if(type != FM_DIR)
+				{
 					// We need to check extension
 					if(strlen(item) > 3)
 					{
@@ -1359,7 +1359,7 @@ OnGUIClick:SubMenuGroupPF(playerid, group, gindex, pindex)
 							format(list, sizeof(list), "%s%s\n", list, item);
 							total++;
 						}
-				    }
+					}
 				}
 			}
 			if(total == 0) SendClientMessage(playerid, STEALTH_YELLOW, "There are no prefabs to list!");
@@ -1388,8 +1388,8 @@ OnGUIClick:SubMenuGroupPF(playerid, group, gindex, pindex)
 			// Create a load list
 			while(dir_list(dHandle, item, type))
 			{
-			 	if(type != FM_DIR)
-			    {
+				if(type != FM_DIR)
+				{
 					// We need to check extension
 					if(strlen(item) > 3)
 					{
@@ -1402,7 +1402,7 @@ OnGUIClick:SubMenuGroupPF(playerid, group, gindex, pindex)
 							format(list, sizeof(list), "%s%s\n", list, item);
 							total++;
 						}
-				    }
+					}
 				}
 			}
 			if(total == 0) SendClientMessage(playerid, STEALTH_YELLOW, "There are no prefabs to list!");
@@ -1413,20 +1413,20 @@ OnGUIClick:SubMenuGroupPF(playerid, group, gindex, pindex)
 					#pragma unused listitem, dialogid, pid, text
 					if(response)
 					{
-                        inline ChooseZ(zpid, zdialogid, zresponse, zlistitem, string:ztext[])
-                        {
-                            #pragma unused zlistitem, zdialogid, zpid, ztext
+						inline ChooseZ(zpid, zdialogid, zresponse, zlistitem, string:ztext[])
+						{
+							#pragma unused zlistitem, zdialogid, zpid, ztext
 							if(zresponse)
 							{
 								new Float:zheight;
-	                            if(!sscanf(ztext, "f", zheight))
+								if(!sscanf(ztext, "f", zheight))
 								{
 									new line[128];
 									format(line, sizeof(line), "/prefabsetz %s %f", text, zheight);
 									BroadcastCommand(playerid, line);
 								}
 							}
-                        }
+						}
 						Dialog_ShowCallback(playerid, using inline ChooseZ, DIALOG_STYLE_INPUT, "Texture Studio - Set Prefab Load Z", "Enter the load Z-Offset for this prefab", "Ok", "Cancel");
 					}
 				}
@@ -1482,7 +1482,7 @@ UpdatePlayerOSelText(playerid)
 	}
 	else
 	{
-	    new line[16];
+		new line[16];
 		if(ObjectData[CurrObject[playerid]][oAttachedVehicle] == -1)
 		{
 			format(line, sizeof(line), "X:%0.2f", ObjectData[CurrObject[playerid]][oX]);
@@ -1545,7 +1545,7 @@ UpdatePlayerGSelText(playerid)
 	}
 	else
 	{
-	    new line[16];
+		new line[16];
 		format(line, sizeof(line), "X:%0.2f", x);
 		PlayerGUISetPlayerText(playerid, PlayerGroupMenu[playerid], CurrGroupPosition[playerid][0], line);
 
@@ -1586,7 +1586,7 @@ YCMD:runbind(playerid, arg[], help)
 		return 1;
 	}
 
-    NoEditingMode(playerid);
+	NoEditingMode(playerid);
 	if(isnull(arg)) return SendClientMessage(playerid, STEALTH_YELLOW, "Usage /runbind <0-9>");
 	new bind = strval(arg);
 	if(bind < 0 || bind > (MAX_CLICK_BINDS - 1)) return SendClientMessage(playerid, STEALTH_YELLOW, "Usage /runbind <0-9>");
@@ -1641,12 +1641,12 @@ YCMD:bindeditor(playerid, arg[], help)
 		return 1;
 	}
 
-    NoEditingMode(playerid);
+	NoEditingMode(playerid);
 
 	new line[1024];
 
 	// Show bind dialog
-    inline ChooseBind(cpid, cdialogid, cresponse, clistitem, string:ctext[])
+	inline ChooseBind(cpid, cdialogid, cresponse, clistitem, string:ctext[])
 	{
 		#pragma unused clistitem, cdialogid, cpid, ctext
 		if(cresponse)
@@ -1654,15 +1654,15 @@ YCMD:bindeditor(playerid, arg[], help)
 			// Edit option for bind
 			inline ChooseEditOption(opid, odialogid, oresponse, olistitem, string:otext[])
 			{
-	            #pragma unused olistitem, odialogid, opid, otext
+				#pragma unused olistitem, odialogid, opid, otext
 				if(oresponse)
 				{
 					// Change text
 					if(olistitem == 0)
 					{
-				   		inline SetBindName(spid, sdialogid, sresponse, slistitem, string:stext[])
-					   	{
-					        #pragma unused slistitem, sdialogid, spid, stext
+						inline SetBindName(spid, sdialogid, sresponse, slistitem, string:stext[])
+						{
+							#pragma unused slistitem, sdialogid, spid, stext
 							if(sresponse)
 							{
 								new len = strlen(stext);
@@ -1694,14 +1694,14 @@ YCMD:bindeditor(playerid, arg[], help)
 					{
 						if(BindUsed[clistitem])
 						{
-				            inline EditLine(epid, edialogid, eresponse, elistitem, string:etext[])
+							inline EditLine(epid, edialogid, eresponse, elistitem, string:etext[])
 							{
-				                #pragma unused elistitem, edialogid, epid, etext
+								#pragma unused elistitem, edialogid, epid, etext
 								if(eresponse)
 								{
-					   				inline SetBind(spid, sdialogid, sresponse, slistitem, string:stext[])
-								   	{
-						                #pragma unused slistitem, sdialogid, spid, stext
+									inline SetBind(spid, sdialogid, sresponse, slistitem, string:stext[])
+									{
+										#pragma unused slistitem, sdialogid, spid, stext
 										if(sresponse)
 										{
 											format(CommandBindData[clistitem][elistitem], MAX_BIND_LENGTH, "%s", stext);
@@ -1711,32 +1711,32 @@ YCMD:bindeditor(playerid, arg[], help)
 										}
 
 										format(line, sizeof(line), "");
-									    for(new i = 0; i < MAX_BINDS_PER_BIND; i++) { format(line, sizeof(line), "%s%i: %s\n", line, i, CommandBindData[clistitem][i]); }
+										for(new i = 0; i < MAX_BINDS_PER_BIND; i++) { format(line, sizeof(line), "%s%i: %s\n", line, i, CommandBindData[clistitem][i]); }
 										Dialog_ShowCallback(playerid, using inline EditLine, DIALOG_STYLE_LIST, "Texture Studio - Edit Bind Text", line, "Ok", "Cancel");
 									}
 									Dialog_ShowCallback(playerid, using inline SetBind, DIALOG_STYLE_INPUT, "Texture Studio - Edit Bind Text", "Set Bind", "Ok", "Cancel");
 								}
 							}
 							format(line, sizeof(line), "");
-						    for(new i = 0; i < MAX_BINDS_PER_BIND; i++) { format(line, sizeof(line), "%s%i: %s\n", line, i, CommandBindData[clistitem][i]); }
+							for(new i = 0; i < MAX_BINDS_PER_BIND; i++) { format(line, sizeof(line), "%s%i: %s\n", line, i, CommandBindData[clistitem][i]); }
 							Dialog_ShowCallback(playerid, using inline EditLine, DIALOG_STYLE_LIST, "Texture Studio - Edit Bind Text", line, "Ok", "Cancel");
 						}
 						else
 						{
-                            SendClientMessage(playerid, STEALTH_YELLOW, "You must set a name to edit this bind!");
-						    Dialog_ShowCallback(playerid, using inline ChooseEditOption, DIALOG_STYLE_LIST, "Texture Studio - Choose Edit Type", "Edit Bind Name\nEdit Bind Text\nDelete Bind", "Ok", "Cancel");
+							SendClientMessage(playerid, STEALTH_YELLOW, "You must set a name to edit this bind!");
+							Dialog_ShowCallback(playerid, using inline ChooseEditOption, DIALOG_STYLE_LIST, "Texture Studio - Choose Edit Type", "Edit Bind Name\nEdit Bind Text\nDelete Bind", "Ok", "Cancel");
 						}
 					}
 					else if(olistitem == 2)
 					{
-			            inline DeleteBind(dpid, dialogid, dresponse, dlistitem, string:dtext[])
+						inline DeleteBind(dpid, dialogid, dresponse, dlistitem, string:dtext[])
 						{
-                            #pragma unused dlistitem, dialogid, dpid, dtext
-                            if(dresponse)
-                            {
-                                sqlite_DeleteBindString(clistitem);
+							#pragma unused dlistitem, dialogid, dpid, dtext
+							if(dresponse)
+							{
+								sqlite_DeleteBindString(clistitem);
 
-                                BindUsed[clistitem] = false;
+								BindUsed[clistitem] = false;
 
 								format(CommandBindText[clistitem], MAX_BIND_TEXT_LENGTH, "");
 
@@ -1752,8 +1752,8 @@ YCMD:bindeditor(playerid, arg[], help)
 								format(line, sizeof(line), "");
 								for(new i = 0; i < MAX_CLICK_BINDS; i++)
 								{
-								    if(BindUsed[i]) format(line, sizeof(line), "%s%s\n", line, CommandBindText[i]);
-								    else format(line, sizeof(line), "%sUnused\n", line);
+									if(BindUsed[i]) format(line, sizeof(line), "%s%s\n", line, CommandBindText[i]);
+									else format(line, sizeof(line), "%sUnused\n", line);
 								}
 								Dialog_ShowCallback(playerid, using inline ChooseBind, DIALOG_STYLE_LIST, "Texture Studio - Edit Binds", line, "Ok", "Cancel");
 							}
@@ -1770,8 +1770,8 @@ YCMD:bindeditor(playerid, arg[], help)
 	format(line, sizeof(line), "");
 	for(new i = 0; i < MAX_CLICK_BINDS; i++)
 	{
-	    if(BindUsed[i]) format(line, sizeof(line), "%s%s\n", line, CommandBindText[i]);
-	    else format(line, sizeof(line), "%sUnused\n", line);
+		if(BindUsed[i]) format(line, sizeof(line), "%s%s\n", line, CommandBindText[i]);
+		else format(line, sizeof(line), "%sUnused\n", line);
 	}
 
 
@@ -1813,38 +1813,38 @@ sqlite_LoadBindString()
 	new index;
 
 	// Bind our results
-    stmt_bind_result_field(loadkeybindsstmt, 0, DB::TYPE_INT, index);
-    stmt_bind_result_field(loadkeybindsstmt, 1, DB::TYPE_STRING, tmpCommandBindText, 16);
-    stmt_bind_result_field(loadkeybindsstmt, 2, DB::TYPE_STRING, tmpCommandBindData[0], 128);
-    stmt_bind_result_field(loadkeybindsstmt, 3, DB::TYPE_STRING, tmpCommandBindData[1], 128);
-    stmt_bind_result_field(loadkeybindsstmt, 4, DB::TYPE_STRING, tmpCommandBindData[2], 128);
-    stmt_bind_result_field(loadkeybindsstmt, 5, DB::TYPE_STRING, tmpCommandBindData[3], 128);
-    stmt_bind_result_field(loadkeybindsstmt, 6, DB::TYPE_STRING, tmpCommandBindData[4], 128);
-    stmt_bind_result_field(loadkeybindsstmt, 7, DB::TYPE_STRING, tmpCommandBindData[5], 128);
-    stmt_bind_result_field(loadkeybindsstmt, 8, DB::TYPE_STRING, tmpCommandBindData[6], 128);
-    stmt_bind_result_field(loadkeybindsstmt, 9, DB::TYPE_STRING, tmpCommandBindData[7], 128);
-    stmt_bind_result_field(loadkeybindsstmt, 10, DB::TYPE_STRING, tmpCommandBindData[8], 128);
-    stmt_bind_result_field(loadkeybindsstmt, 11, DB::TYPE_STRING, tmpCommandBindData[9], 128);
+	stmt_bind_result_field(loadkeybindsstmt, 0, DB::TYPE_INT, index);
+	stmt_bind_result_field(loadkeybindsstmt, 1, DB::TYPE_STRING, tmpCommandBindText, 16);
+	stmt_bind_result_field(loadkeybindsstmt, 2, DB::TYPE_STRING, tmpCommandBindData[0], 128);
+	stmt_bind_result_field(loadkeybindsstmt, 3, DB::TYPE_STRING, tmpCommandBindData[1], 128);
+	stmt_bind_result_field(loadkeybindsstmt, 4, DB::TYPE_STRING, tmpCommandBindData[2], 128);
+	stmt_bind_result_field(loadkeybindsstmt, 5, DB::TYPE_STRING, tmpCommandBindData[3], 128);
+	stmt_bind_result_field(loadkeybindsstmt, 6, DB::TYPE_STRING, tmpCommandBindData[4], 128);
+	stmt_bind_result_field(loadkeybindsstmt, 7, DB::TYPE_STRING, tmpCommandBindData[5], 128);
+	stmt_bind_result_field(loadkeybindsstmt, 8, DB::TYPE_STRING, tmpCommandBindData[6], 128);
+	stmt_bind_result_field(loadkeybindsstmt, 9, DB::TYPE_STRING, tmpCommandBindData[7], 128);
+	stmt_bind_result_field(loadkeybindsstmt, 10, DB::TYPE_STRING, tmpCommandBindData[8], 128);
+	stmt_bind_result_field(loadkeybindsstmt, 11, DB::TYPE_STRING, tmpCommandBindData[9], 128);
 
 	// Execute query
-    if(stmt_execute(loadkeybindsstmt))
-    {
-        while(stmt_fetch_row(loadkeybindsstmt))
-        {
-            BindUsed[index] = true;
-            format(CommandBindText[index], 16, "%s", tmpCommandBindText);
+	if(stmt_execute(loadkeybindsstmt))
+	{
+		while(stmt_fetch_row(loadkeybindsstmt))
+		{
+			BindUsed[index] = true;
+			format(CommandBindText[index], 16, "%s", tmpCommandBindText);
 			if(index <= sizeof(BindElementIDS))
 			{
 				GUISetPlayerText(MainMenu, BindElementIDS[index], CommandBindText[index]);
 			}
 
 			for(new i = 0; i < MAX_BINDS_PER_BIND; i++) { CommandBindData[index][i] = tmpCommandBindData[i]; }
-        }
+		}
 		stmt_close(loadkeybindsstmt);
-        return 1;
-    }
+		return 1;
+	}
 	stmt_close(loadkeybindsstmt);
-    return 0;
+	return 0;
 }
 
 // Insert Key bind
@@ -1878,25 +1878,25 @@ sqlite_InsertBindString(index)
 		InsertBindString,
 			sizeof(InsertBindString),
 			"INSERT INTO `KeyBinds`",
-	        "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+			"VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
 		);
 
-        insertkeybindsstmt = db_prepare(SystemDB, InsertBindString);
+		insertkeybindsstmt = db_prepare(SystemDB, InsertBindString);
 	}
 
 		// Bind our results
-    stmt_bind_value(insertkeybindsstmt, 0, DB::TYPE_INT, index);
-    stmt_bind_value(insertkeybindsstmt, 1, DB::TYPE_STRING, CommandBindText[index], 16);
-    stmt_bind_value(insertkeybindsstmt, 2, DB::TYPE_STRING, CommandBindData[index][0], 128);
-    stmt_bind_value(insertkeybindsstmt, 3, DB::TYPE_STRING, CommandBindData[index][1], 128);
-    stmt_bind_value(insertkeybindsstmt, 4, DB::TYPE_STRING, CommandBindData[index][2], 128);
-    stmt_bind_value(insertkeybindsstmt, 5, DB::TYPE_STRING, CommandBindData[index][3], 128);
-    stmt_bind_value(insertkeybindsstmt, 6, DB::TYPE_STRING, CommandBindData[index][4], 128);
-    stmt_bind_value(insertkeybindsstmt, 7, DB::TYPE_STRING, CommandBindData[index][5], 128);
-    stmt_bind_value(insertkeybindsstmt, 8, DB::TYPE_STRING, CommandBindData[index][6], 128);
-    stmt_bind_value(insertkeybindsstmt, 9, DB::TYPE_STRING, CommandBindData[index][7], 128);
-    stmt_bind_value(insertkeybindsstmt, 10, DB::TYPE_STRING, CommandBindData[index][8], 128);
-    stmt_bind_value(insertkeybindsstmt, 11, DB::TYPE_STRING, CommandBindData[index][9], 128);
+	stmt_bind_value(insertkeybindsstmt, 0, DB::TYPE_INT, index);
+	stmt_bind_value(insertkeybindsstmt, 1, DB::TYPE_STRING, CommandBindText[index], 16);
+	stmt_bind_value(insertkeybindsstmt, 2, DB::TYPE_STRING, CommandBindData[index][0], 128);
+	stmt_bind_value(insertkeybindsstmt, 3, DB::TYPE_STRING, CommandBindData[index][1], 128);
+	stmt_bind_value(insertkeybindsstmt, 4, DB::TYPE_STRING, CommandBindData[index][2], 128);
+	stmt_bind_value(insertkeybindsstmt, 5, DB::TYPE_STRING, CommandBindData[index][3], 128);
+	stmt_bind_value(insertkeybindsstmt, 6, DB::TYPE_STRING, CommandBindData[index][4], 128);
+	stmt_bind_value(insertkeybindsstmt, 7, DB::TYPE_STRING, CommandBindData[index][5], 128);
+	stmt_bind_value(insertkeybindsstmt, 8, DB::TYPE_STRING, CommandBindData[index][6], 128);
+	stmt_bind_value(insertkeybindsstmt, 9, DB::TYPE_STRING, CommandBindData[index][7], 128);
+	stmt_bind_value(insertkeybindsstmt, 10, DB::TYPE_STRING, CommandBindData[index][8], 128);
+	stmt_bind_value(insertkeybindsstmt, 11, DB::TYPE_STRING, CommandBindData[index][9], 128);
 
 	stmt_execute(insertkeybindsstmt);
 	return 1;

@@ -72,7 +72,7 @@ new bool:GUIPaused[MAX_PLAYERS];
 forward PlayerSetGUIPaused(playerid, bool:paused);
 public PlayerSetGUIPaused(playerid, bool:paused)
 {
-    GUIPaused[playerid] = paused;
+	GUIPaused[playerid] = paused;
 	return 1;
 }
 

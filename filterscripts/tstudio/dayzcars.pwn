@@ -14,9 +14,9 @@ YCMD:420carexport(playerid, arg[], help)
 	// Ask for a map name
 	inline Export420Car(epid, edialogid, eresponse, elistitem, string:etext[])
 	{
-	    #pragma unused elistitem, edialogid, epid
-	    if(eresponse)
-	    {
+		#pragma unused elistitem, edialogid, epid
+		if(eresponse)
+		{
 			// Was a map name supplied ?
 			if(!isnull(etext))
 			{
@@ -34,18 +34,18 @@ YCMD:420carexport(playerid, arg[], help)
 				format(exportcar, sizeof(exportcar), "tstudio/420ExportCars/%s.txt", etext);
 
 				// Map exists ask to remove
-			    if(fexist(exportcar))
+				if(fexist(exportcar))
 				{
 					inline RemoveCar(rpid, rdialogid, rresponse, rlistitem, string:rtext[])
 					{
-				        #pragma unused rlistitem, rdialogid, rpid, rtext
+						#pragma unused rlistitem, rdialogid, rpid, rtext
 
 						// Remove map and export
-				        if(rresponse)
-				        {
-				            fremove(exportcar);
-				            DayzCarExport(playerid, exportcar);
-				        }
+						if(rresponse)
+						{
+							fremove(exportcar);
+							DayzCarExport(playerid, exportcar);
+						}
 					}
 					Dialog_ShowCallback(playerid, using inline RemoveCar, DIALOG_STYLE_MSGBOX, "Texture Studio (420 Car Export)", "A export exists with this name replace?", "Ok", "Cancel");
 				}

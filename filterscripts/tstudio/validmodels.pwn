@@ -2300,7 +2300,7 @@ stock IsValidModel(modelid)
 {
 	for(new i = 0; i < sizeof(ObjectList); i++)
 	{
-	    if(ObjectList[i][oID] == modelid) return 1;
+		if(ObjectList[i][oID] == modelid) return 1;
 	}
 	if(IsUnListedValidModel(modelid)) return 1;
 	return 0;
@@ -2310,7 +2310,7 @@ GetModelArray(modelid)
 {
 	for(new i = 0; i < sizeof(ObjectList); i++)
 	{
-	    if(ObjectList[i][oID] == modelid) return i;
+		if(ObjectList[i][oID] == modelid) return i;
 	}
 	
 	return -1;
@@ -2321,7 +2321,7 @@ GetModelName(modelid)
 	new temp[50] = "N/A";
 	for(new i = 0; i < sizeof(ObjectList); i++)
 	{
-	    if(ObjectList[i][oID] == modelid) 
+		if(ObjectList[i][oID] == modelid) 
 		{
 			format(temp, 50, "%s", ObjectList[i][oName]);
 			break;

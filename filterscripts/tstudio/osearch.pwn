@@ -91,7 +91,7 @@ hook OnFilterScriptExit()
 	DestroySearchDraws();
 	foreach(new i : Player)
 	{
-	    DestroyPlayerSearchDraw(i);
+		DestroyPlayerSearchDraw(i);
 	}
 
 	return Y_HOOKS_CONTINUE_RETURN_1;
@@ -99,7 +99,7 @@ hook OnFilterScriptExit()
 
 hook OnPlayerConnect(playerid)
 {
-    CreatePlayerSearchDraw(playerid);
+	CreatePlayerSearchDraw(playerid);
 	CurrOSXRot[playerid] = -20.0;
 	CurrOSYRot[playerid] = 0.0;
 	CurrOSZRot[playerid] = -50.0;
@@ -120,27 +120,27 @@ YCMD:osearch(playerid, arg[], help)
 
 	if(GetEditMode(playerid) != EDIT_MODE_OSEARCH) NoEditingMode(playerid);
 
-    MapOpenCheck();
+	MapOpenCheck();
 
 	for(new i = 0; i < MAX_SEARCH_OBJECT; i++) SearchObjects[playerid][i][SearchModel] = -1;
 	new line[128];
 	new totalobjectsfound;
 	for(new i; i < sizeof(ObjectList); i++)
 	{
-        if(strfind(ObjectList[i][oName],arg, true) != -1)
+		if(strfind(ObjectList[i][oName],arg, true) != -1)
 		{
 			if(totalobjectsfound == 0) SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
-	        format(line, sizeof(line), "Object Name: %s Model ID: %i", ObjectList[i][oName],ObjectList[i][oID]);
-	        SendClientMessage(playerid, STEALTH_GREEN, line);
-	        SearchObjects[playerid][totalobjectsfound][SearchModel] = ObjectList[i][oID];
-	        format(SearchObjects[playerid][totalobjectsfound][SearchName], 50, "%s", ObjectList[i][oName]);
-	        totalobjectsfound++;
+			format(line, sizeof(line), "Object Name: %s Model ID: %i", ObjectList[i][oName],ObjectList[i][oID]);
+			SendClientMessage(playerid, STEALTH_GREEN, line);
+			SearchObjects[playerid][totalobjectsfound][SearchModel] = ObjectList[i][oID];
+			format(SearchObjects[playerid][totalobjectsfound][SearchName], 50, "%s", ObjectList[i][oName]);
+			totalobjectsfound++;
 		}
-        if(totalobjectsfound == MAX_SEARCH_OBJECT)
-        {
-            SendClientMessage(playerid, STEALTH_YELLOW, "Maximum amount of objects found!");
-            break;
-        }
+		if(totalobjectsfound == MAX_SEARCH_OBJECT)
+		{
+			SendClientMessage(playerid, STEALTH_YELLOW, "Maximum amount of objects found!");
+			break;
+		}
 	}
 
 	if(!totalobjectsfound)
@@ -171,7 +171,7 @@ YCMD:osearchex(playerid, arg[], help)
 
 	if(GetEditMode(playerid) != EDIT_MODE_OSEARCH) NoEditingMode(playerid);
 
-    MapOpenCheck();
+	MapOpenCheck();
 
 	new out[64][24], type[64] = {-1, ...}, count = strexplode(out, arg, " ");
 	for(new i = 0; i < MAX_SEARCH_OBJECT; i++) SearchObjects[playerid][i][SearchModel] = -1;
@@ -279,13 +279,13 @@ hook OnPlayerClickTextDraw(playerid, Text:clickedid)
 	if (Text:INVALID_TEXT_DRAW == clickedid)
 	{
 		// Textdraws are now closed
-	    ToggleTextDrawOpen(playerid, false);
+		ToggleTextDrawOpen(playerid, false);
 
-	    // Player is not in text editing mode anymore
-    	SetCurrTextDraw(playerid, TEXTDRAW_NONE);
+		// Player is not in text editing mode anymore
+		SetCurrTextDraw(playerid, TEXTDRAW_NONE);
 
 		// Hide the text editor
-	    HidePlayerOSDraws(playerid);
+		HidePlayerOSDraws(playerid);
 
 		// Cancel textdraw select
 		CancelSelectTextDraw(playerid);
@@ -299,50 +299,50 @@ hook OnPlayerClickTextDraw(playerid, Text:clickedid)
 		// Unpause
 		SetTimerEx("PlayerSetGUIPaused", 300, false, "ii", playerid, 0);
 
-	    return Y_HOOKS_BREAK_RETURN_1;
+		return Y_HOOKS_BREAK_RETURN_1;
 	}
 
 	// Rotate XLeft
 	else if(RotXLeft == clickedid)
 	{
-        CurrOSXRot[playerid] -= 10.0;
-        if(CurrOSXRot[playerid] < 0.0) CurrOSXRot[playerid] = 350.0;
-        UpdateOSPreview(playerid);
+		CurrOSXRot[playerid] -= 10.0;
+		if(CurrOSXRot[playerid] < 0.0) CurrOSXRot[playerid] = 350.0;
+		UpdateOSPreview(playerid);
 	}
 
 	else if(RotYLeft == clickedid)
 	{
-        CurrOSYRot[playerid] -= 10.0;
-        if(CurrOSYRot[playerid] < 0.0) CurrOSYRot[playerid] = 350.0;
-        UpdateOSPreview(playerid);
+		CurrOSYRot[playerid] -= 10.0;
+		if(CurrOSYRot[playerid] < 0.0) CurrOSYRot[playerid] = 350.0;
+		UpdateOSPreview(playerid);
 	}
 
 	else if(RotZLeft == clickedid)
 	{
-        CurrOSZRot[playerid] -= 10.0;
-        if(CurrOSZRot[playerid] < 0.0) CurrOSZRot[playerid] = 350.0;
-        UpdateOSPreview(playerid);
+		CurrOSZRot[playerid] -= 10.0;
+		if(CurrOSZRot[playerid] < 0.0) CurrOSZRot[playerid] = 350.0;
+		UpdateOSPreview(playerid);
 	}
 
 	else if(RotXRight == clickedid)
 	{
-        CurrOSXRot[playerid] += 10.0;
-        if(CurrOSXRot[playerid] > 359.0) CurrOSXRot[playerid] = 0.0;
-        UpdateOSPreview(playerid);
+		CurrOSXRot[playerid] += 10.0;
+		if(CurrOSXRot[playerid] > 359.0) CurrOSXRot[playerid] = 0.0;
+		UpdateOSPreview(playerid);
 	}
 
 	else if(RotYRight == clickedid)
 	{
-        CurrOSYRot[playerid] += 10.0;
-        if(CurrOSYRot[playerid] > 359.0) CurrOSYRot[playerid] = 0.0;
-        UpdateOSPreview(playerid);
+		CurrOSYRot[playerid] += 10.0;
+		if(CurrOSYRot[playerid] > 359.0) CurrOSYRot[playerid] = 0.0;
+		UpdateOSPreview(playerid);
 	}
 
 	else if(RotZRight == clickedid)
 	{
-        CurrOSZRot[playerid] += 10.0;
-        if(CurrOSZRot[playerid] > 359.0) CurrOSZRot[playerid] = 0.0;
-        UpdateOSPreview(playerid);
+		CurrOSZRot[playerid] += 10.0;
+		if(CurrOSZRot[playerid] > 359.0) CurrOSZRot[playerid] = 0.0;
+		UpdateOSPreview(playerid);
 	}
 
 	else if(ZoomLeft == clickedid)
@@ -362,7 +362,7 @@ hook OnPlayerClickTextDraw(playerid, Text:clickedid)
 	// Scroll object page left
 	else if(PageLeft == clickedid)
 	{
-	    if(CurrObjectPage[playerid] == 0) CurrObjectPage[playerid] = (MAX_SEARCH_OBJECT / MAX_OS_PAGE) - 1;
+		if(CurrObjectPage[playerid] == 0) CurrObjectPage[playerid] = (MAX_SEARCH_OBJECT / MAX_OS_PAGE) - 1;
 		else CurrObjectPage[playerid]--;
 		UpdateOSearchPage(playerid);
 	}
@@ -371,7 +371,7 @@ hook OnPlayerClickTextDraw(playerid, Text:clickedid)
 	else if(PageRight == clickedid)
 	{
 		if(CurrObjectPage[playerid] == (MAX_SEARCH_OBJECT / MAX_OS_PAGE) - 1) CurrObjectPage[playerid] = 0;
-        else CurrObjectPage[playerid]++;
+		else CurrObjectPage[playerid]++;
 		UpdateOSearchPage(playerid);
 	}
 
@@ -383,7 +383,7 @@ hook OnPlayerClickTextDraw(playerid, Text:clickedid)
 			new line[128];
 			format(line, sizeof(line), "/cobject %i", SearchObjects[playerid][index][SearchModel]);
 			EditingMode[playerid] = false;
-		    BroadcastCommand(playerid,line);
+			BroadcastCommand(playerid,line);
 			EditingMode[playerid] = true;
 		}
 	}
@@ -397,13 +397,13 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 
 	for(new i = 0; i < MAX_OS_PAGE; i++)
 	{
-	    if(playertextid == OSearchIndex[playerid][i])
-	    {
+		if(playertextid == OSearchIndex[playerid][i])
+		{
 			CurrOSHighlight[playerid] = i;
-		    UpdateOSHighLight(playerid);
-		    UpdateOSPreview(playerid);
+			UpdateOSHighLight(playerid);
+			UpdateOSPreview(playerid);
 			return Y_HOOKS_BREAK_RETURN_1;
-	    }
+		}
 	}
 	return Y_HOOKS_CONTINUE_RETURN_0;
 }
@@ -433,11 +433,11 @@ static UpdateOSHighLight(playerid)
 
 static UpdateOSPreview(playerid)
 {
-    new offset = CurrObjectPage[playerid]*MAX_OS_PAGE;
-    PlayerTextDrawHide(playerid, SearchDisplayModel[playerid]);
+	new offset = CurrObjectPage[playerid]*MAX_OS_PAGE;
+	PlayerTextDrawHide(playerid, SearchDisplayModel[playerid]);
 	PlayerTextDrawSetPreviewModel(playerid, SearchDisplayModel[playerid], SearchObjects[playerid][CurrOSHighlight[playerid]+offset][SearchModel]);
 	PlayerTextDrawSetPreviewRot(playerid, SearchDisplayModel[playerid], CurrOSXRot[playerid], CurrOSYRot[playerid], CurrOSZRot[playerid], CurrOSZoom[playerid]);
-    PlayerTextDrawShow(playerid, SearchDisplayModel[playerid]);
+	PlayerTextDrawShow(playerid, SearchDisplayModel[playerid]);
 	return 1;
 }
 
@@ -450,10 +450,10 @@ static UpdateOSearchPage(playerid)
 		if(SearchObjects[playerid][i+offset][SearchModel] > -1)
 		{
 			format(line, sizeof(line), "~r~ID:~g~ %i ~r~Name:~g~ %s",
-			    SearchObjects[playerid][i+offset][SearchModel],
-			    SearchObjects[playerid][i+offset][SearchName]
+				SearchObjects[playerid][i+offset][SearchModel],
+				SearchObjects[playerid][i+offset][SearchName]
 			);
-            PlayerTextDrawSetString(playerid, OSearchIndex[playerid][i], line);
+			PlayerTextDrawSetString(playerid, OSearchIndex[playerid][i], line);
 		}
 		else PlayerTextDrawSetString(playerid, OSearchIndex[playerid][i], "~r~ID:~g~ -1 ~r~Name:~g~ None");
 	}
@@ -732,7 +732,7 @@ static DestroyPlayerSearchDraw(playerid)
 {
 	for(new i = 0; i < MAX_OS_PAGE; i++)
 	{
-        PlayerTextDrawDestroy(playerid, OSearchIndex[playerid][i]);
+		PlayerTextDrawDestroy(playerid, OSearchIndex[playerid][i]);
 	}
 	PlayerTextDrawDestroy(playerid, SearchDisplayModel[playerid]);
 	return 1;
@@ -758,7 +758,7 @@ static ShowPlayerOSDraws(playerid)
 
 	for(new i = 0; i < MAX_OS_PAGE; i++)
 	{
-        PlayerTextDrawShow(playerid, OSearchIndex[playerid][i]);
+		PlayerTextDrawShow(playerid, OSearchIndex[playerid][i]);
 	}
 	PlayerTextDrawShow(playerid, SearchDisplayModel[playerid]);
 
@@ -784,8 +784,8 @@ static HidePlayerOSDraws(playerid)
 
 	for(new i = 0; i < MAX_OS_PAGE; i++)
 	{
-        PlayerTextDrawHide(playerid, OSearchIndex[playerid][i]);
-   	    TextDrawHideForPlayer(playerid, OSearch_HighLight[i]);
+		PlayerTextDrawHide(playerid, OSearchIndex[playerid][i]);
+		TextDrawHideForPlayer(playerid, OSearch_HighLight[i]);
 	}
 	PlayerTextDrawHide(playerid, SearchDisplayModel[playerid]);
 

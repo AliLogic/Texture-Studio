@@ -77,8 +77,8 @@ hook OnFilterScriptInit()
 {
 	for(new i = 0; i < MAX_PLAYERS; i++)
 	{
-	    OBMData[i][pOBMParts] = 10;
-	    OBMData[i][pOBMDegrees] = 360;
+		OBMData[i][pOBMParts] = 10;
+		OBMData[i][pOBMDegrees] = 360;
 	}
 
 	return Y_HOOKS_CONTINUE_RETURN_1;
@@ -86,9 +86,9 @@ hook OnFilterScriptInit()
 
 hook OnPlayerDisconnect(playerid, reason)
 {
-    ResetOBMValues(playerid);
+	ResetOBMValues(playerid);
 
-    return Y_HOOKS_CONTINUE_RETURN_1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
 
 YCMD:obmedit(playerid, arg[], help)
@@ -100,50 +100,50 @@ YCMD:obmedit(playerid, arg[], help)
 		return 1;
 	}
 
-   	NoEditingMode(playerid);
+	NoEditingMode(playerid);
 
-    MapOpenCheck();
+	MapOpenCheck();
 
-    EditingMode[playerid] = true;
-    
-    SetEditMode(playerid, EDIT_MODE_OBM);
-    
+	EditingMode[playerid] = true;
+	
+	SetEditMode(playerid, EDIT_MODE_OBM);
+	
 	UpdateOBM(playerid);
-    OBMEditor(playerid);
+	OBMEditor(playerid);
 
 	return 1;
 }
 
 static ResetOBMValues(playerid)
 {
-    OBMData[playerid][pOBMType] = 0;
-    OBMData[playerid][pOBMModel] = 0;
-    OBMData[playerid][pOBMParts] = 10;
-    OBMData[playerid][pOBMDegrees] = 360;
-    OBMData[playerid][pOBMOriginX] = 0.0;
-    OBMData[playerid][pOBMOriginY] = 0.0;
-    OBMData[playerid][pOBMOriginZ] = 0.0;
-    OBMData[playerid][pOBMOriginRX] = 0.0;
-    OBMData[playerid][pOBMOriginRY] = 0.0;
-    OBMData[playerid][pOBMOriginRZ] = 0.0;
-    OBMData[playerid][pOBMOrientationRX] = 0.0;
-    OBMData[playerid][pOBMOrientationRY] = 0.0;
-    OBMData[playerid][pOBMOrientationRZ] = 0.0;
-    OBMData[playerid][pOBMRadius] = 0.0;
-    OBMData[playerid][pOBMhsep] = 0.0;
-    OBMData[playerid][pOBMvsep] = 0.0;
-    OBMData[playerid][pOBMfacecenter] = false;
-    OBMData[playerid][OriginSet] = false;
-    OBMData[playerid][pOBMEndX] = 0.0;
-    OBMData[playerid][pOBMEndY] = 0.0;
-    OBMData[playerid][pOBMEndZ] = 0.0;
-    OBMData[playerid][pOBMLength] = 0.0;
-    OBMData[playerid][pOBMWidth] = 0.0;
-    OBMData[playerid][pOBMHeight] = 0.0;
-    OBMData[playerid][pOBMLSegs] = 0;
-    OBMData[playerid][pOBMWSegs] = 0;
-    OBMData[playerid][pOBMHSegs] = 0;
-    OBMData[playerid][pOBMFill] = false;
+	OBMData[playerid][pOBMType] = 0;
+	OBMData[playerid][pOBMModel] = 0;
+	OBMData[playerid][pOBMParts] = 10;
+	OBMData[playerid][pOBMDegrees] = 360;
+	OBMData[playerid][pOBMOriginX] = 0.0;
+	OBMData[playerid][pOBMOriginY] = 0.0;
+	OBMData[playerid][pOBMOriginZ] = 0.0;
+	OBMData[playerid][pOBMOriginRX] = 0.0;
+	OBMData[playerid][pOBMOriginRY] = 0.0;
+	OBMData[playerid][pOBMOriginRZ] = 0.0;
+	OBMData[playerid][pOBMOrientationRX] = 0.0;
+	OBMData[playerid][pOBMOrientationRY] = 0.0;
+	OBMData[playerid][pOBMOrientationRZ] = 0.0;
+	OBMData[playerid][pOBMRadius] = 0.0;
+	OBMData[playerid][pOBMhsep] = 0.0;
+	OBMData[playerid][pOBMvsep] = 0.0;
+	OBMData[playerid][pOBMfacecenter] = false;
+	OBMData[playerid][OriginSet] = false;
+	OBMData[playerid][pOBMEndX] = 0.0;
+	OBMData[playerid][pOBMEndY] = 0.0;
+	OBMData[playerid][pOBMEndZ] = 0.0;
+	OBMData[playerid][pOBMLength] = 0.0;
+	OBMData[playerid][pOBMWidth] = 0.0;
+	OBMData[playerid][pOBMHeight] = 0.0;
+	OBMData[playerid][pOBMLSegs] = 0;
+	OBMData[playerid][pOBMWSegs] = 0;
+	OBMData[playerid][pOBMHSegs] = 0;
+	OBMData[playerid][pOBMFill] = false;
 	return 1;
 }
 
@@ -1130,15 +1130,15 @@ static OBMEditor(playerid)
 static UpdateOBM(playerid)
 {
 	// Clear the stack
-    ClearOBMStack(playerid);
+	ClearOBMStack(playerid);
 
 	// Apply OBM settings
 	if(OBMData[playerid][pOBMModel] > 0)
 	{
 		switch(OBMData[playerid][pOBMType])
 		{
-	 		case OBM_NONE: { }
-		    case OBM_CIRCLE: { CreateDynamicObjectCircle(playerid,
+			case OBM_NONE: { }
+			case OBM_CIRCLE: { CreateDynamicObjectCircle(playerid,
 				OBMData[playerid][pOBMModel],
 				OBMData[playerid][pOBMDegrees],
 				OBMData[playerid][pOBMOriginX], OBMData[playerid][pOBMOriginY], OBMData[playerid][pOBMOriginZ],
@@ -1150,20 +1150,7 @@ static UpdateOBM(playerid)
 			);	}
 
 
-		    case OBM_SPHERE: { CreateDynamicObjectSphere(playerid,
-				OBMData[playerid][pOBMModel],
-				OBMData[playerid][pOBMDegrees],
-				OBMData[playerid][pOBMOriginX], OBMData[playerid][pOBMOriginY], OBMData[playerid][pOBMOriginZ],
-				OBMData[playerid][pOBMOriginRX], OBMData[playerid][pOBMOriginRY], OBMData[playerid][pOBMOriginRZ],
-				OBMData[playerid][pOBMOrientationRX], OBMData[playerid][pOBMOrientationRY], OBMData[playerid][pOBMOrientationRZ],
-				OBMData[playerid][pOBMRadius],
-				OBMData[playerid][pOBMhsep],
-				OBMData[playerid][pOBMvsep],
-				OBMData[playerid][pOBMfacecenter]
-			);	}
-
-
-		    case OBM_SPIRAL: { CreateDynamicObjectSpiral(playerid,
+			case OBM_SPHERE: { CreateDynamicObjectSphere(playerid,
 				OBMData[playerid][pOBMModel],
 				OBMData[playerid][pOBMDegrees],
 				OBMData[playerid][pOBMOriginX], OBMData[playerid][pOBMOriginY], OBMData[playerid][pOBMOriginZ],
@@ -1176,7 +1163,7 @@ static UpdateOBM(playerid)
 			);	}
 
 
-		    case OBM_HELIX: { CreateDynamicObjectHelix(playerid,
+			case OBM_SPIRAL: { CreateDynamicObjectSpiral(playerid,
 				OBMData[playerid][pOBMModel],
 				OBMData[playerid][pOBMDegrees],
 				OBMData[playerid][pOBMOriginX], OBMData[playerid][pOBMOriginY], OBMData[playerid][pOBMOriginZ],
@@ -1189,7 +1176,7 @@ static UpdateOBM(playerid)
 			);	}
 
 
-		    case OBM_CLYINDER: { CreateDynamicObjectCylinder(playerid,
+			case OBM_HELIX: { CreateDynamicObjectHelix(playerid,
 				OBMData[playerid][pOBMModel],
 				OBMData[playerid][pOBMDegrees],
 				OBMData[playerid][pOBMOriginX], OBMData[playerid][pOBMOriginY], OBMData[playerid][pOBMOriginZ],
@@ -1198,12 +1185,11 @@ static UpdateOBM(playerid)
 				OBMData[playerid][pOBMRadius],
 				OBMData[playerid][pOBMhsep],
 				OBMData[playerid][pOBMvsep],
-				OBMData[playerid][pOBMParts],
 				OBMData[playerid][pOBMfacecenter]
 			);	}
 
 
-		    case OBM_CONE: { CreateDynamicObjectCone(playerid,
+			case OBM_CLYINDER: { CreateDynamicObjectCylinder(playerid,
 				OBMData[playerid][pOBMModel],
 				OBMData[playerid][pOBMDegrees],
 				OBMData[playerid][pOBMOriginX], OBMData[playerid][pOBMOriginY], OBMData[playerid][pOBMOriginZ],
@@ -1216,7 +1202,21 @@ static UpdateOBM(playerid)
 				OBMData[playerid][pOBMfacecenter]
 			);	}
 
-		    case OBM_WHIRL: { CreateDynamicObjectWhirl(playerid,
+
+			case OBM_CONE: { CreateDynamicObjectCone(playerid,
+				OBMData[playerid][pOBMModel],
+				OBMData[playerid][pOBMDegrees],
+				OBMData[playerid][pOBMOriginX], OBMData[playerid][pOBMOriginY], OBMData[playerid][pOBMOriginZ],
+				OBMData[playerid][pOBMOriginRX], OBMData[playerid][pOBMOriginRY], OBMData[playerid][pOBMOriginRZ],
+				OBMData[playerid][pOBMOrientationRX], OBMData[playerid][pOBMOrientationRY], OBMData[playerid][pOBMOrientationRZ],
+				OBMData[playerid][pOBMRadius],
+				OBMData[playerid][pOBMhsep],
+				OBMData[playerid][pOBMvsep],
+				OBMData[playerid][pOBMParts],
+				OBMData[playerid][pOBMfacecenter]
+			);	}
+
+			case OBM_WHIRL: { CreateDynamicObjectWhirl(playerid,
 				OBMData[playerid][pOBMModel],
 				OBMData[playerid][pOBMDegrees],
 				OBMData[playerid][pOBMOriginX], OBMData[playerid][pOBMOriginY], OBMData[playerid][pOBMOriginZ],
@@ -1228,7 +1228,7 @@ static UpdateOBM(playerid)
 			);	}
 
 
-		    case OBM_CIRCLEIN: { CreateDynamicCircleIn(playerid,
+			case OBM_CIRCLEIN: { CreateDynamicCircleIn(playerid,
 				OBMData[playerid][pOBMModel],
 				OBMData[playerid][pOBMDegrees],
 				OBMData[playerid][pOBMOriginX], OBMData[playerid][pOBMOriginY], OBMData[playerid][pOBMOriginZ],
@@ -1240,7 +1240,7 @@ static UpdateOBM(playerid)
 				OBMData[playerid][pOBMfacecenter]
 			);	}
 			
-		    case OBM_CIRCLEOUT: { CreateDynamicCircleOut(playerid,
+			case OBM_CIRCLEOUT: { CreateDynamicCircleOut(playerid,
 				OBMData[playerid][pOBMModel],
 				OBMData[playerid][pOBMDegrees],
 				OBMData[playerid][pOBMOriginX], OBMData[playerid][pOBMOriginY], OBMData[playerid][pOBMOriginZ],
@@ -1253,7 +1253,7 @@ static UpdateOBM(playerid)
 			);	}
 			
 			//////////////////Non Round
-		    case OBM_LINE: { CreateDynamicLine(playerid,
+			case OBM_LINE: { CreateDynamicLine(playerid,
 				OBMData[playerid][pOBMModel],
 				OBMData[playerid][pOBMOriginX], OBMData[playerid][pOBMOriginY], OBMData[playerid][pOBMOriginZ],
 				OBMData[playerid][pOBMEndX], OBMData[playerid][pOBMEndY], OBMData[playerid][pOBMEndZ],
@@ -1261,7 +1261,7 @@ static UpdateOBM(playerid)
 				OBMData[playerid][pOBMLSegs]
 			);	}
 		
-		    case OBM_RECTANGLE: { CreateDynamicQuadrilateral(playerid,
+			case OBM_RECTANGLE: { CreateDynamicQuadrilateral(playerid,
 				OBMData[playerid][pOBMModel],
 				OBMData[playerid][pOBMOriginX], OBMData[playerid][pOBMOriginY], OBMData[playerid][pOBMOriginZ],
 				OBMData[playerid][pOBMOriginRX], OBMData[playerid][pOBMOriginRY], OBMData[playerid][pOBMOriginRZ],
@@ -1271,7 +1271,7 @@ static UpdateOBM(playerid)
 				OBMData[playerid][pOBMFill]
 			);	}
 		
-		    case OBM_RECTPRISM: { CreateDynamicPrism(playerid,
+			case OBM_RECTPRISM: { CreateDynamicPrism(playerid,
 				OBMData[playerid][pOBMModel],
 				OBMData[playerid][pOBMOriginX], OBMData[playerid][pOBMOriginY], OBMData[playerid][pOBMOriginZ],
 				OBMData[playerid][pOBMOriginRX], OBMData[playerid][pOBMOriginRY], OBMData[playerid][pOBMOriginRZ],
@@ -1294,28 +1294,28 @@ hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float
 	{
 		if(response == EDIT_RESPONSE_FINAL)
 		{
-	   	    OBMData[playerid][pOBMOriginX] = x;
-	 		OBMData[playerid][pOBMOriginY] = y;
-	 		OBMData[playerid][pOBMOriginZ] = z;
-	   	    OBMData[playerid][pOBMOriginRX] = rx;
-	 		OBMData[playerid][pOBMOriginRY] = ry;
-	 		OBMData[playerid][pOBMOriginRZ] = rz;
+			OBMData[playerid][pOBMOriginX] = x;
+			OBMData[playerid][pOBMOriginY] = y;
+			OBMData[playerid][pOBMOriginZ] = z;
+			OBMData[playerid][pOBMOriginRX] = rx;
+			OBMData[playerid][pOBMOriginRY] = ry;
+			OBMData[playerid][pOBMOriginRZ] = rz;
 			SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
-		    SendClientMessage(playerid, STEALTH_GREEN, "Objectmetry origin set");
+			SendClientMessage(playerid, STEALTH_GREEN, "Objectmetry origin set");
 			DestroyDynamicObject(OBMObject[playerid]);
-	        OBMData[playerid][OriginSet] = true;
+			OBMData[playerid][OriginSet] = true;
 			UpdateOBM(playerid);
-	        OBMEditor(playerid);
+			OBMEditor(playerid);
 		}
 		else if(response == EDIT_RESPONSE_UPDATE)
 		{
-	   	    OBMData[playerid][pOBMOriginX] = x;
-	 		OBMData[playerid][pOBMOriginY] = y;
-	 		OBMData[playerid][pOBMOriginZ] = z;
-	   	    OBMData[playerid][pOBMOriginRX] = rx;
-	 		OBMData[playerid][pOBMOriginRY] = ry;
-	 		OBMData[playerid][pOBMOriginRZ] = rz;
-	 		UpdateOBM(playerid);
+			OBMData[playerid][pOBMOriginX] = x;
+			OBMData[playerid][pOBMOriginY] = y;
+			OBMData[playerid][pOBMOriginZ] = z;
+			OBMData[playerid][pOBMOriginRX] = rx;
+			OBMData[playerid][pOBMOriginRY] = ry;
+			OBMData[playerid][pOBMOriginRZ] = rz;
+			UpdateOBM(playerid);
 
 		}
 		else if(response == EDIT_RESPONSE_CANCEL)
@@ -1338,21 +1338,21 @@ hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float
 	{
 		if(response == EDIT_RESPONSE_FINAL)
 		{
-	   	    OBMData[playerid][pOBMOrientationRX] = rx;
-	 		OBMData[playerid][pOBMOrientationRY] = ry;
-	 		OBMData[playerid][pOBMOrientationRZ] = rz;
+			OBMData[playerid][pOBMOrientationRX] = rx;
+			OBMData[playerid][pOBMOrientationRY] = ry;
+			OBMData[playerid][pOBMOrientationRZ] = rz;
 			SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
-		    SendClientMessage(playerid, STEALTH_GREEN, "Objectmetry orientation set");
+			SendClientMessage(playerid, STEALTH_GREEN, "Objectmetry orientation set");
 			DestroyDynamicObject(OBMObject[playerid]);
 			UpdateOBM(playerid);
-	        OBMEditor(playerid);
+			OBMEditor(playerid);
 		}
 		else if(response == EDIT_RESPONSE_UPDATE)
 		{
-	   	    OBMData[playerid][pOBMOrientationRX] = rx;
-	 		OBMData[playerid][pOBMOrientationRY] = ry;
-	 		OBMData[playerid][pOBMOrientationRZ] = rz;
-	 		UpdateOBM(playerid);
+			OBMData[playerid][pOBMOrientationRX] = rx;
+			OBMData[playerid][pOBMOrientationRY] = ry;
+			OBMData[playerid][pOBMOrientationRZ] = rz;
+			UpdateOBM(playerid);
 		}
 		else if(response == EDIT_RESPONSE_CANCEL)
 		{

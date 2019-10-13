@@ -39,10 +39,10 @@ enum noclipenum
 	udold,
 	lastmove,
 	Float:accelmul,
-    
-    Float:accelrate,
-    Float:maxspeed,
-    bool:accel
+	
+	Float:accelrate,
+	Float:maxspeed,
+	bool:accel
 }
 new noclipdata[MAX_PLAYERS][noclipenum];
 
@@ -95,7 +95,7 @@ YCMD:flymode(playerid, arg[], help)
 		return 1;
 	}
 
-    // Place the player in and out of edit mode
+	// Place the player in and out of edit mode
 	if(FlyMode[playerid]) CancelFlyMode(playerid);
 	else StartFlyMode(playerid);
 	return 1;
@@ -110,18 +110,18 @@ YCMD:fmspeed(playerid, arg[], help)
 		return 1;
 	}
 
-    new Float:newspeed;
-    sscanf(arg, "F(-1.0)", newspeed);
-    
-    if(newspeed == -1.0)
-        newspeed = MOVE_SPEED;
-    else if(newspeed < 5.0)
-        newspeed = 5.0;
-    else if(newspeed > 200.0)
-        newspeed = 200.0;
+	new Float:newspeed;
+	sscanf(arg, "F(-1.0)", newspeed);
+	
+	if(newspeed == -1.0)
+		newspeed = MOVE_SPEED;
+	else if(newspeed < 5.0)
+		newspeed = 5.0;
+	else if(newspeed > 200.0)
+		newspeed = 200.0;
 	
 	noclipdata[playerid][maxspeed] = newspeed;
-    SendClientMessage(playerid, STEALTH_GREEN, sprintf("Flymode max speed set to %0.2f", newspeed));
+	SendClientMessage(playerid, STEALTH_GREEN, sprintf("Flymode max speed set to %0.2f", newspeed));
 	return 1;
 }
 
@@ -134,18 +134,18 @@ YCMD:fmaccel(playerid, arg[], help)
 		return 1;
 	}
 
-    new Float:newacc;
-    sscanf(arg, "F(-1.0)", newacc);
-    
-    if(newacc == -1.0)
-        newacc = ACCEL_RATE;
-    else if(newacc < 0.005)
-        newacc = 0.005;
-    else if(newacc > 0.05)
-        newacc = 0.05;
+	new Float:newacc;
+	sscanf(arg, "F(-1.0)", newacc);
+	
+	if(newacc == -1.0)
+		newacc = ACCEL_RATE;
+	else if(newacc < 0.005)
+		newacc = 0.005;
+	else if(newacc > 0.05)
+		newacc = 0.05;
 	
 	noclipdata[playerid][accelrate] = newacc;
-    SendClientMessage(playerid, STEALTH_GREEN, sprintf("Flymode max speed set to %0.3f", newacc));
+	SendClientMessage(playerid, STEALTH_GREEN, sprintf("Flymode max speed set to %0.3f", newacc));
 	return 1;
 }
 
@@ -175,8 +175,8 @@ hook OnPlayerUpdate(playerid)
 
 		if(noclipdata[playerid][mode] && (GetTickCount() - noclipdata[playerid][lastmove] > 100))
 		{
-		    // If the last move was > 100ms ago, process moving the object the players camera is attached to
-		    MoveCamera(playerid);
+			// If the last move was > 100ms ago, process moving the object the players camera is attached to
+			MoveCamera(playerid);
 		}
 
 		// Is the players current key state different than their last keystate?
@@ -191,7 +191,7 @@ hook OnPlayerUpdate(playerid)
 			else
 			{   // Indicates a new key has been pressed
 
-			    // Get the direction the player wants to move as indicated by the keys
+				// Get the direction the player wants to move as indicated by the keys
 				noclipdata[playerid][mode] = GetMoveDirectionFromKeys(ud, lr);
 
 				// Process moving the object the players camera is attached to
@@ -211,7 +211,7 @@ GetMoveDirectionFromKeys(ud, lr)
 {
 	new direction = 0;
 	
-    if(lr < 0)
+	if(lr < 0)
 	{
 		if(ud < 0) 		direction = MOVE_FORWARD_LEFT; 	// Up & Left key pressed
 		else if(ud > 0) direction = MOVE_BACK_LEFT; 	// Back & Left key pressed
@@ -236,7 +236,7 @@ MoveCamera(playerid)
 	new Float:FV[3], Float:CP[3];
 	//GetPlayerCameraPos(playerid, CP[0], CP[1], CP[2]);          // 	Cameras position in space
 	GetPlayerObjectPos(playerid, noclipdata[playerid][flyobject], CP[0], CP[1], CP[2]);          // 	Cameras position in space
-    GetPlayerCameraFrontVector(playerid, FV[0], FV[1], FV[2]);  //  Where the camera is looking at
+	GetPlayerCameraFrontVector(playerid, FV[0], FV[1], FV[2]);  //  Where the camera is looking at
 
 	// Increases the acceleration multiplier the longer the key is held
 	if(noclipdata[playerid][accelmul] <= 1.0) noclipdata[playerid][accelmul] += noclipdata[playerid][accelrate];
@@ -249,8 +249,8 @@ MoveCamera(playerid)
 	GetNextCameraPosition(noclipdata[playerid][mode], CP, FV, X, Y, Z);
 	MovePlayerObject(playerid, noclipdata[playerid][flyobject], X, Y, Z, speed);
 
-    //SendClientMessage(playerid, -1, sprintf("(%0.1f, %0.1f, %0.1f) - (%0.1f, %0.1f, %0.1f) - (%0.1f, %0.1f, %0.1f)", CP[0], CP[1], CP[2], FV[0], FV[1], FV[2], X, Y, Z));
-    
+	//SendClientMessage(playerid, -1, sprintf("(%0.1f, %0.1f, %0.1f) - (%0.1f, %0.1f, %0.1f) - (%0.1f, %0.1f, %0.1f)", CP[0], CP[1], CP[2], FV[0], FV[1], FV[2], X, Y, Z));
+	
 	// Store the last time the camera was moved as now
 	noclipdata[playerid][lastmove] = GetTickCount();
 	return 1;
@@ -281,8 +281,8 @@ GetFlyModePos(playerid, &Float:x, &Float:y, &Float:z)
 
 GetNextCameraPosition(move_mode, const Float:CP[3], const Float:FV[3], &Float:X, &Float:Y, &Float:Z)
 {
-    // Calculate the cameras next position based on their current position and the direction their camera is facing
-    #define OFFSET_X (FV[0]*6000.0)
+	// Calculate the cameras next position based on their current position and the direction their camera is facing
+	#define OFFSET_X (FV[0]*6000.0)
 	#define OFFSET_Y (FV[1]*6000.0)
 	#define OFFSET_Z (FV[2]*6000.0)
 	switch(move_mode)
@@ -314,14 +314,14 @@ GetNextCameraPosition(move_mode, const Float:CP[3], const Float:FV[3], &Float:X,
 		case MOVE_BACK_LEFT:
 		{
 			X = CP[0]+(-OFFSET_X - OFFSET_Y);
- 			Y = CP[1]+(-OFFSET_Y + OFFSET_X);
-		 	Z = CP[2]-OFFSET_Z;
+			Y = CP[1]+(-OFFSET_Y + OFFSET_X);
+			Z = CP[2]-OFFSET_Z;
 		}
 		case MOVE_BACK_RIGHT:
 		{
 			X = CP[0]+(-OFFSET_X + OFFSET_Y);
- 			Y = CP[1]+(-OFFSET_Y - OFFSET_X);
-		 	Z = CP[2]-OFFSET_Z;
+			Y = CP[1]+(-OFFSET_Y - OFFSET_X);
+			Z = CP[2]-OFFSET_Z;
 		}
 		case MOVE_FORWARD_LEFT:
 		{

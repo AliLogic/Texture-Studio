@@ -15,7 +15,7 @@
 
  /*
  Introduction: This include helps in creating objects in different types of circular paths/tracks.This include is still under development.
- 			   The functions below will not work unless streamer plugin is included in your script.
+			   The functions below will not work unless streamer plugin is included in your script.
 			   There are total 6 different types of functions -
 
 CreateDynamicObjectCircle(playerid,modelid,Float:posx,Float:posy,Float:posz, Float:rx, Float:ry, Float:rz,Float:radius,Float:sep,bool:facecenter=false)
@@ -78,7 +78,7 @@ hook OnFilterScriptExit()
 
 hook OnPlayerDisconnect(playerid, reason)
 {
-    ClearOBMStack(playerid);
+	ClearOBMStack(playerid);
 
 	return Y_HOOKS_CONTINUE_RETURN_1;
 }
@@ -87,10 +87,10 @@ ClearOBMStack(playerid)
 {
 	for(new i = 0; i < MAX_OBM; i++)
 	{
-	    if(OBMStack[playerid][i][OMBID] != -1)
+		if(OBMStack[playerid][i][OMBID] != -1)
 		{
 			DestroyDynamicObject(OBMStack[playerid][i][OMBID]);
-	        OBMStack[playerid][i][OMBID] = -1;
+			OBMStack[playerid][i][OMBID] = -1;
 		}
 	}
 	return 1;
@@ -105,7 +105,7 @@ ApplyOBM(playerid)
 	db_begin_transaction(EditMap);
 	for(new i = 0; i < MAX_OBM; i++)
 	{
-	    if(OBMStack[playerid][i][OMBID] != -1)
+		if(OBMStack[playerid][i][OMBID] != -1)
 		{
 			index = AddDynamicObject(OBMStack[playerid][i][OMBModel],
 				OBMStack[playerid][i][OBMX], OBMStack[playerid][i][OBMY], OBMStack[playerid][i][OBMZ],
@@ -125,17 +125,17 @@ static AddOBMObject(playerid,modelid,Float:x,Float:y,Float:z,Float:rx,Float:ry,F
 {
 	for(new i = 0; i < MAX_OBM; i++)
 	{
-	    if(OBMStack[playerid][i][OMBID] == -1)
+		if(OBMStack[playerid][i][OMBID] == -1)
 		{
-		    OBMStack[playerid][i][OMBID] = CreateDynamicObject(modelid, x, y, z, rx, ry, rz, MapSetting[mVirtualWorld], MapSetting[mInterior], -1, 300.0, 300.0);
-		    OBMStack[playerid][i][OMBModel] = modelid;
-		    OBMStack[playerid][i][OBMX] = x;
-		    OBMStack[playerid][i][OBMY] = y;
-		    OBMStack[playerid][i][OBMZ] = z;
-		    OBMStack[playerid][i][OBMRX] = rx;
-		    OBMStack[playerid][i][OBMRY] = ry;
-		    OBMStack[playerid][i][OBMRZ] = rz;
-		    return i;
+			OBMStack[playerid][i][OMBID] = CreateDynamicObject(modelid, x, y, z, rx, ry, rz, MapSetting[mVirtualWorld], MapSetting[mInterior], -1, 300.0, 300.0);
+			OBMStack[playerid][i][OMBModel] = modelid;
+			OBMStack[playerid][i][OBMX] = x;
+			OBMStack[playerid][i][OBMY] = y;
+			OBMStack[playerid][i][OBMZ] = z;
+			OBMStack[playerid][i][OBMRX] = rx;
+			OBMStack[playerid][i][OBMRY] = ry;
+			OBMStack[playerid][i][OBMRZ] = rz;
+			return i;
 		}
 	}
 	return 1;
@@ -145,13 +145,13 @@ CreateDynamicObjectCircle(playerid,modelid,deg,Float:posx,Float:posy,Float:posz,
 {
 	if(facecenter == false)
 	{
-    	new Float:angle = 0.0,Float:x = 0.0,Float:y = 0.0;
-    	for(new i = 0;i < deg;i += 1)
-    	{
-    	    if(angle <= float(deg))
-    	    {
+		new Float:angle = 0.0,Float:x = 0.0,Float:y = 0.0;
+		for(new i = 0;i < deg;i += 1)
+		{
+			if(angle <= float(deg))
+			{
 				x = posx+radius*floatcos(angle,degrees);
-      			y = posy+radius*floatsin(angle,degrees);
+				y = posy+radius*floatsin(angle,degrees);
 				AddOBMObject(playerid,modelid, x, y, posz,rx,ry,rz+orz);
 				angle = angle+sep;
 			}
@@ -161,28 +161,28 @@ CreateDynamicObjectCircle(playerid,modelid,deg,Float:posx,Float:posy,Float:posz,
 	else
 	{
 		new Float:angle = 0.0,Float:x = 0.0,Float:y = 0.0,Float:z,Float:detrx,Float:detry,Float:detrz;
-	    for(new i = 0;i < float(deg);i += 1)
-        {
- 	   		if(angle <= deg)
-    	    {
-		   		x=posx+radius*floatcos(angle,degrees);
-			   	y=posy+radius*floatsin(angle,degrees);
-			   	
+		for(new i = 0;i < float(deg);i += 1)
+		{
+			if(angle <= deg)
+			{
+				x=posx+radius*floatcos(angle,degrees);
+				y=posy+radius*floatsin(angle,degrees);
+				
 				// Translate to rotation
-                AttachPoint(x, y, posz,
-                    orx, ory, angle-180.0+orz,
-                    posx, posy, posz, rx, ry, rz,
+				AttachPoint(x, y, posz,
+					orx, ory, angle-180.0+orz,
+					posx, posy, posz, rx, ry, rz,
 					x, y, z,
-                    detrx, detry, detrz
+					detrx, detry, detrz
 				);
-                AddOBMObject(playerid,modelid, x, y, z, detrx, detry, detrz);
-			   	angle = angle+sep;
-           	}
-	       	else break;
+				AddOBMObject(playerid,modelid, x, y, z, detrx, detry, detrz);
+				angle = angle+sep;
+			}
+			else break;
 		}
 	}
 	Streamer_Update(playerid);
-    return 1;
+	return 1;
 }
 
 /* Creates objects in a Spherical path */
@@ -190,10 +190,10 @@ CreateDynamicObjectSphere(playerid,modelid,deg,Float:posx,Float:posy,Float:posz,
 {
 	if(facecenter == false)
 	{
-    	new Float:x, Float:y, Float:z;
+		new Float:x, Float:y, Float:z;
 		for(new Float:lat = -90.0; lat <= 90.0; lat += vsep)
 		for(new Float:lon = -180.0, Float:angle = float(clamp(deg, 0, 360) - 180); lon <= angle; lon += hsep)
-    	{
+		{
 			x = radius * -(floatcos(lat, degrees) * floatsin(-lon, degrees));
 			y = radius * floatcos(lat, degrees) * floatcos(-lon, degrees);
 			z = radius * floatsin(lat, degrees);
@@ -203,10 +203,10 @@ CreateDynamicObjectSphere(playerid,modelid,deg,Float:posx,Float:posy,Float:posz,
 	}
 	else
 	{
-    	new Float:x, Float:y, Float:z, Float:detrx, Float:detry, Float:detrz;
+		new Float:x, Float:y, Float:z, Float:detrx, Float:detry, Float:detrz;
 		for(new Float:lat = -90.0; lat <= 90.0; lat += vsep)
 		for(new Float:lon = -180.0, Float:angle = float(clamp(deg, 0, 360) - 180); lon <= angle; lon += hsep)
-    	{
+		{
 			x = -(floatcos(lat, degrees) * floatsin(-lon, degrees));
 			y = floatcos(lat, degrees) * floatcos(-lon, degrees);
 			z = floatsin(lat, degrees);
@@ -220,7 +220,7 @@ CreateDynamicObjectSphere(playerid,modelid,deg,Float:posx,Float:posy,Float:posz,
 		}
 	}
 	Streamer_Update(playerid);
-    return 1;
+	return 1;
 }
 
 /*
@@ -233,7 +233,7 @@ CreateDynamicObjectSpiral(playerid,modelid,deg,Float:posx,Float:posy,Float:posz,
 {
 	if(facecenter == false)
 	{
-    	new Float:x, Float:y, Float:c,
+		new Float:x, Float:y, Float:c,
 			Float:away, Float:around,
 			Float:thetaMax = ((deg + 180) / 360 * 2) * (3.141593),
 			Float:awayStep = radius / thetaMax;
@@ -255,7 +255,7 @@ CreateDynamicObjectSpiral(playerid,modelid,deg,Float:posx,Float:posy,Float:posz,
 	}
 	else
 	{
-    	new Float:x, Float:y, Float:z, Float:c,
+		new Float:x, Float:y, Float:z, Float:c,
 			Float:detrx,Float:detry,Float:detrz,
 			Float:away, Float:around,
 			Float:thetaMax = ((deg + 180) / 360 * 2) * (3.141593),
@@ -283,7 +283,7 @@ CreateDynamicObjectSpiral(playerid,modelid,deg,Float:posx,Float:posy,Float:posz,
 		}
 	}
 	Streamer_Update(playerid);
-    return 1;
+	return 1;
 }
 
 /* Creates objects in a Helical path */
@@ -291,11 +291,11 @@ CreateDynamicObjectHelix(playerid,modelid,deg,Float:posx,Float:posy,Float:posz, 
 {
 	if(facecenter == false)
 	{
-    	new Float:angle = 0.0,Float:x = 0.0,Float:y = 0.0,Float:c = 0.0;
-   		for(new i = 0;i < deg;i += 1)
-   		{
-   		    if(angle <= float(deg))
-   		    {
+		new Float:angle = 0.0,Float:x = 0.0,Float:y = 0.0,Float:c = 0.0;
+		for(new i = 0;i < deg;i += 1)
+		{
+			if(angle <= float(deg))
+			{
 				x=posx+radius*floatcos(angle,degrees);
 				y=posy+radius*floatsin(angle,degrees);
 				AddOBMObject(playerid,modelid, x, y, posz+c,rx,ry,rz+orz);
@@ -307,23 +307,23 @@ CreateDynamicObjectHelix(playerid,modelid,deg,Float:posx,Float:posy,Float:posz, 
 	}
 	else
 	{
-	    new Float:angle = 0.0,Float:x = 0.0,Float:y = 0.0,Float:z, Float:c = 0.0, Float:detrx,Float:detry,Float:detrz;
-   		for(new i = 0;i < deg;i += 1)
-   		{
-   		    if(angle <= float(deg))
-   		    {
+		new Float:angle = 0.0,Float:x = 0.0,Float:y = 0.0,Float:z, Float:c = 0.0, Float:detrx,Float:detry,Float:detrz;
+		for(new i = 0;i < deg;i += 1)
+		{
+			if(angle <= float(deg))
+			{
 				x=posx+radius*floatcos(angle,degrees);
 				y=posy+radius*floatsin(angle,degrees);
 
 
 				// Translate to rotation
-                AttachPoint(x, y, posz+c,
-                    orx, ory, angle+180.0+orz,
-                    posx, posy, posz, rx, ry, rz,
+				AttachPoint(x, y, posz+c,
+					orx, ory, angle+180.0+orz,
+					posx, posy, posz, rx, ry, rz,
 					x, y, z,
-                    detrx, detry, detrz
+					detrx, detry, detrz
 				);
-                AddOBMObject(playerid,modelid, x, y, z, detrx, detry, detrz);
+				AddOBMObject(playerid,modelid, x, y, z, detrx, detry, detrz);
 
 				c=c+vsep;
 				angle = angle+hsep;
@@ -332,7 +332,7 @@ CreateDynamicObjectHelix(playerid,modelid,deg,Float:posx,Float:posy,Float:posz, 
 		}
 	}
 	Streamer_Update(playerid);
-    return 1;
+	return 1;
 }
 
 /* Creates objects in a Cylinderical path */
@@ -340,14 +340,14 @@ CreateDynamicObjectCylinder(playerid,modelid,deg,Float:posx,Float:posy,Float:pos
 {
 	if(facecenter == false)
 	{
-     	new Float:angle=0.0,Float:x=0.0,Float:y=0.0,Float:c=0.0;
-    	for(new j=0;j<parts;j++)
-    	{
-    	    angle = 0.0,x = 0.0,y = 0.0;
+		new Float:angle=0.0,Float:x=0.0,Float:y=0.0,Float:c=0.0;
+		for(new j=0;j<parts;j++)
+		{
+			angle = 0.0,x = 0.0,y = 0.0;
 			for(new i=0;i<deg;i+=1)
 			{
-			    if(angle <= float(deg))
-			    {
+				if(angle <= float(deg))
+				{
 					x=posx+radius*floatcos(angle,degrees);
 					y=posy+radius*floatsin(angle,degrees);
 					AddOBMObject(playerid,modelid, x, y, posz+c,rx,ry,rz+orz);
@@ -360,25 +360,25 @@ CreateDynamicObjectCylinder(playerid,modelid,deg,Float:posx,Float:posy,Float:pos
 	}
 	else
 	{
-	    new Float:angle = 0.0,Float:x = 0.0,Float:y = 0.0,Float:z, Float:c = 0.0, Float:detrx,Float:detry,Float:detrz;
-    	for(new j=0;j<parts;j++)
-    	{
-    	    angle = 0.0,x = 0.0,y = 0.0;
-   			for(new i=0;i<deg;i+=1)
-   			{
-   			    if(angle <= float(deg))
-   			    {
+		new Float:angle = 0.0,Float:x = 0.0,Float:y = 0.0,Float:z, Float:c = 0.0, Float:detrx,Float:detry,Float:detrz;
+		for(new j=0;j<parts;j++)
+		{
+			angle = 0.0,x = 0.0,y = 0.0;
+			for(new i=0;i<deg;i+=1)
+			{
+				if(angle <= float(deg))
+				{
 					x=posx+radius*floatcos(angle,degrees);
 					y=posy+radius*floatsin(angle,degrees);
 					
 					// Translate to rotation
-	                AttachPoint(x, y, posz+c,
-	                    orx, ory, angle+180.0+orz,
-	                    posx, posy, posz, rx, ry, rz,
+					AttachPoint(x, y, posz+c,
+						orx, ory, angle+180.0+orz,
+						posx, posy, posz, rx, ry, rz,
 						x, y, z,
-	                    detrx, detry, detrz
+						detrx, detry, detrz
 					);
-	                AddOBMObject(playerid,modelid, x, y, z, detrx, detry, detrz);
+					AddOBMObject(playerid,modelid, x, y, z, detrx, detry, detrz);
 					angle=angle+hsep;
 				}
 				else break;
@@ -387,7 +387,7 @@ CreateDynamicObjectCylinder(playerid,modelid,deg,Float:posx,Float:posy,Float:pos
 		}
 	}
 	Streamer_Update(playerid);
-    return 1;
+	return 1;
 }
 
 /* Creates objects in a Conical path */
@@ -395,9 +395,9 @@ CreateDynamicObjectCone(playerid,modelid,deg,Float:posx,Float:posy,Float:posz, F
 {
 	if(facecenter == false)
 	{
-     	new Float:angle=0.0,Float:x=0.0,Float:y=0.0,Float:c=0.0;
-    	for(new j=0;j<parts;j++)
-    	{
+		new Float:angle=0.0,Float:x=0.0,Float:y=0.0,Float:c=0.0;
+		for(new j=0;j<parts;j++)
+		{
 			/*|		No Radius
 			j4|			*
 			j3|		   * *
@@ -405,12 +405,12 @@ CreateDynamicObjectCone(playerid,modelid,deg,Float:posx,Float:posy,Float:posz, F
 			j1|		 *     *
 			j0|		*       *
 			*///   Full Radius	
-    	    angle = 0.0,x = 0.0,y = 0.0;
+			angle = 0.0,x = 0.0,y = 0.0;
 			new Float:rad = radius - ((radius / (parts - 1)) * j);
 			for(new i=0;i<deg;i+=1)
 			{
-			    if(angle <= float(deg))
-			    {
+				if(angle <= float(deg))
+				{
 					x=posx+rad*floatcos(angle,degrees);
 					y=posy+rad*floatsin(angle,degrees);
 					AddOBMObject(playerid,modelid, x, y, posz+c,rx,ry,rz+orz);
@@ -423,26 +423,26 @@ CreateDynamicObjectCone(playerid,modelid,deg,Float:posx,Float:posy,Float:posz, F
 	}
 	else
 	{
-	    new Float:angle = 0.0,Float:x = 0.0,Float:y = 0.0,Float:z, Float:c = 0.0, Float:detrx,Float:detry,Float:detrz;
-    	for(new j=0;j<parts;j++)
-    	{
-    	    angle = 0.0,x = 0.0,y = 0.0;
+		new Float:angle = 0.0,Float:x = 0.0,Float:y = 0.0,Float:z, Float:c = 0.0, Float:detrx,Float:detry,Float:detrz;
+		for(new j=0;j<parts;j++)
+		{
+			angle = 0.0,x = 0.0,y = 0.0;
 			new Float:rad = radius - ((radius / (parts - 1)) * j);
-   			for(new i=0;i<deg;i+=1)
-   			{
-   			    if(angle <= float(deg))
-   			    {
+			for(new i=0;i<deg;i+=1)
+			{
+				if(angle <= float(deg))
+				{
 					x=posx+rad*floatcos(angle,degrees);
 					y=posy+rad*floatsin(angle,degrees);
 					
 					// Translate to rotation
-	                AttachPoint(x, y, posz+c,
-	                    orx, ory, angle+180.0+orz,
-	                    posx, posy, posz, rx, ry, rz,
+					AttachPoint(x, y, posz+c,
+						orx, ory, angle+180.0+orz,
+						posx, posy, posz, rx, ry, rz,
 						x, y, z,
-	                    detrx, detry, detrz
+						detrx, detry, detrz
 					);
-	                AddOBMObject(playerid,modelid, x, y, z, detrx, detry, detrz);
+					AddOBMObject(playerid,modelid, x, y, z, detrx, detry, detrz);
 					angle=angle+hsep;
 				}
 				else break;
@@ -451,7 +451,7 @@ CreateDynamicObjectCone(playerid,modelid,deg,Float:posx,Float:posy,Float:posz, F
 		}
 	}
 	Streamer_Update(playerid);
-    return 1;
+	return 1;
 }
 
 
@@ -460,11 +460,11 @@ CreateDynamicObjectWhirl(playerid,modelid,deg,Float:posx,Float:posy,Float:posz,F
 {
 	if(facecenter == false)
 	{
-	    new Float:angle=0.0,Float:x=0.0,Float:y=0.0;
-    	for(new i=0;i<deg;i+=1)
-    	{
-        	if(angle <= float(deg))
-        	{
+		new Float:angle=0.0,Float:x=0.0,Float:y=0.0;
+		for(new i=0;i<deg;i+=1)
+		{
+			if(angle <= float(deg))
+			{
 				x=posx+(radius-i)*floatcos(angle,degrees);
 				y=posy+(radius-i)*floatsin(angle,degrees);
 				AddOBMObject(playerid,modelid, x, y, posz,rx,ry,rz+orz);
@@ -475,22 +475,22 @@ CreateDynamicObjectWhirl(playerid,modelid,deg,Float:posx,Float:posy,Float:posz,F
 	}
 	else
 	{
-    	new Float:angle = 0.0,Float:x = 0.0,Float:y = 0.0,Float:z,Float:detrx,Float:detry,Float:detrz;
-    	for(new i = 0;i < deg;i += 1)
-    	{
-        	if(angle <= float(deg))
-        	{
+		new Float:angle = 0.0,Float:x = 0.0,Float:y = 0.0,Float:z,Float:detrx,Float:detry,Float:detrz;
+		for(new i = 0;i < deg;i += 1)
+		{
+			if(angle <= float(deg))
+			{
 				x=posx+(radius-i)*floatcos(angle,degrees);
 				y=posy+(radius-i)*floatsin(angle,degrees);
 
 				// Translate to rotation
-                AttachPoint(x, y, posz,
-                    orx, ory, angle+180.0+orz,
-                    posx, posy, posz, rx, ry, rz,
+				AttachPoint(x, y, posz,
+					orx, ory, angle+180.0+orz,
+					posx, posy, posz, rx, ry, rz,
 					x, y, z,
-                    detrx, detry, detrz
+					detrx, detry, detrz
 				);
-                AddOBMObject(playerid,modelid, x, y, z, detrx, detry, detrz);
+				AddOBMObject(playerid,modelid, x, y, z, detrx, detry, detrz);
 				angle=angle+sep;
 			}
 			else break;
@@ -498,7 +498,7 @@ CreateDynamicObjectWhirl(playerid,modelid,deg,Float:posx,Float:posy,Float:posz,F
 	}
 
 	Streamer_Update(playerid);
-    return 1;
+	return 1;
 }
 
 /* Creates objects in a circular path within a circular pathed object */
@@ -506,14 +506,14 @@ CreateDynamicCircleIn(playerid,modelid,deg,Float:posx,Float:posy,Float:posz,Floa
 {
 	if(facecenter == false)
 	{
-	    new Float:angle=0.0,Float:x=0.0,Float:y=0.0;
-    	for(new j=0;j<parts;j++)
-    	{
-        	angle=0.0,x=0.0,y=0.0;
-    		for(new i=0;i<deg;i+=1)
-    		{
-        		if(angle <= float(deg))
-        		{
+		new Float:angle=0.0,Float:x=0.0,Float:y=0.0;
+		for(new j=0;j<parts;j++)
+		{
+			angle=0.0,x=0.0,y=0.0;
+			for(new i=0;i<deg;i+=1)
+			{
+				if(angle <= float(deg))
+				{
 					x=posx+(radius)*floatcos(angle,degrees);
 					y=posy+(radius)*floatsin(angle,degrees);
 					AddOBMObject(playerid,modelid, x, y, posz,rx,ry,rz+orz);
@@ -527,24 +527,24 @@ CreateDynamicCircleIn(playerid,modelid,deg,Float:posx,Float:posy,Float:posz,Floa
 	else
 	{
 		new Float:angle = 0.0,Float:x = 0.0,Float:y = 0.0,Float:z,Float:detrx,Float:detry,Float:detrz;
-    	for(new j=0;j<parts;j++)
-    	{
-        	angle=0.0,x=0.0,y=0.0;
-    		for(new i=0;i<deg;i+=1)
-    		{
-        		if(angle <= float(deg))
-        		{
+		for(new j=0;j<parts;j++)
+		{
+			angle=0.0,x=0.0,y=0.0;
+			for(new i=0;i<deg;i+=1)
+			{
+				if(angle <= float(deg))
+				{
 					x=posx+(radius)*floatcos(angle,degrees);
 					y=posy+(radius)*floatsin(angle,degrees);
 
 					// Translate to rotation
-	                AttachPoint(x, y, posz,
-	                    orx, ory, angle+180.0+orz,
-	                    posx, posy, posz, rx, ry, rz,
+					AttachPoint(x, y, posz,
+						orx, ory, angle+180.0+orz,
+						posx, posy, posz, rx, ry, rz,
 						x, y, z,
-	                    detrx, detry, detrz
+						detrx, detry, detrz
 					);
-	                AddOBMObject(playerid,modelid, x, y, z, detrx, detry, detrz);
+					AddOBMObject(playerid,modelid, x, y, z, detrx, detry, detrz);
 					angle=angle+sep;
 				}
 				else break;
@@ -553,22 +553,22 @@ CreateDynamicCircleIn(playerid,modelid,deg,Float:posx,Float:posy,Float:posz,Floa
 		}
 	}
 	Streamer_Update(playerid);
-    return 1;
+	return 1;
 }
 
 /* Creates objects in a circular path outside a circular pathed object */
 CreateDynamicCircleOut(playerid,modelid,deg,Float:posx,Float:posy,Float:posz,Float:rx,Float:ry,Float:rz, Float:orx, Float:ory, Float:orz, Float:radius,Float:sep,parts,bool:facecenter=false)
 {
-    if(facecenter == false)
+	if(facecenter == false)
 	{
-	    new Float:angle=0.0,Float:x=0.0,Float:y=0.0;
-    	for(new j=0;j<parts;j++)
-    	{
-        	angle=0.0,x=0.0,y=0.0;
-    		for(new i=0;i<deg;i+=1)
-    		{
-        		if(angle <= float(deg))
-        		{
+		new Float:angle=0.0,Float:x=0.0,Float:y=0.0;
+		for(new j=0;j<parts;j++)
+		{
+			angle=0.0,x=0.0,y=0.0;
+			for(new i=0;i<deg;i+=1)
+			{
+				if(angle <= float(deg))
+				{
 					x=posx+(radius)*floatcos(angle,degrees);
 					y=posy+(radius)*floatsin(angle,degrees);
 					AddOBMObject(playerid,modelid, x, y, posz,rx,ry,rz+orz);
@@ -581,24 +581,24 @@ CreateDynamicCircleOut(playerid,modelid,deg,Float:posx,Float:posy,Float:posz,Flo
 	}
 	else
 	{
-    	new Float:angle = 0.0,Float:x = 0.0,Float:y = 0.0,Float:z,Float:detrx,Float:detry,Float:detrz;
-    	for(new j=0;j<parts;j++)
-    	{
-        	angle=0.0,x=0.0,y=0.0;
-    		for(new i=0;i<deg;i+=1)
-    		{
-        		if(angle <= float(deg))
-        		{
+		new Float:angle = 0.0,Float:x = 0.0,Float:y = 0.0,Float:z,Float:detrx,Float:detry,Float:detrz;
+		for(new j=0;j<parts;j++)
+		{
+			angle=0.0,x=0.0,y=0.0;
+			for(new i=0;i<deg;i+=1)
+			{
+				if(angle <= float(deg))
+				{
 					x=posx+(radius)*floatcos(angle,degrees);
 					y=posy+(radius)*floatsin(angle,degrees);
 					// Translate to rotation
-	                AttachPoint(x, y, posz,
-	                    orx, ory, angle+180.0+orz,
-	                    posx, posy, posz, rx, ry, rz,
+					AttachPoint(x, y, posz,
+						orx, ory, angle+180.0+orz,
+						posx, posy, posz, rx, ry, rz,
 						x, y, z,
-	                    detrx, detry, detrz
+						detrx, detry, detrz
 					);
-	                AddOBMObject(playerid,modelid, x, y, z, detrx, detry, detrz);
+					AddOBMObject(playerid,modelid, x, y, z, detrx, detry, detrz);
 					angle=angle+sep;
 				}
 				else break;
@@ -608,7 +608,7 @@ CreateDynamicCircleOut(playerid,modelid,deg,Float:posx,Float:posy,Float:posz,Flo
 	}
 
 	Streamer_Update(playerid);
-    return 1;
+	return 1;
 }
 
 //==========================================================================================
@@ -632,7 +632,7 @@ CreateDynamicLine(playerid, modelid, Float:sx, Float:sy, Float:sz, Float:ex, Flo
 		);
 
 	Streamer_Update(playerid);
-    return 1;
+	return 1;
 }
 
 /* Creates objects in a line */
@@ -724,7 +724,7 @@ CreateDynamicPrism(playerid, modelid, Float:cx, Float:cy, Float:cz, Float:rx, Fl
 		);
 
 	Streamer_Update(playerid);
-    return 1;
+	return 1;
 }*/
 
 //==========================================================================================

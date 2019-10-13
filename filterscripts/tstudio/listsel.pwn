@@ -270,7 +270,7 @@ hook OnFilterScriptInit()
 		TextDrawUseBox(ListSelHighLight[i], 1);
 		TextDrawBoxColor(ListSelHighLight[i], 150);
 		TextDrawTextSize(ListSelHighLight[i], 200.000000, 8.000000);
-	    offy += 10.0;
+		offy += 10.0;
 
 	}
 
@@ -344,7 +344,7 @@ static CreatePlayerListDraws(playerid)
 		PlayerTextDrawBoxColor(playerid,ListObjects[playerid][i], 0);
 		PlayerTextDrawTextSize(playerid,ListObjects[playerid][i], 200.000000, 8.000000);
 		PlayerTextDrawSetSelectable(playerid,ListObjects[playerid][i], 1);
-	    offy += 10.0;
+		offy += 10.0;
 	}
 	
 	ListModel[playerid] = CreatePlayerTextDraw(playerid,170.000000, 110.000000, "Preview");
@@ -406,94 +406,94 @@ hook OnPlayerClickTextDraw(playerid, Text:clickedid)
 			DestroyDynamicObject(ObjectData[i][oID]);
 			ObjectData[i][oID] = CreateDynamicObject(ObjectData[i][oModel], ObjectData[i][oX], ObjectData[i][oY], ObjectData[i][oZ], ObjectData[i][oRX], ObjectData[i][oRY], ObjectData[i][oRZ], MapSetting[mVirtualWorld], MapSetting[mInterior], -1, 300.0);
 
-		    UpdateMaterial(CurrListHighlightObject[playerid]);
-            UpdateObjectText(CurrListHighlightObject[playerid]);
+			UpdateMaterial(CurrListHighlightObject[playerid]);
+			UpdateObjectText(CurrListHighlightObject[playerid]);
 			CurrListHighlightObject[playerid] = -1;
 
 			// Update the streamer
 			foreach(new j : Player)
 			{
-			    if(IsPlayerInRangeOfPoint(j, 300.0, ObjectData[i][oX], ObjectData[i][oY], ObjectData[i][oZ])) Streamer_Update(j);
+				if(IsPlayerInRangeOfPoint(j, 300.0, ObjectData[i][oX], ObjectData[i][oY], ObjectData[i][oZ])) Streamer_Update(j);
 			}
 		}
 
-	    SetEditMode(playerid, EDIT_MODE_NONE);
-	    SetCurrTextDraw(playerid, TEXTDRAW_NONE);
+		SetEditMode(playerid, EDIT_MODE_NONE);
+		SetCurrTextDraw(playerid, TEXTDRAW_NONE);
 		EditingMode[playerid] = false;
 		DisablePlayerCheckpoint(playerid);
 		CancelSelectTextDraw(playerid);
 	}
 	
 	// Clicked left
-    else if(clickedid == ListSelRXLeft)
-    {
-        ListSelData[playerid][LRX] -= 45.0;
-        if(ListSelData[playerid][LRX] < 0.0) ListSelData[playerid][LRX] = 315.0;
-        UpdateListPreview(playerid, CurrListOffset[playerid]+CurrListHighlight[playerid], false);
-    }
+	else if(clickedid == ListSelRXLeft)
+	{
+		ListSelData[playerid][LRX] -= 45.0;
+		if(ListSelData[playerid][LRX] < 0.0) ListSelData[playerid][LRX] = 315.0;
+		UpdateListPreview(playerid, CurrListOffset[playerid]+CurrListHighlight[playerid], false);
+	}
 
-    else if(clickedid == ListSelRYLeft)
-    {
-        ListSelData[playerid][LRY] -= 45.0;
-        if(ListSelData[playerid][LRY] < 0.0) ListSelData[playerid][LRY] = 315.0;
-        UpdateListPreview(playerid, CurrListOffset[playerid]+CurrListHighlight[playerid], false);
-    }
+	else if(clickedid == ListSelRYLeft)
+	{
+		ListSelData[playerid][LRY] -= 45.0;
+		if(ListSelData[playerid][LRY] < 0.0) ListSelData[playerid][LRY] = 315.0;
+		UpdateListPreview(playerid, CurrListOffset[playerid]+CurrListHighlight[playerid], false);
+	}
 
-    else if(clickedid == ListSelRZLeft)
-    {
-        ListSelData[playerid][LRZ] -= 45.0;
-        if(ListSelData[playerid][LRZ] < 0.0) ListSelData[playerid][LRZ] = 315.0;
-        UpdateListPreview(playerid, CurrListOffset[playerid]+CurrListHighlight[playerid], false);
-    }
+	else if(clickedid == ListSelRZLeft)
+	{
+		ListSelData[playerid][LRZ] -= 45.0;
+		if(ListSelData[playerid][LRZ] < 0.0) ListSelData[playerid][LRZ] = 315.0;
+		UpdateListPreview(playerid, CurrListOffset[playerid]+CurrListHighlight[playerid], false);
+	}
 
-    else if(clickedid == ListSelRXRight)
-    {
-        ListSelData[playerid][LRX] += 45.0;
-        if(ListSelData[playerid][LRX] > 359.9) ListSelData[playerid][LRX] = 0.0;
-        UpdateListPreview(playerid, CurrListOffset[playerid]+CurrListHighlight[playerid], false);
-    }
+	else if(clickedid == ListSelRXRight)
+	{
+		ListSelData[playerid][LRX] += 45.0;
+		if(ListSelData[playerid][LRX] > 359.9) ListSelData[playerid][LRX] = 0.0;
+		UpdateListPreview(playerid, CurrListOffset[playerid]+CurrListHighlight[playerid], false);
+	}
 
-    else if(clickedid == ListSelRYRight)
-    {
-        ListSelData[playerid][LRY] += 45.0;
-        if(ListSelData[playerid][LRY] > 359.9) ListSelData[playerid][LRY] = 0.0;
-        UpdateListPreview(playerid, CurrListOffset[playerid]+CurrListHighlight[playerid], false);
-    }
+	else if(clickedid == ListSelRYRight)
+	{
+		ListSelData[playerid][LRY] += 45.0;
+		if(ListSelData[playerid][LRY] > 359.9) ListSelData[playerid][LRY] = 0.0;
+		UpdateListPreview(playerid, CurrListOffset[playerid]+CurrListHighlight[playerid], false);
+	}
 
-    else if(clickedid == ListSelRZRight)
-    {
-        ListSelData[playerid][LRZ] += 45.0;
-        if(ListSelData[playerid][LRZ] > 359.9) ListSelData[playerid][LRZ] = 0.0;
-        UpdateListPreview(playerid, CurrListOffset[playerid]+CurrListHighlight[playerid], false);
-    }
+	else if(clickedid == ListSelRZRight)
+	{
+		ListSelData[playerid][LRZ] += 45.0;
+		if(ListSelData[playerid][LRZ] > 359.9) ListSelData[playerid][LRZ] = 0.0;
+		UpdateListPreview(playerid, CurrListOffset[playerid]+CurrListHighlight[playerid], false);
+	}
 
-    else if(clickedid == ListSelZoomLeft)
-    {
-        if(ListSelData[playerid][LZoom] < 1.5) ListSelData[playerid][LZoom] += 0.1;
-        UpdateListPreview(playerid, CurrListOffset[playerid]+CurrListHighlight[playerid], false);
-    }
+	else if(clickedid == ListSelZoomLeft)
+	{
+		if(ListSelData[playerid][LZoom] < 1.5) ListSelData[playerid][LZoom] += 0.1;
+		UpdateListPreview(playerid, CurrListOffset[playerid]+CurrListHighlight[playerid], false);
+	}
 
-    else if(clickedid == ListSelZoomRight)
-    {
-        if(ListSelData[playerid][LZoom] > 0.5) ListSelData[playerid][LZoom] -= 0.1;
-        UpdateListPreview(playerid, CurrListOffset[playerid]+CurrListHighlight[playerid], false);
-    }
+	else if(clickedid == ListSelZoomRight)
+	{
+		if(ListSelData[playerid][LZoom] > 0.5) ListSelData[playerid][LZoom] -= 0.1;
+		UpdateListPreview(playerid, CurrListOffset[playerid]+CurrListHighlight[playerid], false);
+	}
 
-    else if(clickedid == ListSelReset)
-    {
+	else if(clickedid == ListSelReset)
+	{
 		ListSelData[playerid][LRX] = 0.0;
 		ListSelData[playerid][LRY] = 0.0;
 		ListSelData[playerid][LRZ] = 0.0;
-        ListSelData[playerid][LZoom] = 1.0;
-        UpdateListPreview(playerid, CurrListOffset[playerid]+CurrListHighlight[playerid], false);
-    }
+		ListSelData[playerid][LZoom] = 1.0;
+		UpdateListPreview(playerid, CurrListOffset[playerid]+CurrListHighlight[playerid], false);
+	}
 
 
 	else if(clickedid == ListSelClickLeft)
 	{
 		CurrListOffset[playerid] -= MAX_LIST_OBJECTS;
 		if(CurrListOffset[playerid] < 0) CurrListOffset[playerid] = MAX_TEXTURE_OBJECTS - MAX_LIST_OBJECTS;
-        UpdateObjectList(playerid, CurrListOffset[playerid]);
+		UpdateObjectList(playerid, CurrListOffset[playerid]);
 		UpdateListPreview(playerid, CurrListOffset[playerid]+CurrListHighlight[playerid]);
 	}
 
@@ -501,21 +501,21 @@ hook OnPlayerClickTextDraw(playerid, Text:clickedid)
 	{
 		CurrListOffset[playerid] += MAX_LIST_OBJECTS;
 		if(CurrListOffset[playerid] == MAX_TEXTURE_OBJECTS) CurrListOffset[playerid] = 0;
-        UpdateObjectList(playerid, CurrListOffset[playerid]);
+		UpdateObjectList(playerid, CurrListOffset[playerid]);
 		UpdateListPreview(playerid, CurrListOffset[playerid]+CurrListHighlight[playerid]);
 	}
 
-    else if(clickedid == ListSelSelectObject)
+	else if(clickedid == ListSelSelectObject)
 	{
 		if(Iter_Contains(Objects, CurrListOffset[playerid]+CurrListHighlight[playerid]))
 		{
-            if(SetCurrObject(playerid, CurrListOffset[playerid]+CurrListHighlight[playerid])) {
-                new line[128];
-                format(line, sizeof(line), "You have selected object index %i for editing", CurrListOffset[playerid]+CurrListHighlight[playerid]);
-                SendClientMessage(playerid, STEALTH_GREEN, line);
-            }
-            else
-                SendClientMessage(playerid, STEALTH_YELLOW, "You can not select objects in this object's group");
+			if(SetCurrObject(playerid, CurrListOffset[playerid]+CurrListHighlight[playerid])) {
+				new line[128];
+				format(line, sizeof(line), "You have selected object index %i for editing", CurrListOffset[playerid]+CurrListHighlight[playerid]);
+				SendClientMessage(playerid, STEALTH_GREEN, line);
+			}
+			else
+				SendClientMessage(playerid, STEALTH_YELLOW, "You can not select objects in this object's group");
 		}
 		else
 		{
@@ -532,7 +532,7 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 
 	for(new i = 0; i < MAX_LIST_OBJECTS; i++)
 	{
-        if(playertextid == ListObjects[playerid][i])
+		if(playertextid == ListObjects[playerid][i])
 		{
 			UpdateListPreview(playerid, CurrListOffset[playerid]+i);
 			HideListSelHighLights(playerid);
@@ -573,31 +573,31 @@ YCMD:lsel(playerid, arg[], help)
 	}
 
 	NoEditingMode(playerid);
-    MapOpenCheck();
-    
-    if(!isnull(arg))
+	MapOpenCheck();
+	
+	if(!isnull(arg))
 	{
 		CurrListOffset[playerid] = (strval(arg) / MAX_LIST_OBJECTS) * MAX_LIST_OBJECTS;
-        CurrListHighlight[playerid] = strval(arg) % MAX_LIST_OBJECTS;
+		CurrListHighlight[playerid] = strval(arg) % MAX_LIST_OBJECTS;
 	}
-    else if(CurrObject[playerid] > -1)
+	else if(CurrObject[playerid] > -1)
 	{
 		CurrListOffset[playerid] = (CurrObject[playerid] / MAX_LIST_OBJECTS) * MAX_LIST_OBJECTS;
 		CurrListHighlight[playerid] = (CurrObject[playerid] % MAX_LIST_OBJECTS);
 	}
-    else
+	else
 	{
 		CurrListOffset[playerid] = 0;
-        CurrListHighlight[playerid] = 0;
+		CurrListHighlight[playerid] = 0;
 	}
 
 	//printf("Offset: %i, Highlight: %i", CurrListOffset[playerid], CurrListHighlight[playerid]);
 
 
-    HideGUIInterface(playerid);
+	HideGUIInterface(playerid);
 
-    SetEditMode(playerid, EDIT_MODE_LISTSEL);
-    SetCurrTextDraw(playerid, TEXTDRAW_LISTSEL);
+	SetEditMode(playerid, EDIT_MODE_LISTSEL);
+	SetCurrTextDraw(playerid, TEXTDRAW_LISTSEL);
 	EditingMode[playerid] = true;
 //	CurrListOffset[playerid] = 0;
 	ShowObjectList(playerid);
@@ -641,14 +641,14 @@ static ShowObjectList(playerid)
 	TextDrawShowForPlayer(playerid, ListSelExit);
 
 	for(new i = 0; i < MAX_LIST_OBJECTS; i++) PlayerTextDrawShow(playerid, ListObjects[playerid][i]);
-    PlayerTextDrawShow(playerid, ListModel[playerid]);
+	PlayerTextDrawShow(playerid, ListModel[playerid]);
 
 	return 1;
 }
 
 static UpdateObjectList(playerid, offset)
 {
-    new line[64], modelarray;
+	new line[64], modelarray;
 
 	for(new i = 0; i < MAX_LIST_OBJECTS; i++)
 	{
@@ -657,8 +657,8 @@ static UpdateObjectList(playerid, offset)
 			modelarray = GetModelArray(ObjectData[offset+i][oModel]);
 			if(modelarray > -1) format(line, sizeof(line), "%i) %s - Model: %i", offset+i, GetModelName(ObjectData[offset+i][oModel]), ObjectData[offset+i][oModel]);
 			else format(line, sizeof(line), "%i) Unknown - Model: %i", offset+i, ObjectData[offset+i][oModel]);
-            PlayerTextDrawSetString(playerid, ListObjects[playerid][i], line);
-            
+			PlayerTextDrawSetString(playerid, ListObjects[playerid][i], line);
+			
 		}
 		else
 		{
@@ -685,20 +685,20 @@ static UpdateListPreview(playerid, index, bool:update = true)
 				DestroyDynamicObject(ObjectData[i][oID]);
 				ObjectData[i][oID] = CreateDynamicObject(ObjectData[i][oModel], ObjectData[i][oX], ObjectData[i][oY], ObjectData[i][oZ], ObjectData[i][oRX], ObjectData[i][oRY], ObjectData[i][oRZ], MapSetting[mVirtualWorld], MapSetting[mInterior], -1, 300.0);
 
-			    UpdateMaterial(CurrListHighlightObject[playerid]);
-	            UpdateObjectText(CurrListHighlightObject[playerid]);
+				UpdateMaterial(CurrListHighlightObject[playerid]);
+				UpdateObjectText(CurrListHighlightObject[playerid]);
 
 				// Update the streamer
 				foreach(new j : Player)
 				{
-				    if(IsPlayerInRangeOfPoint(j, 300.0, ObjectData[i][oX], ObjectData[i][oY], ObjectData[i][oZ])) Streamer_Update(j);
+					if(IsPlayerInRangeOfPoint(j, 300.0, ObjectData[i][oX], ObjectData[i][oY], ObjectData[i][oZ])) Streamer_Update(j);
 				}
 			}
 			HighlightObject(index);
 			CurrListHighlightObject[playerid] = index;
 
 			new Float:colradius = GetColSphereRadius(ObjectData[index][oModel]);
-	        SetPlayerCheckpoint(playerid, ObjectData[index][oX], ObjectData[index][oY], ObjectData[index][oZ], colradius);
+			SetPlayerCheckpoint(playerid, ObjectData[index][oX], ObjectData[index][oY], ObjectData[index][oZ], colradius);
 		}
 	}
 	else
@@ -713,15 +713,15 @@ static UpdateListPreview(playerid, index, bool:update = true)
 			DestroyDynamicObject(ObjectData[i][oID]);
 			ObjectData[i][oID] = CreateDynamicObject(ObjectData[i][oModel], ObjectData[i][oX], ObjectData[i][oY], ObjectData[i][oZ], ObjectData[i][oRX], ObjectData[i][oRY], ObjectData[i][oRZ], MapSetting[mVirtualWorld], MapSetting[mInterior], -1, 300.0);
 
-		    UpdateMaterial(CurrListHighlightObject[playerid]);
-            UpdateObjectText(CurrListHighlightObject[playerid]);
+			UpdateMaterial(CurrListHighlightObject[playerid]);
+			UpdateObjectText(CurrListHighlightObject[playerid]);
 			CurrListHighlightObject[playerid] = -1;
 			DisablePlayerCheckpoint(playerid);
 
 			// Update the streamer
 			foreach(new j : Player)
 			{
-			    if(IsPlayerInRangeOfPoint(j, 300.0, ObjectData[i][oX], ObjectData[i][oY], ObjectData[i][oZ])) Streamer_Update(j);
+				if(IsPlayerInRangeOfPoint(j, 300.0, ObjectData[i][oX], ObjectData[i][oY], ObjectData[i][oZ])) Streamer_Update(j);
 			}
 		}
 	}

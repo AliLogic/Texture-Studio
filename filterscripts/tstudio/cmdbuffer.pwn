@@ -16,15 +16,15 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 	{
 		new commandtext[256];
 		list_get_str(CommandBuffer[playerid], 0, commandtext);
-        Command_ReProcess(playerid, commandtext, 0); //BroadcastCommand(playerid, CommandBuffer[playerid][0]);
+		Command_ReProcess(playerid, commandtext, 0); //BroadcastCommand(playerid, CommandBuffer[playerid][0]);
 	}
-    
+	
 	if(PRESSED(KEY_WALK))
-        HoldKeyPressed = true;
+		HoldKeyPressed = true;
 	else if(RELEASED(KEY_WALK))
-        HoldKeyPressed = false;
-    
-    return Y_HOOKS_CONTINUE_RETURN_0;
+		HoldKeyPressed = false;
+	
+	return Y_HOOKS_CONTINUE_RETURN_0;
 }
 
 hook OnPlayerCommandText(playerid, const cmdtext[]) 

@@ -14,8 +14,8 @@ hook OnFilterScriptInit()
 	{
 		for(new j = 0; j < MAX_TEXTURE_OBJECTS; j++)
 		{
-	        GroupObjectText[i][j] = Text3D:-1;
-	    }
+			GroupObjectText[i][j] = Text3D:-1;
+		}
 	}
 	return Y_HOOKS_CONTINUE_RETURN_1;
 }
@@ -27,9 +27,9 @@ hook OnPlayerDisconnect(playerid, reason)
 		if(_:GroupObjectText[playerid][i])
 		{
 			DestroyDynamic3DTextLabel(GroupObjectText[playerid][i]);
-	        GroupObjectText[playerid][i] = Text3D:-1;
+			GroupObjectText[playerid][i] = Text3D:-1;
 		}
-    }
+	}
 	ClearGroup(playerid);
 	return Y_HOOKS_CONTINUE_RETURN_1;
 }
@@ -40,9 +40,9 @@ HideGroupLabels(playerid)
 	{
 		if(_:GroupObjectText[playerid][i])
 		{
-            UpdateDynamic3DTextLabelText(GroupObjectText[playerid][i], 0, "");
+			UpdateDynamic3DTextLabelText(GroupObjectText[playerid][i], 0, "");
 		}
-    }
+	}
 }
 
 ShowGroupLabels(playerid)
@@ -51,9 +51,9 @@ ShowGroupLabels(playerid)
 	{
 		if(_:GroupObjectText[playerid][i])
 		{
-            UpdateDynamic3DTextLabelText(GroupObjectText[playerid][i], 0x7D26CDFF, "Grouped");
+			UpdateDynamic3DTextLabelText(GroupObjectText[playerid][i], 0x7D26CDFF, "Grouped");
 		}
-    }
+	}
 }
 
 public OnUpdateGroup3DText(index)
@@ -66,17 +66,17 @@ public OnUpdateGroup3DText(index)
 			GroupObjectText[i][index] = Text3D:-1;
 		}
 
-        if(TextOption[tShowText] && TextOption[tShowGrouped] && GroupedObjects[i][index])
-        {
+		if(TextOption[tShowText] && TextOption[tShowGrouped] && GroupedObjects[i][index])
+		{
 			// 3D Text Label (To identify objects)
 			new line[32];
 			format(line, sizeof(line), "Grouped");
 
 			// Shows the models index
-		    GroupObjectText[i][index] = CreateDynamic3DTextLabel(line, 0x7D26CDFF, ObjectData[index][oX], ObjectData[index][oY], ObjectData[index][oZ]+0.5, TEXT3D_DRAW_DIST, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 0,  -1, -1, i);
+			GroupObjectText[i][index] = CreateDynamic3DTextLabel(line, 0x7D26CDFF, ObjectData[index][oX], ObjectData[index][oY], ObjectData[index][oZ]+0.5, TEXT3D_DRAW_DIST, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 0,  -1, -1, i);
 
 			Streamer_Update(i);
-        }
+		}
 	}
 	return 1;
 }
@@ -85,8 +85,8 @@ public OnDeleteGroup3DText(index)
 {
 	foreach(new i : Player)
 	{
-        if(GroupedObjects[i][index])
-        {
+		if(GroupedObjects[i][index])
+		{
 			DestroyDynamic3DTextLabel(GroupObjectText[i][index]);
 			GroupObjectText[i][index] = Text3D:-1;
 		}
@@ -98,64 +98,64 @@ hook OnPlayerSelectDynObject(playerid, objectid, modelid, Float:x, Float:y, Floa
 {
 	if(GetEditMode(playerid) == EDIT_MODE_GROUP)
 	{
-	    new Keys,ud,lr,index;
-	    GetPlayerKeys(playerid,Keys,ud,lr);
+		new Keys,ud,lr,index;
+		GetPlayerKeys(playerid,Keys,ud,lr);
 
 		// Find edit object
 		foreach(new i : Objects)
 		{
 			// Object found
-		    if(ObjectData[i][oID] == objectid)
+			if(ObjectData[i][oID] == objectid)
 			{
 				index = i;
-			    break;
+				break;
 			}
 		}
-        
-        if(!CanSelectObject(playerid, index))
-            SendClientMessage(playerid, STEALTH_YELLOW, "You can not select objects in this object's group");
-        else
-        {
-            SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
-            // Try and add to group
-            if(Keys & KEY_CTRL_BACK || (InFlyMode(playerid) && (Keys & KEY_SECONDARY_ATTACK)))
-            {
-                if(GroupedObjects[playerid][index]) SendClientMessage(playerid, STEALTH_YELLOW, "Object is already in your group selection");
-                else
-                {
-                    SendClientMessage(playerid, STEALTH_GREEN, "Object added to your group selection");
-                    GroupedObjects[playerid][index] = true;
-                    OnUpdateGroup3DText(index);
+		
+		if(!CanSelectObject(playerid, index))
+			SendClientMessage(playerid, STEALTH_YELLOW, "You can not select objects in this object's group");
+		else
+		{
+			SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+			// Try and add to group
+			if(Keys & KEY_CTRL_BACK || (InFlyMode(playerid) && (Keys & KEY_SECONDARY_ATTACK)))
+			{
+				if(GroupedObjects[playerid][index]) SendClientMessage(playerid, STEALTH_YELLOW, "Object is already in your group selection");
+				else
+				{
+					SendClientMessage(playerid, STEALTH_GREEN, "Object added to your group selection");
+					GroupedObjects[playerid][index] = true;
+					OnUpdateGroup3DText(index);
 
-                }
-            }
+				}
+			}
 
-            // Try and remove from group
-            else if(Keys & KEY_WALK)
-            {
-                if(!GroupedObjects[playerid][index]) SendClientMessage(playerid, STEALTH_YELLOW, "Object is not in your group selection");
-                else
-                {
-                    SendClientMessage(playerid, STEALTH_GREEN, "Object removed from your group selection");
-                    GroupedObjects[playerid][index] = false;
-                    OnUpdateGroup3DText(index);
-                }
-            }
-            else
-            {
-                SendClientMessage(playerid, STEALTH_YELLOW, "Hold the 'H' ('Enter' in /flymode) key and click a object to select it");
-                SendClientMessage(playerid, STEALTH_YELLOW, "Hold the 'Walk' key and click a object to deselect it");
+			// Try and remove from group
+			else if(Keys & KEY_WALK)
+			{
+				if(!GroupedObjects[playerid][index]) SendClientMessage(playerid, STEALTH_YELLOW, "Object is not in your group selection");
+				else
+				{
+					SendClientMessage(playerid, STEALTH_GREEN, "Object removed from your group selection");
+					GroupedObjects[playerid][index] = false;
+					OnUpdateGroup3DText(index);
+				}
+			}
+			else
+			{
+				SendClientMessage(playerid, STEALTH_YELLOW, "Hold the 'H' ('Enter' in /flymode) key and click a object to select it");
+				SendClientMessage(playerid, STEALTH_YELLOW, "Hold the 'Walk' key and click a object to deselect it");
 
-            }
-        }
+			}
+		}
 	}
 	return Y_HOOKS_CONTINUE_RETURN_1;
 }
 
 hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
-    if(GetEditMode(playerid) == EDIT_MODE_OBJECTGROUP)
-    {
+	if(GetEditMode(playerid) == EDIT_MODE_OBJECTGROUP)
+	{
 		if(oldkeys & KEY_WALK)
 		{
 			if(PivotReset[playerid] == false) return Y_HOOKS_BREAK_RETURN_1;
@@ -163,8 +163,8 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 			PivotReset[playerid] = false;
 			return Y_HOOKS_BREAK_RETURN_1;
 		}
-    }
-    return Y_HOOKS_CONTINUE_RETURN_0;
+	}
+	return Y_HOOKS_CONTINUE_RETURN_0;
 }
 
 hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz)
@@ -182,7 +182,7 @@ hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float
 		db_begin_transaction(EditMap);
 		foreach(new i : Objects)
 		{
-	   		if(GroupedObjects[playerid][i])
+			if(GroupedObjects[playerid][i])
 			{
 				SaveUndoInfo(i, UNDO_TYPE_EDIT, time);
 
@@ -191,13 +191,13 @@ hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float
 				offy = (ObjectData[i][oY] + (LastGroupPosition[playerid][yPos] - gCenterY)) - PivotOffset[playerid][yPos];
 				offz = (ObjectData[i][oZ] + (LastGroupPosition[playerid][zPos] - gCenterZ)) - PivotOffset[playerid][zPos];
 
-                AttachObjectToPoint_GroupEdit(i, offx, offy, offz, x, y, z, rx, ry, rz, ObjectData[i][oX], ObjectData[i][oY], ObjectData[i][oZ], ObjectData[i][oRX], ObjectData[i][oRY], ObjectData[i][oRZ]);
+				AttachObjectToPoint_GroupEdit(i, offx, offy, offz, x, y, z, rx, ry, rz, ObjectData[i][oX], ObjectData[i][oY], ObjectData[i][oZ], ObjectData[i][oRX], ObjectData[i][oRY], ObjectData[i][oRZ]);
 				SetDynamicObjectPos(ObjectData[i][oID], ObjectData[i][oX], ObjectData[i][oY], ObjectData[i][oZ]);
-  				SetDynamicObjectRot(ObjectData[i][oID], ObjectData[i][oRX], ObjectData[i][oRY], ObjectData[i][oRZ]);
+				SetDynamicObjectRot(ObjectData[i][oID], ObjectData[i][oRX], ObjectData[i][oRY], ObjectData[i][oRZ]);
 
-			    sqlite_UpdateObjectPos(i);
+				sqlite_UpdateObjectPos(i);
 
-			    UpdateObject3DText(i);
+				UpdateObject3DText(i);
 			}
 		}
 		db_end_transaction(EditMap);
@@ -214,14 +214,14 @@ hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float
 		new Float:gCenterX, Float:gCenterY, Float:gCenterZ;
 		GetGroupCenter(playerid, gCenterX, gCenterY, gCenterZ);
 
-	    new Keys,ud,lr;
-	    GetPlayerKeys(playerid,Keys,ud,lr);
+		new Keys,ud,lr;
+		GetPlayerKeys(playerid,Keys,ud,lr);
 
 		if(Keys & KEY_WALK)
 		{
 			if(!PivotReset[playerid])
 			{
-		       	SetDynamicObjectPos(PivotObject[playerid], LastGroupPosition[playerid][xPos], LastGroupPosition[playerid][yPos], LastGroupPosition[playerid][zPos]);
+				SetDynamicObjectPos(PivotObject[playerid], LastGroupPosition[playerid][xPos], LastGroupPosition[playerid][yPos], LastGroupPosition[playerid][zPos]);
 				SendClientMessage(playerid, STEALTH_YELLOW, "Save your object before changing the pivot again");
 			}
 			else
@@ -238,16 +238,16 @@ hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float
 		{
 			foreach(new i : Objects)
 			{
-		   		if(GroupedObjects[playerid][i])
+				if(GroupedObjects[playerid][i])
 				{
 					new Float:offx, Float:offy, Float:offz, Float:newx, Float:newy, Float:newz, Float:newrx, Float:newry, Float:newrz;
 					offx = (ObjectData[i][oX] + (x - gCenterX)) - PivotOffset[playerid][xPos];
 					offy = (ObjectData[i][oY] + (y - gCenterY)) - PivotOffset[playerid][yPos];
 					offz = (ObjectData[i][oZ] + (z - gCenterZ)) - PivotOffset[playerid][zPos];
 
-                    AttachObjectToPoint_GroupEdit(i, offx, offy, offz, x, y, z, rx, ry, rz, newx, newy, newz, newrx, newry, newrz);
+					AttachObjectToPoint_GroupEdit(i, offx, offy, offz, x, y, z, rx, ry, rz, newx, newy, newz, newrx, newry, newrz);
 					SetDynamicObjectPos(ObjectData[i][oID], newx, newy, newz);
-	  				SetDynamicObjectRot(ObjectData[i][oID], newrx, newry, newrz);
+					SetDynamicObjectRot(ObjectData[i][oID], newrx, newry, newrz);
 				}
 			}
 
@@ -272,10 +272,10 @@ hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float
 	{
 		foreach(new i : Objects)
 		{
-	   		if(GroupedObjects[playerid][i])
+			if(GroupedObjects[playerid][i])
 			{
 				SetDynamicObjectPos(ObjectData[i][oID], ObjectData[i][oX], ObjectData[i][oY], ObjectData[i][oZ]);
-  				SetDynamicObjectRot(ObjectData[i][oID], ObjectData[i][oRX], ObjectData[i][oRY], ObjectData[i][oRZ]);
+				SetDynamicObjectRot(ObjectData[i][oID], ObjectData[i][oRX], ObjectData[i][oRY], ObjectData[i][oRZ]);
 
 				EditingMode[playerid] = false;
 				SetEditMode(playerid, EDIT_MODE_NONE);
@@ -300,7 +300,7 @@ GroupUpdate(index)
 {
 	foreach(new i : Player)
 	{
-        GroupedObjects[i][index] = false;
+		GroupedObjects[i][index] = false;
 	}
 	return 1;
 }
@@ -466,12 +466,12 @@ YCMD:setgroup(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
-    NoEditingMode(playerid);
+	MapOpenCheck();
+	NoEditingMode(playerid);
 
-    new groupid = strval(arg);
+	new groupid = strval(arg);
 
-    new time = GetTickCount();
+	new time = GetTickCount();
 
 	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 
@@ -509,27 +509,27 @@ YCMD:selectgroup(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
-    NoEditingMode(playerid);
+	MapOpenCheck();
+	NoEditingMode(playerid);
 
-    SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 
 	new groupid = strval(arg);
-    
-    if(!CanSelectGroup(playerid, groupid))
-        return SendClientMessage(playerid, STEALTH_YELLOW, "You can not select this group");
+	
+	if(!CanSelectGroup(playerid, groupid))
+		return SendClientMessage(playerid, STEALTH_YELLOW, "You can not select this group");
 
 	if(PlayerHasGroup(playerid)) ClearGroup(playerid);
 
 	new count;
 	foreach(new i : Objects)
 	{
-	    if(ObjectData[i][oGroup] == groupid)
+		if(ObjectData[i][oGroup] == groupid)
 		{
-		    GroupedObjects[playerid][i] = true;
+			GroupedObjects[playerid][i] = true;
 			OnUpdateGroup3DText(i);
 			UpdateObject3DText(i);
-		    count++;
+			count++;
 		}
 	}
 	if(count)
@@ -554,10 +554,10 @@ YCMD:gselmodel(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
-    NoEditingMode(playerid);
+	MapOpenCheck();
+	NoEditingMode(playerid);
 
-    SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 
 	new modelid = strval(arg);
 
@@ -566,15 +566,15 @@ YCMD:gselmodel(playerid, arg[], help)
 	new count;
 	foreach(new i : Objects)
 	{
-        if(!CanSelectObject(playerid, i))
-            continue;
-        
-	    if(ObjectData[i][oModel] == modelid)
+		if(!CanSelectObject(playerid, i))
+			continue;
+		
+		if(ObjectData[i][oModel] == modelid)
 		{
-		    GroupedObjects[playerid][i] = true;
+			GroupedObjects[playerid][i] = true;
 			OnUpdateGroup3DText(i);
 			UpdateObject3DText(i);
-		    count++;
+			count++;
 		}
 	}
 	if(count)
@@ -615,8 +615,8 @@ YCMD:editgroup(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
-    NoEditingMode(playerid);
+	MapOpenCheck();
+	NoEditingMode(playerid);
 
 	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 
@@ -643,9 +643,9 @@ YCMD:editgroup(playerid, arg[], help)
 		EditingMode[playerid] = true;
 		PivotReset[playerid] = true;
 		SetEditMode(playerid, EDIT_MODE_OBJECTGROUP);
-	    EditDynamicObject(playerid, PivotObject[playerid]);
+		EditDynamicObject(playerid, PivotObject[playerid]);
 
-	    SendClientMessage(playerid, STEALTH_GREEN, "Editing your group");
+		SendClientMessage(playerid, STEALTH_GREEN, "Editing your group");
 	}
 	else SendClientMessage(playerid, STEALTH_YELLOW, "You must have at least one object grouped");
 
@@ -662,7 +662,7 @@ YCMD:gmtset(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 
 	EditCheck(playerid);
 
@@ -714,7 +714,7 @@ YCMD:gmtcolor(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 
 	EditCheck(playerid);
 
@@ -801,9 +801,9 @@ YCMD:gsel(playerid, arg[], help)
 		return 1;
 	}
 
-    NoEditingMode(playerid);
+	NoEditingMode(playerid);
 
-    MapOpenCheck();
+	MapOpenCheck();
 
 	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 
@@ -827,16 +827,16 @@ YCMD:gadd(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 	if(isnull(arg)) return SendClientMessage(playerid, STEALTH_YELLOW, "You must supply an object index to group");
 	
 	new index, range;
 	sscanf(arg, "iI(-1)", index, range);
-    
-    if(range == -1 && !CanSelectObject(playerid, index))
-        return SendClientMessage(playerid, STEALTH_YELLOW, "You can not select objects in this object's group");
-        
+	
+	if(range == -1 && !CanSelectObject(playerid, index))
+		return SendClientMessage(playerid, STEALTH_YELLOW, "You can not select objects in this object's group");
+		
 	if(index < 0 || (range != -1 && range < 0)) return SendClientMessage(playerid, STEALTH_YELLOW, "Index can not be less than 0");
 	if(index >= MAX_TEXTURE_OBJECTS || range >= MAX_TEXTURE_OBJECTS)
 	{
@@ -895,7 +895,7 @@ YCMD:grem(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 	if(isnull(arg)) return SendClientMessage(playerid, STEALTH_YELLOW, "You must supply an object index to group");
 	
@@ -962,9 +962,9 @@ YCMD:gclear(playerid, arg[], help)
 	}
 
 	MapOpenCheck();
-    ClearGroup(playerid);
+	ClearGroup(playerid);
 	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
-    SendClientMessage(playerid, STEALTH_GREEN, "Your group selection has been cleared");
+	SendClientMessage(playerid, STEALTH_GREEN, "Your group selection has been cleared");
 
 	// Update the Group GUI
 	UpdatePlayerGSelText(playerid);
@@ -983,7 +983,7 @@ YCMD:gclone(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 
 	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 
@@ -994,28 +994,28 @@ YCMD:gclone(playerid, arg[], help)
 	for(new i = 0; i < MAX_TEXTURE_OBJECTS; i++) { tmpgrp[i] = false; }
 
 	db_begin_transaction(EditMap);
-    foreach(new i : Objects)
-    {
-        if(GroupedObjects[playerid][i])
-        {
+	foreach(new i : Objects)
+	{
+		if(GroupedObjects[playerid][i])
+		{
 			index = CloneObject(i, time);
-            GroupedObjects[playerid][i] = false;
-            tmpgrp[index] = true;
+			GroupedObjects[playerid][i] = false;
+			tmpgrp[index] = true;
 			OnUpdateGroup3DText(i);
 			count++;
-        }
-    }
+		}
+	}
 	db_end_transaction(EditMap);
 
-    // Update grouped objects
-    for(new i = 0; i < MAX_TEXTURE_OBJECTS; i++)
+	// Update grouped objects
+	for(new i = 0; i < MAX_TEXTURE_OBJECTS; i++)
 	{
 		GroupedObjects[playerid][i] = tmpgrp[i];
 		if(GroupedObjects[playerid][i] == true)
 		OnUpdateGroup3DText(i);
 	}
 
-    if(count)
+	if(count)
 	{
 		// Update the Group GUI
 		UpdatePlayerGSelText(playerid);
@@ -1024,9 +1024,9 @@ YCMD:gclone(playerid, arg[], help)
 		format(line, sizeof(line), "Cloned group selection Objects: %i", count);
 		SendClientMessage(playerid, STEALTH_GREEN, line);
 	}
-    else SendClientMessage(playerid, STEALTH_YELLOW, "No group objects to clone");
+	else SendClientMessage(playerid, STEALTH_YELLOW, "No group objects to clone");
 
-    return 1;
+	return 1;
 }
 
 YCMD:gdelete(playerid, arg[], help)
@@ -1038,7 +1038,7 @@ YCMD:gdelete(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 
 	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 
@@ -1046,18 +1046,18 @@ YCMD:gdelete(playerid, arg[], help)
 	new time = GetTickCount();
 
 	db_begin_transaction(EditMap);
-    foreach(new i : Objects)
-    {
-        if(GroupedObjects[playerid][i])
-        {
+	foreach(new i : Objects)
+	{
+		if(GroupedObjects[playerid][i])
+		{
 			SaveUndoInfo(i, UNDO_TYPE_DELETED, time);
 			i = DeleteDynamicObject(i);
-        	count++;
-        }
-    }
+			count++;
+		}
+	}
 	db_end_transaction(EditMap);
 
-    if(count)
+	if(count)
 	{
 		// Update the Group GUI
 		UpdatePlayerGSelText(playerid);
@@ -1066,7 +1066,7 @@ YCMD:gdelete(playerid, arg[], help)
 		format(line, sizeof(line), "Deleted group selection Objects: %i", count);
 		SendClientMessage(playerid, STEALTH_GREEN, line);
 	}
-    else SendClientMessage(playerid, STEALTH_YELLOW, "No group objects to delete");
+	else SendClientMessage(playerid, STEALTH_YELLOW, "No group objects to delete");
 
 	return 1;
 }
@@ -1080,23 +1080,23 @@ YCMD:gall(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 
 	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 
 	new count;
 
-    foreach(new i : Objects)
+	foreach(new i : Objects)
 	{
-        if(!CanSelectObject(playerid, i))
-            continue;
-        
-        GroupedObjects[playerid][i] = true;
+		if(!CanSelectObject(playerid, i))
+			continue;
+		
+		GroupedObjects[playerid][i] = true;
 		OnUpdateGroup3DText(i);
 		count++;
-    }
+	}
 
-    if(count)
+	if(count)
 	{
 		// Update the Group GUI
 		UpdatePlayerGSelText(playerid);
@@ -1105,7 +1105,7 @@ YCMD:gall(playerid, arg[], help)
 		format(line, sizeof(line), "Grouped All Objects", count);
 		SendClientMessage(playerid, STEALTH_GREEN, line);
 	}
-    else SendClientMessage(playerid, STEALTH_YELLOW, "There are no objects to group");
+	else SendClientMessage(playerid, STEALTH_YELLOW, "There are no objects to group");
 
 	return 1;
 }
@@ -1119,7 +1119,7 @@ YCMD:ginvert(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 //	NoEditingMode(playerid);
 //	EditCheck(playerid);
 	
@@ -1208,7 +1208,7 @@ YCMD:gox(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 
 	new Float:dist;
 	new time = GetTickCount();
@@ -1217,19 +1217,19 @@ YCMD:gox(playerid, arg[], help)
 	if(dist == 0) dist = 1.0;
 
 	db_begin_transaction(EditMap);
- 	foreach(new i : Objects)
+	foreach(new i : Objects)
 	{
 		if(GroupedObjects[playerid][i])
 		{
 			SaveUndoInfo(i, UNDO_TYPE_EDIT, time);
 
-		    ObjectData[i][oX] += dist;
+			ObjectData[i][oX] += dist;
 
-		    SetDynamicObjectPos(ObjectData[i][oID], ObjectData[i][oX], ObjectData[i][oY], ObjectData[i][oZ]);
+			SetDynamicObjectPos(ObjectData[i][oID], ObjectData[i][oX], ObjectData[i][oY], ObjectData[i][oZ]);
 
 			UpdateObject3DText(i);
 
-		    sqlite_UpdateObjectPos(i);
+			sqlite_UpdateObjectPos(i);
 		}
 	}
 	db_end_transaction(EditMap);
@@ -1250,28 +1250,28 @@ YCMD:goy(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 
 	new Float:dist;
-    new time = GetTickCount();
+	new time = GetTickCount();
 
 	dist = floatstr(arg);
 	if(dist == 0) dist = 1.0;
 
 	db_begin_transaction(EditMap);
- 	foreach(new i : Objects)
+	foreach(new i : Objects)
 	{
 		if(GroupedObjects[playerid][i])
 		{
 			SaveUndoInfo(i, UNDO_TYPE_EDIT, time);
 
-		    ObjectData[i][oY] += dist;
+			ObjectData[i][oY] += dist;
 
-		    SetDynamicObjectPos(ObjectData[i][oID], ObjectData[i][oX], ObjectData[i][oY], ObjectData[i][oZ]);
+			SetDynamicObjectPos(ObjectData[i][oID], ObjectData[i][oX], ObjectData[i][oY], ObjectData[i][oZ]);
 
 			UpdateObject3DText(i);
 
-		    sqlite_UpdateObjectPos(i);
+			sqlite_UpdateObjectPos(i);
 
 		}
 	}
@@ -1294,7 +1294,7 @@ YCMD:goz(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 
 	new Float:dist;
 	new time = GetTickCount();
@@ -1303,19 +1303,19 @@ YCMD:goz(playerid, arg[], help)
 	if(dist == 0) dist = 1.0;
 
 	db_begin_transaction(EditMap);
- 	foreach(new i : Objects)
+	foreach(new i : Objects)
 	{
 		if(GroupedObjects[playerid][i])
 		{
 			SaveUndoInfo(i, UNDO_TYPE_EDIT, time);
 
-		    ObjectData[i][oZ] += dist;
+			ObjectData[i][oZ] += dist;
 
-		    SetDynamicObjectPos(ObjectData[i][oID], ObjectData[i][oX], ObjectData[i][oY], ObjectData[i][oZ]);
+			SetDynamicObjectPos(ObjectData[i][oID], ObjectData[i][oX], ObjectData[i][oY], ObjectData[i][oZ]);
 
 			UpdateObject3DText(i);
 
-		    sqlite_UpdateObjectPos(i);
+			sqlite_UpdateObjectPos(i);
 		}
 	}
 	db_end_transaction(EditMap);
@@ -1336,7 +1336,7 @@ YCMD:grx(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 	new time = GetTickCount();
 	new Float:Delta;
 	if(sscanf(arg, "f", Delta))
@@ -1354,13 +1354,13 @@ YCMD:grx(playerid, arg[], help)
 		new bool:hasgroup;
 		foreach(new i : Objects)
 		{
-		    if(GroupedObjects[playerid][i])
-		    {
-			    gCenterX = PivotPoint[playerid][xPos];
-			    gCenterY = PivotPoint[playerid][yPos];
-			    gCenterZ = PivotPoint[playerid][zPos];
+			if(GroupedObjects[playerid][i])
+			{
+				gCenterX = PivotPoint[playerid][xPos];
+				gCenterY = PivotPoint[playerid][yPos];
+				gCenterZ = PivotPoint[playerid][zPos];
 				value = true;
-                hasgroup = true;
+				hasgroup = true;
 				break;
 			}
 		}
@@ -1418,7 +1418,7 @@ YCMD:gry(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 	new time = GetTickCount();
 	new Float:Delta;
 	if(sscanf(arg, "f", Delta))
@@ -1436,13 +1436,13 @@ YCMD:gry(playerid, arg[], help)
 		new bool:hasgroup;
 		foreach(new i : Objects)
 		{
-		    if(GroupedObjects[playerid][i])
-		    {
-			    gCenterX = PivotPoint[playerid][xPos];
-			    gCenterY = PivotPoint[playerid][yPos];
-			    gCenterZ = PivotPoint[playerid][zPos];
+			if(GroupedObjects[playerid][i])
+			{
+				gCenterX = PivotPoint[playerid][xPos];
+				gCenterY = PivotPoint[playerid][yPos];
+				gCenterZ = PivotPoint[playerid][zPos];
 				value = true;
-                hasgroup = true;
+				hasgroup = true;
 				break;
 			}
 		}
@@ -1474,7 +1474,7 @@ YCMD:gry(playerid, arg[], help)
 		}
 		db_end_transaction(EditMap);
 
-   		// Update the Group GUI
+		// Update the Group GUI
 		UpdatePlayerGSelText(playerid);
 
 		SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
@@ -1499,7 +1499,7 @@ YCMD:grz(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 	new time = GetTickCount();
 	new Float:Delta;
 	if(sscanf(arg, "f", Delta))
@@ -1517,13 +1517,13 @@ YCMD:grz(playerid, arg[], help)
 		new bool:hasgroup;
 		foreach(new i : Objects)
 		{
-		    if(GroupedObjects[playerid][i])
-		    {
-			    gCenterX = PivotPoint[playerid][xPos];
-			    gCenterY = PivotPoint[playerid][yPos];
-			    gCenterZ = PivotPoint[playerid][zPos];
+			if(GroupedObjects[playerid][i])
+			{
+				gCenterX = PivotPoint[playerid][xPos];
+				gCenterY = PivotPoint[playerid][yPos];
+				gCenterZ = PivotPoint[playerid][zPos];
 				value = true;
-                hasgroup = true;
+				hasgroup = true;
 				break;
 			}
 		}
@@ -1555,7 +1555,7 @@ YCMD:grz(playerid, arg[], help)
 		}
 		db_end_transaction(EditMap);
 
-   		// Update the Group GUI
+		// Update the Group GUI
 		UpdatePlayerGSelText(playerid);
 
 		SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
@@ -1579,29 +1579,29 @@ YCMD:gdd(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 	new time = GetTickCount();
 	new Float:dd;
 	sscanf(arg, "F(300.0)", dd);
 
-    db_begin_transaction(EditMap);
-    foreach(new i : Objects)
-    {
-        if(GroupedObjects[playerid][i])
-        {
-            SaveUndoInfo(i, UNDO_TYPE_EDIT, time);
+	db_begin_transaction(EditMap);
+	foreach(new i : Objects)
+	{
+		if(GroupedObjects[playerid][i])
+		{
+			SaveUndoInfo(i, UNDO_TYPE_EDIT, time);
 
-            ObjectData[i][oDD] = dd;
-            Streamer_SetFloatData(STREAMER_TYPE_OBJECT, ObjectData[i][oID], E_STREAMER_DRAW_DISTANCE, dd);
-            Streamer_SetFloatData(STREAMER_TYPE_OBJECT, ObjectData[i][oID], E_STREAMER_STREAM_DISTANCE, dd);
+			ObjectData[i][oDD] = dd;
+			Streamer_SetFloatData(STREAMER_TYPE_OBJECT, ObjectData[i][oID], E_STREAMER_DRAW_DISTANCE, dd);
+			Streamer_SetFloatData(STREAMER_TYPE_OBJECT, ObjectData[i][oID], E_STREAMER_STREAM_DISTANCE, dd);
 
-            sqlite_UpdateObjectDD(i);
-        }
-    }
-    db_end_transaction(EditMap);
+			sqlite_UpdateObjectDD(i);
+		}
+	}
+	db_end_transaction(EditMap);
 
-    SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
-    SendClientMessage(playerid, STEALTH_GREEN, sprintf("Groups draw distance set to %.2f", dd));
+	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+	SendClientMessage(playerid, STEALTH_GREEN, sprintf("Groups draw distance set to %.2f", dd));
 
 	return 1;
 }
@@ -1622,7 +1622,7 @@ YCMD:gaexport(playerid, arg[], help)
 	new count;
 	foreach(new i : Objects)
 	{
-	    if(GroupedObjects[playerid][i])
+		if(GroupedObjects[playerid][i])
 		{
 			count++;
 			break;
@@ -1631,11 +1631,11 @@ YCMD:gaexport(playerid, arg[], help)
 
 	if(count)
 	{
-	    inline CreateAttachExport(cpid, cdialogid, cresponse, clistitem, string:ctext[])
+		inline CreateAttachExport(cpid, cdialogid, cresponse, clistitem, string:ctext[])
 		{
-		    #pragma unused clistitem, cdialogid, cpid
+			#pragma unused clistitem, cdialogid, cpid
 			if(cresponse)
-		    {
+			{
 				if(!isnull(ctext))
 				{
 					inline DrawDist(dpid, ddialogid, dresponse, dlistitem, string:dtext[])
@@ -1688,7 +1688,7 @@ YCMD:gaexport(playerid, arg[], help)
 					SendClientMessage(playerid, STEALTH_YELLOW, "You must give your attached export a filename");
 					Dialog_ShowCallback(playerid, using inline CreateAttachExport, DIALOG_STYLE_INPUT, "Texture Studio", "Enter attached object export file", "Ok", "Cancel");
 				}
-		    }
+			}
 		}
 		Dialog_ShowCallback(playerid, using inline CreateAttachExport, DIALOG_STYLE_INPUT, "Texture Studio", "Enter attached object export file", "Ok", "Cancel");
 	}
@@ -1725,19 +1725,19 @@ AttachExport(playerid, mapname[], Float:drawdist)
 				return 1;
 			}
 
-		    if(!GroupedObjects[playerid][centerindex])
-		    {
+			if(!GroupedObjects[playerid][centerindex])
+			{
 				SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 				SendClientMessage(playerid, STEALTH_YELLOW, "That object is not in your group selection");
 				Dialog_ShowCallback(playerid, using inline SelectObjectCenterNode, DIALOG_STYLE_INPUT, "Texture Studio", "Enter object index of attach object center", "Ok", "Cancel");
 				return 1;
-		    }
+			}
 
 			// Get Offsets
-		    new Float:offx, Float:offy, Float:offz;
-		    offx = ObjectData[centerindex][oX];
-		    offy = ObjectData[centerindex][oY];
-		    offz = ObjectData[centerindex][oZ];
+			new Float:offx, Float:offy, Float:offz;
+			offx = ObjectData[centerindex][oX];
+			offy = ObjectData[centerindex][oY];
+			offz = ObjectData[centerindex][oZ];
 
 			new exportmap[256];
 			format(exportmap, sizeof(exportmap), "%s", mapname);
@@ -1771,15 +1771,15 @@ AttachExport(playerid, mapname[], Float:drawdist)
 			// Write all objects with materials first
 			foreach(new i : Objects)
 			{
-			    if(ObjectData[i][oAttachedVehicle] > -1 || !GroupedObjects[playerid][i] || centerindex == i) continue;
+				if(ObjectData[i][oAttachedVehicle] > -1 || !GroupedObjects[playerid][i] || centerindex == i) continue;
 
 				new bool:writeobject;
 
 				// Does the object have materials?
-		        for(new j = 0; j < MAX_MATERIALS; j++)
-		        {
-		            if(ObjectData[i][oTexIndex][j] != 0 || ObjectData[i][oColorIndex][j] != 0 || ObjectData[i][ousetext])
-		            {
+				for(new j = 0; j < MAX_MATERIALS; j++)
+				{
+					if(ObjectData[i][oTexIndex][j] != 0 || ObjectData[i][oColorIndex][j] != 0 || ObjectData[i][ousetext])
+					{
 						writeobject = true;
 						break;
 					}
@@ -1795,17 +1795,17 @@ AttachExport(playerid, mapname[], Float:drawdist)
 					fwrite(f,templine);
 
 					// Write all materials and colors
-		  			for(new j = 0; j < MAX_MATERIALS; j++)
-		        	{
+					for(new j = 0; j < MAX_MATERIALS; j++)
+					{
 						// Does object have a texture set?
-			            if(ObjectData[i][oTexIndex][j] != 0)
-			            {
+						if(ObjectData[i][oTexIndex][j] != 0)
+						{
 							format(templine,sizeof(templine),"SetObjectMaterial(tmpobjid, %i, %i, %c%s%c, %c%s%c, %i);\r\n", j, GetTModel(ObjectData[i][oTexIndex][j]), 34, GetTXDName(ObjectData[i][oTexIndex][j]), 34, 34,GetTextureName(ObjectData[i][oTexIndex][j]), 34, ObjectData[i][oColorIndex][j]);
 							fwrite(f,templine);
-			            }
-			            // No texture how about a color?
-			            else if(ObjectData[i][oColorIndex][j] != 0)
-			            {
+						}
+						// No texture how about a color?
+						else if(ObjectData[i][oColorIndex][j] != 0)
+						{
 							format(templine,sizeof(templine),"SetObjectMaterial(tmpobjid, %i, -1, %c%s%c, %c%s%c, %i);\r\n", j, 34, "none", 34, 34,"none", 34, ObjectData[i][oColorIndex][j]);
 							fwrite(f,templine);
 						}
@@ -1851,16 +1851,16 @@ AttachExport(playerid, mapname[], Float:drawdist)
 			// We need to write all of the objects that didn't have materials set now
 			foreach(new i : Objects)
 			{
-			    if(ObjectData[i][oAttachedVehicle] > -1 || !GroupedObjects[playerid][i] || centerindex == i) continue;
+				if(ObjectData[i][oAttachedVehicle] > -1 || !GroupedObjects[playerid][i] || centerindex == i) continue;
 
 				new bool:skipobject = true;
 
 				// Does the object have materials?
-		        for(new j = 0; j < MAX_MATERIALS; j++)
-		        {
+				for(new j = 0; j < MAX_MATERIALS; j++)
+				{
 					// This object has already been written
-		            if(ObjectData[i][oTexIndex][j] != 0 || ObjectData[i][oColorIndex][j] != 0 || ObjectData[i][ousetext])
-		            {
+					if(ObjectData[i][oTexIndex][j] != 0 || ObjectData[i][oColorIndex][j] != 0 || ObjectData[i][ousetext])
+					{
 						skipobject = true;
 						break;
 					}
@@ -1893,7 +1893,7 @@ AttachExport(playerid, mapname[], Float:drawdist)
 		}
 	}
 
-    Dialog_ShowCallback(playerid, using inline SelectObjectCenterNode, DIALOG_STYLE_INPUT, "Texture Studio", "Enter object index of attach object center", "Ok", "Cancel");
+	Dialog_ShowCallback(playerid, using inline SelectObjectCenterNode, DIALOG_STYLE_INPUT, "Texture Studio", "Enter object index of attach object center", "Ok", "Cancel");
 
 	return 1;
 }
@@ -1915,7 +1915,7 @@ YCMD:gprefab(playerid, arg[], help)
 	new count;
 	foreach(new i : Objects)
 	{
-	    if(GroupedObjects[playerid][i])
+		if(GroupedObjects[playerid][i])
 		{
 			count++;
 			break;
@@ -1924,11 +1924,11 @@ YCMD:gprefab(playerid, arg[], help)
 
 	if(count)
 	{
-	    inline CreatePrefab(cpid, cdialogid, cresponse, clistitem, string:ctext[])
+		inline CreatePrefab(cpid, cdialogid, cresponse, clistitem, string:ctext[])
 		{
-		    #pragma unused clistitem, cdialogid, cpid
+			#pragma unused clistitem, cdialogid, cpid
 			if(cresponse)
-		    {
+			{
 				if(!isnull(ctext))
 				{
 					new mapname[128];
@@ -1937,7 +1937,7 @@ YCMD:gprefab(playerid, arg[], help)
 					if(!fexist(mapname))
 					{
 						// Open the map for editing
-			            PrefabDB = db_open_persistent(mapname);
+						PrefabDB = db_open_persistent(mapname);
 
 						if(!NewPreFabString[0])
 						{
@@ -1986,7 +1986,7 @@ YCMD:gprefab(playerid, arg[], help)
 									z = ObjectData[i][oZ];
 									break;
 								}
-						    }
+							}
 						}
 
 
@@ -1999,7 +1999,7 @@ YCMD:gprefab(playerid, arg[], help)
 							{
 								sqlite_InsertPrefab(i, x, y, z);
 								count++;
-						    }
+							}
 						}
 						db_end_transaction(EditMap);
 
@@ -2024,7 +2024,7 @@ YCMD:gprefab(playerid, arg[], help)
 					SendClientMessage(playerid, STEALTH_YELLOW, "You must give your prefab a filename");
 					Dialog_ShowCallback(playerid, using inline CreatePrefab, DIALOG_STYLE_INPUT, "Texture Studio", "Enter a prefab name", "Ok", "Cancel");
 				}
-		    }
+			}
 		}
 		Dialog_ShowCallback(playerid, using inline CreatePrefab, DIALOG_STYLE_INPUT, "Texture Studio", "Enter a prefab name", "Ok", "Cancel");
 	}
@@ -2051,33 +2051,33 @@ sqlite_InsertPrefab(index, Float:x, Float:y, Float:z)
 			InsertPrefabString,
 			sizeof(InsertPrefabString),
 			"INSERT INTO `Objects`",
-	        "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+			"VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
 		);
 	}
 
 	insertprefabstmt = db_prepare(PrefabDB, InsertPrefabString);
 
 	// Bind our results
-    stmt_bind_value(insertprefabstmt, 0, DB::TYPE_INT, ObjectData[index][oModel]);
-    stmt_bind_value(insertprefabstmt, 1, DB::TYPE_FLOAT, ObjectData[index][oX]-x);
-    stmt_bind_value(insertprefabstmt, 2, DB::TYPE_FLOAT, ObjectData[index][oY]-y);
-    stmt_bind_value(insertprefabstmt, 3, DB::TYPE_FLOAT, ObjectData[index][oZ]-z);
-    stmt_bind_value(insertprefabstmt, 4, DB::TYPE_FLOAT, ObjectData[index][oRX]);
-    stmt_bind_value(insertprefabstmt, 5, DB::TYPE_FLOAT, ObjectData[index][oRY]);
-    stmt_bind_value(insertprefabstmt, 6, DB::TYPE_FLOAT, ObjectData[index][oRZ]);
-    stmt_bind_value(insertprefabstmt, 7, DB::TYPE_ARRAY, ObjectData[index][oTexIndex], MAX_MATERIALS);
-    stmt_bind_value(insertprefabstmt, 8, DB::TYPE_ARRAY, ObjectData[index][oColorIndex], MAX_MATERIALS);
-    stmt_bind_value(insertprefabstmt, 9, DB::TYPE_INT, ObjectData[index][ousetext]);
-    stmt_bind_value(insertprefabstmt, 10, DB::TYPE_INT, ObjectData[index][oFontFace]);
-    stmt_bind_value(insertprefabstmt, 11, DB::TYPE_INT, ObjectData[index][oFontSize]);
-    stmt_bind_value(insertprefabstmt, 12, DB::TYPE_INT, ObjectData[index][oFontBold]);
-    stmt_bind_value(insertprefabstmt, 13, DB::TYPE_INT, ObjectData[index][oFontColor]);
-    stmt_bind_value(insertprefabstmt, 14, DB::TYPE_INT, ObjectData[index][oBackColor]);
-    stmt_bind_value(insertprefabstmt, 15, DB::TYPE_INT, ObjectData[index][oAlignment]);
-    stmt_bind_value(insertprefabstmt, 16, DB::TYPE_INT, ObjectData[index][oTextFontSize]);
-    stmt_bind_value(insertprefabstmt, 17, DB::TYPE_STRING, ObjectData[index][oObjectText], MAX_TEXT_LENGTH);
+	stmt_bind_value(insertprefabstmt, 0, DB::TYPE_INT, ObjectData[index][oModel]);
+	stmt_bind_value(insertprefabstmt, 1, DB::TYPE_FLOAT, ObjectData[index][oX]-x);
+	stmt_bind_value(insertprefabstmt, 2, DB::TYPE_FLOAT, ObjectData[index][oY]-y);
+	stmt_bind_value(insertprefabstmt, 3, DB::TYPE_FLOAT, ObjectData[index][oZ]-z);
+	stmt_bind_value(insertprefabstmt, 4, DB::TYPE_FLOAT, ObjectData[index][oRX]);
+	stmt_bind_value(insertprefabstmt, 5, DB::TYPE_FLOAT, ObjectData[index][oRY]);
+	stmt_bind_value(insertprefabstmt, 6, DB::TYPE_FLOAT, ObjectData[index][oRZ]);
+	stmt_bind_value(insertprefabstmt, 7, DB::TYPE_ARRAY, ObjectData[index][oTexIndex], MAX_MATERIALS);
+	stmt_bind_value(insertprefabstmt, 8, DB::TYPE_ARRAY, ObjectData[index][oColorIndex], MAX_MATERIALS);
+	stmt_bind_value(insertprefabstmt, 9, DB::TYPE_INT, ObjectData[index][ousetext]);
+	stmt_bind_value(insertprefabstmt, 10, DB::TYPE_INT, ObjectData[index][oFontFace]);
+	stmt_bind_value(insertprefabstmt, 11, DB::TYPE_INT, ObjectData[index][oFontSize]);
+	stmt_bind_value(insertprefabstmt, 12, DB::TYPE_INT, ObjectData[index][oFontBold]);
+	stmt_bind_value(insertprefabstmt, 13, DB::TYPE_INT, ObjectData[index][oFontColor]);
+	stmt_bind_value(insertprefabstmt, 14, DB::TYPE_INT, ObjectData[index][oBackColor]);
+	stmt_bind_value(insertprefabstmt, 15, DB::TYPE_INT, ObjectData[index][oAlignment]);
+	stmt_bind_value(insertprefabstmt, 16, DB::TYPE_INT, ObjectData[index][oTextFontSize]);
+	stmt_bind_value(insertprefabstmt, 17, DB::TYPE_STRING, ObjectData[index][oObjectText], MAX_TEXT_LENGTH);
 
-    stmt_execute(insertprefabstmt);
+	stmt_execute(insertprefabstmt);
 	stmt_close(insertprefabstmt);
 }
 
@@ -2102,11 +2102,11 @@ YCMD:prefabsetz(playerid, arg[], help)
 		format(mapname, sizeof(mapname), "tstudio/PreFabs/%s.db", mapname);
 		if(fexist(mapname))
 		{
-		    PrefabDB = db_open_persistent(mapname);
+			PrefabDB = db_open_persistent(mapname);
 			new Query[128];
 			format(Query, sizeof(Query), "UPDATE `PrefabInfo` SET `zOFF` = %f;", offset);
 			db_exec(PrefabDB, Query);
-		    db_free_persistent(PrefabDB);
+			db_free_persistent(PrefabDB);
 			SendClientMessage(playerid, STEALTH_GREEN, "Updated prefab Z-Load offset");
 		}
 		else SendClientMessage(playerid, STEALTH_YELLOW, "That prefab does not exist!");
@@ -2135,9 +2135,9 @@ YCMD:prefab(playerid, arg[], help)
 		format(mapname, sizeof(mapname), "tstudio/PreFabs/%s.db", arg);
 		if(fexist(mapname))
 		{
-		    PrefabDB = db_open_persistent(mapname);
-		    sqlite_LoadPrefab(playerid);
-		    db_free_persistent(PrefabDB);
+			PrefabDB = db_open_persistent(mapname);
+			sqlite_LoadPrefab(playerid);
+			db_free_persistent(PrefabDB);
 			SendClientMessage(playerid, STEALTH_GREEN, "Prefab loaded and set to your group selection");
 		}
 		else SendClientMessage(playerid, STEALTH_YELLOW, "That prefab does not exist!");
@@ -2155,7 +2155,7 @@ YCMD:0group(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 
 	new Float:gCenterX, Float:gCenterY, Float:gCenterZ;
 	GetGroupCenter(playerid, gCenterX, gCenterY, gCenterZ);
@@ -2168,7 +2168,7 @@ YCMD:0group(playerid, arg[], help)
 	db_begin_transaction(EditMap);
 	foreach(new i : Objects)
 	{
-   		if(GroupedObjects[playerid][i])
+		if(GroupedObjects[playerid][i])
 		{
 			SaveUndoInfo(i, UNDO_TYPE_EDIT, time);
 
@@ -2178,9 +2178,9 @@ YCMD:0group(playerid, arg[], help)
 
 			SetDynamicObjectPos(ObjectData[i][oID], ObjectData[i][oX], ObjectData[i][oY], ObjectData[i][oZ]);
 
-		    sqlite_UpdateObjectPos(i);
+			sqlite_UpdateObjectPos(i);
 
-		    UpdateObject3DText(i);
+			UpdateObject3DText(i);
 
 			hasgroup = true;
 		}
@@ -2205,8 +2205,8 @@ ShowPrefabs(playerid)
 	// Create a load list
 	while(dir_list(dHandle, item, type))
 	{
-	 	if(type != FM_DIR)
-	    {
+		if(type != FM_DIR)
+		{
 			// We need to check extension
 			if(strlen(item) > 3)
 			{
@@ -2225,7 +2225,7 @@ ShowPrefabs(playerid)
 						line = "";
 					}
 				}
-		    }
+			}
 		}
 	}
 	if(fcount != 0) SendClientMessage(playerid, STEALTH_YELLOW, line);
@@ -2249,24 +2249,24 @@ sqlite_LoadPrefab(playerid, offset = true)
 	new tmpobject[OBJECTINFO];
 
 	// Bind our results
-    stmt_bind_result_field(loadprefabstmt, 0, DB::TYPE_INT, tmpobject[oModel]);
-    stmt_bind_result_field(loadprefabstmt, 1, DB::TYPE_FLOAT, tmpobject[oX]);
-    stmt_bind_result_field(loadprefabstmt, 2, DB::TYPE_FLOAT, tmpobject[oY]);
-    stmt_bind_result_field(loadprefabstmt, 3, DB::TYPE_FLOAT, tmpobject[oZ]);
-    stmt_bind_result_field(loadprefabstmt, 4, DB::TYPE_FLOAT, tmpobject[oRX]);
-    stmt_bind_result_field(loadprefabstmt, 5, DB::TYPE_FLOAT, tmpobject[oRY]);
-    stmt_bind_result_field(loadprefabstmt, 6, DB::TYPE_FLOAT, tmpobject[oRZ]);
-    stmt_bind_result_field(loadprefabstmt, 7, DB::TYPE_ARRAY, tmpobject[oTexIndex], MAX_MATERIALS);
-    stmt_bind_result_field(loadprefabstmt, 8, DB::TYPE_ARRAY, tmpobject[oColorIndex], MAX_MATERIALS);
-    stmt_bind_result_field(loadprefabstmt, 9, DB::TYPE_INT, tmpobject[ousetext]);
-    stmt_bind_result_field(loadprefabstmt, 10, DB::TYPE_INT, tmpobject[oFontFace]);
-    stmt_bind_result_field(loadprefabstmt, 11, DB::TYPE_INT, tmpobject[oFontSize]);
-    stmt_bind_result_field(loadprefabstmt, 12, DB::TYPE_INT, tmpobject[oFontBold]);
-    stmt_bind_result_field(loadprefabstmt, 13, DB::TYPE_INT, tmpobject[oFontColor]);
-    stmt_bind_result_field(loadprefabstmt, 14, DB::TYPE_INT, tmpobject[oBackColor]);
-    stmt_bind_result_field(loadprefabstmt, 15, DB::TYPE_INT, tmpobject[oAlignment]);
-    stmt_bind_result_field(loadprefabstmt, 16, DB::TYPE_INT, tmpobject[oTextFontSize]);
-    stmt_bind_result_field(loadprefabstmt, 17, DB::TYPE_STRING, tmpobject[oObjectText], MAX_TEXT_LENGTH);
+	stmt_bind_result_field(loadprefabstmt, 0, DB::TYPE_INT, tmpobject[oModel]);
+	stmt_bind_result_field(loadprefabstmt, 1, DB::TYPE_FLOAT, tmpobject[oX]);
+	stmt_bind_result_field(loadprefabstmt, 2, DB::TYPE_FLOAT, tmpobject[oY]);
+	stmt_bind_result_field(loadprefabstmt, 3, DB::TYPE_FLOAT, tmpobject[oZ]);
+	stmt_bind_result_field(loadprefabstmt, 4, DB::TYPE_FLOAT, tmpobject[oRX]);
+	stmt_bind_result_field(loadprefabstmt, 5, DB::TYPE_FLOAT, tmpobject[oRY]);
+	stmt_bind_result_field(loadprefabstmt, 6, DB::TYPE_FLOAT, tmpobject[oRZ]);
+	stmt_bind_result_field(loadprefabstmt, 7, DB::TYPE_ARRAY, tmpobject[oTexIndex], MAX_MATERIALS);
+	stmt_bind_result_field(loadprefabstmt, 8, DB::TYPE_ARRAY, tmpobject[oColorIndex], MAX_MATERIALS);
+	stmt_bind_result_field(loadprefabstmt, 9, DB::TYPE_INT, tmpobject[ousetext]);
+	stmt_bind_result_field(loadprefabstmt, 10, DB::TYPE_INT, tmpobject[oFontFace]);
+	stmt_bind_result_field(loadprefabstmt, 11, DB::TYPE_INT, tmpobject[oFontSize]);
+	stmt_bind_result_field(loadprefabstmt, 12, DB::TYPE_INT, tmpobject[oFontBold]);
+	stmt_bind_result_field(loadprefabstmt, 13, DB::TYPE_INT, tmpobject[oFontColor]);
+	stmt_bind_result_field(loadprefabstmt, 14, DB::TYPE_INT, tmpobject[oBackColor]);
+	stmt_bind_result_field(loadprefabstmt, 15, DB::TYPE_INT, tmpobject[oAlignment]);
+	stmt_bind_result_field(loadprefabstmt, 16, DB::TYPE_INT, tmpobject[oTextFontSize]);
+	stmt_bind_result_field(loadprefabstmt, 17, DB::TYPE_STRING, tmpobject[oObjectText], MAX_TEXT_LENGTH);
 
 	// Get the ZOffset
 	new Query[128];
@@ -2285,33 +2285,33 @@ sqlite_LoadPrefab(playerid, offset = true)
 	else GetPlayerPos(playerid, px, py, pz);
 
 	// Clear any grouped objects
-    ClearGroup(playerid);
+	ClearGroup(playerid);
 
 	// Execute query
-    if(stmt_execute(loadprefabstmt))
-    {
+	if(stmt_execute(loadprefabstmt))
+	{
 		db_begin_transaction(EditMap);
-        while(stmt_fetch_row(loadprefabstmt))
-        {
+		while(stmt_fetch_row(loadprefabstmt))
+		{
 			new index = AddDynamicObject(tmpobject[oModel], tmpobject[oX]+px, tmpobject[oY]+py, tmpobject[oZ]+pz+zoff, tmpobject[oRX], tmpobject[oRY], tmpobject[oRZ]);
 
 			// Set textures and colors
 			for(new i = 0; i < MAX_MATERIALS; i++)
 			{
-                ObjectData[index][oTexIndex][i] = tmpobject[oTexIndex][i];
-	            ObjectData[index][oColorIndex][i] = tmpobject[oColorIndex][i];
+				ObjectData[index][oTexIndex][i] = tmpobject[oTexIndex][i];
+				ObjectData[index][oColorIndex][i] = tmpobject[oColorIndex][i];
 			}
 
 			// Get all text settings
-		   	ObjectData[index][ousetext] = tmpobject[ousetext];
-		    ObjectData[index][oFontFace] = tmpobject[oFontFace];
-		    ObjectData[index][oFontSize] = tmpobject[oFontSize];
-		    ObjectData[index][oFontBold] = tmpobject[oFontBold];
-		    ObjectData[index][oFontColor] = tmpobject[oFontColor];
-		    ObjectData[index][oBackColor] = tmpobject[oBackColor];
-		    ObjectData[index][oAlignment] = tmpobject[oAlignment];
-		    ObjectData[index][oTextFontSize] = tmpobject[oTextFontSize];
-		    ObjectData[index][oGroup] = 0;
+			ObjectData[index][ousetext] = tmpobject[ousetext];
+			ObjectData[index][oFontFace] = tmpobject[oFontFace];
+			ObjectData[index][oFontSize] = tmpobject[oFontSize];
+			ObjectData[index][oFontBold] = tmpobject[oFontBold];
+			ObjectData[index][oFontColor] = tmpobject[oFontColor];
+			ObjectData[index][oBackColor] = tmpobject[oBackColor];
+			ObjectData[index][oAlignment] = tmpobject[oAlignment];
+			ObjectData[index][oTextFontSize] = tmpobject[oTextFontSize];
+			ObjectData[index][oGroup] = 0;
 
 			// Get any text string
 			format(ObjectData[index][oObjectText], MAX_TEXT_LENGTH, "%s", tmpobject[oObjectText]);
@@ -2339,15 +2339,15 @@ sqlite_LoadPrefab(playerid, offset = true)
 			sqlite_SaveAllObjectText(index);
 
 			SaveUndoInfo(index, UNDO_TYPE_CREATED, time);
-        }
+		}
 		db_end_transaction(EditMap);
 
-   		// Update the Group GUI
+		// Update the Group GUI
 		UpdatePlayerGSelText(playerid);
 		stmt_close(loadprefabstmt);
-        return 1;
-    }
+		return 1;
+	}
 	stmt_close(loadprefabstmt);
-    return 0;
+	return 0;
 }
 

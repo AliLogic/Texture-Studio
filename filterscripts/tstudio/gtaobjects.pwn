@@ -14,7 +14,7 @@ hook OnPlayerDisconnect(playerid, reason)
 	if(HighLightObject[playerid] > -1)
 	{
 		DestroyDynamicObject(HighLightObject[playerid]);
-        HighLightObject[playerid] = -1;
+		HighLightObject[playerid] = -1;
 	}
 	return Y_HOOKS_CONTINUE_RETURN_1;
 }
@@ -41,7 +41,7 @@ YCMD:gtaobjects(playerid, arg[], help)
 	if(ObjectsShown && !colradius)
 	{
 		for(new i = 0; i < SEARCH_DATA_SIZE; i++) DestroyDynamic3DTextLabel(GTAObjectText[i]);
-        ObjectsShown = false;
+		ObjectsShown = false;
 		SendClientMessage(playerid, STEALTH_GREEN, "Hiding GTA Objects");
 	}
 	else
@@ -57,14 +57,14 @@ YCMD:gtaobjects(playerid, arg[], help)
 			model = db_get_field_int(AO_RESULT, 1);
 			//db_get_field(AO_RESULT, 3, name, sizeof name[]);
 			
- 			if(!colradius)
+			if(!colradius)
 			{
 				colradius = GetColSphereRadius(model);
 				if(colradius < MIN_GTAOBJECT_LABEL_DIST) colradius = MIN_GTAOBJECT_LABEL_DIST;
 				colradius *= 2;
 			}
 		
-            GTAObjectText[index] = CreateDynamic3DTextLabel(
+			GTAObjectText[index] = CreateDynamic3DTextLabel(
 				sprintf("Index: %i\nName: %s\nModelID: %i", index, GetModelName(model), model), 
 				(GTAObjectDeleted[index] ? (GTAObjectSwapped[index] ? 0x5A34FFFF : 0xFF345AFF) : 0xFF69B4FF), 
 				db_get_field_float(AO_RESULT, 4), db_get_field_float(AO_RESULT, 5), db_get_field_float(AO_RESULT, 6) + db_get_field_float(AO_RESULT, 10), colradius * 2.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 0, -1, -1, -1, colradius
@@ -72,8 +72,8 @@ YCMD:gtaobjects(playerid, arg[], help)
 		}
 		while(db_next_row(AO_RESULT));
 		
-	    ObjectsShown = true;
-	    SendClientMessage(playerid, STEALTH_GREEN, "Showing GTA Objects");
+		ObjectsShown = true;
+		SendClientMessage(playerid, STEALTH_GREEN, "Showing GTA Objects");
 	}
 
 	return 1;
@@ -91,22 +91,22 @@ YCMD:gtaobjects(playerid, arg[], help)
 	if(ObjectsShown)
 	{
 		for(new i = 0; i < SEARCH_DATA_SIZE; i++) DestroyDynamic3DTextLabel(GTAObjectText[i]);
-        ObjectsShown = false;
+		ObjectsShown = false;
 		SendClientMessage(playerid, STEALTH_GREEN, "Hiding GTA Objects");
 	}
 	else
 	{
 		new text[64], Float:colradius;
 		
-	    for(new i = 0; i < SEARCH_DATA_SIZE; i++)
+		for(new i = 0; i < SEARCH_DATA_SIZE; i++)
 		{
- 			colradius = GetColSphereRadius(SearchData[i][Search_Model]);
- 			if(colradius < MIN_GTAOBJECT_LABEL_DIST) colradius = MIN_GTAOBJECT_LABEL_DIST;
-		    format(text, sizeof(text), "Index: %i\nName: %s\nModelID: %i", i, SearchData[i][Search_Model_Name], SearchData[i][Search_Model]);
-            GTAObjectText[i] = CreateDynamic3DTextLabel(text, 0xFF69B4FF, SearchData[i][SearchX], SearchData[i][SearchY], SearchData[i][SearchZ]+SearchData[i][SearchOffset], colradius*2.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 0, -1, -1, -1, colradius*2.0);
+			colradius = GetColSphereRadius(SearchData[i][Search_Model]);
+			if(colradius < MIN_GTAOBJECT_LABEL_DIST) colradius = MIN_GTAOBJECT_LABEL_DIST;
+			format(text, sizeof(text), "Index: %i\nName: %s\nModelID: %i", i, SearchData[i][Search_Model_Name], SearchData[i][Search_Model]);
+			GTAObjectText[i] = CreateDynamic3DTextLabel(text, 0xFF69B4FF, SearchData[i][SearchX], SearchData[i][SearchY], SearchData[i][SearchZ]+SearchData[i][SearchOffset], colradius*2.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 0, -1, -1, -1, colradius*2.0);
 		}
-	    ObjectsShown = true;
-	    SendClientMessage(playerid, STEALTH_GREEN, "Showing GTA Objects");
+		ObjectsShown = true;
+		SendClientMessage(playerid, STEALTH_GREEN, "Showing GTA Objects");
 	}
 
 	return 1;
@@ -127,12 +127,12 @@ YCMD:gtashow(playerid, arg[], help)
 	if(index < 0 || index >= SEARCH_DATA_SIZE)
 	{
 		format(line, sizeof(line), "Index must be between 0 and %i", SEARCH_DATA_SIZE-1);
-	    return SendClientMessage(playerid, STEALTH_YELLOW, line);
+		return SendClientMessage(playerid, STEALTH_YELLOW, line);
 	}
 
 	if(HighLightObject[playerid] > -1) DestroyDynamicObject(HighLightObject[playerid]);
 
-    HighLightObject[playerid] = CreateDynamicObject(db_get_field_int(AO_RESULT, 1),
+	HighLightObject[playerid] = CreateDynamicObject(db_get_field_int(AO_RESULT, 1),
 		db_get_field_float(AO_RESULT, 4), db_get_field_float(AO_RESULT, 5), db_get_field_float(AO_RESULT, 6) + 1.0,
 		db_get_field_float(AO_RESULT, 7), db_get_field_float(AO_RESULT, 8), db_get_field_float(AO_RESULT, 9),
 		-1, -1, playerid
@@ -155,7 +155,7 @@ YCMD:gtahide(playerid, arg[], help)
 	if(HighLightObject[playerid] > -1)
 	{
 		DestroyDynamicObject(HighLightObject[playerid]);
-        HighLightObject[playerid] = -1;
+		HighLightObject[playerid] = -1;
 	}
 
 	return 1;
@@ -170,7 +170,7 @@ YCMD:remobject(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 	
 	new index;
 	if(sscanf(arg, "i", index)) return SendClientMessage(playerid, STEALTH_YELLOW, "You must provide an index to delete!");
@@ -180,12 +180,12 @@ YCMD:remobject(playerid, arg[], help)
 	if(index < 0 || index >= SEARCH_DATA_SIZE)
 	{
 		format(line, sizeof(line), "Index must be between 0 and %i", SEARCH_DATA_SIZE-1);
-	    return SendClientMessage(playerid, STEALTH_YELLOW, line);
+		return SendClientMessage(playerid, STEALTH_YELLOW, line);
 	}
 
 	if(GTAObjectDeleted[index] == true) return SendClientMessage(playerid, STEALTH_YELLOW, "That object is already deleted!");
 
-    GTAObjectDeleted[index] = true;
+	GTAObjectDeleted[index] = true;
 	
 	AO_RESULT = db_query(AO_DB, sprintf("SELECT * FROM `buildings` WHERE `ID` = %i", index));
 	//db_get_field(AO_RESULT, 3, name, sizeof name[]);
@@ -212,7 +212,7 @@ YCMD:rremobject(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 	
 	new model, Float:range;
 	if(sscanf(arg, "if", model, range))
@@ -224,7 +224,7 @@ YCMD:rremobject(playerid, arg[], help)
 
 	if(model < 0 || model >= 19999)
 	{
-	    SendClientMessage(playerid, STEALTH_YELLOW, "Model must be between 0 and 19999");
+		SendClientMessage(playerid, STEALTH_YELLOW, "Model must be between 0 and 19999");
 		return 1;
 	}
 	
@@ -281,7 +281,7 @@ YCMD:swapbuilding(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 
 
 	if(isnull(arg)) return SendClientMessage(playerid, STEALTH_YELLOW, "You must provide an index to swap!");
@@ -290,7 +290,7 @@ YCMD:swapbuilding(playerid, arg[], help)
 	if(index < 0 || index >= SEARCH_DATA_SIZE)
 	{
 		format(line, sizeof(line), "Index must be between 0 and %i", SEARCH_DATA_SIZE-1);
-	    return SendClientMessage(playerid, STEALTH_YELLOW, line);
+		return SendClientMessage(playerid, STEALTH_YELLOW, line);
 	}
 
 	if(GTAObjectSwapped[index] == true) return SendClientMessage(playerid, STEALTH_YELLOW, "That object is already swapped!");
@@ -304,13 +304,13 @@ YCMD:swapbuilding(playerid, arg[], help)
 		AddRemoveBuilding(model, db_get_field_float(AO_RESULT, 4), db_get_field_float(AO_RESULT, 5), db_get_field_float(AO_RESULT, 6), 0.25, true);
 		if(db_get_field_int(AO_RESULT, 2) != INVALID_OBJECT_ID)
 			AddRemoveBuilding(db_get_field_int(AO_RESULT, 2), db_get_field_float(AO_RESULT, 4), db_get_field_float(AO_RESULT, 5), db_get_field_float(AO_RESULT, 6), 0.25, true);
-	    
+		
 		GTAObjectDeleted[index] = true;
 	}
 
 	// Swap object
 	UpdateObject3DText(AddDynamicObject(model, db_get_field_float(AO_RESULT, 4), db_get_field_float(AO_RESULT, 5), db_get_field_float(AO_RESULT, 6), db_get_field_float(AO_RESULT, 7), db_get_field_float(AO_RESULT, 8), db_get_field_float(AO_RESULT, 9)), true);
-    GTAObjectSwapped[index] = true;
+	GTAObjectSwapped[index] = true;
 
 	UpdateDynamic3DTextLabelText(GTAObjectText[index],
 		(GTAObjectDeleted[index] ? (GTAObjectSwapped[index] ? 0x5A34FFFF : 0xFF345AFF) : 0xFF69B4FF),
@@ -329,7 +329,7 @@ YCMD:clonebuilding(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 
 	EditCheck(playerid);
 
@@ -341,7 +341,7 @@ YCMD:clonebuilding(playerid, arg[], help)
 	if(index < 0 || index >= SEARCH_DATA_SIZE)
 	{
 		format(line, sizeof(line), "Index must be between 0 and %i", SEARCH_DATA_SIZE-1);
-	    return SendClientMessage(playerid, STEALTH_YELLOW, line);
+		return SendClientMessage(playerid, STEALTH_YELLOW, line);
 	}
 	
 	AO_RESULT = db_query(AO_DB, sprintf("SELECT * FROM `buildings` WHERE `ID` = %i", index));

@@ -1,12 +1,12 @@
 /*
 		A
-            ....
-            ,DDDDDD      ..DDDDDDD=...        . .......
-            DDDDDDD     .DDDDDDDDDDDD.        .~DDDD8:.
-         ..DD.DDDDD     DDDDDDZ.7DDDDD8.   .7DDDDDDDDDDD.
-    .. ..,DD..DDDDD....=DDDDDD...DDDDDD....DDDDDDDD.DDDDD..
-      =.DDDD...DDD,D...DDDDDDD...DDDDDD...8DDDD$..8.ODDDD  .
-    ...Z.~8I..,D:.I.. .DDDDDD8...DDDDDD...DDDD...D,..8DDD8D.
+			....
+			,DDDDDD      ..DDDDDDD=...        . .......
+			DDDDDDD     .DDDDDDDDDDDD.        .~DDDD8:.
+		 ..DD.DDDDD     DDDDDDZ.7DDDDD8.   .7DDDDDDDDDDD.
+	.. ..,DD..DDDDD....=DDDDDD...DDDDDD....DDDDDDDD.DDDDD..
+	  =.DDDD...DDD,D...DDDDDDD...DDDDDD...8DDDD$..8.ODDDD  .
+	...Z.~8I..,D:.I.. .DDDDDD8...DDDDDD...DDDD...D,..8DDD8D.
   ...+DD...D. D...D..     .....D8DDDDDD..DDDD..O,D  .DDD.+..
   .,DDDDD..=. =..D+8O     .=DDDDDDDDDD...D8DD. .O$  .D...D..
 ..DDDD7..~+.~$.8...DD   .:D.ODDDDDD8..  .DDDD8...8..D,...D~.
@@ -16,8 +16,8 @@ DDDDDDDDDDID~DDDDDDDD.O.,D8..$..?...     DD8Z...8.Z:,?...7I.
 .DDDDDDDDDDDDDDDDDDDD+ZD7.....+Z,+DDDDD+..DDDDD7$D$8?DDDD:..
 .DDDDDDDD8ZZZ8DDDDD8D.8.....+Z..=DDDDDD...DDDDDDDDDDDDDDD...
  ...        .DDDDDD  ..DDDDI?8DDDDDDDDD....DDDDDDDDDDDDZ.
-            .8DDDDD....DD8DO$Z??$$ODDDD.   .?DDDDDDDDD.
-            ........................  ..   ............
+			.8DDDDD....DD8DO$Z??$$ODDDD.   .?DDDDDDDDD.
+			........................  ..   ............
 										Production
 
  _______        _                     _____ _             _ _
@@ -162,34 +162,34 @@ Change Log:
 		- Can now copy/paste texture and text from one object to another
 	v1.3 - Complete GUI implementation that calls all commands
 		- Groups added you can edit group selections
-	    - Texture editor texture objects with a GUI
-	    - You can make your own texture themes
-	    - Prefabs can be saved/loaded
-	    - Texture themes can now be created "default_theme" is always loaded when a player connects
-	    - You can make your own command based binds and execute them
+		- Texture editor texture objects with a GUI
+		- You can make your own texture themes
+		- Prefabs can be saved/loaded
+		- Texture themes can now be created "default_theme" is always loaded when a player connects
+		- You can make your own command based binds and execute them
 	v1.4 - New command /lsel gives a new advanced object selection method
-	    - Fix a spelling mistake in the gui
-	    - Added /oprop command to directly edit all object properties
-	    - Map exporting now has a option for CreateDynamicObject() instead of CreateDynamicObjectEx()
+		- Fix a spelling mistake in the gui
+		- Added /oprop command to directly edit all object properties
+		- Map exporting now has a option for CreateDynamicObject() instead of CreateDynamicObjectEx()
 	v1.5 - Greatly enhanced /osearch command
 	v1.5a - Added a feature to clone in edit object mode simply press 'walk' to clone the object
-	    - You can press enter/exit vehicle to save a objects position in edit object mode
+		- You can press enter/exit vehicle to save a objects position in edit object mode
 	v1.5b - Added /obmedit command an object metric tool
 	v1.5c - Improved object metric tool to include rotation translations
-	    - Added degree option to object metric tool
+		- Added degree option to object metric tool
 	v1.5d - Minor update to object metric tool to set object orientation for rotation translation
 	v1.5e - Important fix
 	v1.6 - Editable vehicles
-	    - A few bug fixes with texturing and overlapping key presses with other systems
+		- A few bug fixes with texturing and overlapping key presses with other systems
 	v1.6a - New command /tsearch search for textures useful for finding the index of a known texture
 	v1.6b - Added feature to export map including cars to filterscript
-	    - New command /avmirror mirror objects on a car
-	    - Completely rebuild the all objects array some where missing it should be complete now
+		- New command /avmirror mirror objects on a car
+		- Completely rebuild the all objects array some where missing it should be complete now
 	v1.6c - Text length is now 128 characters and will accept \n for new line
-	    - Fixed a issue with folders now showing on github
+		- Fixed a issue with folders now showing on github
 	v1.6d - Fixed an issue with exporting objects if an object had text the parameters were out of order
-	    - Any object should be able to be created now there even LOD
-	    - Re-organized the project slightly
+		- Any object should be able to be created now there even LOD
+		- Re-organized the project slightly
 	v1.7 - /undo command (Note you can't undo edits on vehicles currently)
 */
 
@@ -352,7 +352,7 @@ enum OBJECTINFO
 	oGroup,                                     // Object group
 	oModel,                                     // Object Model
 	Text3D:oTextID,                             // Object 3d text label
-    oNote[64],                                  // Object note
+	oNote[64],                                  // Object note
 	Float:oX,                                   // Position Z
 	Float:oY,                                   // Position Z
 	Float:oZ,                                   // Position Z
@@ -371,7 +371,7 @@ enum OBJECTINFO
 	oTextFontSize, 							 	// Font text size
 	oObjectText[MAX_TEXT_LENGTH],              	// Font text
 	oAttachedVehicle,                           // Vehicle object is attached to
-    Float:oDD                                   // Draw distance
+	Float:oDD                                   // Draw distance
 }
 
 // Copy object material / color
@@ -402,27 +402,27 @@ new ObjectData[MAX_TEXTURE_OBJECTS][OBJECTINFO];
 // 3D Text Options
 enum TEXTOPTIONS
 {
-    bool:tShowText,
-    bool:tShowNote,
-    bool:tShowModel,
-    bool:tShowGroup,
-    bool:tShowGrouped,
+	bool:tShowText,
+	bool:tShowNote,
+	bool:tShowModel,
+	bool:tShowGroup,
+	bool:tShowGrouped,
 	bool:tAlwaysShowNew
 }
 new TextOption[TEXTOPTIONS] = {
-    true, false, false, true, true, false
+	true, false, false, true, true, false
 };
 
 // Map Options
 enum MAPOPTIONS
 {
-    mVersion,
-    mAuthor[MAX_PLAYER_NAME],
-    mLastEdit,
-    mSpawn[XYZ],
-    
-    mInterior,
-    mVirtualWorld
+	mVersion,
+	mAuthor[MAX_PLAYER_NAME],
+	mLastEdit,
+	mSpawn[XYZ],
+	
+	mInterior,
+	mVirtualWorld
 }
 new MapSetting[MAPOPTIONS];
 
@@ -586,11 +586,11 @@ new Iterator:Restriction[51]<MAX_PLAYERS>, bool:gRestricted[51] = {false, ...};
 
 // playerid, object index (must be 0 or more than 50, if not it must be in a group with no restrictions, if not then the restriction must allow this player)
 #define CanSelectObject(%0,%1) \
-    (!(0 <= %1 < MAX_TEXTURE_OBJECTS) || (!gRestricted[ObjectData[%1][oGroup]] || !(0 < ObjectData[%1][oGroup] <= 50) || !Iter_Count(Restriction[ObjectData[%1][oGroup]]) || Iter_Contains(Restriction[ObjectData[%1][oGroup]], playerid) || IsPlayerAdmin(playerid)))
+	(!(0 <= %1 < MAX_TEXTURE_OBJECTS) || (!gRestricted[ObjectData[%1][oGroup]] || !(0 < ObjectData[%1][oGroup] <= 50) || !Iter_Count(Restriction[ObjectData[%1][oGroup]]) || Iter_Contains(Restriction[ObjectData[%1][oGroup]], playerid) || IsPlayerAdmin(playerid)))
 // playerid, group index (it must be a group with no restrictions, if not then the restriction must allow this player)
 #define CanSelectGroup(%0,%1) \
-    (!(0 < %1 <= 50) || (!gRestricted[%1] || !Iter_Count(Restriction[%1]) || Iter_Contains(Restriction[%1], playerid) || IsPlayerAdmin(playerid)))
-    //not in this ? then safely test these
+	(!(0 < %1 <= 50) || (!gRestricted[%1] || !Iter_Count(Restriction[%1]) || Iter_Contains(Restriction[%1], playerid) || IsPlayerAdmin(playerid)))
+	//not in this ? then safely test these
 // ===== Not a very good modular technique... =====
 
 // Debug/testing commands (teleporting to other players, setting the weather, etc)

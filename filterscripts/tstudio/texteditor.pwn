@@ -43,11 +43,11 @@ YCMD:text(playerid, arg[], help)
 		return 1;
 	}
 
-    NoEditingMode(playerid);
+	NoEditingMode(playerid);
 
-    MapOpenCheck();
-    
-    EditCheck(playerid);
+	MapOpenCheck();
+	
+	EditCheck(playerid);
 
 	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 	SendClientMessage(playerid, STEALTH_GREEN, "Started Editing Text");
@@ -60,10 +60,10 @@ YCMD:text(playerid, arg[], help)
 	SetEditMode(playerid, EDIT_MODE_TEXT);
 	
 	// Update the text editor
-    UpdateTextEditor(playerid);
+	UpdateTextEditor(playerid);
 
 	// Show the text editor
-    ShowTextEditorDraw(playerid);
+	ShowTextEditorDraw(playerid);
 
 	// Set the current textdraw
 	SetCurrTextDraw(playerid, TEXTDRAW_TEXTEDIT);
@@ -81,7 +81,7 @@ UpdateTextEditor(playerid)
 
 	new tmp[64];
 
-   	// Update active status
+	// Update active status
 	if(GetObjectUseText(index)) PlayerTextDrawSetString(playerid, Click_ToggleText[playerid], "On");
 	else PlayerTextDrawSetString(playerid, Click_ToggleText[playerid], "Off");
 
@@ -123,13 +123,13 @@ hook OnPlayerClickTextDraw(playerid, Text:clickedid)
 	if (GetCurrTextDraw(playerid) == TEXTDRAW_TEXTEDIT && clickedid == Text:INVALID_TEXT_DRAW)
 	{
 		// Textdraws are now closed
-	    ToggleTextDrawOpen(playerid, false);
+		ToggleTextDrawOpen(playerid, false);
 
-	    // Player is not in text editing mode anymore
-    	SetCurrTextDraw(playerid, TEXTDRAW_NONE);
+		// Player is not in text editing mode anymore
+		SetCurrTextDraw(playerid, TEXTDRAW_NONE);
 
 		// Hide the text editor
-	    HideTextEditorDraw(playerid);
+		HideTextEditorDraw(playerid);
 
 		// Cancel textdraw select
 		CancelSelectTextDraw(playerid);
@@ -138,7 +138,7 @@ hook OnPlayerClickTextDraw(playerid, Text:clickedid)
 		EditingMode[playerid] = false;
 		SetEditMode(playerid, EDIT_MODE_NONE);
 				
-	    return Y_HOOKS_BREAK_RETURN_1;
+		return Y_HOOKS_BREAK_RETURN_1;
 	}
 	return Y_HOOKS_CONTINUE_RETURN_0;
 }
@@ -155,12 +155,12 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 	{
 		if(GetObjectUseText(index))
 		{
-            SetObjectUseText(index, false);
+			SetObjectUseText(index, false);
 			PlayerTextDrawSetString(playerid, Click_ToggleText[playerid], "Off");
 		}
 		else
 		{
-            SetObjectUseText(index, true);
+			SetObjectUseText(index, true);
 			PlayerTextDrawSetString(playerid, Click_ToggleText[playerid], "On");
 		}
 
@@ -169,9 +169,9 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 		// Need to update materials when turning off
 		UpdateMaterial(index);
 		
-        UpdateObjectText(index);
+		UpdateObjectText(index);
 
-       	if(ObjectData[index][oAttachedVehicle] > -1) UpdateAttachedVehicleObject(ObjectData[index][oAttachedVehicle], index, VEHICLE_REATTACH_UPDATE);
+		if(ObjectData[index][oAttachedVehicle] > -1) UpdateAttachedVehicleObject(ObjectData[index][oAttachedVehicle], index, VEHICLE_REATTACH_UPDATE);
 
 		return 1;
 	}
@@ -191,29 +191,29 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 						SetObjectObjectText(index, text);
 						PlayerTextDrawSetString(playerid, Click_SetText[playerid], "Click To Edit");
 
-                        sqlite_ObjObjectText(index);
+						sqlite_ObjObjectText(index);
 
 						UpdateObjectText(index);
 
-			        	if(ObjectData[index][oAttachedVehicle] > -1) UpdateAttachedVehicleObject(ObjectData[index][oAttachedVehicle], index, VEHICLE_REATTACH_UPDATE);
+						if(ObjectData[index][oAttachedVehicle] > -1) UpdateAttachedVehicleObject(ObjectData[index][oAttachedVehicle], index, VEHICLE_REATTACH_UPDATE);
 					}
 					else
 					{
-					    SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
-					    SendClientMessage(playerid, STEALTH_YELLOW, "Text length is too long");
+						SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+						SendClientMessage(playerid, STEALTH_YELLOW, "Text length is too long");
 					}
 				}
 				else
 				{
-				    SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
-				    SendClientMessage(playerid, STEALTH_YELLOW, "Text must contain at least 1 character.");
+					SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+					SendClientMessage(playerid, STEALTH_YELLOW, "Text must contain at least 1 character.");
 				}
-                return 1;
+				return 1;
 			}
 		}
 		new tmptext[MAX_TEXT_LENGTH];
 		strcat(tmptext, ObjectData[index][oObjectText], MAX_TEXT_LENGTH);
-	    FixText(tmptext);
+		FixText(tmptext);
 
 
 		Dialog_ShowCallback(playerid, using inline Response, DIALOG_STYLE_INPUT, "Set Material Text", tmptext, "Ok", "Cancel");
@@ -229,15 +229,15 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 		
 		// Too high reset to 0
 		if(GetObjectFontFace(index) == sizeof(FontNames)) SetObjectFontFace(index, 0);
-        PlayerTextDrawSetString(playerid, Click_SetFont[playerid], FontNames[GetObjectFontFace(index)]);
+		PlayerTextDrawSetString(playerid, Click_SetFont[playerid], FontNames[GetObjectFontFace(index)]);
 
 		sqlite_ObjFontFace(index);
 		
 		UpdateObjectText(index);
 
-       	if(ObjectData[index][oAttachedVehicle] > -1) UpdateAttachedVehicleObject(ObjectData[index][oAttachedVehicle], index, VEHICLE_REATTACH_UPDATE);
+		if(ObjectData[index][oAttachedVehicle] > -1) UpdateAttachedVehicleObject(ObjectData[index][oAttachedVehicle], index, VEHICLE_REATTACH_UPDATE);
 		
-        return 1;
+		return 1;
 	}
 	
 	// Set font size
@@ -246,28 +246,28 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 		SetObjectFontSize(index, GetObjectFontSize(index) + 1);
 
 		if(GetObjectFontSize(index) == sizeof(FontSizeNames)) SetObjectFontSize(index, 0);
-        PlayerTextDrawSetString(playerid, Click_SetFontSize[playerid], FontSizeNames[GetObjectFontSize(index)]);
+		PlayerTextDrawSetString(playerid, Click_SetFontSize[playerid], FontSizeNames[GetObjectFontSize(index)]);
 
-        sqlite_ObjFontSize(index);
-        
-        UpdateObjectText(index);
+		sqlite_ObjFontSize(index);
+		
+		UpdateObjectText(index);
 
-       	if(ObjectData[index][oAttachedVehicle] > -1) UpdateAttachedVehicleObject(ObjectData[index][oAttachedVehicle], index, VEHICLE_REATTACH_UPDATE);
-        
+		if(ObjectData[index][oAttachedVehicle] > -1) UpdateAttachedVehicleObject(ObjectData[index][oAttachedVehicle], index, VEHICLE_REATTACH_UPDATE);
+		
 		return 1;
 	}
 	
 	// Toggle bold on off
-    else if(playertextid == Click_ToggleBold[playerid])
-    {
+	else if(playertextid == Click_ToggleBold[playerid])
+	{
 		if(GetObjectFontBold(index))
 		{
-            SetObjectFontBold(index, false);
+			SetObjectFontBold(index, false);
 			PlayerTextDrawSetString(playerid, Click_ToggleBold[playerid], "Off");
 		}
 		else
 		{
-            SetObjectFontBold(index, true);
+			SetObjectFontBold(index, true);
 			PlayerTextDrawSetString(playerid, Click_ToggleBold[playerid], "On");
 		}
 
@@ -275,13 +275,13 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 		
 		UpdateObjectText(index);
 
-       	if(ObjectData[index][oAttachedVehicle] > -1) UpdateAttachedVehicleObject(ObjectData[index][oAttachedVehicle], index, VEHICLE_REATTACH_UPDATE);
-        
+		if(ObjectData[index][oAttachedVehicle] > -1) UpdateAttachedVehicleObject(ObjectData[index][oAttachedVehicle], index, VEHICLE_REATTACH_UPDATE);
+		
 		return 1;
-    }
-    
-    	// Set alignment
-    else if(playertextid == Click_Alignment[playerid])
+	}
+	
+		// Set alignment
+	else if(playertextid == Click_Alignment[playerid])
 	{
 		if(GetObjectAlignment(index) < 2) SetObjectAlignment(index, GetObjectAlignment(index) + 1);
 		else SetObjectAlignment(index, 0);
@@ -290,40 +290,40 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 		else if(GetObjectAlignment(index) == 1) PlayerTextDrawSetString(playerid, Click_Alignment[playerid], "Center");
 		else if(GetObjectAlignment(index) == 2) PlayerTextDrawSetString(playerid, Click_Alignment[playerid], "Right");
 
-        sqlite_ObjAlignment(index);
-        
-        UpdateObjectText(index);
+		sqlite_ObjAlignment(index);
+		
+		UpdateObjectText(index);
 
-       	if(ObjectData[index][oAttachedVehicle] > -1) UpdateAttachedVehicleObject(ObjectData[index][oAttachedVehicle], index, VEHICLE_REATTACH_UPDATE);
-        
+		if(ObjectData[index][oAttachedVehicle] > -1) UpdateAttachedVehicleObject(ObjectData[index][oAttachedVehicle], index, VEHICLE_REATTACH_UPDATE);
+		
 		return 1;
 	}
 	
 	// Set the font text size
- 	else if(playertextid == Click_FontTextSize[playerid])
+	else if(playertextid == Click_FontTextSize[playerid])
 	{
 		inline Response(pid, dialogid, response, listitem, string:text[])
 		{
 			#pragma unused listitem, dialogid, pid
 			if(response)
 			{
-			    new size;
+				new size;
 				size = strval(text);
 				if(size > 0 && size < 200)
 				{
 					SetObjectTextFontSize(index, size);
-                    PlayerTextDrawSetString(playerid, Click_FontTextSize[playerid], text);
-                    
+					PlayerTextDrawSetString(playerid, Click_FontTextSize[playerid], text);
+					
 					sqlite_ObjFontTextSize(index);
 					
 					UpdateObjectText(index);
 
-		        	if(ObjectData[index][oAttachedVehicle] > -1) UpdateAttachedVehicleObject(ObjectData[index][oAttachedVehicle], index, VEHICLE_REATTACH_UPDATE);
+					if(ObjectData[index][oAttachedVehicle] > -1) UpdateAttachedVehicleObject(ObjectData[index][oAttachedVehicle], index, VEHICLE_REATTACH_UPDATE);
 				}
 				else
 				{
-				    SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
-				    SendClientMessage(playerid, STEALTH_YELLOW, "Invalid text font size (0 - 200).");
+					SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+					SendClientMessage(playerid, STEALTH_YELLOW, "Invalid text font size (0 - 200).");
 				}
 			}
 		}
@@ -342,34 +342,34 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 				new hexcolor;
 				if(sscanf(text, "h", hexcolor))
 				{
-				    SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
-				    SendClientMessage(playerid, STEALTH_YELLOW, "Invalid hex color.");
+					SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+					SendClientMessage(playerid, STEALTH_YELLOW, "Invalid hex color.");
 				}
 				else
 				{
-				    // Set the font color
-				    SetFontColor(index, hexcolor);
-					    
+					// Set the font color
+					SetFontColor(index, hexcolor);
+						
 					// Save the font color
 					sqlite_ObjFontColor(index);
 					
 					UpdateObjectText(index);
 
-		        	if(ObjectData[index][oAttachedVehicle] > -1) UpdateAttachedVehicleObject(ObjectData[index][oAttachedVehicle], index, VEHICLE_REATTACH_UPDATE);
+					if(ObjectData[index][oAttachedVehicle] > -1) UpdateAttachedVehicleObject(ObjectData[index][oAttachedVehicle], index, VEHICLE_REATTACH_UPDATE);
 						
-				    new tmp[12];
+					new tmp[12];
 					valstr(tmp, hexcolor);
 					PlayerTextDrawSetString(playerid, Click_FontColor[playerid], tmp);
 				}
 			}
 		}
-        Dialog_ShowCallback(playerid, using inline Response, DIALOG_STYLE_INPUT, "Set Font Color", "Enter a hex value for the font color (ARGB) ", "Ok", "Cancel");
+		Dialog_ShowCallback(playerid, using inline Response, DIALOG_STYLE_INPUT, "Set Font Color", "Enter a hex value for the font color (ARGB) ", "Ok", "Cancel");
 		return 1;
 	}
 
 	// Set Back color
-    else if(playertextid == Click_BackColor[playerid])
-    {
+	else if(playertextid == Click_BackColor[playerid])
+	{
 		inline Response(pid, dialogid, response, listitem, string:text[])
 		{
 			#pragma unused listitem, dialogid, pid
@@ -378,30 +378,30 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 				new hexcolor;
 				if(sscanf(text, "h", hexcolor))
 				{
-				    SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
-				    SendClientMessage(playerid, STEALTH_YELLOW, "Invalid hex color.");
+					SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+					SendClientMessage(playerid, STEALTH_YELLOW, "Invalid hex color.");
 				}
 				else
 				{
-				    // Set the font color
-				    SetBackColor(index, hexcolor);
+					// Set the font color
+					SetBackColor(index, hexcolor);
 
 					// Save the font color
 					sqlite_ObjBackColor(index);
 
 					UpdateObjectText(index);
 
-		        	if(ObjectData[index][oAttachedVehicle] > -1) UpdateAttachedVehicleObject(ObjectData[index][oAttachedVehicle], index, VEHICLE_REATTACH_UPDATE);
+					if(ObjectData[index][oAttachedVehicle] > -1) UpdateAttachedVehicleObject(ObjectData[index][oAttachedVehicle], index, VEHICLE_REATTACH_UPDATE);
 
-				    new tmp[12];
+					new tmp[12];
 					valstr(tmp, hexcolor);
 					PlayerTextDrawSetString(playerid, Click_BackColor[playerid], tmp);
 				}
 			}
 		}
-        Dialog_ShowCallback(playerid, using inline Response, DIALOG_STYLE_INPUT, "Set Back Color", "Enter a hex value for the font color (ARGB) ", "Ok", "Cancel");
+		Dialog_ShowCallback(playerid, using inline Response, DIALOG_STYLE_INPUT, "Set Back Color", "Enter a hex value for the font color (ARGB) ", "Ok", "Cancel");
 		return 1;
-    }
+	}
 
 	return 0;
 }
@@ -553,7 +553,7 @@ hook OnFilterScriptInit()
 
 	foreach(new i : Player)
 	{
-	    CreatePlayerTextDraws(i);
+		CreatePlayerTextDraws(i);
 	
 	}
 
@@ -591,7 +591,7 @@ hook OnFilterScriptExit()
 hook OnPlayerConnect(playerid)
 {
 	CreatePlayerTextDraws(playerid);
-    TextEditing[playerid] = false;
+	TextEditing[playerid] = false;
 
 	return Y_HOOKS_CONTINUE_RETURN_1;
 }

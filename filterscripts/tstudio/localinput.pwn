@@ -150,7 +150,7 @@ hook OnPlayerDisconnect(playerid, reason)
 	if(editorid == playerid)
 		editorid = INVALID_PLAYER_ID;
 		
-    return Y_HOOKS_CONTINUE_RETURN_1;
+	return Y_HOOKS_CONTINUE_RETURN_1;
 }
 
 public OnEditorUpdate()

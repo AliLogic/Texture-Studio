@@ -20,9 +20,9 @@ YCMD:gs(playerid, arg[], help)
 {
 	new Float:x, Float:y, Float:z, line[128];
 	GetPlayerPos(playerid, x, y, z);
-    CalcSlopeAtPoint(x, y, x, y);
+	CalcSlopeAtPoint(x, y, x, y);
 	format(line, sizeof(line), "Slope X:%3.4f | Slope Y:%3.4f", x, y);
-    SendClientMessage(playerid, -1, line);
+	SendClientMessage(playerid, -1, line);
 	return 1;
 }*/
 
@@ -47,15 +47,15 @@ YCMD:prefabsets(playerid, arg[], help)
 		format(mapname, sizeof(mapname), "tstudio/PreFabs/%s.db", arg);
 		if(fexist(mapname))
 		{
-		    PrefabDB = db_open_persistent(mapname);
-		    sqlite_LoadPrefab(playerid);
-		    db_free_persistent(PrefabDB);
+			PrefabDB = db_open_persistent(mapname);
+			sqlite_LoadPrefab(playerid);
+			db_free_persistent(PrefabDB);
 
 			new Float:x, Float:y, Float:z;
 			GetPlayerPos(playerid, x, y, z);
 			//CalcSlopeAtPoint(x, y, GroupSlopeRX[playerid], GroupSlopeRY[playerid]);
 			CA_RayCastLineAngle(x, y, 1200.0, x, y, -100.0, z, z, z, GroupSlopeRX[playerid], GroupSlopeRY[playerid], z);
-   			GroupRotate(playerid, GroupSlopeRX[playerid], GroupSlopeRY[playerid], 0.0);
+			GroupRotate(playerid, GroupSlopeRX[playerid], GroupSlopeRY[playerid], 0.0);
 			
 			SendClientMessage(playerid, STEALTH_GREEN, "Prefab loaded and set to your group selection");
 		}
@@ -75,7 +75,7 @@ YCMD:gsets(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 	new time = GetTickCount();
 
 	// We need to get the map center as the rotation node
@@ -86,13 +86,13 @@ YCMD:gsets(playerid, arg[], help)
 		new bool:hasgroup;
 		foreach(new i : Objects)
 		{
-		    if(GroupedObjects[playerid][i])
-		    {
-			    gCenterX = PivotPoint[playerid][xPos];
-			    gCenterY = PivotPoint[playerid][yPos];
-			    gCenterZ = PivotPoint[playerid][zPos];
+			if(GroupedObjects[playerid][i])
+			{
+				gCenterX = PivotPoint[playerid][xPos];
+				gCenterY = PivotPoint[playerid][yPos];
+				gCenterZ = PivotPoint[playerid][zPos];
 				value = true;
-                hasgroup = true;
+				hasgroup = true;
 				break;
 			}
 		}
@@ -131,7 +131,7 @@ YCMD:gsets(playerid, arg[], help)
 		}
 		db_end_transaction(EditMap);
 
-   		// Update the Group GUI
+		// Update the Group GUI
 		UpdatePlayerGSelText(playerid);
 
 		SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
@@ -157,8 +157,8 @@ YCMD:editgroups(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
-    NoEditingMode(playerid);
+	MapOpenCheck();
+	NoEditingMode(playerid);
 
 	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 
@@ -189,9 +189,9 @@ YCMD:editgroups(playerid, arg[], help)
 		EditingMode[playerid] = true;
 		PivotReset[playerid] = true;
 		SetEditMode(playerid, EDIT_MODE_OBJECTGROUP);
-	    EditDynamicObject(playerid, PivotObject[playerid]);
+		EditDynamicObject(playerid, PivotObject[playerid]);
 
-	    SendClientMessage(playerid, STEALTH_GREEN, "Editing your group");
+		SendClientMessage(playerid, STEALTH_GREEN, "Editing your group");
 	}
 	else SendClientMessage(playerid, STEALTH_YELLOW, "You must have at least one object grouped");
 
@@ -208,11 +208,11 @@ YCMD:osets(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
-    EditCheck(playerid);
-    NoEditingMode(playerid);
+	MapOpenCheck();
+	EditCheck(playerid);
+	NoEditingMode(playerid);
 
-    SaveUndoInfo(CurrObject[playerid], UNDO_TYPE_EDIT);
+	SaveUndoInfo(CurrObject[playerid], UNDO_TYPE_EDIT);
 
 	new Float:x, Float:y, Float:z;
 	GetPlayerPos(playerid, x, y, z);
@@ -228,12 +228,12 @@ YCMD:osets(playerid, arg[], help)
 	}
 	else
 	{
-	    ObjectData[CurrObject[playerid]][oRX] += GroupSlopeRX[playerid];
-	    ObjectData[CurrObject[playerid]][oRY] += GroupSlopeRY[playerid];
-	    SetDynamicObjectRot(ObjectData[CurrObject[playerid]][oID], ObjectData[CurrObject[playerid]][oRX], ObjectData[CurrObject[playerid]][oRY], ObjectData[CurrObject[playerid]][oRZ]);
+		ObjectData[CurrObject[playerid]][oRX] += GroupSlopeRX[playerid];
+		ObjectData[CurrObject[playerid]][oRY] += GroupSlopeRY[playerid];
+		SetDynamicObjectRot(ObjectData[CurrObject[playerid]][oID], ObjectData[CurrObject[playerid]][oRX], ObjectData[CurrObject[playerid]][oRY], ObjectData[CurrObject[playerid]][oRZ]);
 	}
 
-    sqlite_UpdateObjectPos(CurrObject[playerid]);
+	sqlite_UpdateObjectPos(CurrObject[playerid]);
 
 	return 1;
 }
@@ -255,9 +255,9 @@ YCMD:pmaf(playerid, arg[], help)
 		format(mapname, sizeof(mapname), "tstudio/PreFabs/%s.db", mapname);
 		if(fexist(mapname))
 		{
-		    PrefabDB = db_open_persistent(mapname);
-		    sqlite_LoadPrefab(playerid, false);
-		    db_free_persistent(PrefabDB);
+			PrefabDB = db_open_persistent(mapname);
+			sqlite_LoadPrefab(playerid, false);
+			db_free_persistent(PrefabDB);
 
 			new Float:x, Float:y, Float:z, Float:rx, Float:ry;
 
@@ -266,10 +266,10 @@ YCMD:pmaf(playerid, arg[], help)
 			CalcSlopeAtPoint(x, y, rx, ry);
 
 			// Translate new rotation offsets
-   			GroupRotate(playerid, 0.0, 0.0, zrot);
+			GroupRotate(playerid, 0.0, 0.0, zrot);
 
 			// Translate new rotation to slope
-   			GroupRotate(playerid, rx, ry, 0.0);
+			GroupRotate(playerid, rx, ry, 0.0);
 
 			SendClientMessage(playerid, STEALTH_GREEN, "Prefab loaded and set to your group selection");
 		}
@@ -289,14 +289,14 @@ YCMD:cobjectsets(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 	NoEditingMode(playerid);
 
- 	new modelid, Float:RZAngle;
+	new modelid, Float:RZAngle;
 	if(sscanf(arg, "iF(0.0)", modelid, RZAngle))
 	{
-	    SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
-        SendClientMessage(playerid, STEALTH_YELLOW, "Usage: /csobject <modelid>");
+		SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+		SendClientMessage(playerid, STEALTH_YELLOW, "Usage: /csobject <modelid>");
 		return 1;
 	}
 
@@ -319,7 +319,7 @@ YCMD:cobjectsets(playerid, arg[], help)
 	if(CurrObject[playerid] != -1)
 	{
 		// Update the streamer for this player
-        Streamer_Update(playerid);
+		Streamer_Update(playerid);
 
 		SaveUndoInfo(CurrObject[playerid], UNDO_TYPE_CREATED);
 
@@ -396,27 +396,27 @@ ObjectRotateZ(Float:RX, Float:RY, Float:RZ, Float:rot_z, &Float:NewRX, &Float:Ne
 		Float:cosy,
 		Float:cosz;
 
-    FloatConvertValue(RX, RY, RZ, sinx, siny, sinz, cosx, cosy, cosz);
-    // Convert from one euler angle sequence (ZXY) to another and add the rotation
-    FloatConvertValue(asin(cosx * cosy), atan2(sinx, cosx * siny) + rot_z, atan2(cosy * cosz * sinx - siny * sinz, cosz * siny - cosy * sinx * -sinz),
+	FloatConvertValue(RX, RY, RZ, sinx, siny, sinz, cosx, cosy, cosz);
+	// Convert from one euler angle sequence (ZXY) to another and add the rotation
+	FloatConvertValue(asin(cosx * cosy), atan2(sinx, cosx * siny) + rot_z, atan2(cosy * cosz * sinx - siny * sinz, cosz * siny - cosy * sinx * -sinz),
 		sinx, siny, sinz, cosx, cosy, cosz);
 
-    // Convert back to the original euler angle sequence and apply the new rotation to the object
-    NewRX = asin(cosx * siny),
+	// Convert back to the original euler angle sequence and apply the new rotation to the object
+	NewRX = asin(cosx * siny),
 	NewRY = atan2(cosx * cosy, sinx),
 	NewRZ = atan2(cosz * sinx * siny - cosy * sinz, cosy * cosz + sinx * siny * sinz);
-    return 1;
+	return 1;
 }
 
 FloatConvertValue(Float:rot_x, Float:rot_y, Float:rot_z, &Float:sinx, &Float:siny, &Float:sinz, &Float:cosx, &Float:cosy, &Float:cosz)
 {
-    sinx = floatsin(rot_x, degrees);
-    siny = floatsin(rot_y, degrees);
-    sinz = floatsin(rot_z, degrees);
-    cosx = floatcos(rot_x, degrees);
-    cosy = floatcos(rot_y, degrees);
-    cosz = floatcos(rot_z, degrees);
-    return 1;
+	sinx = floatsin(rot_x, degrees);
+	siny = floatsin(rot_y, degrees);
+	sinz = floatsin(rot_z, degrees);
+	cosx = floatcos(rot_x, degrees);
+	cosy = floatcos(rot_y, degrees);
+	cosz = floatcos(rot_z, degrees);
+	return 1;
 }
 
 
@@ -436,8 +436,8 @@ YCMD:cpf(playerid, arg[], help)
 	// Create a load list
 	while(dir_list(dHandle, item, type))
 	{
-	 	if(type != FM_DIR)
-	    {
+		if(type != FM_DIR)
+		{
 			// We need to check extension
 			if(strlen(item) > 3)
 			{
@@ -542,7 +542,7 @@ ConvertMeditPrefab(tempmap[64])
 		ImportPrefabInsert,
 		sizeof(ImportPrefabInsert),
 		"INSERT INTO `Objects`",
-        "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+		"VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
 	);
 	
 	// Prepare data base for writing
@@ -613,32 +613,32 @@ ConvertMeditPrefab(tempmap[64])
 				while(done == false)
 				{
 					new tmptext[64];
-                    tmptext = strtok(templine,index);
-                    if(!strcmp(tmptext, "E\r\n")) done = true;
-                    else format(temp_Material_Object_Text[i], 64, "%s%s ",temp_Material_Object_Text[i], tmptext);
+					tmptext = strtok(templine,index);
+					if(!strcmp(tmptext, "E\r\n")) done = true;
+					else format(temp_Material_Object_Text[i], 64, "%s%s ",temp_Material_Object_Text[i], tmptext);
 				}
 			}
 			// Object read save object to new prefab format
 			stmt_bind_value(insertprefabimpstmt, 0, DB::TYPE_INT, tempobject[medit_modelid]);
 			stmt_bind_value(insertprefabimpstmt, 1, DB::TYPE_FLOAT, tempobject[pfox]);
 			stmt_bind_value(insertprefabimpstmt, 2, DB::TYPE_FLOAT, tempobject[pfoy]);
-		    stmt_bind_value(insertprefabimpstmt, 3, DB::TYPE_FLOAT, tempobject[pfoz]);
-		    stmt_bind_value(insertprefabimpstmt, 4, DB::TYPE_FLOAT, tempobject[pfrx]);
-		    stmt_bind_value(insertprefabimpstmt, 5, DB::TYPE_FLOAT, tempobject[pfry]);
-		    stmt_bind_value(insertprefabimpstmt, 6, DB::TYPE_FLOAT, tempobject[pfrz]);
-		    stmt_bind_value(insertprefabimpstmt, 7, DB::TYPE_ARRAY, tempobject[Material_Index], MAX_MATERIALS);
-		    stmt_bind_value(insertprefabimpstmt, 8, DB::TYPE_ARRAY, tempobject[Material_Color], MAX_MATERIALS);
-		    stmt_bind_value(insertprefabimpstmt, 9, DB::TYPE_INT, tempobject[usetext][0]);
-		    stmt_bind_value(insertprefabimpstmt, 10, DB::TYPE_INT, tempobject[Material_FontFace][0]);
-		    stmt_bind_value(insertprefabimpstmt, 11, DB::TYPE_INT, tempobject[Material_FontSize][0]);
-		    stmt_bind_value(insertprefabimpstmt, 12, DB::TYPE_INT, tempobject[Material_FontBold][0]);
-		    stmt_bind_value(insertprefabimpstmt, 13, DB::TYPE_INT, tempobject[Material_FontColor][0]);
-		 	stmt_bind_value(insertprefabimpstmt, 14, DB::TYPE_INT, tempobject[Material_BackColor][0]);
-		    stmt_bind_value(insertprefabimpstmt, 15, DB::TYPE_INT, tempobject[Material_Alignment][0]);
-		    stmt_bind_value(insertprefabimpstmt, 16, DB::TYPE_INT, tempobject[Material_TextFontSize][0]);
-		    stmt_bind_value(insertprefabimpstmt, 17, DB::TYPE_STRING, temp_Material_Object_Text[0], MAX_TEXT_LENGTH);
+			stmt_bind_value(insertprefabimpstmt, 3, DB::TYPE_FLOAT, tempobject[pfoz]);
+			stmt_bind_value(insertprefabimpstmt, 4, DB::TYPE_FLOAT, tempobject[pfrx]);
+			stmt_bind_value(insertprefabimpstmt, 5, DB::TYPE_FLOAT, tempobject[pfry]);
+			stmt_bind_value(insertprefabimpstmt, 6, DB::TYPE_FLOAT, tempobject[pfrz]);
+			stmt_bind_value(insertprefabimpstmt, 7, DB::TYPE_ARRAY, tempobject[Material_Index], MAX_MATERIALS);
+			stmt_bind_value(insertprefabimpstmt, 8, DB::TYPE_ARRAY, tempobject[Material_Color], MAX_MATERIALS);
+			stmt_bind_value(insertprefabimpstmt, 9, DB::TYPE_INT, tempobject[usetext][0]);
+			stmt_bind_value(insertprefabimpstmt, 10, DB::TYPE_INT, tempobject[Material_FontFace][0]);
+			stmt_bind_value(insertprefabimpstmt, 11, DB::TYPE_INT, tempobject[Material_FontSize][0]);
+			stmt_bind_value(insertprefabimpstmt, 12, DB::TYPE_INT, tempobject[Material_FontBold][0]);
+			stmt_bind_value(insertprefabimpstmt, 13, DB::TYPE_INT, tempobject[Material_FontColor][0]);
+			stmt_bind_value(insertprefabimpstmt, 14, DB::TYPE_INT, tempobject[Material_BackColor][0]);
+			stmt_bind_value(insertprefabimpstmt, 15, DB::TYPE_INT, tempobject[Material_Alignment][0]);
+			stmt_bind_value(insertprefabimpstmt, 16, DB::TYPE_INT, tempobject[Material_TextFontSize][0]);
+			stmt_bind_value(insertprefabimpstmt, 17, DB::TYPE_STRING, temp_Material_Object_Text[0], MAX_TEXT_LENGTH);
 
-            stmt_execute(insertprefabimpstmt);
+			stmt_execute(insertprefabimpstmt);
 		}
 
 	}
@@ -663,9 +663,9 @@ ConvertMeditPrefab(tempmap[64])
 
 			// Bind our reults
 			stmt_bind_value(insertprefabimpstmt, 0, DB::TYPE_INT, tempobject[medit_modelid]);
-		  	stmt_bind_value(insertprefabimpstmt, 1, DB::TYPE_FLOAT, tempobject[pfox]);
-		   	stmt_bind_value(insertprefabimpstmt, 2, DB::TYPE_FLOAT, tempobject[pfoy]);
-		   	stmt_bind_value(insertprefabimpstmt, 3, DB::TYPE_FLOAT, tempobject[pfoz]);
+			stmt_bind_value(insertprefabimpstmt, 1, DB::TYPE_FLOAT, tempobject[pfox]);
+			stmt_bind_value(insertprefabimpstmt, 2, DB::TYPE_FLOAT, tempobject[pfoy]);
+			stmt_bind_value(insertprefabimpstmt, 3, DB::TYPE_FLOAT, tempobject[pfoz]);
 			stmt_bind_value(insertprefabimpstmt, 4, DB::TYPE_FLOAT, tempobject[pfrx]);
 			stmt_bind_value(insertprefabimpstmt, 5, DB::TYPE_FLOAT, tempobject[pfry]);
 			stmt_bind_value(insertprefabimpstmt, 6, DB::TYPE_FLOAT, tempobject[pfrz]);
@@ -682,7 +682,7 @@ ConvertMeditPrefab(tempmap[64])
 			stmt_bind_value(insertprefabimpstmt, 17, DB::TYPE_STRING, "None", MAX_TEXT_LENGTH);
 
 
-            stmt_execute(insertprefabimpstmt);
+			stmt_execute(insertprefabimpstmt);
 		}
 	}
 
@@ -759,9 +759,9 @@ GetPrefabCenter(openmap[64], &Float:pfx, &Float:pfy, &Float:pfz)
 				while(done == false)
 				{
 					new tmptext[64];
-                    tmptext = strtok(templine,index);
-                    if(!strcmp(tmptext, "E\r\n")) done = true;
-                    else format(temp_Material_Object_Text[i], 64, "%s%s ",temp_Material_Object_Text[i], tmptext);
+					tmptext = strtok(templine,index);
+					if(!strcmp(tmptext, "E\r\n")) done = true;
+					else format(temp_Material_Object_Text[i], 64, "%s%s ",temp_Material_Object_Text[i], tmptext);
 				}
 			}
 			// Calculate group center
