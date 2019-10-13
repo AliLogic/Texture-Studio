@@ -5,7 +5,7 @@
 
 #define MANGLE
 
-#include <YSI_Coding\y_iterate>
+#include <YSI_Coding\y_hooks>
 hook OnFilterScriptInit()
 {
 	CA_Init();
