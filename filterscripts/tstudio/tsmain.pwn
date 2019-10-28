@@ -2052,6 +2052,8 @@ LoadMap(playerid)
 	//no files were found.
 	if(fcount == 0)
 	{
+		list_delete(maps);
+
 		await_arr(response) ShowPlayerAsyncDialog(playerid, DIALOG_STYLE_MSGBOX, "Texture Studio", "There are no maps to load.\nCreate a new map?", "Ok", "Cancel");
 		if(response[E_DIALOG_RESPONSE_Response])
 		{
