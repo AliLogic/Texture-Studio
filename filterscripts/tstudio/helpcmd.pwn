@@ -73,6 +73,7 @@ new Commands[][COMMAND_INFO] = {
     {2, 0, "mtreset"},
     {2, 0, "mtcolor"},
     {2, 0, "mtcolorall"},
+    {2, 0, "mtsearch"},
     {2, 0, "tsearch"},
     {2, 0, "text"},
     
