@@ -27,14 +27,14 @@ public OnPlayerRequestClass(playerid, classid)
 
 public OnPlayerConnect(playerid)
 {
-	GameTextForPlayer(playerid,"~r~T~w~exture ~r~S~w~tudio ~b~1.9~g~d",5000,5);
+	GameTextForPlayer(playerid,"~r~T~w~exture ~r~S~w~tudio ~b~1.9~g~g",5000,5);
 	JustConnected[playerid] = true;
 	return 1;
 }
 
 public OnGameModeInit()
 {
-	SetGameModeText("TS 1.9d");
+	SetGameModeText("TS 1.9g");
 	UsePlayerPedAnims();
 
 	AddPlayerClass(265,1322.1832,1564.2081,10.8203,300.1425,0,0,0,0,-1,-1);
