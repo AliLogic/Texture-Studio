@@ -212,10 +212,10 @@ Change Log:
 // #define GUI_DEBUG
 
 // Compile the Angular Map Extension module
-//#define COMPILE_MANGLE
+#define COMPILE_MANGLE 0
 
 // Compile the local input module for advanced keys and mouse control
-//#define COMPILE_LOCAL_INPUT
+#define COMPILE_LOCAL_INPUT 1
 
 #if defined DEBUG
 	#define DB_DEBUG true
@@ -255,6 +255,10 @@ Change Log:
 
 #include <formatex>
 #include <strlib>
+
+#if (COMPILE_MANGLE || COMPILE_LOCAL_INPUT)
+	#include "tstudio\colandreas.pwn"
+#endif
 
 #define PP_SYNTAX_AWAIT
 #include <PawnPlus>
@@ -316,18 +320,18 @@ forward OnDeleteGroup3DText(index);
 
 // Edit check makes sure the player is actually editing an object before doing certain commands
 #define EditCheck(%0); if(CurrObject[%0] == -1) { \
-	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________"); \
-	return SendClientMessage(playerid, STEALTH_YELLOW, "You need to select an object (/sel) to use this command"); }
+	SendClientMessage(%0, STEALTH_ORANGE, "______________________________________________"); \
+	return SendClientMessage(%0, STEALTH_YELLOW, "You need to select an object (/sel) to use this command"); }
 
 // Don't let player use command if they are editing an object
 #define NoEditingMode(%0); if(EditingMode[%0]) { \
-	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________"); \
-	return SendClientMessage(playerid, STEALTH_YELLOW, "You need to finish editing your object before using this command"); }
+	SendClientMessage(%0, STEALTH_ORANGE, "______________________________________________"); \
+	return SendClientMessage(%0, STEALTH_YELLOW, "You need to finish editing your object before using this command"); }
 
 // Checks if a map is open
-#define MapOpenCheck(); if(!MapOpen) { \
-	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________"); \
-	return SendClientMessage(playerid, STEALTH_YELLOW, "There is no map currently open"); }
+#define MapOpenCheck(%0); if(!MapOpen) { \
+	SendClientMessage(%0, STEALTH_ORANGE, "______________________________________________"); \
+	return SendClientMessage(%0, STEALTH_YELLOW, "There is no map currently open"); }
 
 // Removebuilding information enum
 enum REMOVEINFO
@@ -619,7 +623,7 @@ new Iterator:Restriction[51]<MAX_PLAYERS>, bool:gRestricted[51] = {false, ...};
 #include "tstudio\gtaobjects.pwn"
 
 // Local input module
-#if defined COMPILE_LOCAL_INPUT
+#if COMPILE_LOCAL_INPUT == 1
 	#include "tstudio\localinput.pwn"
 #endif
 
@@ -628,7 +632,7 @@ new Iterator:Restriction[51]<MAX_PLAYERS>, bool:gRestricted[51] = {false, ...};
 #include "tstudio\vehicles.pwn"
 
 // Special includes
-#if defined COMPILE_MANGLE
+#if COMPILE_MANGLE == 1
 	#include "tstudio\mangle.pwn"
 #endif
 

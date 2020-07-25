@@ -305,7 +305,7 @@ GroupUpdate(index)
 	return 1;
 }
 
-#if defined COMPILE_MANGLE
+#if COMPILE_MANGLE == 1
 GroupRotate(playerid, Float:rx, Float:ry, Float:rz, update = true)
 {
 	new Float:gCenterX, Float:gCenterY, Float:gCenterZ;
@@ -339,7 +339,7 @@ YCMD:ginfront(playerid, arg[], help)
 		SendClientMessage(playerid, STEALTH_GREEN, "Move all grouped objects in front of the player.");
 		return 1;
 	}
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 	new Float:radius;
 	if(GetGroupRadius(playerid, radius))
 	{
@@ -466,7 +466,7 @@ YCMD:setgroup(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 	NoEditingMode(playerid);
 
 	new groupid = strval(arg);
@@ -509,7 +509,7 @@ YCMD:selectgroup(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 	NoEditingMode(playerid);
 
 	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
@@ -554,7 +554,7 @@ YCMD:gselmodel(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 	NoEditingMode(playerid);
 
 	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
@@ -615,7 +615,7 @@ YCMD:editgroup(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 	NoEditingMode(playerid);
 
 	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
@@ -662,7 +662,7 @@ YCMD:gmtset(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	EditCheck(playerid);
 
@@ -714,7 +714,7 @@ YCMD:gmtcolor(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	EditCheck(playerid);
 
@@ -803,7 +803,7 @@ YCMD:gsel(playerid, arg[], help)
 
 	NoEditingMode(playerid);
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 
@@ -827,7 +827,7 @@ YCMD:gadd(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 	if(isnull(arg)) return SendClientMessage(playerid, STEALTH_YELLOW, "You must supply an object index to group");
 	
@@ -895,7 +895,7 @@ YCMD:grem(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 	if(isnull(arg)) return SendClientMessage(playerid, STEALTH_YELLOW, "You must supply an object index to group");
 	
@@ -961,7 +961,7 @@ YCMD:gclear(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 	ClearGroup(playerid);
 	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 	SendClientMessage(playerid, STEALTH_GREEN, "Your group selection has been cleared");
@@ -983,7 +983,7 @@ YCMD:gclone(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 
@@ -1038,7 +1038,7 @@ YCMD:gdelete(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 
@@ -1080,7 +1080,7 @@ YCMD:gall(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 
@@ -1119,7 +1119,7 @@ YCMD:ginvert(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 //	NoEditingMode(playerid);
 //	EditCheck(playerid);
 	
@@ -1208,7 +1208,7 @@ YCMD:gox(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	new Float:dist;
 	new time = GetTickCount();
@@ -1250,7 +1250,7 @@ YCMD:goy(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	new Float:dist;
 	new time = GetTickCount();
@@ -1294,7 +1294,7 @@ YCMD:goz(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	new Float:dist;
 	new time = GetTickCount();
@@ -1336,7 +1336,7 @@ YCMD:grx(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 	new time = GetTickCount();
 	new Float:Delta;
 	if(sscanf(arg, "f", Delta))
@@ -1418,7 +1418,7 @@ YCMD:gry(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 	new time = GetTickCount();
 	new Float:Delta;
 	if(sscanf(arg, "f", Delta))
@@ -1499,7 +1499,7 @@ YCMD:grz(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 	new time = GetTickCount();
 	new Float:Delta;
 	if(sscanf(arg, "f", Delta))
@@ -1579,7 +1579,7 @@ YCMD:gdd(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 	new time = GetTickCount();
 	new Float:dd;
 	sscanf(arg, "F(300.0)", dd);
@@ -1617,7 +1617,7 @@ YCMD:gaexport(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	new count;
 	foreach(new i : Objects)
@@ -1910,7 +1910,7 @@ YCMD:gprefab(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	new count;
 	foreach(new i : Objects)
@@ -2125,7 +2125,7 @@ YCMD:prefab(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 	if(isnull(arg)) ShowPrefabs(playerid);
@@ -2155,7 +2155,7 @@ YCMD:0group(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	new Float:gCenterX, Float:gCenterY, Float:gCenterZ;
 	GetGroupCenter(playerid, gCenterX, gCenterY, gCenterZ);

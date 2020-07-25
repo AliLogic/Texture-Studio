@@ -50,11 +50,14 @@
 
 #define VK_SPACE	0x20
 
+
+
 native GetVirtualKeyState(key);
 native GetScreenSize(&Width, &Height);
 native GetMousePos(&X, &Y);
 
 #include <colandreas>
+#include <screentoworld>
 
 forward OnCursorPositionChange(OldX, OldY, NewX, NewY);
 forward OnVirtualKeyDown(key);
@@ -76,7 +79,7 @@ static
 	VirtualKeys[46][E_KEY_STRUCT];
 
 #include <YSI_Coding\y_hooks>
-hook OnFilterScriptInit()
+hook OnScriptInit()
 {
 	VirtualKeys[00][KEY_CODE] = VK_KEY_0;
 	VirtualKeys[01][KEY_CODE] = VK_KEY_1;
@@ -133,15 +136,18 @@ hook OnFilterScriptInit()
 
 hook OnPlayerConnect(playerid)
 {
-	if(editorid != INVALID_PLAYER_ID)
-		return 1;
+	//if(editorid != INVALID_PLAYER_ID)
+	//	return 1;
 		
 	new ip[24];
 	GetPlayerIp(playerid, ip, 24);
 	
-	if(!strcmp(ip, "127.0.0.1"))
+	if(!strcmp(ip, "127.0.0.1")) {
+		printf("[DEBUGGG] Editor connected.");
 		editorid = playerid;
+    }
 
+		printf("[DEBUGGG] testseted.");
 	return Y_HOOKS_CONTINUE_RETURN_1;
 }
 
@@ -197,7 +203,6 @@ public OnCursorPositionChange(OldX, OldY, NewX, NewY)
 	if(editorid == INVALID_PLAYER_ID)
 		return 1;
 	
-	//else
 	return 1;
 }
 
@@ -230,13 +235,18 @@ public OnVirtualKeyDown(key)
 	}
 	else switch(key) {
 		case VK_LBUTTON: {
+            //SendClientMessage(editorid, 0xFFFFFF, "[DEBUGGG] LMB Down");
 		}
 		case VK_MBUTTON: {
+            //SendClientMessage(editorid, 0xFFFFFF, "[DEBUGGG] MMB Down");
 		}
 		case VK_RBUTTON: {
+            //SendClientMessage(editorid, 0xFFFFFF, "[DEBUGGG] RMB Down");
+			
 			//Example Of Right Clicking On The Ground
 			/*new Float:cX, Float:cY, Float:cZ,
 				Float:wX, Float:wY, Float:wZ;
+				
 			if(ScreenToWorld(editorid, 320.0, 224.0, wX, wY, wZ)) {
 					
 				GetPlayerCameraPos(editorid, cX, cY, cZ);
@@ -248,6 +258,48 @@ public OnVirtualKeyDown(key)
 					SendClientMessage(editorid, -1, "What do you want to do here?");
 				}
 			}*/
+			
+			if(VirtualKeys[33][KEY_PRESSED]) {
+				new Float:wX, Float:wY, Float:wZ;
+				new i = CA_ScreenToWorld(editorid, 300.0, 320.0, 224.0, wX, wY, wZ);
+				
+				if(i != -1) {
+					MapOpenCheck(editorid);
+
+					EditCheck(editorid);
+
+					NoEditingMode(editorid);
+
+					SetCurrObject(editorid, CloneObject(CurrObject[editorid]));
+					
+					
+
+
+					ObjectData[CurrObject[editorid]][oX] = wX;
+					ObjectData[CurrObject[editorid]][oY] = wY;
+					ObjectData[CurrObject[editorid]][oZ] = wZ;
+
+					SetDynamicObjectPos(ObjectData[CurrObject[editorid]][oID], ObjectData[CurrObject[editorid]][oX], ObjectData[CurrObject[editorid]][oY], ObjectData[CurrObject[editorid]][oZ]);
+
+					UpdateObject3DText(CurrObject[editorid]);
+
+					sqlite_UpdateObjectPos(CurrObject[editorid]);
+					
+					Streamer_Update(editorid);
+
+					SaveUndoInfo(CurrObject[editorid], UNDO_TYPE_CREATED);
+					
+					
+					
+
+					SendClientMessage(editorid, STEALTH_ORANGE, "______________________________________________");
+					SendClientMessage(editorid, STEALTH_GREEN, "Cloned your selected object the new object is now your selection");
+				}
+				else {
+					SendClientMessage(editorid, STEALTH_ORANGE, "______________________________________________");
+					SendClientMessage(editorid, STEALTH_GREEN, "Failed to clone object because of camera object detection.");
+				}
+			}
 		}
 	}
 	
@@ -261,10 +313,13 @@ public OnVirtualKeyRelease(key)
 	
 	switch(key) {
 		case VK_LBUTTON: {
+            SendClientMessage(editorid, 0xFFFFFF, "[DEBUGGG] LMB Up");
 		}
 		case VK_MBUTTON: {
+            SendClientMessage(editorid, 0xFFFFFF, "[DEBUGGG] MMB Up");
 		}
 		case VK_RBUTTON: {
+            SendClientMessage(editorid, 0xFFFFFF, "[DEBUGGG] RMB Up");
 		}
 	}
 	

@@ -187,7 +187,7 @@ YCMD:avdeletecar(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	NoEditingMode(playerid);
 
@@ -471,7 +471,7 @@ YCMD:avnewcar(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	NoEditingMode(playerid);
 
@@ -916,7 +916,7 @@ YCMD:avcarcolor(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	NoEditingMode(playerid);
 
@@ -956,7 +956,7 @@ YCMD:avpaint(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	NoEditingMode(playerid);
 
@@ -986,7 +986,7 @@ YCMD:avsiren(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	NoEditingMode(playerid);
 
@@ -1013,7 +1013,7 @@ YCMD:avrespawn(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	NoEditingMode(playerid);
 
@@ -1032,7 +1032,7 @@ YCMD:avattach(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	NoEditingMode(playerid);
 	
@@ -1097,7 +1097,7 @@ YCMD:avmirror(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	NoEditingMode(playerid);
 
@@ -1187,7 +1187,7 @@ YCMD:avclone(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	NoEditingMode(playerid);
 
@@ -1242,7 +1242,7 @@ YCMD:avdetach(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	NoEditingMode(playerid);
 
@@ -1293,7 +1293,7 @@ YCMD:avsel(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 	new index = strval(arg);
 	if(Iter_Contains(Cars, index))
 	{
@@ -1322,7 +1322,7 @@ YCMD:avclonecar(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 	NoEditingMode(playerid);
 	VehicleCheck(playerid);
 	
@@ -1386,7 +1386,7 @@ YCMD:avox(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	NoEditingMode(playerid);
 
@@ -1424,7 +1424,7 @@ YCMD:avoy(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	NoEditingMode(playerid);
 
@@ -1462,7 +1462,7 @@ YCMD:avoz(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	NoEditingMode(playerid);
 
@@ -1500,7 +1500,7 @@ YCMD:avrx(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	NoEditingMode(playerid);
 
@@ -1538,7 +1538,7 @@ YCMD:avry(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	NoEditingMode(playerid);
 
@@ -1576,7 +1576,7 @@ YCMD:avrz(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	NoEditingMode(playerid);
 
@@ -1610,7 +1610,7 @@ static Float:AVEditObjPos[MAX_PLAYERS][6];
 
 EditVehicleObject(playerid)
 {
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	EditCheck(playerid);
 
@@ -2178,7 +2178,7 @@ YCMD:avexport(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	VehicleCheck(playerid);
 
@@ -2246,7 +2246,7 @@ YCMD:avexportall(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	if(Iter_Count(Cars) == 0)
 	{

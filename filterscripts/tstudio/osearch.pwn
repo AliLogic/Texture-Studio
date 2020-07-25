@@ -120,7 +120,7 @@ YCMD:osearch(playerid, arg[], help)
 
 	if(GetEditMode(playerid) != EDIT_MODE_OSEARCH) NoEditingMode(playerid);
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	for(new i = 0; i < MAX_SEARCH_OBJECT; i++) SearchObjects[playerid][i][SearchModel] = -1;
 	new line[128];
@@ -171,7 +171,7 @@ YCMD:osearchex(playerid, arg[], help)
 
 	if(GetEditMode(playerid) != EDIT_MODE_OSEARCH) NoEditingMode(playerid);
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	new out[64][24], type[64] = {-1, ...}, count = strexplode(out, arg, " ");
 	for(new i = 0; i < MAX_SEARCH_OBJECT; i++) SearchObjects[playerid][i][SearchModel] = -1;
@@ -705,7 +705,7 @@ static CreatePlayerSearchDraw(playerid)
 		PlayerTextDrawSetProportional(playerid,OSearchIndex[playerid][i], 1);
 		PlayerTextDrawUseBox(playerid,OSearchIndex[playerid][i], 1);
 		PlayerTextDrawBoxColor(playerid,OSearchIndex[playerid][i], 0);
-		PlayerTextDrawTextSize(playerid,OSearchIndex[playerid][i], 300.000000, 10.000000);
+		PlayerTextDrawTextSize(playerid,OSearchIndex[playerid][i], 150.000000, 10.000000);
 		PlayerTextDrawSetSelectable(playerid,OSearchIndex[playerid][i], 1);
 		y += 10.0;
 	}

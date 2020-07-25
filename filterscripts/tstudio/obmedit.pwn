@@ -102,7 +102,7 @@ YCMD:obmedit(playerid, arg[], help)
 
 	NoEditingMode(playerid);
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	EditingMode[playerid] = true;
 	

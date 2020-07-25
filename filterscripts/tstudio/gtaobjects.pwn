@@ -170,7 +170,7 @@ YCMD:remobject(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 	
 	new index;
 	if(sscanf(arg, "i", index)) return SendClientMessage(playerid, STEALTH_YELLOW, "You must provide an index to delete!");
@@ -212,7 +212,7 @@ YCMD:rremobject(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 	
 	new model, Float:range;
 	if(sscanf(arg, "if", model, range))
@@ -281,7 +281,7 @@ YCMD:swapbuilding(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 
 	if(isnull(arg)) return SendClientMessage(playerid, STEALTH_YELLOW, "You must provide an index to swap!");
@@ -329,7 +329,7 @@ YCMD:clonebuilding(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	EditCheck(playerid);
 

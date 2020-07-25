@@ -342,7 +342,7 @@ static CreatePlayerListDraws(playerid)
 		PlayerTextDrawSetProportional(playerid,ListObjects[playerid][i], 1);
 		PlayerTextDrawUseBox(playerid,ListObjects[playerid][i], 1);
 		PlayerTextDrawBoxColor(playerid,ListObjects[playerid][i], 0);
-		PlayerTextDrawTextSize(playerid,ListObjects[playerid][i], 200.000000, 8.000000);
+		PlayerTextDrawTextSize(playerid,ListObjects[playerid][i], 150.000000, 8.000000);
 		PlayerTextDrawSetSelectable(playerid,ListObjects[playerid][i], 1);
 		offy += 10.0;
 	}
@@ -573,7 +573,7 @@ YCMD:lsel(playerid, arg[], help)
 	}
 
 	NoEditingMode(playerid);
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 	
 	if(!isnull(arg))
 	{

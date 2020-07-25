@@ -45,7 +45,7 @@ YCMD:text(playerid, arg[], help)
 
 	NoEditingMode(playerid);
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 	
 	EditCheck(playerid);
 

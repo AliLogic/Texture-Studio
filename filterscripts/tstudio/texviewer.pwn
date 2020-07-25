@@ -1278,7 +1278,7 @@ YCMD:settindex(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 
@@ -1303,7 +1303,7 @@ YCMD:stexture(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 	EditCheck(playerid);
 
 	if(GetEditMode(playerid) == EDIT_MODE_TEXTURING)

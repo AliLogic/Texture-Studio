@@ -607,14 +607,14 @@ OnGUIClick:MainMenu(playerid, group, gindex, pindex)
 		// Mode commands
 		case CLICK_OBJECT_MODE:
 		{
-			MapOpenCheck();
+			MapOpenCheck(playerid);
 			PlayerHideGUIMenu(playerid, PlayerSubMenu[playerid]);
 			PlayerHideGUIMenu(playerid, PlayerGroupMenu[playerid]);
 			PlayerShowGUIMenu(playerid, PlayerObjectMenu[playerid], true);
 		}
 		case CLICK_GROUP_MODE:
 		{
-			MapOpenCheck();
+			MapOpenCheck(playerid);
 			PlayerHideGUIMenu(playerid, PlayerSubMenu[playerid]);
 			PlayerHideGUIMenu(playerid, PlayerObjectMenu[playerid]);
 			PlayerShowGUIMenu(playerid, PlayerGroupMenu[playerid], true);

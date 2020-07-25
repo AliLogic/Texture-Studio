@@ -1667,7 +1667,7 @@ AddDynamicObject(modelid, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:r
 		ObjectData[index][oID] = CreateDynamicObject(modelid, x, y, z, rx, ry, rz, MapSetting[mVirtualWorld], MapSetting[mInterior], -1, dd);
 		Streamer_SetFloatData(STREAMER_TYPE_OBJECT, ObjectData[index][oID], E_STREAMER_DRAW_DISTANCE, dd);
 		
-		#if defined COMPILE_MANGLE
+		#if COMPILE_MANGLE == 1
 			ObjectData[index][oCAID] = CA_CreateObject(modelid, x, y, z, rx, ry, rz, true);
 		#endif
 		
@@ -1729,7 +1729,7 @@ DeleteDynamicObject(index, bool:sqlsave = true)
 
 		GroupUpdate(index);
 		
-		#if defined COMPILE_MANGLE
+		#if COMPILE_MANGLE == 1
 			CA_DestroyObject(ObjectData[index][oCAID]);
 		#endif
 
@@ -2155,7 +2155,7 @@ YCMD:renamemap(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	// Confirm rename map
 	inline Confirm(cpid, cdialogid, cresponse, clistitem, string:ctext[])
@@ -2215,7 +2215,7 @@ YCMD:deletemap(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	// Confirm delete map
 	inline Confirm(cpid, cdialogid, cresponse, clistitem, string:ctext[])
@@ -2558,7 +2558,7 @@ YCMD:export(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	inline Export(epid, edialogid, eresponse, elistitem, string:etext[])
 	{
@@ -2590,7 +2590,7 @@ YCMD:exportmap(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	// Ask for a map name
 	inline ExportMap(epid, edialogid, eresponse, elistitem, string:etext[])
@@ -2903,7 +2903,7 @@ YCMD:exportallmap(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	// Ask for a map name
 	inline ExportMap(epid, edialogid, eresponse, elistitem, string:etext[])
@@ -3319,7 +3319,7 @@ YCMD:sel(playerid, arg[], help)
 
 	NoEditingMode(playerid);
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 	if(isnull(arg)) return SendClientMessage(playerid, STEALTH_YELLOW, "Usage: /sel <index> selects a object to edit");
@@ -3349,7 +3349,7 @@ YCMD:dsel(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 	EditCheck(playerid);
 	NoEditingMode(playerid);
 
@@ -3372,7 +3372,7 @@ YCMD:scsel(playerid, arg[], help)
 	}
 
 	NoEditingMode(playerid);
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	new Float:dist = 9999999.0, Float:tmpdist, index = -1;
 
@@ -3413,7 +3413,7 @@ YCMD:dcsel(playerid, arg[], help)
 	}
 
 	NoEditingMode(playerid);
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	new Float:dist = 9999999.0, Float:tmpdist, index = -1;
 
@@ -3468,7 +3468,7 @@ YCMD:csel(playerid, arg[], help)
 
 	NoEditingMode(playerid);
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 
@@ -3494,7 +3494,7 @@ YCMD:mtset(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	EditCheck(playerid);
 
@@ -3539,7 +3539,7 @@ YCMD:mtsetall(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	EditCheck(playerid);
 
@@ -3586,7 +3586,7 @@ YCMD:ogroup(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	EditCheck(playerid);
 
@@ -3646,7 +3646,7 @@ YCMD:clone(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	EditCheck(playerid);
 
@@ -3669,7 +3669,7 @@ YCMD:copy(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	EditCheck(playerid);
 
@@ -3728,7 +3728,7 @@ YCMD:paste(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	EditCheck(playerid);
 
@@ -3872,7 +3872,7 @@ YCMD:ogoto(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	NoEditingMode(playerid);
 
@@ -3961,7 +3961,7 @@ YCMD:mtcolor(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	EditCheck(playerid);
 
@@ -4038,7 +4038,7 @@ YCMD:mtcolorall(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	EditCheck(playerid);
 
@@ -4122,7 +4122,7 @@ YCMD:oswap(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	EditCheck(playerid);
 
@@ -4169,7 +4169,7 @@ YCMD:mtreset(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	EditCheck(playerid);
 
@@ -4204,7 +4204,7 @@ YCMD:editobject(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	EditCheck(playerid);
 
@@ -4239,7 +4239,7 @@ YCMD:cobject(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 	NoEditingMode(playerid);
 
 	new modelid;
@@ -4303,7 +4303,7 @@ YCMD:dobject(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 	EditCheck(playerid);
 	NoEditingMode(playerid);
 
@@ -4331,7 +4331,7 @@ YCMD:rotreset(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 	EditCheck(playerid);
 	NoEditingMode(playerid);
 
@@ -4360,7 +4360,7 @@ YCMD:robject(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 	EditCheck(playerid);
 	NoEditingMode(playerid);
 
@@ -4445,7 +4445,7 @@ YCMD:sindex(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 	EditCheck(playerid);
 //    NoEditingMode(playerid);
 
@@ -4487,7 +4487,7 @@ YCMD:rindex(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 	EditCheck(playerid);
 //    NoEditingMode(playerid);
 
@@ -4574,7 +4574,7 @@ YCMD:pivot(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 	NoEditingMode(playerid);
 
 	new Float:x, Float:y, Float:z, Float:fa;
@@ -4608,7 +4608,7 @@ YCMD:togpivot(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	if(PivotPointOn[playerid])
 	{
@@ -4637,7 +4637,7 @@ YCMD:ox(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 	EditCheck(playerid);
 	NoEditingMode(playerid);
 
@@ -4669,7 +4669,7 @@ YCMD:oy(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 	EditCheck(playerid);
 	NoEditingMode(playerid);
 
@@ -4701,7 +4701,7 @@ YCMD:oz(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 	EditCheck(playerid);
 	NoEditingMode(playerid);
 
@@ -4733,7 +4733,7 @@ YCMD:rx(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 	EditCheck(playerid);
 	NoEditingMode(playerid);
 
@@ -4773,7 +4773,7 @@ YCMD:ry(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 	EditCheck(playerid);
 	NoEditingMode(playerid);
 
@@ -4813,7 +4813,7 @@ YCMD:rz(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 	EditCheck(playerid);
 	NoEditingMode(playerid);
 
@@ -4853,7 +4853,7 @@ YCMD:dox(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 	NoEditingMode(playerid);
 
 	new Float:dist, time;
@@ -4890,7 +4890,7 @@ YCMD:doy(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 	NoEditingMode(playerid);
 
 	new Float:dist, time;
@@ -4927,7 +4927,7 @@ YCMD:doz(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 	NoEditingMode(playerid);
 
 	new Float:dist, time;
@@ -4964,7 +4964,7 @@ YCMD:drx(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	new Float:Delta, time;
 	time = GetTickCount();
@@ -5019,7 +5019,7 @@ YCMD:dry(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	new Float:Delta, time;
 	time = GetTickCount();
@@ -5074,7 +5074,7 @@ YCMD:drz(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	new Float:Delta, time;
 	time = GetTickCount();
@@ -5128,7 +5128,7 @@ YCMD:odd(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 	EditCheck(playerid);
 	NoEditingMode(playerid);
 
@@ -5255,7 +5255,7 @@ YCMD:note(playerid, arg[], help)
 		return 1;
 	}
 	
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 	
 	new index, note[64];
 	if(sscanf(arg, "iS()[64]", index, note))
@@ -5291,7 +5291,7 @@ YCMD:setspawn(playerid, arg[], help)
 		return 1;
 	}
 	
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 	
 	GetPlayerPos(playerid, MapSetting[mSpawn][xPos], MapSetting[mSpawn][yPos], MapSetting[mSpawn][zPos]);
 	sqlite_UpdateSettings();
@@ -5347,7 +5347,7 @@ YCMD:stopedit(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 

@@ -37,7 +37,7 @@ YCMD:prefabsets(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 	if(isnull(arg)) ShowPrefabs(playerid);
@@ -75,7 +75,7 @@ YCMD:gsets(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 	new time = GetTickCount();
 
 	// We need to get the map center as the rotation node
@@ -157,7 +157,7 @@ YCMD:editgroups(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 	NoEditingMode(playerid);
 
 	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
@@ -208,7 +208,7 @@ YCMD:osets(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 	EditCheck(playerid);
 	NoEditingMode(playerid);
 
@@ -243,7 +243,7 @@ YCMD:osets(playerid, arg[], help)
 // Load a prefab specify a filename adjust to facing angle
 YCMD:pmaf(playerid, arg[], help)
 {
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 	if(isnull(arg)) ShowPrefabs(playerid);
@@ -289,7 +289,7 @@ YCMD:cobjectsets(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 	NoEditingMode(playerid);
 
 	new modelid, Float:RZAngle;

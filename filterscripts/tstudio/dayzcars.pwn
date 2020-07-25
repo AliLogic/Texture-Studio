@@ -7,7 +7,7 @@ YCMD:420carexport(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 	
 	VehicleCheck(playerid);
 

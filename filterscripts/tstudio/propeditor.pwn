@@ -8,7 +8,7 @@ YCMD:oprop(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 	EditCheck(playerid);
 	NoEditingMode(playerid);
 
@@ -560,7 +560,7 @@ YCMD:mprop(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 
 	ShowMapPropMenu(playerid);
 

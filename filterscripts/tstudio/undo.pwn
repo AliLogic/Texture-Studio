@@ -232,7 +232,7 @@ YCMD:undo(playerid, arg[], help)
 		return 1;
 	}
 
-	MapOpenCheck();
+	MapOpenCheck(playerid);
 	NoEditingMode(playerid);
 	if(UndoLastAction()) SendClientMessage(playerid, STEALTH_GREEN, "Last action has been undone.");
 	else SendClientMessage(playerid, STEALTH_YELLOW, "No actions to undo.");
