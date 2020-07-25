@@ -56,7 +56,7 @@ enum GUIMENUINFO {
 static GUIData[MAX_GUI][GUIMENUINFO];
 
 #include <YSI_Coding\y_hooks>
-hook OnFilterScriptExit()
+hook OnScriptExit()
 {
 	for(new i = 0; i < MAX_GUI; i++)
 	{

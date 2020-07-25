@@ -80,7 +80,7 @@ new WebColorsARGB[216][11] = {
 };
 
 #include <YSI_Coding\y_hooks>
-hook OnFilterScriptInit()
+hook OnScriptInit()
 {
 	for(new j = 0; j < 216; j++)
 		strcat(webcolors, sprintf("%s@@@\n", WebColorsRGB[j]));

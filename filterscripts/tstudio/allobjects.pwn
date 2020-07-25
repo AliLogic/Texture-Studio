@@ -6,7 +6,7 @@
 new DB:AO_DB, DBResult:AO_RESULT;
 
 #include <YSI_Coding\y_hooks>
-hook OnFilterScriptInit()
+hook OnScriptInit()
 {
 	if((AO_DB = db_open("tstudio/allbuildings.db")) == DB:0)
 		print("All Buildings - Loading Failed (Database Could Not Be Opened).");

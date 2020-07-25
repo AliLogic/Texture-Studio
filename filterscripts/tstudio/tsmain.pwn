@@ -3,7 +3,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <YSI_Coding\y_hooks>
-public OnFilterScriptInit()
+public OnScriptInit()
 {
 	print("----------------------------------------------");
 	print("----Texture Studio By [uL]Pottus and Crayder--");
@@ -21,7 +21,7 @@ public OnFilterScriptInit()
 	return 1;
 }
 
-public OnFilterScriptExit()
+public OnScriptExit()
 {
 	print("----------------------------------------------");
 	print("----Texture Studio By [uL]Pottus and Crayder--");

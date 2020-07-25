@@ -6,7 +6,7 @@
 new DB:MS_DB, MS_QUERY[128], DBResult:MS_RESULT, Float:MS_VALUE[6];
 
 #include <YSI_Coding\y_hooks>
-hook OnFilterScriptInit()
+hook OnScriptInit()
 {
 	if((MS_DB = db_open("tstudio/modelsizes.db")) == DB:0)
 		print("Model Sizes Plus - Loading Failed (Database Could Not Be Opened).");

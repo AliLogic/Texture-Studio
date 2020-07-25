@@ -9084,7 +9084,7 @@ new ObjectTextures[][TEXTUREDEF] =
 };
 
 #include <YSI_Coding\y_hooks>
-hook OnFilterScriptInit()
+hook OnScriptInit()
 {
 	MAX_TEXTURES = sizeof(ObjectTextures);
 	printf("LOADED %i texture definitions", MAX_TEXTURES);

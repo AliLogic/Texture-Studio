@@ -75,7 +75,7 @@ static Operators[16][3] = {
 };
 
 #include <YSI_Coding\y_hooks>
-hook OnFilterScriptInit()
+hook OnScriptInit()
 {
 	CreateSearchDraws();
 	foreach(new i : Player)
@@ -86,7 +86,7 @@ hook OnFilterScriptInit()
 	return Y_HOOKS_CONTINUE_RETURN_1;
 }
 
-hook OnFilterScriptExit()
+hook OnScriptExit()
 {
 	DestroySearchDraws();
 	foreach(new i : Player)

@@ -24,7 +24,7 @@ static GUIMenu:GroupPrefabMenu;
 
 
 // Save all bind elements for custom binding
-static BindElementIDS[8];
+static BindElementIDS[10];
 
 // Indexes for object movement text
 static ObjectMovementIndex[15];
@@ -160,7 +160,7 @@ static bool:DeltaMapMovement[MAX_PLAYERS];
 #include <YSI_Coding\y_hooks>
 
 // Initialize all GUIMenus
-hook OnFilterScriptInit()
+hook OnScriptInit()
 {
 // Static menu draws ///////////////////////////////////////////////////////
 	MainMenu = CreateGUI("MainMenu");

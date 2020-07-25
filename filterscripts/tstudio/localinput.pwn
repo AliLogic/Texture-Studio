@@ -202,7 +202,7 @@ public OnCursorPositionChange(OldX, OldY, NewX, NewY)
 {
 	if(editorid == INVALID_PLAYER_ID)
 		return 1;
-	
+	SendClientMessage(editorid, -1, sprintf("[DEBUGGG] %i, %i | %i, %i", OldX, OldY, NewX, NewY));
 	return 1;
 }
 
@@ -259,7 +259,7 @@ public OnVirtualKeyDown(key)
 				}
 			}*/
 			
-			if(VirtualKeys[33][KEY_PRESSED]) {
+			if(VirtualKeys[33][KEY_PRESSED]) { // If key X is down while RMB was clicked, clone selected object at crosshair
 				new Float:wX, Float:wY, Float:wZ;
 				new i = CA_ScreenToWorld(editorid, 300.0, 320.0, 224.0, wX, wY, wZ);
 				

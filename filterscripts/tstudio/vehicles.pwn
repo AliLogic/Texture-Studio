@@ -234,14 +234,14 @@ SSCANF:vehiclemodel(string[])
 }
 
 #include <YSI_Coding\y_hooks>
-hook OnFilterScriptInit()
+hook OnScriptInit()
 {
 	for(new i = 0; i < 212; i++) format(VehicleList, sizeof(VehicleList), "%s(%i) %s\n", VehicleList, i+400, VehicleNames[i]);
 
 	return Y_HOOKS_CONTINUE_RETURN_1;
 }
 
-hook OnFilterScriptExit()
+hook OnScriptExit()
 {
 	DeleteAllCars();
 

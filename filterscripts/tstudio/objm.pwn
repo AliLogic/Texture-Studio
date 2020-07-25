@@ -59,7 +59,7 @@ enum OBMINFO
 static OBMStack[MAX_PLAYERS][MAX_OBM][OBMINFO];
 
 #include <YSI_Coding\y_hooks>
-hook OnFilterScriptInit()
+hook OnScriptInit()
 {
 	for(new i = 0; i < MAX_PLAYERS; i++)
 	{
@@ -69,7 +69,7 @@ hook OnFilterScriptInit()
 	return Y_HOOKS_CONTINUE_RETURN_1;
 }
 
-hook OnFilterScriptExit()
+hook OnScriptExit()
 {
 	foreach(new i : Player) ClearOBMStack(i);
 

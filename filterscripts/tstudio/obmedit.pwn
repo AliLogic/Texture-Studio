@@ -73,7 +73,7 @@ static Float:OBMOrientationSave[MAX_PLAYERS][3];
 static OBMEditMode[MAX_PLAYERS];
 
 #include <YSI_Coding\y_hooks>
-hook OnFilterScriptInit()
+hook OnScriptInit()
 {
 	for(new i = 0; i < MAX_PLAYERS; i++)
 	{

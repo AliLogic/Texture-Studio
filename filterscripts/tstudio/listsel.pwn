@@ -44,7 +44,7 @@ enum LISTSELINFO { Float:LRX, Float:LRY, Float:LRZ, Float:LZoom }
 static ListSelData[MAX_PLAYERS][LISTSELINFO];
 
 #include <YSI_Coding\y_hooks>
-hook OnFilterScriptInit()
+hook OnScriptInit()
 {
 	// Background
 	ListSelBackGround_0 = TextDrawCreate(539.000000, 159.000000, "RX");
@@ -278,7 +278,7 @@ hook OnFilterScriptInit()
 	return Y_HOOKS_CONTINUE_RETURN_1;
 }
 
-hook OnFilterScriptExit()
+hook OnScriptExit()
 {
 	TextDrawDestroy(ListSelBackGround_0);
 	TextDrawDestroy(ListSelBackGround_1);

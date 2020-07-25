@@ -106,7 +106,7 @@ static bool:SelectionOn[MAX_PLAYERS];
 
 // Init playergui //////////////////////////////////////////////////////////////
 #include <YSI_Coding\y_hooks>
-hook OnFilterScriptInit()
+hook OnScriptInit()
 {
 	for(new i = 0; i < MAX_PLAYERS; i++)
 	{
@@ -121,7 +121,7 @@ hook OnFilterScriptInit()
 
 ////////////////////////////////////////////////////////////////////////////////
 
-hook OnFilterScriptExit()
+hook OnScriptExit()
 {
 	foreach(new i : Player)
 	{

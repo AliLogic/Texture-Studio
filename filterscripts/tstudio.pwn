@@ -215,7 +215,7 @@ Change Log:
 #define COMPILE_MANGLE 0
 
 // Compile the local input module for advanced keys and mouse control
-#define COMPILE_LOCAL_INPUT 1
+#define COMPILE_LOCAL_INPUT 0
 
 #if defined DEBUG
 	#define DB_DEBUG true
@@ -255,10 +255,6 @@ Change Log:
 
 #include <formatex>
 #include <strlib>
-
-#if (COMPILE_MANGLE || COMPILE_LOCAL_INPUT)
-	#include "tstudio\colandreas.pwn"
-#endif
 
 #define PP_SYNTAX_AWAIT
 #include <PawnPlus>
@@ -469,6 +465,7 @@ new Float:CurrEditPos[MAX_PLAYERS][6];
 #define         EDIT_MODE_OBM           11
 #define         EDIT_MODE_VOBJECT 		12
 #define         EDIT_MODE_MODCAR        13
+#define         EDIT_MODE_LOCALINPUT    14
 
 
 // Textdraw modes
@@ -477,6 +474,7 @@ new Float:CurrEditPos[MAX_PLAYERS][6];
 #define         TEXTDRAW_MATERIALS      2
 #define         TEXTDRAW_LISTSEL        3
 #define         TEXTDRAW_OSEARCH        4
+#define         TEXTDRAW_LOCALINPUT     5
 
 
 // Set the players editing mode
@@ -621,6 +619,10 @@ new Iterator:Restriction[51]<MAX_PLAYERS>, bool:gRestricted[51] = {false, ...};
 
 // GTA objects module
 #include "tstudio\gtaobjects.pwn"
+
+#if (COMPILE_MANGLE || COMPILE_LOCAL_INPUT)
+	#include "tstudio\colandreas.pwn"
+#endif
 
 // Local input module
 #if COMPILE_LOCAL_INPUT == 1

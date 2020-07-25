@@ -468,7 +468,7 @@ HideTextEditorDraw(playerid)
 
 
 // Initalize Static draws
-hook OnFilterScriptInit()
+hook OnScriptInit()
 {
 	TextEdit_Background_0 = TextDrawCreate(10.000000, 150.000000, "Text On:");
 	TextDrawBackgroundColor(TextEdit_Background_0, 255);
@@ -560,7 +560,7 @@ hook OnFilterScriptInit()
 	return Y_HOOKS_CONTINUE_RETURN_1;
 }
 
-hook OnFilterScriptExit()
+hook OnScriptExit()
 {
 	TextDrawDestroy(TextEdit_Background_0);
 	TextDrawDestroy(TextEdit_Background_2);

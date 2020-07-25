@@ -55,7 +55,7 @@ new bool:FlyMode[MAX_PLAYERS];
 IsFlyMode(playerid) { return noclipdata[playerid][cameramode]; }
 
 #include <YSI_Coding\y_hooks>
-hook OnFilterScriptExit()
+hook OnScriptExit()
 {
 	// If any players are still in edit mode, boot them out before the filterscript unloads
 	for(new x; x<MAX_PLAYERS; x++)

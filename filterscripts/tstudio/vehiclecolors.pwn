@@ -33,7 +33,7 @@ new VehicleColoursTableRGBA[256] = {
 };
 
 #include <YSI_Coding\y_hooks>
-hook OnFilterScriptInit()
+hook OnScriptInit()
 {
 	for(new i = 0; i < 256; i++) format(VehicleColorList, sizeof(VehicleColorList), "%s{%06x}%i XXX\n", VehicleColorList, VehicleColoursTableRGBA[i] >>> 8, i);
 

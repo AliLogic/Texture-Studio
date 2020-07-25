@@ -104,7 +104,7 @@ Select3DMenu(playerid,MenuID)
 }
 
 #include <YSI_Coding\y_hooks>
-hook OnFilterScriptInit()
+hook OnScriptInit()
 {
 	for(new i = 0; i < MAX_3DMENUS; i++)
 	{
@@ -118,7 +118,7 @@ hook OnFilterScriptInit()
 	return Y_HOOKS_CONTINUE_RETURN_1;
 }
 
-hook OnFilterScriptExit()
+hook OnScriptExit()
 {
 	for(new i = 0; i < MAX_3DMENUS; i++)
 	{

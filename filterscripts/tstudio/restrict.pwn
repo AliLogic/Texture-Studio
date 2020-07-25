@@ -1,5 +1,5 @@
 #include <YSI_Coding\y_hooks>
-hook OnFilterScriptInit()
+hook OnScriptInit()
 {
 	Iter_Init(Restriction);
 	

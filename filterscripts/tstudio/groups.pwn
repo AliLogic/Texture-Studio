@@ -8,7 +8,7 @@ new Float:LastGroupPosition[MAX_PLAYERS][XYZ];
 new bool:PivotReset[MAX_PLAYERS];
 
 #include <YSI_Coding\y_hooks>
-hook OnFilterScriptInit()
+hook OnScriptInit()
 {
 	for(new i = 0; i < MAX_PLAYERS; i++)
 	{
