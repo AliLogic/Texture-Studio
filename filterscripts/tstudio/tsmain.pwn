@@ -2459,6 +2459,7 @@ ImportMap(playerid)
 					new type;
 					if(strfind(templine, "CreateObject(", true) != -1) type = 1;
 					else if(strfind(templine, "CreateDynamicObject(", true) != -1) type = 1;
+					else if(strfind(templine, "CreateDynamicObjectEx(", true) != -1) type = 1;
 					else if(strfind(templine, "RemoveBuildingForPlayer(", true) != -1) type = 2;
 					else if(strfind(templine, "SetObjectMaterial(", true) != -1) type = 3;
 					else if(strfind(templine, "SetDynamicObjectMaterial(", true) != -1) type = 3;

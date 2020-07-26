@@ -1620,7 +1620,6 @@ YCMD:makebind(playerid, arg[], help)
 	for(new x; x < range; x++) {
 		list_get_arr(CommandBuffer[playerid], range - 1 - x, commandtext) ;
 		format(CommandBindData[index][x], 128, commandtext);
-		printf("%i: %s", x, CommandBindData[index][x]);
 	}
 	
 	BindUsed[index] = true;

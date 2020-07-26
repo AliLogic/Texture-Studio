@@ -202,6 +202,7 @@ public OnCursorPositionChange(OldX, OldY, NewX, NewY)
 {
 	if(editorid == INVALID_PLAYER_ID)
 		return 1;
+	
 	SendClientMessage(editorid, -1, sprintf("[DEBUGGG] %i, %i | %i, %i", OldX, OldY, NewX, NewY));
 	return 1;
 }
