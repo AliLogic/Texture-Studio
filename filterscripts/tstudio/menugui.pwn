@@ -1625,7 +1625,7 @@ YCMD:makebind(playerid, arg[], help)
 	BindUsed[index] = true;
 
 	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
-	SendClientMessage(playerid, STEALTH_GREEN, sprintf("%i is now the last %i commands", index, range));
+	SendClientMessage(playerid, STEALTH_GREEN, sprintf("Bind #%i is now the last %i commands.", index, range));
 	
 	return 1;
 }
@@ -1679,8 +1679,8 @@ YCMD:bindeditor(playerid, arg[], help)
 								}
 								else
 								{
-									if(len < 1) SendClientMessage(playerid, STEALTH_YELLOW, "Bind name too short");
-									else SendClientMessage(playerid, STEALTH_YELLOW, "Bind name too long");
+									if(len < 1) SendClientMessage(playerid, STEALTH_YELLOW, "Bind name too short.");
+									else SendClientMessage(playerid, STEALTH_YELLOW, "Bind name too long.");
 								}
 								Dialog_ShowCallback(playerid, using inline ChooseEditOption, DIALOG_STYLE_LIST, "Texture Studio - Choose Edit Type", "Edit Bind Name\nEdit Bind Text\nDelete Bind", "Ok", "Cancel");
 							}
