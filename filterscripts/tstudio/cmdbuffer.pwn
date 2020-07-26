@@ -35,7 +35,7 @@ hook OnPlayerCommandText(playerid, const cmdtext[])
 		list_add_str(CommandBuffer[playerid], cmdtext, 0);
 	}
 
-	return Y_HOOKS_CONTINUE_RETURN_1;
+	return Y_HOOKS_CONTINUE_RETURN_0;
 }
 
 hook OnPlayerConnect(playerid)

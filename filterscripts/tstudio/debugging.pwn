@@ -2,5 +2,5 @@
 hook OnPlayerCommandText(playerid, const cmdtext[]) 
 {
 	print(cmdtext);
-	return Y_HOOKS_CONTINUE_RETURN_1;
+	return Y_HOOKS_CONTINUE_RETURN_0;
 }

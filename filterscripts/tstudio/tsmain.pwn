@@ -3593,6 +3593,9 @@ YCMD:ogroup(playerid, arg[], help)
 	NoEditingMode(playerid);
 
 	new index = CurrObject[playerid];
+	
+    if(!(0 < index < MAX_GROUPS))
+		return SendClientMessage(playerid, STEALTH_YELLOW, sprintf("You can only set group ID to 0-%d.", MAX_GROUPS - 1));
 
 	SaveUndoInfo(index, UNDO_TYPE_EDIT);
 

@@ -86,6 +86,16 @@ hook OnPlayerConnect(playerid)
 
 //--------------------------------------------------
 
+
+hook OnPlayerDisconnect(playerid, reason)
+{
+	if(noclipdata[playerid][cameramode] == CAMERA_MODE_FLY) CancelFlyMode(playerid);
+
+	return Y_HOOKS_CONTINUE_RETURN_1;
+}
+
+//--------------------------------------------------
+
 YCMD:flymode(playerid, arg[], help)
 {
 	if(help)
@@ -184,7 +194,7 @@ hook OnPlayerUpdate(playerid)
 		{
 			if((noclipdata[playerid][udold] != 0 || noclipdata[playerid][lrold] != 0) && ud == 0 && lr == 0)
 			{   // All keys have been released, stop the object the camera is attached to and reset the acceleration multiplier
-				StopPlayerObject(playerid, noclipdata[playerid][flyobject]);
+				StopDynamicObject(noclipdata[playerid][flyobject]);
 				noclipdata[playerid][mode]      = 0;
 				noclipdata[playerid][accelmul]  = 0.0;
 			}
@@ -235,7 +245,7 @@ MoveCamera(playerid)
 {
 	new Float:FV[3], Float:CP[3];
 	//GetPlayerCameraPos(playerid, CP[0], CP[1], CP[2]);          // 	Cameras position in space
-	GetPlayerObjectPos(playerid, noclipdata[playerid][flyobject], CP[0], CP[1], CP[2]);          // 	Cameras position in space
+	GetDynamicObjectPos(noclipdata[playerid][flyobject], CP[0], CP[1], CP[2]);          // 	Cameras position in space
 	GetPlayerCameraFrontVector(playerid, FV[0], FV[1], FV[2]);  //  Where the camera is looking at
 
 	// Increases the acceleration multiplier the longer the key is held
@@ -247,7 +257,7 @@ MoveCamera(playerid)
 	// Calculate the cameras next position based on their current position and the direction their camera is facing
 	new Float:X, Float:Y, Float:Z;
 	GetNextCameraPosition(noclipdata[playerid][mode], CP, FV, X, Y, Z);
-	MovePlayerObject(playerid, noclipdata[playerid][flyobject], X, Y, Z, speed);
+	MoveDynamicObject(noclipdata[playerid][flyobject], X, Y, Z, speed, 0.0, 0.0, 0.0);
 
 	//SendClientMessage(playerid, -1, sprintf("(%0.1f, %0.1f, %0.1f) - (%0.1f, %0.1f, %0.1f) - (%0.1f, %0.1f, %0.1f)", CP[0], CP[1], CP[2], FV[0], FV[1], FV[2], X, Y, Z));
 	
@@ -260,7 +270,7 @@ SetFlyModePos(playerid, Float:x, Float:y, Float:z)
 {
 	if(FlyMode[playerid])
 	{
-		SetPlayerObjectPos(playerid, noclipdata[playerid][flyobject], x, y, z);
+		SetDynamicObjectPos(noclipdata[playerid][flyobject], x, y, z);
 		noclipdata[playerid][lastmove] = GetTickCount();
 		return 1;
 	}
@@ -270,7 +280,7 @@ GetFlyModePos(playerid, &Float:x, &Float:y, &Float:z)
 {
 	if(FlyMode[playerid])
 	{
-		GetPlayerObjectPos(playerid, noclipdata[playerid][flyobject], x, y, z);
+		GetDynamicObjectPos(noclipdata[playerid][flyobject], x, y, z);
 		return 1;
 	}
 	return 0;
@@ -349,7 +359,7 @@ CancelFlyMode(playerid)
 	CancelEdit(playerid);
 	TogglePlayerSpectating(playerid, false);
 
-	DestroyPlayerObject(playerid, noclipdata[playerid][flyobject]);
+	DestroyDynamicObject(noclipdata[playerid][flyobject]);
 	noclipdata[playerid][cameramode] = CAMERA_MODE_NONE;
 
 	SpawnPlayer(playerid);
@@ -363,12 +373,12 @@ StartFlyMode(playerid)
 	// Create an invisible object for the players camera to be attached to
 	new Float:X, Float:Y, Float:Z;
 	GetPlayerPos(playerid, X, Y, Z);
-	noclipdata[playerid][flyobject] = CreatePlayerObject(playerid, 19300, X, Y, Z, 0.0, 0.0, 0.0);
+	noclipdata[playerid][flyobject] = CreateDynamicObject(19300, X, Y, Z, 0.0, 0.0, 0.0, .playerid = playerid, .streamdistance = 300.0, .drawdistance = 300.0);
 
 	// Place the player in spectating mode so objects will be streamed based on camera location
 	TogglePlayerSpectating(playerid, true);
 	// Attach the players camera to the created object
-	AttachCameraToPlayerObject(playerid, noclipdata[playerid][flyobject]);
+	AttachCameraToDynamicObject(playerid, noclipdata[playerid][flyobject]);
 
 	FlyMode[playerid] = true;
 	noclipdata[playerid][cameramode] = CAMERA_MODE_FLY;
