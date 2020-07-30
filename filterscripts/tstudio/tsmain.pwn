@@ -1667,7 +1667,7 @@ AddDynamicObject(modelid, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:r
 		ObjectData[index][oID] = CreateDynamicObject(modelid, x, y, z, rx, ry, rz, MapSetting[mVirtualWorld], MapSetting[mInterior], -1, dd);
 		Streamer_SetFloatData(STREAMER_TYPE_OBJECT, ObjectData[index][oID], E_STREAMER_DRAW_DISTANCE, dd);
 		
-		#if COMPILE_MANGLE == 1
+		#if (COMPILE_MANGLE || COMPILE_LOCAL_INPUT)
 			ObjectData[index][oCAID] = CA_CreateObject(modelid, x, y, z, rx, ry, rz, true);
 		#endif
 		
@@ -1729,7 +1729,7 @@ DeleteDynamicObject(index, bool:sqlsave = true)
 
 		GroupUpdate(index);
 		
-		#if COMPILE_MANGLE == 1
+		#if (COMPILE_MANGLE || COMPILE_LOCAL_INPUT)
 			CA_DestroyObject(ObjectData[index][oCAID]);
 		#endif
 
