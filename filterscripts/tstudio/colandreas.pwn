@@ -7,7 +7,6 @@ hook OnScriptInit()
 	return Y_HOOKS_CONTINUE_RETURN_1;
 }
 
-
 /* TODO
 - Figure out why y_hooks fails to process the AddDynamicObject hook below.
 - Figure out why cloned objects are not being created in CA until next object is cloned.

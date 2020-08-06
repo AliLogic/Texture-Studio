@@ -209,13 +209,13 @@ Change Log:
 // Uncomment to turn on DEBUG mode
 // #define DEBUG
 
-// #define GUI_DEBUG
+#define GUI_DEBUG
 
 // Compile the Angular Map Extension module
 #define COMPILE_MANGLE 0
 
 // Compile the local input module for advanced keys and mouse control
-#define COMPILE_LOCAL_INPUT 0
+#define COMPILE_LOCAL_INPUT 1
 
 #if defined DEBUG
 	#define DB_DEBUG true
@@ -623,15 +623,6 @@ new Iterator:Restriction[MAX_GROUPS]<MAX_PLAYERS>, bool:gRestricted[MAX_GROUPS] 
 // GTA objects module
 #include "tstudio\gtaobjects.pwn"
 
-#if (COMPILE_MANGLE || COMPILE_LOCAL_INPUT)
-	#include "tstudio\colandreas.pwn"
-#endif
-
-// Local input module
-#if COMPILE_LOCAL_INPUT == 1
-	#include "tstudio\localinput.pwn"
-#endif
-
 // Vehicles
 #include "tstudio\vehiclecolors.pwn"
 #include "tstudio\vehicles.pwn"
@@ -644,6 +635,16 @@ new Iterator:Restriction[MAX_GROUPS]<MAX_PLAYERS>, bool:gRestricted[MAX_GROUPS] 
 // Menu GUI
 #include "tstudio\menugui.pwn"
 
+#if (COMPILE_MANGLE || COMPILE_LOCAL_INPUT)
+	#include "tstudio\colandreas.pwn"
+#endif
+
+// Local input module
+#if COMPILE_LOCAL_INPUT == 1
+	#include "tstudio\localinput.pwn"
+	#include "tstudio\localinputgui.pwn"
+#endif
+
 // Help Command
 #include "tstudio\helpcmd.pwn"
 
@@ -653,7 +654,7 @@ new Iterator:Restriction[MAX_GROUPS]<MAX_PLAYERS>, bool:gRestricted[MAX_GROUPS] 
 // SA-MP Introspect by Slice and Y_Less, automatically included with debug mode.
 #if debug > 1
 	#define AMX_NAME "tstudio.amx"
-	#include <interpreter>
+	//#include <interpreter>
 	
 	#include "tstudio\debugging.pwn"
 #endif

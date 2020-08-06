@@ -15,7 +15,7 @@
 #define         FUNC_NAME_SIZE  	20
 
 // Player Textdraw Data
-#define         MAX_PLAYER_GUI         10
+#define         MAX_PLAYER_GUI         20
 #define         MAX_PLAYER_ELEMENTS    40
 
 // Maximum Textdraw binds allowed

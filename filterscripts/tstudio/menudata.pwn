@@ -627,7 +627,7 @@ stock const MainMenuPlayerText[][GUIDEF] = {
 };
 
 // Menu button definition
-stock const MenuButton[][GUIDEF] = {
+stock const MainMenuButton[][GUIDEF] = {
 	{
 		"I",         // Text
 		0.0,				// OffsetX

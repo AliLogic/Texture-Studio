@@ -33,7 +33,7 @@ enum MenuParams
 	Player
 }
 
-new MenuInfo[MAX_3DMENUS][MenuParams];
+new Menu3DInfo[MAX_3DMENUS][MenuParams];
 
 //Callbacks
 forward OnPlayerSelect3DMenuBox(playerid,MenuID,boxid);
@@ -49,15 +49,15 @@ Create3DMenu(playerid,Float:x,Float:y,Float:z,Float:rotation,boxes)
 	for(new i = 0; i < MAX_3DMENUS; i++)
 	{
 		// Menu exists continue
-		if(MenuInfo[i][IsExist]) continue;
+		if(Menu3DInfo[i][IsExist]) continue;
 
 		new Float:NextLineX,Float:NextLineY;
 		new lineindx,binc;
 
-		MenuInfo[i][MenuRotation] = rotation;
-		MenuInfo[i][Boxes] = boxes;
-		MenuInfo[i][AddingX] = 0.25*floatsin(rotation,degrees);
-		MenuInfo[i][AddingY] = -floatcos(rotation,degrees)*0.25;
+		Menu3DInfo[i][MenuRotation] = rotation;
+		Menu3DInfo[i][Boxes] = boxes;
+		Menu3DInfo[i][AddingX] = 0.25*floatsin(rotation,degrees);
+		Menu3DInfo[i][AddingY] = -floatcos(rotation,degrees)*0.25;
 
 		NextLineX = floatcos(rotation,degrees)+0.05*floatcos(rotation,degrees);
 		NextLineY = floatsin(rotation,degrees)+0.05*floatsin(rotation,degrees);
@@ -66,11 +66,11 @@ Create3DMenu(playerid,Float:x,Float:y,Float:z,Float:rotation,boxes)
 		for(new b = 0; b < boxes; b++)
 		{
 			if(b%4 == 0 && b != 0) lineindx++,binc+=4;
-			MenuInfo[i][Objects][b] = CreateDynamicObject(2661,x+NextLineX*lineindx,y+NextLineY*lineindx,z+1.65-0.55*(b-binc),0,0,rotation,-1,-1,playerid,100.0);
-			GetDynamicObjectPos(MenuInfo[i][Objects][b],MenuInfo[i][OrigPosX][b],MenuInfo[i][OrigPosY][b],MenuInfo[i][OrigPosZ][b]);
+			Menu3DInfo[i][Objects][b] = CreateDynamicObject(2661,x+NextLineX*lineindx,y+NextLineY*lineindx,z+1.65-0.55*(b-binc),0,0,rotation,-1,-1,playerid,100.0);
+			GetDynamicObjectPos(Menu3DInfo[i][Objects][b],Menu3DInfo[i][OrigPosX][b],Menu3DInfo[i][OrigPosY][b],Menu3DInfo[i][OrigPosZ][b]);
 		}
-		MenuInfo[i][IsExist] = true;
-		MenuInfo[i][Player] = playerid;
+		Menu3DInfo[i][IsExist] = true;
+		Menu3DInfo[i][Player] = playerid;
 		Streamer_Update(playerid);
 		return i;
 	}
@@ -79,21 +79,21 @@ Create3DMenu(playerid,Float:x,Float:y,Float:z,Float:rotation,boxes)
 
 SetBoxMaterial(MenuID,box,index,model,const txd[],const texture[], selectcolor, unselectcolor)
 {
-	if(!MenuInfo[MenuID][IsExist]) return -1;
-	if(box == MenuInfo[MenuID][Boxes] || box < 0) return -1;
-	if(MenuInfo[MenuID][Objects][box] == INVALID_OBJECT_ID) return -1;
-	MenuInfo[MenuID][SelectColor][box] = selectcolor;
-	MenuInfo[MenuID][UnselectColor][box] = unselectcolor;
-	if(SelectedBox[MenuInfo[MenuID][Player]] == box) SetDynamicObjectMaterial(MenuInfo[MenuID][Objects][box], index, model, txd, texture, selectcolor);
-	else SetDynamicObjectMaterial(MenuInfo[MenuID][Objects][box], index, model, txd, texture, unselectcolor);
+	if(!Menu3DInfo[MenuID][IsExist]) return -1;
+	if(box == Menu3DInfo[MenuID][Boxes] || box < 0) return -1;
+	if(Menu3DInfo[MenuID][Objects][box] == INVALID_OBJECT_ID) return -1;
+	Menu3DInfo[MenuID][SelectColor][box] = selectcolor;
+	Menu3DInfo[MenuID][UnselectColor][box] = unselectcolor;
+	if(SelectedBox[Menu3DInfo[MenuID][Player]] == box) SetDynamicObjectMaterial(Menu3DInfo[MenuID][Objects][box], index, model, txd, texture, selectcolor);
+	else SetDynamicObjectMaterial(Menu3DInfo[MenuID][Objects][box], index, model, txd, texture, unselectcolor);
 	return 1;
 }
 
 Select3DMenu(playerid,MenuID)
 {
 	if(!IsPlayerConnected(playerid)) return -1;
-	if(!MenuInfo[MenuID][IsExist]) return -1;
-	if(MenuInfo[MenuID][Player] != playerid) return -1;
+	if(!Menu3DInfo[MenuID][IsExist]) return -1;
+	if(Menu3DInfo[MenuID][Player] != playerid) return -1;
 	if(SelectedMenu[playerid] != -1) CancelSelect3DMenu(playerid);
 
 	SelectedMenu[playerid] = MenuID;
@@ -108,12 +108,12 @@ hook OnScriptInit()
 {
 	for(new i = 0; i < MAX_3DMENUS; i++)
 	{
-		for(new b = 0; b < MAX_BOXES; b++) MenuInfo[i][Objects][b] = INVALID_OBJECT_ID;
-		MenuInfo[i][Boxes] = 0;
-		MenuInfo[i][IsExist] = false;
-		MenuInfo[i][AddingX] = 0.0;
-		MenuInfo[i][AddingY] = 0.0;
-		MenuInfo[i][Player] = -1;
+		for(new b = 0; b < MAX_BOXES; b++) Menu3DInfo[i][Objects][b] = INVALID_OBJECT_ID;
+		Menu3DInfo[i][Boxes] = 0;
+		Menu3DInfo[i][IsExist] = false;
+		Menu3DInfo[i][AddingX] = 0.0;
+		Menu3DInfo[i][AddingY] = 0.0;
+		Menu3DInfo[i][Player] = -1;
 	}
 	return Y_HOOKS_CONTINUE_RETURN_1;
 }
@@ -122,7 +122,7 @@ hook OnScriptExit()
 {
 	for(new i = 0; i < MAX_3DMENUS; i++)
 	{
-		if(MenuInfo[i][IsExist]) Destroy3DMenu(i);
+		if(Menu3DInfo[i][IsExist]) Destroy3DMenu(i);
 	}
 	return Y_HOOKS_CONTINUE_RETURN_1;
 }
@@ -154,18 +154,18 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 		if(newkeys == KEY_CTRL_BACK || (IsFlyMode(playerid) && (newkeys & KEY_ANALOG_LEFT && (newkeys & KEY_SECONDARY_ATTACK || oldkeys & KEY_SECONDARY_ATTACK) )))
 		{
 			new model,txd[32],texture[32], color;
-			GetDynamicObjectMaterial(MenuInfo[MenuID][Objects][SelectedBox[playerid]],0,model, txd, texture, color);
-			SetDynamicObjectMaterial(MenuInfo[MenuID][Objects][SelectedBox[playerid]],0, model, txd, texture, MenuInfo[MenuID][UnselectColor][SelectedBox[playerid]]);
+			GetDynamicObjectMaterial(Menu3DInfo[MenuID][Objects][SelectedBox[playerid]],0,model, txd, texture, color);
+			SetDynamicObjectMaterial(Menu3DInfo[MenuID][Objects][SelectedBox[playerid]],0, model, txd, texture, Menu3DInfo[MenuID][UnselectColor][SelectedBox[playerid]]);
 
-			MoveDynamicObject(MenuInfo[MenuID][Objects][SelectedBox[playerid]],MenuInfo[MenuID][OrigPosX][SelectedBox[playerid]],MenuInfo[MenuID][OrigPosY][SelectedBox[playerid]],MenuInfo[MenuID][OrigPosZ][SelectedBox[playerid]],1.0);
+			MoveDynamicObject(Menu3DInfo[MenuID][Objects][SelectedBox[playerid]],Menu3DInfo[MenuID][OrigPosX][SelectedBox[playerid]],Menu3DInfo[MenuID][OrigPosY][SelectedBox[playerid]],Menu3DInfo[MenuID][OrigPosZ][SelectedBox[playerid]],1.0);
 			SelectedBox[playerid]++;
 
-			if(SelectedBox[playerid] == MenuInfo[MenuID][Boxes]) SelectedBox[playerid] = 0;
+			if(SelectedBox[playerid] == Menu3DInfo[MenuID][Boxes]) SelectedBox[playerid] = 0;
 
-			GetDynamicObjectMaterial(MenuInfo[MenuID][Objects][SelectedBox[playerid]],0,model, txd, texture, color);
-			SetDynamicObjectMaterial(MenuInfo[MenuID][Objects][SelectedBox[playerid]],0, model, txd, texture, MenuInfo[MenuID][SelectColor][SelectedBox[playerid]]);
+			GetDynamicObjectMaterial(Menu3DInfo[MenuID][Objects][SelectedBox[playerid]],0,model, txd, texture, color);
+			SetDynamicObjectMaterial(Menu3DInfo[MenuID][Objects][SelectedBox[playerid]],0, model, txd, texture, Menu3DInfo[MenuID][SelectColor][SelectedBox[playerid]]);
 
-			MoveDynamicObject(MenuInfo[MenuID][Objects][SelectedBox[playerid]],MenuInfo[MenuID][OrigPosX][SelectedBox[playerid]]+MenuInfo[MenuID][AddingX],MenuInfo[MenuID][OrigPosY][SelectedBox[playerid]]+MenuInfo[MenuID][AddingY],MenuInfo[MenuID][OrigPosZ][SelectedBox[playerid]],1.0);
+			MoveDynamicObject(Menu3DInfo[MenuID][Objects][SelectedBox[playerid]],Menu3DInfo[MenuID][OrigPosX][SelectedBox[playerid]]+Menu3DInfo[MenuID][AddingX],Menu3DInfo[MenuID][OrigPosY][SelectedBox[playerid]]+Menu3DInfo[MenuID][AddingY],Menu3DInfo[MenuID][OrigPosZ][SelectedBox[playerid]],1.0);
 
 			if(funcidx("OnPlayerChange3DMenuBox") != -1) OnPlayerChange3DMenuBox(playerid,MenuID,SelectedBox[playerid]);
 
@@ -174,18 +174,18 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 		if(newkeys == KEY_YES || (IsFlyMode(playerid) && (newkeys & KEY_ANALOG_RIGHT && (newkeys & KEY_SECONDARY_ATTACK || oldkeys & KEY_SECONDARY_ATTACK) )))
 		{
 			new model,txd[32],texture[32], color;
-			GetDynamicObjectMaterial(MenuInfo[MenuID][Objects][SelectedBox[playerid]],0,model, txd, texture, color);
-			SetDynamicObjectMaterial(MenuInfo[MenuID][Objects][SelectedBox[playerid]],0, model, txd, texture, MenuInfo[MenuID][UnselectColor][SelectedBox[playerid]]);
+			GetDynamicObjectMaterial(Menu3DInfo[MenuID][Objects][SelectedBox[playerid]],0,model, txd, texture, color);
+			SetDynamicObjectMaterial(Menu3DInfo[MenuID][Objects][SelectedBox[playerid]],0, model, txd, texture, Menu3DInfo[MenuID][UnselectColor][SelectedBox[playerid]]);
 
-			MoveDynamicObject(MenuInfo[MenuID][Objects][SelectedBox[playerid]],MenuInfo[MenuID][OrigPosX][SelectedBox[playerid]],MenuInfo[MenuID][OrigPosY][SelectedBox[playerid]],MenuInfo[MenuID][OrigPosZ][SelectedBox[playerid]],1.0);
+			MoveDynamicObject(Menu3DInfo[MenuID][Objects][SelectedBox[playerid]],Menu3DInfo[MenuID][OrigPosX][SelectedBox[playerid]],Menu3DInfo[MenuID][OrigPosY][SelectedBox[playerid]],Menu3DInfo[MenuID][OrigPosZ][SelectedBox[playerid]],1.0);
 			SelectedBox[playerid]--;
 
-			if(SelectedBox[playerid] < 0) SelectedBox[playerid] = MenuInfo[MenuID][Boxes]-1;
+			if(SelectedBox[playerid] < 0) SelectedBox[playerid] = Menu3DInfo[MenuID][Boxes]-1;
 
-			GetDynamicObjectMaterial(MenuInfo[MenuID][Objects][SelectedBox[playerid]],0,model, txd, texture, color);
-			SetDynamicObjectMaterial(MenuInfo[MenuID][Objects][SelectedBox[playerid]],0, model, txd, texture, MenuInfo[MenuID][SelectColor][SelectedBox[playerid]]);
+			GetDynamicObjectMaterial(Menu3DInfo[MenuID][Objects][SelectedBox[playerid]],0,model, txd, texture, color);
+			SetDynamicObjectMaterial(Menu3DInfo[MenuID][Objects][SelectedBox[playerid]],0, model, txd, texture, Menu3DInfo[MenuID][SelectColor][SelectedBox[playerid]]);
 
-			MoveDynamicObject(MenuInfo[MenuID][Objects][SelectedBox[playerid]],MenuInfo[MenuID][OrigPosX][SelectedBox[playerid]]+MenuInfo[MenuID][AddingX],MenuInfo[MenuID][OrigPosY][SelectedBox[playerid]]+MenuInfo[MenuID][AddingY],MenuInfo[MenuID][OrigPosZ][SelectedBox[playerid]],1.0);
+			MoveDynamicObject(Menu3DInfo[MenuID][Objects][SelectedBox[playerid]],Menu3DInfo[MenuID][OrigPosX][SelectedBox[playerid]]+Menu3DInfo[MenuID][AddingX],Menu3DInfo[MenuID][OrigPosY][SelectedBox[playerid]]+Menu3DInfo[MenuID][AddingY],Menu3DInfo[MenuID][OrigPosZ][SelectedBox[playerid]],1.0);
 
 			if(funcidx("OnPlayerChange3DMenuBox") != -1) OnPlayerChange3DMenuBox(playerid,MenuID,SelectedBox[playerid]);
 
@@ -204,10 +204,10 @@ CancelSelect3DMenu(playerid)
 	if(SelectedBox[playerid] != -1)
 	{
 		new model,txd[32],texture[32], color;
-		GetDynamicObjectMaterial(MenuInfo[MenuID][Objects][SelectedBox[playerid]],0,model, txd, texture, color);
-		SetDynamicObjectMaterial(MenuInfo[MenuID][Objects][SelectedBox[playerid]],0, model, txd, texture, MenuInfo[MenuID][UnselectColor][SelectedBox[playerid]]);
+		GetDynamicObjectMaterial(Menu3DInfo[MenuID][Objects][SelectedBox[playerid]],0,model, txd, texture, color);
+		SetDynamicObjectMaterial(Menu3DInfo[MenuID][Objects][SelectedBox[playerid]],0, model, txd, texture, Menu3DInfo[MenuID][UnselectColor][SelectedBox[playerid]]);
 
-		MoveDynamicObject(MenuInfo[MenuID][Objects][SelectedBox[playerid]],MenuInfo[MenuID][OrigPosX][SelectedBox[playerid]],MenuInfo[MenuID][OrigPosY][SelectedBox[playerid]],MenuInfo[MenuID][OrigPosZ][SelectedBox[playerid]],1.0);
+		MoveDynamicObject(Menu3DInfo[MenuID][Objects][SelectedBox[playerid]],Menu3DInfo[MenuID][OrigPosX][SelectedBox[playerid]],Menu3DInfo[MenuID][OrigPosY][SelectedBox[playerid]],Menu3DInfo[MenuID][OrigPosZ][SelectedBox[playerid]],1.0);
 	}
 	
 	SelectedMenu[playerid] = -1;
@@ -218,42 +218,42 @@ CancelSelect3DMenu(playerid)
 Select3DMenuBox(playerid,MenuID,BoxID)
 {
 	if(!IsPlayerConnected(playerid)) return -1;
-	if(!MenuInfo[MenuID][IsExist]) return -1;
-	if(MenuInfo[MenuID][Player] != playerid) return -1;
+	if(!Menu3DInfo[MenuID][IsExist]) return -1;
+	if(Menu3DInfo[MenuID][Player] != playerid) return -1;
 
 	new model,txd[32],texture[32], color;
 	if(SelectedBox[playerid] != -1)
 	{
-		GetDynamicObjectMaterial(MenuInfo[MenuID][Objects][SelectedBox[playerid]],0,model, txd, texture, color);
-		SetDynamicObjectMaterial(MenuInfo[MenuID][Objects][SelectedBox[playerid]],0, model, txd, texture, MenuInfo[MenuID][UnselectColor][SelectedBox[playerid]]);
+		GetDynamicObjectMaterial(Menu3DInfo[MenuID][Objects][SelectedBox[playerid]],0,model, txd, texture, color);
+		SetDynamicObjectMaterial(Menu3DInfo[MenuID][Objects][SelectedBox[playerid]],0, model, txd, texture, Menu3DInfo[MenuID][UnselectColor][SelectedBox[playerid]]);
 		
-		MoveDynamicObject(MenuInfo[MenuID][Objects][SelectedBox[playerid]],MenuInfo[MenuID][OrigPosX][SelectedBox[playerid]],MenuInfo[MenuID][OrigPosY][SelectedBox[playerid]],MenuInfo[MenuID][OrigPosZ][SelectedBox[playerid]],1.0);
+		MoveDynamicObject(Menu3DInfo[MenuID][Objects][SelectedBox[playerid]],Menu3DInfo[MenuID][OrigPosX][SelectedBox[playerid]],Menu3DInfo[MenuID][OrigPosY][SelectedBox[playerid]],Menu3DInfo[MenuID][OrigPosZ][SelectedBox[playerid]],1.0);
 	}
 
 
 	SelectedBox[playerid] = BoxID;
 
-	GetDynamicObjectMaterial(MenuInfo[MenuID][Objects][SelectedBox[playerid]],0, model, txd, texture, color);
-	SetDynamicObjectMaterial(MenuInfo[MenuID][Objects][SelectedBox[playerid]],0, model, txd, texture, MenuInfo[MenuID][SelectColor][SelectedBox[playerid]]);
+	GetDynamicObjectMaterial(Menu3DInfo[MenuID][Objects][SelectedBox[playerid]],0, model, txd, texture, color);
+	SetDynamicObjectMaterial(Menu3DInfo[MenuID][Objects][SelectedBox[playerid]],0, model, txd, texture, Menu3DInfo[MenuID][SelectColor][SelectedBox[playerid]]);
 
-	MoveDynamicObject(MenuInfo[MenuID][Objects][SelectedBox[playerid]],MenuInfo[MenuID][OrigPosX][SelectedBox[playerid]]+MenuInfo[MenuID][AddingX],MenuInfo[MenuID][OrigPosY][SelectedBox[playerid]]+MenuInfo[MenuID][AddingY],MenuInfo[MenuID][OrigPosZ][SelectedBox[playerid]],1.0);
+	MoveDynamicObject(Menu3DInfo[MenuID][Objects][SelectedBox[playerid]],Menu3DInfo[MenuID][OrigPosX][SelectedBox[playerid]]+Menu3DInfo[MenuID][AddingX],Menu3DInfo[MenuID][OrigPosY][SelectedBox[playerid]]+Menu3DInfo[MenuID][AddingY],Menu3DInfo[MenuID][OrigPosZ][SelectedBox[playerid]],1.0);
 
 	return 1;
 }
 
 Destroy3DMenu(MenuID)
 {
-	if(!MenuInfo[MenuID][IsExist]) return -1;
-	if(SelectedMenu[MenuInfo[MenuID][Player]] == MenuID) CancelSelect3DMenu(MenuInfo[MenuID][Player]);
-	for(new i = 0; i < MenuInfo[MenuID][Boxes]; i++)
+	if(!Menu3DInfo[MenuID][IsExist]) return -1;
+	if(SelectedMenu[Menu3DInfo[MenuID][Player]] == MenuID) CancelSelect3DMenu(Menu3DInfo[MenuID][Player]);
+	for(new i = 0; i < Menu3DInfo[MenuID][Boxes]; i++)
 	{
-		DestroyDynamicObject(MenuInfo[MenuID][Objects][i]);
-		MenuInfo[MenuID][Objects][i] = INVALID_OBJECT_ID;
+		DestroyDynamicObject(Menu3DInfo[MenuID][Objects][i]);
+		Menu3DInfo[MenuID][Objects][i] = INVALID_OBJECT_ID;
 	}
-	MenuInfo[MenuID][Boxes] = 0;
-	MenuInfo[MenuID][IsExist] = false;
-	MenuInfo[MenuID][AddingX] = 0.0;
-	MenuInfo[MenuID][AddingY] = 0.0;
-	MenuInfo[MenuID][Player] = -1;
+	Menu3DInfo[MenuID][Boxes] = 0;
+	Menu3DInfo[MenuID][IsExist] = false;
+	Menu3DInfo[MenuID][AddingX] = 0.0;
+	Menu3DInfo[MenuID][AddingY] = 0.0;
+	Menu3DInfo[MenuID][Player] = -1;
 	return 1;
 }

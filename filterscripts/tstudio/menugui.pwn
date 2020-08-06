@@ -183,31 +183,31 @@ hook OnScriptInit()
 // Load main menu //////////////////////////////////////////////////////////////
 	LoadGUIMenu(MainMenu,MainMenuText,0.0, 0.0, CLICK_NO_GROUP, E_INDEX);
 
-	LoadGUIMenu(MainMenu,MenuButton,535.0, 135.0, CLICK_NEW_MAP, E_INDEX);
+	LoadGUIMenu(MainMenu,MainMenuButton,535.0, 135.0, CLICK_NEW_MAP, E_INDEX);
 	GUISetPlayerText(MainMenu, E_INDEX[1], "New Map");
 	GUISetPlayerText(MainMenu, E_INDEX[2], "LD_BEAT:square");
 
-	LoadGUIMenu(MainMenu,MenuButton,535.0, 150.0, CLICK_LOAD_MAP, E_INDEX);
+	LoadGUIMenu(MainMenu,MainMenuButton,535.0, 150.0, CLICK_LOAD_MAP, E_INDEX);
 	GUISetPlayerText(MainMenu, E_INDEX[1], "Load Map");
 	GUISetPlayerText(MainMenu, E_INDEX[2], "LD_BEAT:square");
 
-	LoadGUIMenu(MainMenu,MenuButton,535.0, 165.0, CLICK_IMPORT_MAP, E_INDEX);
+	LoadGUIMenu(MainMenu,MainMenuButton,535.0, 165.0, CLICK_IMPORT_MAP, E_INDEX);
 	GUISetPlayerText(MainMenu, E_INDEX[1], "Import Map");
 	GUISetPlayerText(MainMenu, E_INDEX[2], "LD_BEAT:square");
 
-	LoadGUIMenu(MainMenu,MenuButton,535.0, 180.0, CLICK_EXPORT_MAP, E_INDEX);
+	LoadGUIMenu(MainMenu,MainMenuButton,535.0, 180.0, CLICK_EXPORT_MAP, E_INDEX);
 	GUISetPlayerText(MainMenu, E_INDEX[1], "Export");
 	GUISetPlayerText(MainMenu, E_INDEX[2], "LD_BEAT:square");
 
 	LoadGUIElement(MainMenu,MainMenuText[2],0.0,-200.0);
 	
-	LoadGUIMenu(MainMenu,MenuButton,535.0, 210.0, CLICK_OBJECT_MODE, E_INDEX);
+	LoadGUIMenu(MainMenu,MainMenuButton,535.0, 210.0, CLICK_OBJECT_MODE, E_INDEX);
 	GUISetPlayerText(MainMenu, E_INDEX[1], "Object Mode");
 	
-	LoadGUIMenu(MainMenu,MenuButton,535.0, 225.0, CLICK_GROUP_MODE, E_INDEX);
+	LoadGUIMenu(MainMenu,MainMenuButton,535.0, 225.0, CLICK_GROUP_MODE, E_INDEX);
 	GUISetPlayerText(MainMenu, E_INDEX[1], "Group Mode");
 
-	LoadGUIMenu(MainMenu,MenuButton,535.0, 240.0, CLICK_FLY_MODE, E_INDEX);
+	LoadGUIMenu(MainMenu,MainMenuButton,535.0, 240.0, CLICK_FLY_MODE, E_INDEX);
 	GUISetPlayerText(MainMenu, E_INDEX[1], "Fly Mode");
 	GUISetPlayerText(MainMenu, E_INDEX[2], "LD_BEAT:square");
 
@@ -219,7 +219,7 @@ hook OnScriptInit()
 	for(new i = 0; i < sizeof(BindElementIDS); i++)
 	{
 		format(line, sizeof(line), "User Bind %i", i);
-		LoadGUIMenu(MainMenu,MenuButton,535.0, 270.0+inc, CLICK_BIND_1+i, E_INDEX);
+		LoadGUIMenu(MainMenu,MainMenuButton,535.0, 270.0+inc, CLICK_BIND_1+i, E_INDEX);
 		GUISetPlayerText(MainMenu, E_INDEX[1], line);
 		GUISetPlayerText(MainMenu, E_INDEX[2], "LD_BEAT:square");
 		
@@ -231,24 +231,24 @@ hook OnScriptInit()
 
 	LoadGUIMenu(ObjectMenu,MainMenuText,-100.0, 0.0, CLICK_NO_GROUP, E_INDEX);
 	
-	LoadGUIMenu(ObjectMenu,MenuButton,435.0, 135.0, CLICK_OBJECTEDIT_MENU, E_INDEX);
+	LoadGUIMenu(ObjectMenu,MainMenuButton,435.0, 135.0, CLICK_OBJECTEDIT_MENU, E_INDEX);
 	GUISetPlayerText(ObjectMenu, E_INDEX[1], "Object Editor");
 
-	LoadGUIMenu(ObjectMenu,MenuButton,435.0, 150.0, CLICK_SELECTION_MENU, E_INDEX);
+	LoadGUIMenu(ObjectMenu,MainMenuButton,435.0, 150.0, CLICK_SELECTION_MENU, E_INDEX);
 	GUISetPlayerText(ObjectMenu, E_INDEX[1], "Selection");
 
-	LoadGUIMenu(ObjectMenu,MenuButton,435.0, 165.0, CLICK_TEXTURE_MENU, E_INDEX);
+	LoadGUIMenu(ObjectMenu,MainMenuButton,435.0, 165.0, CLICK_TEXTURE_MENU, E_INDEX);
 	GUISetPlayerText(ObjectMenu, E_INDEX[1], "Textures");
 
-	LoadGUIMenu(ObjectMenu,MenuButton,435.0, 180.0, CLICK_SEARCH_MENU, E_INDEX);
+	LoadGUIMenu(ObjectMenu,MainMenuButton,435.0, 180.0, CLICK_SEARCH_MENU, E_INDEX);
 	GUISetPlayerText(ObjectMenu, E_INDEX[1], "Object Search");
 	GUISetPlayerText(ObjectMenu, E_INDEX[2], "LD_BEAT:square");
 
-	LoadGUIMenu(ObjectMenu,MenuButton,435.0, 195.0, CLICK_PIVOT_MENU, E_INDEX);
+	LoadGUIMenu(ObjectMenu,MainMenuButton,435.0, 195.0, CLICK_PIVOT_MENU, E_INDEX);
 	GUISetPlayerText(ObjectMenu, E_INDEX[1], "Set Pivot");
 	GUISetPlayerText(ObjectMenu, E_INDEX[2], "LD_BEAT:square");
 
-	LoadGUIMenu(ObjectMenu,MenuButton,435.0, 210.0, CLICK_TOGPIVOT_MENU, E_INDEX);
+	LoadGUIMenu(ObjectMenu,MainMenuButton,435.0, 210.0, CLICK_TOGPIVOT_MENU, E_INDEX);
 	GUISetPlayerText(ObjectMenu, E_INDEX[1], "Toggle Pivot");
 	GUISetPlayerText(ObjectMenu, E_INDEX[2], "LD_BEAT:square");
 
@@ -264,31 +264,31 @@ hook OnScriptInit()
 	LoadGUIMenu(ObjectSubMenu,SubMenuText,-200.0, 0.0, EXIT_GUI_MENU, E_INDEX);
 	GUISetPlayerText(ObjectSubMenu, E_INDEX[6], "Object Editor");
 
-	LoadGUIMenu(ObjectSubMenu,MenuButton,335.0, 135.0, CLICK_OBJECTEDIT_COBJECT, E_INDEX);
+	LoadGUIMenu(ObjectSubMenu,MainMenuButton,335.0, 135.0, CLICK_OBJECTEDIT_COBJECT, E_INDEX);
 	GUISetPlayerText(ObjectSubMenu, E_INDEX[1], "Create Object");
 	GUISetPlayerText(ObjectSubMenu, E_INDEX[2], "LD_BEAT:square");
 
-	LoadGUIMenu(ObjectSubMenu,MenuButton,335.0, 150.0, CLICK_OBJECTEDIT_RROT, E_INDEX);
+	LoadGUIMenu(ObjectSubMenu,MainMenuButton,335.0, 150.0, CLICK_OBJECTEDIT_RROT, E_INDEX);
 	GUISetPlayerText(ObjectSubMenu, E_INDEX[1], "Reset Rotation");
 	GUISetPlayerText(ObjectSubMenu, E_INDEX[2], "LD_BEAT:square");
 	
-	LoadGUIMenu(ObjectSubMenu,MenuButton,335.0, 165.0, CLICK_OBJECTEDIT_CLONE, E_INDEX);
+	LoadGUIMenu(ObjectSubMenu,MainMenuButton,335.0, 165.0, CLICK_OBJECTEDIT_CLONE, E_INDEX);
 	GUISetPlayerText(ObjectSubMenu, E_INDEX[1], "Clone");
 	GUISetPlayerText(ObjectSubMenu, E_INDEX[2], "LD_BEAT:square");
 
-	LoadGUIMenu(ObjectSubMenu,MenuButton,335.0, 180.0, CLICK_OBJECTEDIT_GOTO, E_INDEX);
+	LoadGUIMenu(ObjectSubMenu,MainMenuButton,335.0, 180.0, CLICK_OBJECTEDIT_GOTO, E_INDEX);
 	GUISetPlayerText(ObjectSubMenu, E_INDEX[1], "Goto");
 	GUISetPlayerText(ObjectSubMenu, E_INDEX[2], "LD_BEAT:square");
 
-	LoadGUIMenu(ObjectSubMenu,MenuButton,335.0, 195.0, CLICK_OBJECTEDIT_EDIT, E_INDEX);
+	LoadGUIMenu(ObjectSubMenu,MainMenuButton,335.0, 195.0, CLICK_OBJECTEDIT_EDIT, E_INDEX);
 	GUISetPlayerText(ObjectSubMenu, E_INDEX[1], "Edit Object");
 	GUISetPlayerText(ObjectSubMenu, E_INDEX[2], "LD_BEAT:square");
 
-	LoadGUIMenu(ObjectSubMenu,MenuButton,335.0, 210.0, CLICK_OBJECTEDIT_OGROUP, E_INDEX);
+	LoadGUIMenu(ObjectSubMenu,MainMenuButton,335.0, 210.0, CLICK_OBJECTEDIT_OGROUP, E_INDEX);
 	GUISetPlayerText(ObjectSubMenu, E_INDEX[1], "Assign Group");
 	GUISetPlayerText(ObjectSubMenu, E_INDEX[2], "LD_BEAT:square");
 
-	LoadGUIMenu(ObjectSubMenu,MenuButton,335.0, 225.0, CLICK_OBJECTEDIT_DOBJECT, E_INDEX);
+	LoadGUIMenu(ObjectSubMenu,MainMenuButton,335.0, 225.0, CLICK_OBJECTEDIT_DOBJECT, E_INDEX);
 	GUISetPlayerText(ObjectSubMenu, E_INDEX[1], "Delete Object");
 	GUISetPlayerText(ObjectSubMenu, E_INDEX[2], "LD_BEAT:square");
 
@@ -296,31 +296,31 @@ hook OnScriptInit()
 	// Selection sub
 	LoadGUIMenu(SelectionSubMenu,SubMenuText,-200.0, 15.0, EXIT_GUI_MENU, E_INDEX);
 
-	LoadGUIMenu(SelectionSubMenu,MenuButton,335.0, 150.0, CLICK_SELECT_OBJECT, E_INDEX);
+	LoadGUIMenu(SelectionSubMenu,MainMenuButton,335.0, 150.0, CLICK_SELECT_OBJECT, E_INDEX);
 	GUISetPlayerText(SelectionSubMenu, E_INDEX[1], "Select");
 	GUISetPlayerText(SelectionSubMenu, E_INDEX[2], "LD_BEAT:square");
 
-	LoadGUIMenu(SelectionSubMenu,MenuButton,335.0, 165.0, CLICK_DESELECT_OBJECT, E_INDEX);
+	LoadGUIMenu(SelectionSubMenu,MainMenuButton,335.0, 165.0, CLICK_DESELECT_OBJECT, E_INDEX);
 	GUISetPlayerText(SelectionSubMenu, E_INDEX[1], "Deselect");
 	GUISetPlayerText(SelectionSubMenu, E_INDEX[2], "LD_BEAT:square");
 
-	LoadGUIMenu(SelectionSubMenu,MenuButton,335.0, 180.0, CLICK_SELECT_CLOSEST, E_INDEX);
+	LoadGUIMenu(SelectionSubMenu,MainMenuButton,335.0, 180.0, CLICK_SELECT_CLOSEST, E_INDEX);
 	GUISetPlayerText(SelectionSubMenu, E_INDEX[1], "Select Closest");
 	GUISetPlayerText(SelectionSubMenu, E_INDEX[2], "LD_BEAT:square");
 
-	LoadGUIMenu(SelectionSubMenu,MenuButton,335.0, 195.0, CLICK_SELECT_CLICK, E_INDEX);
+	LoadGUIMenu(SelectionSubMenu,MainMenuButton,335.0, 195.0, CLICK_SELECT_CLICK, E_INDEX);
 	GUISetPlayerText(SelectionSubMenu, E_INDEX[1], "Click Select");
 	GUISetPlayerText(SelectionSubMenu, E_INDEX[2], "LD_BEAT:square");
 
-	LoadGUIMenu(SelectionSubMenu,MenuButton,335.0, 210.0, CLICK_SELECT_LIST, E_INDEX);
+	LoadGUIMenu(SelectionSubMenu,MainMenuButton,335.0, 210.0, CLICK_SELECT_LIST, E_INDEX);
 	GUISetPlayerText(SelectionSubMenu, E_INDEX[1], "List Select");
 	GUISetPlayerText(SelectionSubMenu, E_INDEX[2], "LD_BEAT:square");
 
-	LoadGUIMenu(SelectionSubMenu,MenuButton,335.0, 225.0, CLICK_SELECT_OPROP, E_INDEX);
+	LoadGUIMenu(SelectionSubMenu,MainMenuButton,335.0, 225.0, CLICK_SELECT_OPROP, E_INDEX);
 	GUISetPlayerText(SelectionSubMenu, E_INDEX[1], "Property Editor");
 	GUISetPlayerText(SelectionSubMenu, E_INDEX[2], "LD_BEAT:square");
 
-	LoadGUIMenu(SelectionSubMenu,MenuButton,335.0, 240.0, CLICK_SELECT_DCLOSEST, E_INDEX);
+	LoadGUIMenu(SelectionSubMenu,MainMenuButton,335.0, 240.0, CLICK_SELECT_DCLOSEST, E_INDEX);
 	GUISetPlayerText(SelectionSubMenu, E_INDEX[1], "Delete Closest");
 	GUISetPlayerText(SelectionSubMenu, E_INDEX[2], "LD_BEAT:square");
 
@@ -328,72 +328,72 @@ hook OnScriptInit()
 	LoadGUIMenu(TextureSubMenu,SubMenuTexText,-200.0, 30.0, EXIT_GUI_MENU, E_INDEX);
 	GUISetPlayerText(TextureSubMenu, E_INDEX[6], "Textures");
 	
-	LoadGUIMenu(TextureSubMenu,MenuButton,335.0, 165.0, CLICK_TEXTURE_TEXEDIT, E_INDEX);
+	LoadGUIMenu(TextureSubMenu,MainMenuButton,335.0, 165.0, CLICK_TEXTURE_TEXEDIT, E_INDEX);
 	GUISetPlayerText(TextureSubMenu, E_INDEX[1], "Texture Editor");
 	GUISetPlayerText(TextureSubMenu, E_INDEX[2], "LD_BEAT:square");
 
-	LoadGUIMenu(TextureSubMenu,MenuButton,335.0, 180.0, CLICK_TEXTURE_TEXTEDIT, E_INDEX);
+	LoadGUIMenu(TextureSubMenu,MainMenuButton,335.0, 180.0, CLICK_TEXTURE_TEXTEDIT, E_INDEX);
 	GUISetPlayerText(TextureSubMenu, E_INDEX[1], "Text Editor");
 	GUISetPlayerText(TextureSubMenu, E_INDEX[2], "LD_BEAT:square");
 	
-	LoadGUIMenu(TextureSubMenu,MenuButton,335.0, 195.0, CLICK_TEXTURE_SHOWINDEX, E_INDEX);
+	LoadGUIMenu(TextureSubMenu,MainMenuButton,335.0, 195.0, CLICK_TEXTURE_SHOWINDEX, E_INDEX);
 	GUISetPlayerText(TextureSubMenu, E_INDEX[1], "Show Indexes");
 	GUISetPlayerText(TextureSubMenu, E_INDEX[2], "LD_BEAT:square");
 
-	LoadGUIMenu(TextureSubMenu,MenuButton,335.0, 210.0, CLICK_TEXTURE_HIDEINDEX, E_INDEX);
+	LoadGUIMenu(TextureSubMenu,MainMenuButton,335.0, 210.0, CLICK_TEXTURE_HIDEINDEX, E_INDEX);
 	GUISetPlayerText(TextureSubMenu, E_INDEX[1], "Hide Indexes");
 	GUISetPlayerText(TextureSubMenu, E_INDEX[2], "LD_BEAT:square");
 	
-	LoadGUIMenu(TextureSubMenu,MenuButton,335.0, 225.0, CLICK_TEXTURE_COPY, E_INDEX);
+	LoadGUIMenu(TextureSubMenu,MainMenuButton,335.0, 225.0, CLICK_TEXTURE_COPY, E_INDEX);
 	GUISetPlayerText(TextureSubMenu, E_INDEX[1], "Copy Properties");
 	GUISetPlayerText(TextureSubMenu, E_INDEX[2], "LD_BEAT:square");
 
-	LoadGUIMenu(TextureSubMenu,MenuButton,335.0, 240.0, CLICK_TEXTURE_CLEAR, E_INDEX);
+	LoadGUIMenu(TextureSubMenu,MainMenuButton,335.0, 240.0, CLICK_TEXTURE_CLEAR, E_INDEX);
 	GUISetPlayerText(TextureSubMenu, E_INDEX[1], "Clear Properties");
 	GUISetPlayerText(TextureSubMenu, E_INDEX[2], "LD_BEAT:square");
 
-	LoadGUIMenu(TextureSubMenu,MenuButton,335.0, 255.0, CLICK_TEXTURE_PASTE, E_INDEX);
+	LoadGUIMenu(TextureSubMenu,MainMenuButton,335.0, 255.0, CLICK_TEXTURE_PASTE, E_INDEX);
 	GUISetPlayerText(TextureSubMenu, E_INDEX[1], "Paste Properties");
 	GUISetPlayerText(TextureSubMenu, E_INDEX[2], "LD_BEAT:square");
 	
-	LoadGUIMenu(TextureSubMenu,MenuButton,335.0, 270.0, CLICK_TEXTURE_VIEWER, E_INDEX);
+	LoadGUIMenu(TextureSubMenu,MainMenuButton,335.0, 270.0, CLICK_TEXTURE_VIEWER, E_INDEX);
 	GUISetPlayerText(TextureSubMenu, E_INDEX[1], "Texture Viewer");
 	GUISetPlayerText(TextureSubMenu, E_INDEX[2], "LD_BEAT:square");
 
-	LoadGUIMenu(TextureSubMenu,MenuButton,335.0, 285.0, CLICK_TEXTURE_THEMEV, E_INDEX);
+	LoadGUIMenu(TextureSubMenu,MainMenuButton,335.0, 285.0, CLICK_TEXTURE_THEMEV, E_INDEX);
 	GUISetPlayerText(TextureSubMenu, E_INDEX[1], "Theme Viewer");
 	GUISetPlayerText(TextureSubMenu, E_INDEX[2], "LD_BEAT:square");
 
-	LoadGUIMenu(TextureSubMenu,MenuButton,335.0, 300.0, CLICK_TEXTURE_THEMET, E_INDEX);
+	LoadGUIMenu(TextureSubMenu,MainMenuButton,335.0, 300.0, CLICK_TEXTURE_THEMET, E_INDEX);
 	GUISetPlayerText(TextureSubMenu, E_INDEX[1], "Texture Themes");
 	GUISetPlayerText(TextureSubMenu, E_INDEX[2], "LD_BEAT:square");
 
-	LoadGUIMenu(TextureSubMenu,MenuButton,335.0, 315.0, CLICK_TEXTURE_SEARCH, E_INDEX);
+	LoadGUIMenu(TextureSubMenu,MainMenuButton,335.0, 315.0, CLICK_TEXTURE_SEARCH, E_INDEX);
 	GUISetPlayerText(TextureSubMenu, E_INDEX[1], "Texture Search");
 	GUISetPlayerText(TextureSubMenu, E_INDEX[2], "LD_BEAT:square");
 
 	// Load Group Menu
 	LoadGUIMenu(GroupMenu,MainMenuText,-100.0, 0.0, CLICK_NO_GROUP, E_INDEX);
 
-	LoadGUIMenu(GroupMenu,MenuButton,435.0, 135.0, CLICK_GROUPSEL_MENU, E_INDEX);
+	LoadGUIMenu(GroupMenu,MainMenuButton,435.0, 135.0, CLICK_GROUPSEL_MENU, E_INDEX);
 	GUISetPlayerText(GroupMenu, E_INDEX[1], "Selection");
 	
-	LoadGUIMenu(GroupMenu,MenuButton,435.0, 150.0, CLICK_GROUPPF_MENU, E_INDEX);
+	LoadGUIMenu(GroupMenu,MainMenuButton,435.0, 150.0, CLICK_GROUPPF_MENU, E_INDEX);
 	GUISetPlayerText(GroupMenu, E_INDEX[1], "Prefabs");
 
-	LoadGUIMenu(GroupMenu,MenuButton,435.0, 165.0, CLICK_PIVOTG_MENU, E_INDEX);
+	LoadGUIMenu(GroupMenu,MainMenuButton,435.0, 165.0, CLICK_PIVOTG_MENU, E_INDEX);
 	GUISetPlayerText(GroupMenu, E_INDEX[1], "Set Pivot");
 	GUISetPlayerText(GroupMenu, E_INDEX[2], "LD_BEAT:square");
 
-	LoadGUIMenu(GroupMenu,MenuButton,435.0, 180.0, CLICK_TOGPIVOTG_MENU, E_INDEX);
+	LoadGUIMenu(GroupMenu,MainMenuButton,435.0, 180.0, CLICK_TOGPIVOTG_MENU, E_INDEX);
 	GUISetPlayerText(GroupMenu, E_INDEX[1], "Toggle Pivot");
 	GUISetPlayerText(GroupMenu, E_INDEX[2], "LD_BEAT:square");
 	
-	LoadGUIMenu(GroupMenu,MenuButton,435.0, 195.0, CLICK_ZEROGROUP_MENU, E_INDEX);
+	LoadGUIMenu(GroupMenu,MainMenuButton,435.0, 195.0, CLICK_ZEROGROUP_MENU, E_INDEX);
 	GUISetPlayerText(GroupMenu, E_INDEX[1], "Group to 0,0,0");
 	GUISetPlayerText(GroupMenu, E_INDEX[2], "LD_BEAT:square");
 	
-	LoadGUIMenu(GroupMenu,MenuButton,435.0, 195.0, CLICK_OBJECTMETRY_MENU, E_INDEX);
+	LoadGUIMenu(GroupMenu,MainMenuButton,435.0, 195.0, CLICK_OBJECTMETRY_MENU, E_INDEX);
 	GUISetPlayerText(GroupMenu, E_INDEX[1], "Objectmetry");
 	GUISetPlayerText(GroupMenu, E_INDEX[2], "LD_BEAT:square");
 
@@ -406,47 +406,47 @@ hook OnScriptInit()
 	// Selection sub
 	LoadGUIMenu(GroupSelSubMenu,SubMenuTexText,-200.0, 0.0, EXIT_GUI_MENU, E_INDEX);
 
-	LoadGUIMenu(GroupSelSubMenu,MenuButton,335.0, 135.0, CLICK_GROUP_CSEL, E_INDEX);
+	LoadGUIMenu(GroupSelSubMenu,MainMenuButton,335.0, 135.0, CLICK_GROUP_CSEL, E_INDEX);
 	GUISetPlayerText(GroupSelSubMenu, E_INDEX[1], "Click Select");
 	GUISetPlayerText(GroupSelSubMenu, E_INDEX[2], "LD_BEAT:square");
 
-	LoadGUIMenu(GroupSelSubMenu,MenuButton,335.0, 150.0, CLICK_GROUP_GADD, E_INDEX);
+	LoadGUIMenu(GroupSelSubMenu,MainMenuButton,335.0, 150.0, CLICK_GROUP_GADD, E_INDEX);
 	GUISetPlayerText(GroupSelSubMenu, E_INDEX[1], "Group Add");
 	GUISetPlayerText(GroupSelSubMenu, E_INDEX[2], "LD_BEAT:square");
 
-	LoadGUIMenu(GroupSelSubMenu,MenuButton,335.0, 165.0, CLICK_GROUP_GREM, E_INDEX);
+	LoadGUIMenu(GroupSelSubMenu,MainMenuButton,335.0, 165.0, CLICK_GROUP_GREM, E_INDEX);
 	GUISetPlayerText(GroupSelSubMenu, E_INDEX[1], "Group Remove");
 	GUISetPlayerText(GroupSelSubMenu, E_INDEX[2], "LD_BEAT:square");
 
-	LoadGUIMenu(GroupSelSubMenu,MenuButton,335.0, 180.0, CLICK_GROUP_CLEAR, E_INDEX);
+	LoadGUIMenu(GroupSelSubMenu,MainMenuButton,335.0, 180.0, CLICK_GROUP_CLEAR, E_INDEX);
 	GUISetPlayerText(GroupSelSubMenu, E_INDEX[1], "Group Clear");
 	GUISetPlayerText(GroupSelSubMenu, E_INDEX[2], "LD_BEAT:square");
 
-	LoadGUIMenu(GroupSelSubMenu,MenuButton,335.0, 195.0, CLICK_GROUP_CLONE, E_INDEX);
+	LoadGUIMenu(GroupSelSubMenu,MainMenuButton,335.0, 195.0, CLICK_GROUP_CLONE, E_INDEX);
 	GUISetPlayerText(GroupSelSubMenu, E_INDEX[1], "Group Clone");
 	GUISetPlayerText(GroupSelSubMenu, E_INDEX[2], "LD_BEAT:square");
 
-	LoadGUIMenu(GroupSelSubMenu,MenuButton,335.0, 210.0, CLICK_GROUP_GALL, E_INDEX);
+	LoadGUIMenu(GroupSelSubMenu,MainMenuButton,335.0, 210.0, CLICK_GROUP_GALL, E_INDEX);
 	GUISetPlayerText(GroupSelSubMenu, E_INDEX[1], "Group All");
 	GUISetPlayerText(GroupSelSubMenu, E_INDEX[2], "LD_BEAT:square");
 
-	LoadGUIMenu(GroupSelSubMenu,MenuButton,335.0, 225.0, CLICK_GROUP_SETGROUP, E_INDEX);
+	LoadGUIMenu(GroupSelSubMenu,MainMenuButton,335.0, 225.0, CLICK_GROUP_SETGROUP, E_INDEX);
 	GUISetPlayerText(GroupSelSubMenu, E_INDEX[1], "Set Group");
 	GUISetPlayerText(GroupSelSubMenu, E_INDEX[2], "LD_BEAT:square");
 
-	LoadGUIMenu(GroupSelSubMenu,MenuButton,335.0, 240.0, CLICK_GROUP_SELECTGROUP, E_INDEX);
+	LoadGUIMenu(GroupSelSubMenu,MainMenuButton,335.0, 240.0, CLICK_GROUP_SELECTGROUP, E_INDEX);
 	GUISetPlayerText(GroupSelSubMenu, E_INDEX[1], "Select Group");
 	GUISetPlayerText(GroupSelSubMenu, E_INDEX[2], "LD_BEAT:square");
 
-	LoadGUIMenu(GroupSelSubMenu,MenuButton,335.0, 255.0, CLICK_GROUP_EDIT, E_INDEX);
+	LoadGUIMenu(GroupSelSubMenu,MainMenuButton,335.0, 255.0, CLICK_GROUP_EDIT, E_INDEX);
 	GUISetPlayerText(GroupSelSubMenu, E_INDEX[1], "Group Edit");
 	GUISetPlayerText(GroupSelSubMenu, E_INDEX[2], "LD_BEAT:square");
 	
-	LoadGUIMenu(GroupSelSubMenu,MenuButton,335.0, 270.0, CLICK_GROUP_INFRONT, E_INDEX);
+	LoadGUIMenu(GroupSelSubMenu,MainMenuButton,335.0, 270.0, CLICK_GROUP_INFRONT, E_INDEX);
 	GUISetPlayerText(GroupSelSubMenu, E_INDEX[1], "Group Infront");
 	GUISetPlayerText(GroupSelSubMenu, E_INDEX[2], "LD_BEAT:square");
 
-	LoadGUIMenu(GroupSelSubMenu,MenuButton,335.0, 285.0, CLICK_GROUP_GDELETE, E_INDEX);
+	LoadGUIMenu(GroupSelSubMenu,MainMenuButton,335.0, 285.0, CLICK_GROUP_GDELETE, E_INDEX);
 	GUISetPlayerText(GroupSelSubMenu, E_INDEX[1], "Group Delete");
 	GUISetPlayerText(GroupSelSubMenu, E_INDEX[2], "LD_BEAT:square");
 	
@@ -455,15 +455,15 @@ hook OnScriptInit()
 	LoadGUIMenu(GroupPrefabMenu,SubMenuText,-200.0, 15.0, EXIT_GUI_MENU, E_INDEX);
 	GUISetPlayerText(GroupPrefabMenu, E_INDEX[6], "Prefabs");
 
-	LoadGUIMenu(GroupPrefabMenu,MenuButton,335.0, 150.0, CLICK_GROUP_GPREFAB, E_INDEX);
+	LoadGUIMenu(GroupPrefabMenu,MainMenuButton,335.0, 150.0, CLICK_GROUP_GPREFAB, E_INDEX);
 	GUISetPlayerText(GroupPrefabMenu, E_INDEX[1], "Prefab Group");
 	GUISetPlayerText(GroupPrefabMenu, E_INDEX[2], "LD_BEAT:square");
 	
-	LoadGUIMenu(GroupPrefabMenu,MenuButton,335.0, 165.0, CLICK_GROUP_LOADPF, E_INDEX);
+	LoadGUIMenu(GroupPrefabMenu,MainMenuButton,335.0, 165.0, CLICK_GROUP_LOADPF, E_INDEX);
 	GUISetPlayerText(GroupPrefabMenu, E_INDEX[1], "Load Prefab");
 	GUISetPlayerText(GroupPrefabMenu, E_INDEX[2], "LD_BEAT:square");
 
-	LoadGUIMenu(GroupPrefabMenu,MenuButton,335.0, 180.0, CLICK_GROUP_LOADZPF, E_INDEX);
+	LoadGUIMenu(GroupPrefabMenu,MainMenuButton,335.0, 180.0, CLICK_GROUP_LOADZPF, E_INDEX);
 	GUISetPlayerText(GroupPrefabMenu, E_INDEX[1], "Set Load Z");
 	GUISetPlayerText(GroupPrefabMenu, E_INDEX[2], "LD_BEAT:square");
 
@@ -559,7 +559,7 @@ static CreatePlayerMenus(playerid)
 
 hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
-	if( newkeys & KEY_NO || (IsFlyMode(playerid) && newkeys & KEY_JUMP) )
+	if(newkeys & KEY_NO && !IsFlyMode(playerid)) //|| (IsFlyMode(playerid) && newkeys & KEY_JUMP) )
 	{
 		if(!EditingMode[playerid])
 		{
