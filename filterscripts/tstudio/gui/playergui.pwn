@@ -351,19 +351,20 @@ stock PlayerShowGUIMenu(playerid, PlayerGUIMenu:gindex, showbinds = true, bool:v
 	PlayerGUIValidIndex(playerid, gindex);
 	PlayerGUIData[playerid][_:gindex][PlayerGUIIsVisible] = visible;
 	
+	// Show any binds
+	if(showbinds)
+	{
+		for(new j = 0; j < MAX_PLAYER_BINDS; j++)
+		{
+			if(PlayerGUIData[playerid][_:gindex][PlayerTextDrawBinds][j] != INVALID_MENU_GUI) ShowGUIMenu(playerid, PlayerGUIData[playerid][_:gindex][PlayerTextDrawBinds][j]);
+		}
+	}
+	
 	for(new i = 0; i < MAX_PLAYER_ELEMENTS; i++)
 	{
 		if(PlayerGUIData[playerid][_:gindex][PlayerGUIUsed][i])
 		{
 			PlayerTextDrawShow(playerid, PlayerGUIData[playerid][_:gindex][PlayerGUIid][i]);
-			// Show any binds
-			if(showbinds)
-			{
-				for(new j = 0; j < MAX_PLAYER_BINDS; j++)
-				{
-					if(PlayerGUIData[playerid][_:gindex][PlayerTextDrawBinds][j] != INVALID_MENU_GUI) ShowGUIMenu(playerid, PlayerGUIData[playerid][_:gindex][PlayerTextDrawBinds][j]);
-				}
-			}
 		}
 	}
 	return 1;

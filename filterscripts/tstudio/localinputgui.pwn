@@ -114,14 +114,19 @@ static GUIMenu:MenuGroup;
 static GUIMenu:MenuGroupMove;
 static GUIMenu:MenuGroupMoveMore;
 
+//static PlayerGUIMenu:ToolBar[MAX_PLAYERS];
+static PlayerGUIMenu:PlayerMenuMap[MAX_PLAYERS];
 static PlayerGUIMenu:PlayerMenuObject[MAX_PLAYERS];
 static PlayerGUIMenu:PlayerMenuObjectMove[MAX_PLAYERS];
+static PlayerGUIMenu:PlayerMenuObjectMoveMore[MAX_PLAYERS];
+static PlayerGUIMenu:PlayerMenuGroup[MAX_PLAYERS];
 static PlayerGUIMenu:PlayerMenuGroupMove[MAX_PLAYERS];
+static PlayerGUIMenu:PlayerMenuGroupMoveMore[MAX_PLAYERS];
 
 // GUI Groups
 
-static PlayerGUIMenu:PlayerMenuAll[MAX_PLAYERS];
-static PlayerGUIMenu:PlayerMenuSubmenuAll[MAX_PLAYERS];
+//static PlayerGUIMenu:PlayerMenuAll[MAX_PLAYERS];
+//static PlayerGUIMenu:PlayerMenuSubmenuAll[MAX_PLAYERS];
 
 static PlayerGUIMenu:PlayerMenuMapAll[MAX_PLAYERS];
 static PlayerGUIMenu:PlayerMenuObjectAll[MAX_PLAYERS];
@@ -195,7 +200,7 @@ hook OnScriptInit()
 
 	LoadGUIMenu(MenuMap, MenuHeader, 500.0, 128.0, CLICK_NO_GROUP, E_INDEX);
 	GUISetTextSize(MenuMap, E_INDEX[0], 120.0, 16.0); // header box
-	GUISetPlayerText(MenuObject, E_INDEX[1], "Map_Menu");
+	GUISetPlayerText(MenuMap, E_INDEX[1], "Map_Menu");
 
 	LoadGUIMenu(MenuMap, MenuButton, 502.0, 146.0, CLICK_MAP_NEWMAP, E_INDEX);
 	GUISetTextSize(MenuMap, E_INDEX[0], 37.0, 16.0); // new map button
@@ -219,6 +224,7 @@ hook OnScriptInit()
 
 	LoadGUIMenu(MenuMap, MenuHeader, 500.0, 182.0, CLICK_NO_GROUP, E_INDEX);
 	GUISetTextSize(MenuMap, E_INDEX[0], 120.0, 16.0); // prop header box
+	GUISetPlayerText(MenuMap, E_INDEX[1], "Properties");
 
 	LoadGUIMenu(MenuMap, MenuInfo, 502.0, 200.0, CLICK_NO_GROUP, E_INDEX);
 	GUISetTextSize(MenuMap, E_INDEX[0], 116.0, 72.0); // prop info box
@@ -259,7 +265,6 @@ hook OnScriptInit()
 	GUISetTextSize(MenuObject, E_INDEX[0], 16.0, 16.0); // model left button
 	GUISetPlayerText(MenuObject, E_INDEX[1], "ld_beat:left");
 	
-	// TODO MODEL INPUT BOX
 	//
 	LoadGUIMenu(MenuObject, MenuText, 502.0, 182.0, CLICK_NO_GROUP, E_INDEX);
 	GUISetTextSize(MenuObject, E_INDEX[0], 31.0, 16.0); // group text
@@ -287,6 +292,7 @@ hook OnScriptInit()
 	//
 	LoadGUIMenu(MenuObject, MenuHeader, 500.0, 236.0, CLICK_NO_GROUP, E_INDEX);
 	GUISetTextSize(MenuObject, E_INDEX[0], 120.0, 16.0); // prop header box
+	GUISetPlayerText(MenuObject, E_INDEX[1], "Properties");
 
 	LoadGUIMenu(MenuObject, MenuInfo, 502.0, 254.0, CLICK_NO_GROUP, E_INDEX);
 	GUISetTextSize(MenuObject, E_INDEX[0], 116.0, 87.0); // prop info box
@@ -301,7 +307,7 @@ hook OnScriptInit()
 
 	LoadGUIMenu(MenuObjectMove, MenuHeader, 500.0, 128.0, CLICK_NO_GROUP, E_INDEX);
 	GUISetTextSize(MenuObjectMove, E_INDEX[0], 120.0, 16.0); // header box
-	GUISetPlayerText(MenuObject, E_INDEX[1], "Object_Movement_Menu");
+	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "Object_Movement");
 	//
 	LoadGUIMenu(MenuObjectMove, MenuHeaderMoreButton, 604.0, 128.0, CLICK_OBJMOVE_MORE, E_INDEX);
 	GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // header more button
@@ -314,7 +320,7 @@ hook OnScriptInit()
 	LoadGUIMenu(MenuObjectMove, MenuText, 502.0, 146.0, CLICK_NO_GROUP, E_INDEX);
 	GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // X text
 	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "X");
-	GUISetAlignment(MenuObjectMove, E_INDEX[1], 2);
+	GUISetAlignment(MenuObjectMove, E_INDEX[1], 1);
 
 	LoadGUIMenu(MenuObjectMove, MenuSpriteButton, 602.0, 146.0, CLICK_OBJMOVE_X_L, E_INDEX);
 	GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // X left button
@@ -327,7 +333,7 @@ hook OnScriptInit()
 	LoadGUIMenu(MenuObjectMove, MenuText, 502.0, 164.0, CLICK_NO_GROUP, E_INDEX);
 	GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // Y text
 	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "Y");
-	GUISetAlignment(MenuObjectMove, E_INDEX[1], 2);
+	GUISetAlignment(MenuObjectMove, E_INDEX[1], 1);
 
 	LoadGUIMenu(MenuObjectMove, MenuSpriteButton, 602.0, 164.0, CLICK_OBJMOVE_Y_L, E_INDEX);
 	GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // Y left button
@@ -340,7 +346,7 @@ hook OnScriptInit()
 	LoadGUIMenu(MenuObjectMove, MenuText, 502.0, 182.0, CLICK_NO_GROUP, E_INDEX);
 	GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // Z text
 	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "Z");
-	GUISetAlignment(MenuObjectMove, E_INDEX[1], 2);
+	GUISetAlignment(MenuObjectMove, E_INDEX[1], 1);
 
 	LoadGUIMenu(MenuObjectMove, MenuSpriteButton, 602.0, 182.0, CLICK_OBJMOVE_Z_L, E_INDEX);
 	GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // Z left button
@@ -352,11 +358,12 @@ hook OnScriptInit()
 	//
 	LoadGUIMenu(MenuObjectMove, MenuHeader, 500.0, 200.0, CLICK_NO_GROUP, E_INDEX);
 	GUISetTextSize(MenuObjectMove, E_INDEX[0], 120.0, 16.0); // rot header box
+	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "Rotation");
 	//
 	LoadGUIMenu(MenuObjectMove, MenuText, 502.0, 218.0, CLICK_NO_GROUP, E_INDEX);
 	GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // RX text
 	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "RX");
-	GUISetAlignment(MenuObjectMove, E_INDEX[1], 2);
+	GUISetAlignment(MenuObjectMove, E_INDEX[1], 1);
 
 	LoadGUIMenu(MenuObjectMove, MenuSpriteButton, 602.0, 218.0, CLICK_OBJMOVE_RX_L, E_INDEX);
 	GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // RX left button
@@ -369,7 +376,7 @@ hook OnScriptInit()
 	LoadGUIMenu(MenuObjectMove, MenuText, 502.0, 236.0, CLICK_NO_GROUP, E_INDEX);
 	GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // RY text
 	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "RY");
-	GUISetAlignment(MenuObjectMove, E_INDEX[1], 2);
+	GUISetAlignment(MenuObjectMove, E_INDEX[1], 1);
 
 	LoadGUIMenu(MenuObjectMove, MenuSpriteButton, 602.0, 236.0, CLICK_OBJMOVE_RY_L, E_INDEX);
 	GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // RY left button
@@ -382,7 +389,7 @@ hook OnScriptInit()
 	LoadGUIMenu(MenuObjectMove, MenuText, 502.0, 254.0, CLICK_NO_GROUP, E_INDEX);
 	GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // RZ text
 	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "RZ");
-	GUISetAlignment(MenuObjectMove, E_INDEX[1], 2);
+	GUISetAlignment(MenuObjectMove, E_INDEX[1], 1);
 
 	LoadGUIMenu(MenuObjectMove, MenuSpriteButton, 602.0, 254.0, CLICK_OBJMOVE_RZ_L, E_INDEX);
 	GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // RZ left button
@@ -398,28 +405,29 @@ hook OnScriptInit()
 	//
 	LoadGUIMenu(MenuObjectMove, MenuHeader, 500.0, 290.0, CLICK_NO_GROUP, E_INDEX);
 	GUISetTextSize(MenuObjectMove, E_INDEX[0], 120.0, 16.0); // nudge header box
+	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "Nudge_Settings");
 	//
-	LoadGUIMenu(MenuObjectMove, MenuText, 502.0, 290.0, CLICK_NO_GROUP, E_INDEX);
+	LoadGUIMenu(MenuObjectMove, MenuText, 502.0, 308.0, CLICK_NO_GROUP, E_INDEX);
 	GUISetTextSize(MenuObjectMove, E_INDEX[0], 20.0, 16.0); // nudge pos text
 	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "Pos");
 
-	LoadGUIMenu(MenuObjectMove, MenuSpriteButton, 602.0, 290.0, CLICK_OBJMOVE_NUDPOS_R, E_INDEX);
+	LoadGUIMenu(MenuObjectMove, MenuSpriteButton, 602.0, 308.0, CLICK_OBJMOVE_NUDPOS_R, E_INDEX);
 	GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // nudge pos right button
 	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "ld_beat:right");
 
-	LoadGUIMenu(MenuObjectMove, MenuSpriteButton, 584.0, 290.0, CLICK_OBJMOVE_NUDPOS_L, E_INDEX);
+	LoadGUIMenu(MenuObjectMove, MenuSpriteButton, 584.0, 308.0, CLICK_OBJMOVE_NUDPOS_L, E_INDEX);
 	GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // nudge pos left button
 	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "ld_beat:left");
 	//
-	LoadGUIMenu(MenuObjectMove, MenuText, 502.0, 308.0, CLICK_NO_GROUP, E_INDEX);
+	LoadGUIMenu(MenuObjectMove, MenuText, 502.0, 326.0, CLICK_NO_GROUP, E_INDEX);
 	GUISetTextSize(MenuObjectMove, E_INDEX[0], 20.0, 16.0); // nudge rot text
 	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "Rot");
 
-	LoadGUIMenu(MenuObjectMove, MenuSpriteButton, 602.0, 308.0, CLICK_OBJMOVE_NUDROT_R, E_INDEX);
+	LoadGUIMenu(MenuObjectMove, MenuSpriteButton, 602.0, 326.0, CLICK_OBJMOVE_NUDROT_R, E_INDEX);
 	GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // nudge rot right button
 	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "ld_beat:right");
 
-	LoadGUIMenu(MenuObjectMove, MenuSpriteButton, 584.0, 308.0, CLICK_OBJMOVE_NUDROT_L, E_INDEX);
+	LoadGUIMenu(MenuObjectMove, MenuSpriteButton, 584.0, 326.0, CLICK_OBJMOVE_NUDROT_L, E_INDEX);
 	GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // nudge rot left button
 	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "ld_beat:left");
 
@@ -432,7 +440,7 @@ hook OnScriptInit()
 
 	LoadGUIMenu(MenuObjectMoveMore, MenuHeader, 420.0, 128.0, CLICK_NO_GROUP, E_INDEX);
 	GUISetTextSize(MenuObjectMoveMore, E_INDEX[0], 80.0, 16.0); // header box
-	GUISetPlayerText(MenuObject, E_INDEX[1], "More");
+	GUISetPlayerText(MenuObjectMoveMore, E_INDEX[1], "Extra");
 	//
 	LoadGUIMenu(MenuObjectMoveMore, MenuButton, 422.0, 146.0, CLICK_OBJMOVEMORE_TRANSFORM, E_INDEX);
 	GUISetTextSize(MenuObjectMoveMore, E_INDEX[0], 76.0, 16.0); // transform button
@@ -459,6 +467,7 @@ hook OnScriptInit()
 
 	LoadGUIMenu(MenuGroup, MenuHeader, 500.0, 128.0, CLICK_NO_GROUP, E_INDEX);
 	GUISetTextSize(MenuGroup, E_INDEX[0], 120.0, 16.0); // header box
+	GUISetPlayerText(MenuGroup, E_INDEX[1], "Group_Menu");
 	//
 	LoadGUIMenu(MenuGroup, MenuButton, 502.0, 146.0, CLICK_GRP_SELALLOBJ, E_INDEX);
 	GUISetTextSize(MenuGroup, E_INDEX[0], 116.0, 16.0); // select all objects button
@@ -525,7 +534,7 @@ hook OnScriptInit()
 
 	LoadGUIMenu(MenuGroupMove, MenuHeader, 500.0, 128.0, CLICK_NO_GROUP, E_INDEX);
 	GUISetTextSize(MenuGroupMove, E_INDEX[0], 120.0, 16.0); // header box
-	GUISetPlayerText(MenuObject, E_INDEX[1], "Group_Movement_Menu");
+	GUISetPlayerText(MenuGroupMove, E_INDEX[1], "Group_Movement");
 	//
 	LoadGUIMenu(MenuGroupMove, MenuHeaderMoreButton, 604.0, 128.0, CLICK_GRPMOVE_MORE, E_INDEX);
 	GUISetTextSize(MenuGroupMove, E_INDEX[0], 16.0, 16.0); // header more button
@@ -538,7 +547,7 @@ hook OnScriptInit()
 	LoadGUIMenu(MenuGroupMove, MenuText, 502.0, 146.0, CLICK_NO_GROUP, E_INDEX);
 	GUISetTextSize(MenuGroupMove, E_INDEX[0], 80.0, 16.0); // X text
 	GUISetPlayerText(MenuGroupMove, E_INDEX[1], "X");
-	GUISetAlignment(MenuGroupMove, E_INDEX[1], 2);
+	GUISetAlignment(MenuGroupMove, E_INDEX[1], 1);
 
 	LoadGUIMenu(MenuGroupMove, MenuSpriteButton, 602.0, 146.0, CLICK_GRPMOVE_X_L, E_INDEX);
 	GUISetTextSize(MenuGroupMove, E_INDEX[0], 16.0, 16.0); // X left button
@@ -551,7 +560,7 @@ hook OnScriptInit()
 	LoadGUIMenu(MenuGroupMove, MenuText, 502.0, 164.0, CLICK_NO_GROUP, E_INDEX);
 	GUISetTextSize(MenuGroupMove, E_INDEX[0], 80.0, 16.0); // Y text
 	GUISetPlayerText(MenuGroupMove, E_INDEX[1], "Y");
-	GUISetAlignment(MenuGroupMove, E_INDEX[1], 2);
+	GUISetAlignment(MenuGroupMove, E_INDEX[1], 1);
 
 	LoadGUIMenu(MenuGroupMove, MenuSpriteButton, 602.0, 164.0, CLICK_GRPMOVE_Y_L, E_INDEX);
 	GUISetTextSize(MenuGroupMove, E_INDEX[0], 16.0, 16.0); // Y left button
@@ -564,7 +573,7 @@ hook OnScriptInit()
 	LoadGUIMenu(MenuGroupMove, MenuText, 502.0, 182.0, CLICK_NO_GROUP, E_INDEX);
 	GUISetTextSize(MenuGroupMove, E_INDEX[0], 80.0, 16.0); // Z text
 	GUISetPlayerText(MenuGroupMove, E_INDEX[1], "Z");
-	GUISetAlignment(MenuGroupMove, E_INDEX[1], 2);
+	GUISetAlignment(MenuGroupMove, E_INDEX[1], 1);
 
 	LoadGUIMenu(MenuGroupMove, MenuSpriteButton, 602.0, 182.0, CLICK_GRPMOVE_Z_L, E_INDEX);
 	GUISetTextSize(MenuGroupMove, E_INDEX[0], 16.0, 16.0); // Z left button
@@ -576,11 +585,12 @@ hook OnScriptInit()
 	//
 	LoadGUIMenu(MenuGroupMove, MenuHeader, 500.0, 200.0, CLICK_NO_GROUP, E_INDEX);
 	GUISetTextSize(MenuGroupMove, E_INDEX[0], 120.0, 16.0); // rot header box
+	GUISetPlayerText(MenuGroupMove, E_INDEX[1], "Rotation");
 	//
 	LoadGUIMenu(MenuGroupMove, MenuText, 502.0, 218.0, CLICK_NO_GROUP, E_INDEX);
 	GUISetTextSize(MenuGroupMove, E_INDEX[0], 80.0, 16.0); // RX text
 	GUISetPlayerText(MenuGroupMove, E_INDEX[1], "RX");
-	GUISetAlignment(MenuGroupMove, E_INDEX[1], 2);
+	GUISetAlignment(MenuGroupMove, E_INDEX[1], 1);
 
 	LoadGUIMenu(MenuGroupMove, MenuSpriteButton, 602.0, 218.0, CLICK_GRPMOVE_RX_L, E_INDEX);
 	GUISetTextSize(MenuGroupMove, E_INDEX[0], 16.0, 16.0); // RX left button
@@ -593,7 +603,7 @@ hook OnScriptInit()
 	LoadGUIMenu(MenuGroupMove, MenuText, 502.0, 236.0, CLICK_NO_GROUP, E_INDEX);
 	GUISetTextSize(MenuGroupMove, E_INDEX[0], 80.0, 16.0); // RY text
 	GUISetPlayerText(MenuGroupMove, E_INDEX[1], "RY");
-	GUISetAlignment(MenuGroupMove, E_INDEX[1], 2);
+	GUISetAlignment(MenuGroupMove, E_INDEX[1], 1);
 
 	LoadGUIMenu(MenuGroupMove, MenuSpriteButton, 602.0, 236.0, CLICK_GRPMOVE_RY_L, E_INDEX);
 	GUISetTextSize(MenuGroupMove, E_INDEX[0], 16.0, 16.0); // RY left button
@@ -606,7 +616,7 @@ hook OnScriptInit()
 	LoadGUIMenu(MenuGroupMove, MenuText, 502.0, 254.0, CLICK_NO_GROUP, E_INDEX);
 	GUISetTextSize(MenuGroupMove, E_INDEX[0], 80.0, 16.0); // RZ text
 	GUISetPlayerText(MenuGroupMove, E_INDEX[1], "RZ");
-	GUISetAlignment(MenuGroupMove, E_INDEX[1], 2);
+	GUISetAlignment(MenuGroupMove, E_INDEX[1], 1);
 
 	LoadGUIMenu(MenuGroupMove, MenuSpriteButton, 602.0, 254.0, CLICK_GRPMOVE_RZ_L, E_INDEX);
 	GUISetTextSize(MenuGroupMove, E_INDEX[0], 16.0, 16.0); // RZ left button
@@ -618,6 +628,7 @@ hook OnScriptInit()
 	//
 	LoadGUIMenu(MenuGroupMove, MenuHeader, 500.0, 272.0, CLICK_NO_GROUP, E_INDEX);
 	GUISetTextSize(MenuGroupMove, E_INDEX[0], 120.0, 16.0); // nudge header box
+	GUISetPlayerText(MenuGroupMove, E_INDEX[1], "Nudge_Settings");
 	//
 	LoadGUIMenu(MenuGroupMove, MenuText, 502.0, 290.0, CLICK_NO_GROUP, E_INDEX);
 	GUISetTextSize(MenuGroupMove, E_INDEX[0], 20.0, 16.0); // nudge pos text
@@ -652,7 +663,7 @@ hook OnScriptInit()
 
 	LoadGUIMenu(MenuGroupMoveMore, MenuHeader, 420.0, 128.0, CLICK_NO_GROUP, E_INDEX);
 	GUISetTextSize(MenuGroupMoveMore, E_INDEX[0], 80.0, 16.0); // header box
-	GUISetPlayerText(MenuObject, E_INDEX[1], "More");
+	GUISetPlayerText(MenuGroupMoveMore, E_INDEX[1], "Extra");
 	//
 	LoadGUIMenu(MenuGroupMoveMore, MenuButton, 422.0, 146.0, CLICK_GRPMOVEMORE_TRANSFORM, E_INDEX);
 	GUISetTextSize(MenuGroupMoveMore, E_INDEX[0], 76.0, 16.0); // transform button
@@ -699,16 +710,19 @@ static CreatePlayerMenus(playerid)
 	PlayerLoadGUIMenu(playerid, PlayerMenuObject[playerid], MenuInput, 535.0, 164.0, CLICK_OBJ_MODEL_INPUT, E_PLAYERINDEX);
 	PlayerGUISetTextSize(playerid, PlayerMenuObject[playerid], E_PLAYERINDEX[0], 47.0, 16.0); // model input
 	PlayerGUISetPlayerText(playerid, PlayerMenuObject[playerid], E_PLAYERINDEX[1], "18754");
+	PlayerGUISetAlignment(playerid, PlayerMenuObject[playerid], E_PLAYERINDEX[1], 2);
 	PlayerElementData[playerid][E_ObjModel] = E_PLAYERINDEX[1];
 
 	PlayerLoadGUIMenu(playerid, PlayerMenuObject[playerid], MenuInput, 535.0, 182.0, CLICK_OBJ_GROUP_INPUT, E_PLAYERINDEX);
 	PlayerGUISetTextSize(playerid, PlayerMenuObject[playerid], E_PLAYERINDEX[0], 47.0, 16.0); // group input
 	PlayerGUISetPlayerText(playerid, PlayerMenuObject[playerid], E_PLAYERINDEX[1], "0");
+	PlayerGUISetAlignment(playerid, PlayerMenuObject[playerid], E_PLAYERINDEX[1], 2);
 	PlayerElementData[playerid][E_ObjGroup] = E_PLAYERINDEX[1];
 
 	PlayerLoadGUIMenu(playerid, PlayerMenuObject[playerid], MenuInput, 531.0, 200.0, CLICK_OBJ_NOTE_INPUT, E_PLAYERINDEX);
 	PlayerGUISetTextSize(playerid, PlayerMenuObject[playerid], E_PLAYERINDEX[0], 87.0, 16.0); // note input
-	PlayerGUISetPlayerText(playerid, PlayerMenuObject[playerid], E_PLAYERINDEX[1], "18754");
+	PlayerGUISetPlayerText(playerid, PlayerMenuObject[playerid], E_PLAYERINDEX[1], "Some_text_here.");
+	PlayerGUISetAlignment(playerid, PlayerMenuObject[playerid], E_PLAYERINDEX[1], 1);
 	PlayerElementData[playerid][E_ObjNote] = E_PLAYERINDEX[1];
 	
 	// Object move menu
@@ -718,41 +732,49 @@ static CreatePlayerMenus(playerid)
 	PlayerLoadGUIMenu(playerid, PlayerMenuObjectMove[playerid], MenuInput, 520.0, 146.0, CLICK_OBJMOVE_X_INPUT, E_PLAYERINDEX);
 	PlayerGUISetTextSize(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[0], 62.0, 16.0); // X input
 	PlayerGUISetPlayerText(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[1], "1524.1000");
+	PlayerGUISetAlignment(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[1], 2);
 	PlayerElementData[playerid][E_ObjX] = E_PLAYERINDEX[1];
 
 	PlayerLoadGUIMenu(playerid, PlayerMenuObjectMove[playerid], MenuInput, 520.0, 164.0, CLICK_OBJMOVE_Y_INPUT, E_PLAYERINDEX);
 	PlayerGUISetTextSize(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[0], 62.0, 16.0); // Y input
-	PlayerGUISetPlayerText(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[1], "1524.1000");
+	PlayerGUISetPlayerText(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[1], "123.1000");
+	PlayerGUISetAlignment(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[1], 2);
 	PlayerElementData[playerid][E_ObjY] = E_PLAYERINDEX[1];
 
-	PlayerLoadGUIMenu(playerid, PlayerMenuObjectMove[playerid], MenuInput, 520.0, 164.0, CLICK_OBJMOVE_Z_INPUT, E_PLAYERINDEX);
+	PlayerLoadGUIMenu(playerid, PlayerMenuObjectMove[playerid], MenuInput, 520.0, 182.0, CLICK_OBJMOVE_Z_INPUT, E_PLAYERINDEX);
 	PlayerGUISetTextSize(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[0], 62.0, 16.0); // Z input
-	PlayerGUISetPlayerText(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[1], "1524.1000");
+	PlayerGUISetPlayerText(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[1], "12.1000");
+	PlayerGUISetAlignment(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[1], 2);
 	PlayerElementData[playerid][E_ObjZ] = E_PLAYERINDEX[1];
 
 	PlayerLoadGUIMenu(playerid, PlayerMenuObjectMove[playerid], MenuInput, 520.0, 218.0, CLICK_OBJMOVE_RX_INPUT, E_PLAYERINDEX);
 	PlayerGUISetTextSize(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[0], 62.0, 16.0); // RX input
-	PlayerGUISetPlayerText(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[1], "1524.1000");
+	PlayerGUISetPlayerText(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[1], "1.1000");
+	PlayerGUISetAlignment(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[1], 2);
 	PlayerElementData[playerid][E_ObjRX] = E_PLAYERINDEX[1];
 
 	PlayerLoadGUIMenu(playerid, PlayerMenuObjectMove[playerid], MenuInput, 520.0, 236.0, CLICK_OBJMOVE_RY_INPUT, E_PLAYERINDEX);
 	PlayerGUISetTextSize(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[0], 62.0, 16.0); // RY input
-	PlayerGUISetPlayerText(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[1], "1524.1000");
+	PlayerGUISetPlayerText(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[1], "12.1000");
+	PlayerGUISetAlignment(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[1], 2);
 	PlayerElementData[playerid][E_ObjRY] = E_PLAYERINDEX[1];
 
 	PlayerLoadGUIMenu(playerid, PlayerMenuObjectMove[playerid], MenuInput, 520.0, 254.0, CLICK_OBJMOVE_RZ_INPUT, E_PLAYERINDEX);
 	PlayerGUISetTextSize(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[0], 62.0, 16.0); // RZ input
-	PlayerGUISetPlayerText(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[1], "1524.1000");
+	PlayerGUISetPlayerText(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[1], "123.1000");
+	PlayerGUISetAlignment(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[1], 2);
 	PlayerElementData[playerid][E_ObjRZ] = E_PLAYERINDEX[1];
 
-	PlayerLoadGUIMenu(playerid, PlayerMenuObjectMove[playerid], MenuInput, 524.0, 290.0, CLICK_OBJMOVE_NUDPOS_INPUT, E_PLAYERINDEX);
+	PlayerLoadGUIMenu(playerid, PlayerMenuObjectMove[playerid], MenuInput, 524.0, 308.0, CLICK_OBJMOVE_NUDPOS_INPUT, E_PLAYERINDEX);
 	PlayerGUISetTextSize(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[0], 58.0, 16.0); // nudge pos input
-	PlayerGUISetPlayerText(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[1], "2854.1562");
+	PlayerGUISetPlayerText(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[1], "0.5");
+	PlayerGUISetAlignment(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[1], 2);
 	PlayerElementData[playerid][E_ObjNudPos] = E_PLAYERINDEX[1];
 
-	PlayerLoadGUIMenu(playerid, PlayerMenuObjectMove[playerid], MenuInput, 524.0, 308.0, CLICK_OBJMOVE_NUDROT_INPUT, E_PLAYERINDEX);
+	PlayerLoadGUIMenu(playerid, PlayerMenuObjectMove[playerid], MenuInput, 524.0, 326.0, CLICK_OBJMOVE_NUDROT_INPUT, E_PLAYERINDEX);
 	PlayerGUISetTextSize(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[0], 58.0, 16.0); // nudge rot input
-	PlayerGUISetPlayerText(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[1], "2854.1562");
+	PlayerGUISetPlayerText(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[1], "1.0");
+	PlayerGUISetAlignment(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[1], 2);
 	PlayerElementData[playerid][E_ObjNudRot] = E_PLAYERINDEX[1];
 	
 	// Group move menu
@@ -762,11 +784,13 @@ static CreatePlayerMenus(playerid)
 	PlayerLoadGUIMenu(playerid, PlayerMenuGroupMove[playerid], MenuInput, 524.0, 308.0, CLICK_GRPMOVE_NUDROT_INPUT, E_PLAYERINDEX);
 	PlayerGUISetTextSize(playerid, PlayerMenuGroupMove[playerid], E_PLAYERINDEX[0], 58.0, 16.0); // nudge rot input
 	PlayerGUISetPlayerText(playerid, PlayerMenuGroupMove[playerid], E_PLAYERINDEX[1], "2854.1562");
+	PlayerGUISetAlignment(playerid, PlayerMenuGroupMove[playerid], E_PLAYERINDEX[1], 2);
 	PlayerElementData[playerid][E_GrpNudPos] = E_PLAYERINDEX[1];
 
 	PlayerLoadGUIMenu(playerid, PlayerMenuGroupMove[playerid], MenuInput, 524.0, 290.0, CLICK_GRPMOVE_NUDPOS_INPUT, E_PLAYERINDEX);
 	PlayerGUISetTextSize(playerid, PlayerMenuGroupMove[playerid], E_PLAYERINDEX[0], 58.0, 16.0); // nudge pos input
 	PlayerGUISetPlayerText(playerid, PlayerMenuGroupMove[playerid], E_PLAYERINDEX[1], "2854.1562");
+	PlayerGUISetAlignment(playerid, PlayerMenuGroupMove[playerid], E_PLAYERINDEX[1], 2);
 	PlayerElementData[playerid][E_GrpNudRot] = E_PLAYERINDEX[1];
 	
 	// Bind menus
@@ -775,9 +799,19 @@ static CreatePlayerMenus(playerid)
 	PlayerBindGUITextDraw(playerid, PlayerMenuObjectMove[playerid], MenuObjectMove);
 	PlayerBindGUITextDraw(playerid, PlayerMenuGroupMove[playerid], MenuGroupMove);
 	
+	// Other bind menus (no ele's)
+	PlayerMenuMap[playerid] = PlayerCreateGUI(playerid, "MenuMap");
+	PlayerBindGUITextDraw(playerid, PlayerMenuMap[playerid], MenuMap);
+	PlayerMenuObjectMoveMore[playerid] = PlayerCreateGUI(playerid, "MenuObjectMoveMore");
+	PlayerBindGUITextDraw(playerid, PlayerMenuObjectMoveMore[playerid], MenuObjectMoveMore);
+	PlayerMenuGroup[playerid] = PlayerCreateGUI(playerid, "MenuGroup");
+	PlayerBindGUITextDraw(playerid, PlayerMenuGroup[playerid], MenuGroup);
+	PlayerMenuGroupMoveMore[playerid] = PlayerCreateGUI(playerid, "MenuGroupMoveMore");
+	PlayerBindGUITextDraw(playerid, PlayerMenuGroupMoveMore[playerid], MenuGroupMoveMore);
+	
 	// Bind menu groups
 	printf("Bind all menus");
-	PlayerMenuAll[playerid] = PlayerCreateGUI(playerid, "AllMenus");
+	/*PlayerMenuAll[playerid] = PlayerCreateGUI(playerid, "AllMenus");
 	PlayerBindGUITextDraw(playerid, PlayerMenuAll[playerid], ToolBar);
 	PlayerBindGUITextDraw(playerid, PlayerMenuAll[playerid], MenuMap);
 	PlayerBindGUITextDraw(playerid, PlayerMenuAll[playerid], MenuObject);
@@ -785,7 +819,7 @@ static CreatePlayerMenus(playerid)
 	PlayerBindGUITextDraw(playerid, PlayerMenuAll[playerid], MenuObjectMoveMore);
 	PlayerBindGUITextDraw(playerid, PlayerMenuAll[playerid], MenuGroup);
 	PlayerBindGUITextDraw(playerid, PlayerMenuAll[playerid], MenuGroupMove);
-	PlayerBindGUITextDraw(playerid, PlayerMenuAll[playerid], MenuGroupMoveMore);
+	PlayerBindGUITextDraw(playerid, PlayerMenuAll[playerid], MenuGroupMoveMore);*/
 	
 	PlayerMenuMapAll[playerid] = PlayerCreateGUI(playerid, "AllMapMenus");
 	PlayerBindGUITextDraw(playerid, PlayerMenuMapAll[playerid], MenuMap);
@@ -800,9 +834,9 @@ static CreatePlayerMenus(playerid)
 	PlayerBindGUITextDraw(playerid, PlayerMenuGroupAll[playerid], MenuGroupMove);
 	PlayerBindGUITextDraw(playerid, PlayerMenuGroupAll[playerid], MenuGroupMoveMore);
 	
-	PlayerMenuSubmenuAll[playerid] = PlayerCreateGUI(playerid, "AllSubmenus");
+	/*PlayerMenuSubmenuAll[playerid] = PlayerCreateGUI(playerid, "AllSubmenus");
 	PlayerBindGUITextDraw(playerid, PlayerMenuSubmenuAll[playerid], MenuObjectMoveMore);
-	PlayerBindGUITextDraw(playerid, PlayerMenuSubmenuAll[playerid], MenuGroupMoveMore);
+	PlayerBindGUITextDraw(playerid, PlayerMenuSubmenuAll[playerid], MenuGroupMoveMore);*/
 	
 	return 1;
 }
@@ -811,7 +845,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
 	if(IsFlyMode(playerid) && (newkeys & KEY_WALK))
 	{
-		if(!EditingMode[playerid])
+		//if(!EditingMode[playerid])
 		{
 			ShowGUIMenu(playerid, ToolBar);
 			PlayerSelectGUITextDraw(playerid);
@@ -823,7 +857,15 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
 HideFlymodeInterface(playerid)
 {
-	PlayerHideGUIMenu(playerid, PlayerMenuAll[playerid]);
+	HideGUIMenu(playerid, ToolBar);
+	PlayerHideGUIMenu(playerid, PlayerMenuMap[playerid]);
+	PlayerHideGUIMenu(playerid, PlayerMenuObject[playerid]);
+	PlayerHideGUIMenu(playerid, PlayerMenuObjectMove[playerid]);
+	PlayerHideGUIMenu(playerid, PlayerMenuObjectMoveMore[playerid]);
+	PlayerHideGUIMenu(playerid, PlayerMenuGroup[playerid]);
+	PlayerHideGUIMenu(playerid, PlayerMenuGroupMove[playerid]);
+	PlayerHideGUIMenu(playerid, PlayerMenuGroupMoveMore[playerid]);
+	
 	PlayerCancelSelectGUITextDraw(playerid);
 	return 1;
 }
@@ -834,30 +876,33 @@ OnGUIClick:ToolBar(playerid, group, gindex, pindex)
 	{
 		case CLICK_EXIT_MENU:
 		{
-			PlayerHideGUIMenu(playerid, PlayerMenuAll[playerid]);
-			
-			PlayerCancelSelectGUITextDraw(playerid, true);
+			HideFlymodeInterface(playerid);
 		}
 		case CLICK_TOOL_MAPMENU:
 		{
 			PlayerHideGUIMenu(playerid, PlayerMenuObjectAll[playerid]);
 			PlayerHideGUIMenu(playerid, PlayerMenuGroupAll[playerid]);
 			
-			ShowGUIMenu(playerid, MenuMap);
+			PlayerHideGUIMenu(playerid, PlayerMenuObject[playerid]);
+			PlayerHideGUIMenu(playerid, PlayerMenuGroupMove[playerid]);
+			PlayerHideGUIMenu(playerid, PlayerMenuObjectMove[playerid]);
+			
+			wait_ms(25);
+			
+			PlayerShowGUIMenu(playerid, PlayerMenuMap[playerid], true);
 			PlayerSelectGUITextDraw(playerid);
 		}
 		case CLICK_TOOL_OBJMENU:
 		{
-			printf("[DEBUGG-3] %i, %i, %i, %i", playerid, group, gindex, pindex);
 			PlayerHideGUIMenu(playerid, PlayerMenuMapAll[playerid]);
 			PlayerHideGUIMenu(playerid, PlayerMenuGroupAll[playerid]);
 			
-			//TODO WHY THE HELL DONT THIS OPEN
-			printf("ShowGUIMenu", playerid, group, gindex, pindex);
-			ShowGUIMenu(playerid, MenuObject);
-			printf("PlayerShowGUIMenu", playerid, group, gindex, pindex);
-			PlayerShowGUIMenu(playerid, PlayerMenuObject[playerid], false);
-			printf("PlayerSelectGUITextDraw", playerid, group, gindex, pindex);
+			PlayerHideGUIMenu(playerid, PlayerMenuGroupMove[playerid]);
+			PlayerHideGUIMenu(playerid, PlayerMenuObjectMove[playerid]);
+			
+			wait_ms(25);
+			
+			PlayerShowGUIMenu(playerid, PlayerMenuObject[playerid], true);
 			PlayerSelectGUITextDraw(playerid);
 		}
 		case CLICK_TOOL_GRPMENU:
@@ -865,17 +910,21 @@ OnGUIClick:ToolBar(playerid, group, gindex, pindex)
 			PlayerHideGUIMenu(playerid, PlayerMenuMapAll[playerid]);
 			PlayerHideGUIMenu(playerid, PlayerMenuObjectAll[playerid]);
 			
-			ShowGUIMenu(playerid, MenuGroup);
+			PlayerHideGUIMenu(playerid, PlayerMenuObject[playerid]);
+			PlayerHideGUIMenu(playerid, PlayerMenuGroupMove[playerid]);
+			PlayerHideGUIMenu(playerid, PlayerMenuObjectMove[playerid]);
+			
+			wait_ms(25);
+			
+			PlayerShowGUIMenu(playerid, PlayerMenuGroup[playerid], true);
 			PlayerSelectGUITextDraw(playerid);
 		}
 		case CLICK_TOOL_MODSEARCH:
 		{
-			printf("[DEBUGG-5] %i, %i, %i, %i", playerid, group, gindex, pindex);
 			//TODO 
 		}
 		case CLICK_TOOL_TEXSEARCH:
 		{
-			printf("[DEBUGG-6] %i, %i, %i, %i", playerid, group, gindex, pindex);
 			//TODO 
 		}
 		default:
@@ -892,7 +941,6 @@ OnGUIClick:MenuMap(playerid, group, gindex, pindex)
 	{
 		case CLICK_EXIT_MENU:
 		{
-			printf("[DEBUGG-1] %i, %i, %i, %i", playerid, group, gindex, pindex);
 			PlayerHideGUIMenu(playerid, PlayerMenuMapAll[playerid]);
 		}
 		default:
@@ -909,8 +957,15 @@ OnGUIClick:MenuObject(playerid, group, gindex, pindex)
 	{
 		case CLICK_EXIT_MENU:
 		{
-			printf("[DEBUGG-1] %i, %i, %i, %i", playerid, group, gindex, pindex);
 			PlayerHideGUIMenu(playerid, PlayerMenuObjectAll[playerid]);
+		}
+		case CLICK_OBJ_TRANSFORM:
+		{
+			PlayerHideGUIMenu(playerid, PlayerMenuObject[playerid]);
+			wait_ms(25);
+			
+			PlayerShowGUIMenu(playerid, PlayerMenuObjectMove[playerid], true);
+			PlayerSelectGUITextDraw(playerid);
 		}
 		default:
 		{
@@ -924,11 +979,6 @@ OnPlayerGUIClick:PlayerMenuObject(playerid, group, gindex, pindex)
 {
 	switch(group)
 	{
-		case CLICK_EXIT_MENU:
-		{
-			printf("[DEBUGG-1] %i, %i, %i, %i", playerid, group, gindex, pindex);
-			PlayerHideGUIMenu(playerid, PlayerMenuObjectAll[playerid]);
-		}
 		default:
 		{
 			printf("[DEBUGG] %i, %i, %i, %i", playerid, group, gindex, pindex);
@@ -943,8 +993,21 @@ OnGUIClick:MenuObjectMove(playerid, group, gindex, pindex)
 	{
 		case CLICK_EXIT_MENU:
 		{
-			printf("[DEBUGG-1] %i, %i, %i, %i", playerid, group, gindex, pindex);
 			PlayerHideGUIMenu(playerid, PlayerMenuObjectAll[playerid]);
+		}
+		case CLICK_OBJMOVE_MORE:
+		{
+			PlayerShowGUIMenu(playerid, PlayerMenuObjectMoveMore[playerid], true);
+			PlayerSelectGUITextDraw(playerid);
+		}
+		case CLICK_OBJMOVE_BACK:
+		{
+			PlayerHideGUIMenu(playerid, PlayerMenuObjectMove[playerid]);
+			PlayerHideGUIMenu(playerid, PlayerMenuObjectMoveMore[playerid]);
+			wait_ms(25);
+			
+			PlayerShowGUIMenu(playerid, PlayerMenuObject[playerid], true);
+			PlayerSelectGUITextDraw(playerid);
 		}
 		default:
 		{
@@ -958,11 +1021,6 @@ OnPlayerGUIClick:PlayerMenuObjectMove(playerid, group, gindex, pindex)
 {
 	switch(group)
 	{
-		case CLICK_EXIT_MENU:
-		{
-			printf("[DEBUGG-1] %i, %i, %i, %i", playerid, group, gindex, pindex);
-			PlayerHideGUIMenu(playerid, PlayerMenuObjectAll[playerid]);
-		}
 		default:
 		{
 			printf("[DEBUGG] %i, %i, %i, %i", playerid, group, gindex, pindex);
@@ -977,8 +1035,7 @@ OnGUIClick:MenuObjectMoveMore(playerid, group, gindex, pindex)
 	{
 		case CLICK_EXIT_MENU:
 		{
-			printf("[DEBUGG-1] %i, %i, %i, %i", playerid, group, gindex, pindex);
-			PlayerHideGUIMenu(playerid, PlayerMenuSubmenuAll[playerid]);
+			PlayerHideGUIMenu(playerid, PlayerMenuObjectMoveMore[playerid]);
 		}
 		default:
 		{
@@ -994,8 +1051,15 @@ OnGUIClick:MenuGroup(playerid, group, gindex, pindex)
 	{
 		case CLICK_EXIT_MENU:
 		{
-			printf("[DEBUGG-1] %i, %i, %i, %i", playerid, group, gindex, pindex);
 			PlayerHideGUIMenu(playerid, PlayerMenuGroupAll[playerid]);
+		}
+		case CLICK_GRP_TRANSFORM:
+		{
+			PlayerHideGUIMenu(playerid, PlayerMenuGroup[playerid]);
+			wait_ms(25);
+			
+			PlayerShowGUIMenu(playerid, PlayerMenuGroupMove[playerid], true);
+			PlayerSelectGUITextDraw(playerid);
 		}
 		default:
 		{
@@ -1011,8 +1075,20 @@ OnGUIClick:MenuGroupMove(playerid, group, gindex, pindex)
 	{
 		case CLICK_EXIT_MENU:
 		{
-			printf("[DEBUGG-1] %i, %i, %i, %i", playerid, group, gindex, pindex);
 			PlayerHideGUIMenu(playerid, PlayerMenuGroupAll[playerid]);
+		}
+		case CLICK_GRPMOVE_MORE:
+		{
+			PlayerShowGUIMenu(playerid, PlayerMenuGroupMoveMore[playerid], true);
+		}
+		case CLICK_GRPMOVE_BACK:
+		{
+			PlayerHideGUIMenu(playerid, PlayerMenuGroupMove[playerid]);
+			PlayerHideGUIMenu(playerid, PlayerMenuGroupMoveMore[playerid]);
+			wait_ms(25);
+			
+			PlayerShowGUIMenu(playerid, PlayerMenuGroup[playerid], true);
+			PlayerSelectGUITextDraw(playerid);
 		}
 		default:
 		{
@@ -1026,11 +1102,6 @@ OnPlayerGUIClick:PlayerMenuGroupMove(playerid, group, gindex, pindex)
 {
 	switch(group)
 	{
-		case CLICK_EXIT_MENU:
-		{
-			printf("[DEBUGG-1] %i, %i, %i, %i", playerid, group, gindex, pindex);
-			PlayerHideGUIMenu(playerid, PlayerMenuGroupAll[playerid]);
-		}
 		default:
 		{
 			printf("[DEBUGG] %i, %i, %i, %i", playerid, group, gindex, pindex);
@@ -1045,8 +1116,7 @@ OnGUIClick:MenuGroupMoveMore(playerid, group, gindex, pindex)
 	{
 		case CLICK_EXIT_MENU:
 		{
-			printf("[DEBUGG-1] %i, %i, %i, %i", playerid, group, gindex, pindex);
-			PlayerHideGUIMenu(playerid, PlayerMenuSubmenuAll[playerid]);
+			PlayerHideGUIMenu(playerid, PlayerMenuGroupMoveMore[playerid]);
 		}
 		default:
 		{

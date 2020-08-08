@@ -209,13 +209,13 @@ Change Log:
 // Uncomment to turn on DEBUG mode
 // #define DEBUG
 
-#define GUI_DEBUG
+//#define GUI_DEBUG
 
 // Compile the Angular Map Extension module
 #define COMPILE_MANGLE 0
 
 // Compile the local input module for advanced keys and mouse control
-#define COMPILE_LOCAL_INPUT 1
+#define COMPILE_LOCAL_INPUT 0
 
 #if defined DEBUG
 	#define DB_DEBUG true

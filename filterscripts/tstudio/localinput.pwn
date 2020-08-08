@@ -203,7 +203,7 @@ public OnCursorPositionChange(OldX, OldY, NewX, NewY)
 	if(editorid == INVALID_PLAYER_ID)
 		return 1;
 	
-	SendClientMessage(editorid, -1, sprintf("[DEBUGGG] %i, %i | %i, %i", OldX, OldY, NewX, NewY));
+	//SendClientMessage(editorid, -1, sprintf("[DEBUGGG] %i, %i | %i, %i", OldX, OldY, NewX, NewY));
 	return 1;
 }
 
@@ -314,13 +314,13 @@ public OnVirtualKeyRelease(key)
 	
 	switch(key) {
 		case VK_LBUTTON: {
-            SendClientMessage(editorid, 0xFFFFFF, "[DEBUGGG] LMB Up");
+            //SendClientMessage(editorid, 0xFFFFFF, "[DEBUGGG] LMB Up");
 		}
 		case VK_MBUTTON: {
-            SendClientMessage(editorid, 0xFFFFFF, "[DEBUGGG] MMB Up");
+            //SendClientMessage(editorid, 0xFFFFFF, "[DEBUGGG] MMB Up");
 		}
 		case VK_RBUTTON: {
-            SendClientMessage(editorid, 0xFFFFFF, "[DEBUGGG] RMB Up");
+            //SendClientMessage(editorid, 0xFFFFFF, "[DEBUGGG] RMB Up");
 		}
 	}
 	

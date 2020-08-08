@@ -362,7 +362,7 @@ CancelFlyMode(playerid)
 	DestroyDynamicObject(noclipdata[playerid][flyobject]);
 	noclipdata[playerid][cameramode] = CAMERA_MODE_NONE;
 	
-	HideFlymodeInterface(playerid);
+	//HideFlymodeInterface(playerid);
 
 	SpawnPlayer(playerid);
 	return 1;
@@ -385,7 +385,7 @@ StartFlyMode(playerid)
 	FlyMode[playerid] = true;
 	noclipdata[playerid][cameramode] = CAMERA_MODE_FLY;
 	
-	HideGUIInterface(playerid);
+	//HideGUIInterface(playerid);
 	return 1;
 }
 
