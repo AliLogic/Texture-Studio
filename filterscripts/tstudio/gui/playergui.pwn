@@ -212,7 +212,7 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 						{
 							new CallFunc[32];
 							format(CallFunc, sizeof(CallFunc), "ONGUIP_%s", PlayerGUIData[playerid][i][PlayerGUICallFunc]);
-							return CallLocalFunction(CallFunc, "iiii", playerid, PlayerGUIData[playerid][i][PlayerGUIElementGroups], i, j);
+							return CallLocalFunction(CallFunc, "iiii", playerid, PlayerGUIData[playerid][i][PlayerGUIElementGroups][j], i, j);
 						}
 					}
 				}

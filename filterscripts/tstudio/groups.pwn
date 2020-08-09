@@ -457,6 +457,39 @@ GetGroupCenter(playerid, &Float:X, &Float:Y, &Float:Z)
 	return 1;
 }
 
+YCMD:ogroup(playerid, arg[], help)
+{
+	if(help)
+	{
+		SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+		SendClientMessage(playerid, STEALTH_GREEN, "Sets the group ID of currently selected object.");
+		return 1;
+	}
+
+	MapOpenCheck(playerid);
+	EditCheck(playerid);
+	NoEditingMode(playerid);
+	
+	new groupid = strval(arg);
+	new time = GetTickCount();
+	new index = CurrObject[playerid];
+
+	if (!(0 <= groupid < MAX_GROUPS))
+		return SendClientMessage(playerid, STEALTH_YELLOW, sprintf("The group id must be from 0 to %d.", MAX_GROUPS - 1));
+	
+	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+	
+	SaveUndoInfo(index, UNDO_TYPE_EDIT, time);
+	ObjectData[index][oGroup] = groupid;
+	OnUpdateGroup3DText(index);
+	UpdateObject3DText(index);
+	sqlite_ObjGroup(index);
+	
+	SendClientMessage(playerid, STEALTH_GREEN, sprintf("You have changed the group ID of this object to: %i", groupid));
+
+	return 1;
+}
+
 YCMD:setgroup(playerid, arg[], help)
 {
 	if(help)

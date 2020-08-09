@@ -3578,44 +3578,6 @@ YCMD:mtsetall(playerid, arg[], help)
 	return 1;
 }
 
-YCMD:ogroup(playerid, arg[], help)
-{
-	if(help)
-	{
-		SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
-		SendClientMessage(playerid, STEALTH_GREEN, "Set the group ID of current object.");
-		return 1;
-	}
-
-	MapOpenCheck(playerid);
-
-	EditCheck(playerid);
-
-	NoEditingMode(playerid);
-
-	new index = CurrObject[playerid];
-	
-    if(!(0 < index < MAX_GROUPS))
-		return SendClientMessage(playerid, STEALTH_YELLOW, sprintf("You can only set group ID to 0-%d.", MAX_GROUPS - 1));
-
-	SaveUndoInfo(index, UNDO_TYPE_EDIT);
-
-	ObjectData[index][oGroup] = strval(arg);
-
-	sqlite_ObjGroup(index);
-
-	UpdateObject3DText(index);
-
-	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
-	new line[128];
-	format(line, sizeof(line), "You have changed the group ID of this object to: %i", ObjectData[index][oGroup]);
-	SendClientMessage(playerid, STEALTH_GREEN, line);
-
-	return 1;
-}
-
-
-
 ColumnExists(DB:database, const table[], const columnname[])
 {
 	new q[128];
