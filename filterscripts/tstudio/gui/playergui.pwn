@@ -280,12 +280,12 @@ stock PlayerApplyGUIArray(playerid, PlayerGUIMenu:gindex, pindex, const GUIType[
 	PlayerGUISetProportional(playerid, gindex, pindex, GUIType[GUIProportional]);
 	PlayerGUISetAlignment(playerid, gindex, pindex, GUIType[GUIAlignment]);
 	PlayerGUISetShadow(playerid, gindex, pindex, GUIType[GUIShadow]);
+	PlayerGUISetTextSize(playerid, gindex, pindex, xoffset, yoffset);
 
 	if(GUIType[GUIBox])
 	{
 		PlayerGUISetBox(playerid, gindex, pindex, GUIType[GUIBox]);
 		PlayerGUISetBoxColor(playerid, gindex, pindex, GUIType[GUIBoxColor]);
-		PlayerGUISetTextSize(playerid, gindex, pindex, xoffset, yoffset);
 	}
 
 	if(GUIType[GUIPModel] > 0)

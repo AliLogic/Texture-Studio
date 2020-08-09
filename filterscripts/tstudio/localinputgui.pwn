@@ -167,15 +167,15 @@ hook OnScriptInit()
 
 	LoadGUIMenu(ToolBar, ToolBarButton, 2.0, 430.0, CLICK_TOOL_MAPMENU, E_INDEX);
 	GUISetTextSize(ToolBar, E_INDEX[0], 48.0, 16.0);
-	GUISetPlayerText(ToolBar, E_INDEX[1], "Map Menu");
+	GUISetPlayerText(ToolBar, E_INDEX[1], "Map_Menu");
 
 	LoadGUIMenu(ToolBar, ToolBarButton, 52.0, 430.0, CLICK_TOOL_OBJMENU, E_INDEX);
 	GUISetTextSize(ToolBar, E_INDEX[0], 58.0, 16.0);
-	GUISetPlayerText(ToolBar, E_INDEX[1], "Object Menu");
+	GUISetPlayerText(ToolBar, E_INDEX[1], "Object_Menu");
 
 	LoadGUIMenu(ToolBar, ToolBarButton, 112.0, 430.0, CLICK_TOOL_GRPMENU, E_INDEX);
 	GUISetTextSize(ToolBar, E_INDEX[0], 58.0, 16.0);
-	GUISetPlayerText(ToolBar, E_INDEX[1], "Group Menu");
+	GUISetPlayerText(ToolBar, E_INDEX[1], "Group_Menu");
 
 	LoadGUIMenu(ToolBar, ToolBarInfo, 200.0, 430.0, CLICK_NO_GROUP, E_INDEX);
 	GUISetTextSize(ToolBar, E_INDEX[0], 240.0, 16.0);
@@ -183,11 +183,11 @@ hook OnScriptInit()
 
 	LoadGUIMenu(ToolBar, ToolBarButton, 484.0, 430.0, CLICK_TOOL_TEXSEARCH, E_INDEX);
 	GUISetTextSize(ToolBar, E_INDEX[0], 67.0, 16.0);
-	GUISetPlayerText(ToolBar, E_INDEX[1], "Texture Search");
+	GUISetPlayerText(ToolBar, E_INDEX[1], "Texture_Search");
 
 	LoadGUIMenu(ToolBar, ToolBarButton, 553.0, 430.0, CLICK_TOOL_MODSEARCH, E_INDEX);
 	GUISetTextSize(ToolBar, E_INDEX[0], 61.0, 16.0);
-	GUISetPlayerText(ToolBar, E_INDEX[1], "Model Search");
+	GUISetPlayerText(ToolBar, E_INDEX[1], "Model_Search");
 
 	LoadGUIMenu(ToolBar, ToolBarButton, 616.0, 430.0, CLICK_EXIT_MENU, E_INDEX);
 	GUISetTextSize(ToolBar, E_INDEX[0], 22.0, 16.0);
@@ -207,7 +207,7 @@ hook OnScriptInit()
 	/* THEORY */
 	/*AdjustGUIMenuDataFloat(tmpArray, 0, GUITextSizeX, 37.0, GUITextSizeY, 16.0);*/
 	/*AdjustGUIMenuData(tmpArray, 0, GUITextSizeX, 37.0);
-	AdjustGUIMenuData(tmpArray, 0, GUITextSizeY, 16.0);*/
+	tmpArray = AdjustGUIMenuData(tmpArray, 0, GUITextSizeY, 16.0);*/
 	/*AdjustGUIMenuDataText(tmpArray, 1, "New");*/
 	//tmpArray[0][GUITextSizeX] = 37.0;
 	//tmpArray[0][GUITextSizeY] = 16.0;
@@ -215,7 +215,7 @@ hook OnScriptInit()
 	/* THEORY */
 	
 	/*tmpCount = CopyGUIMenuData(MenuButton, tmpArray);
-	AdjustGUIMenuData(tmpArray, 1, .setText = "X", .setAlignment = 2);
+	tmpArray = AdjustGUIMenuData(tmpArray, 1, .setText = "X", .setAlignment = 2);
 	LoadGUIMenu(MenuMap, tmpArray, 502.0, 146.0, CLICK_MAP_NEWMAP, E_INDEX, tmpCount);
 	GUISetTextSize(MenuMap, E_INDEX[0], 37.0, 16.0);*/
 	
@@ -335,11 +335,19 @@ hook OnScriptInit()
 	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "Back");
 	//
 	
+	/*//TMP
+	tmpCount = CopyGUIMenuData(MenuSpriteButton, tmpArray);
+	tmpArray = AdjustGUIMenuData(tmpArray, 0, .setTextSizeX = 16.0, .setTextSizeY = 16.0);
+	tmpArray = AdjustGUIMenuData(tmpArray, 1, .setText = "LD_BEAT:right", .setFont = 4);
+	LoadGUIMenu(MenuObjectMove, tmpArray, 602.0, 146.0, CLICK_OBJMOVE_X_L, E_INDEX, tmpCount);
+	//TMP*/
+	
 	tmpCount = CopyGUIMenuData(MenuText, tmpArray);
-	AdjustGUIMenuData(tmpArray, 1, .setOffX = 8.0, .setText = "X", .setAlignment = 2);
+	tmpArray = AdjustGUIMenuData(tmpArray, 0, .setTextSizeX = 16.0, .setTextSizeY = 16.0);
+	tmpArray = AdjustGUIMenuData(tmpArray, 1, .setOffX = 8.0, .setText = "X", .setAlignment = 2);
 	
 	LoadGUIMenu(MenuObjectMove, tmpArray, 502.0, 146.0, CLICK_NO_GROUP, E_INDEX, tmpCount);
-	GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // X text
+	//GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // X text
 	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "X");
 
 	LoadGUIMenu(MenuObjectMove, MenuSpriteButton, 602.0, 146.0, CLICK_OBJMOVE_X_L, E_INDEX);
@@ -351,7 +359,7 @@ hook OnScriptInit()
 	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "LD_BEAT:left");
 	//
 	LoadGUIMenu(MenuObjectMove, tmpArray, 502.0, 164.0, CLICK_NO_GROUP, E_INDEX, tmpCount);
-	GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // Y text
+	//GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // Y text
 	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "Y");
 
 	LoadGUIMenu(MenuObjectMove, MenuSpriteButton, 602.0, 164.0, CLICK_OBJMOVE_Y_L, E_INDEX);
@@ -363,7 +371,7 @@ hook OnScriptInit()
 	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "LD_BEAT:left");
 	//
 	LoadGUIMenu(MenuObjectMove, tmpArray, 502.0, 182.0, CLICK_NO_GROUP, E_INDEX, tmpCount);
-	GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // Z text
+	//GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // Z text
 	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "Z");
 
 	LoadGUIMenu(MenuObjectMove, MenuSpriteButton, 602.0, 182.0, CLICK_OBJMOVE_Z_L, E_INDEX);
@@ -379,7 +387,7 @@ hook OnScriptInit()
 	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "Rotation");
 	//
 	LoadGUIMenu(MenuObjectMove, tmpArray, 502.0, 218.0, CLICK_NO_GROUP, E_INDEX, tmpCount);
-	GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // RX text
+	//GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // RX text
 	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "RX");
 
 	LoadGUIMenu(MenuObjectMove, MenuSpriteButton, 602.0, 218.0, CLICK_OBJMOVE_RX_L, E_INDEX);
@@ -391,7 +399,7 @@ hook OnScriptInit()
 	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "LD_BEAT:left");
 	//
 	LoadGUIMenu(MenuObjectMove, tmpArray, 502.0, 236.0, CLICK_NO_GROUP, E_INDEX, tmpCount);
-	GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // RY text
+	//GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // RY text
 	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "RY");
 
 	LoadGUIMenu(MenuObjectMove, MenuSpriteButton, 602.0, 236.0, CLICK_OBJMOVE_RY_L, E_INDEX);
@@ -403,7 +411,7 @@ hook OnScriptInit()
 	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "LD_BEAT:left");
 	//
 	LoadGUIMenu(MenuObjectMove, tmpArray, 502.0, 254.0, CLICK_NO_GROUP, E_INDEX, tmpCount);
-	GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // RZ text
+	//GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // RZ text
 	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "RZ");
 
 	LoadGUIMenu(MenuObjectMove, MenuSpriteButton, 602.0, 254.0, CLICK_OBJMOVE_RZ_L, E_INDEX);
@@ -737,7 +745,7 @@ static CreatePlayerMenus(playerid)
 	PlayerElementData[playerid][E_ObjGroup] = E_PLAYERINDEX[1];
 	
 	tmpCount = CopyGUIMenuData(MenuInput, tmpArray);
-	AdjustGUIMenuData(tmpArray, 1, .setOffX = 3.0, .setText = "Some_text_here.", .setAlignment = 1);
+	tmpArray = AdjustGUIMenuData(tmpArray, 1, .setOffX = 3.0, .setText = "Some_text_here.", .setAlignment = 1);
 	PlayerLoadGUIMenu(playerid, PlayerMenuObject[playerid], tmpArray, 531.0, 200.0, CLICK_OBJ_NOTE_INPUT, E_PLAYERINDEX, tmpCount);
 	PlayerGUISetTextSize(playerid, PlayerMenuObject[playerid], E_PLAYERINDEX[0], 87.0, 16.0); // note input
 	PlayerElementData[playerid][E_ObjNote] = E_PLAYERINDEX[1];
@@ -747,7 +755,7 @@ static CreatePlayerMenus(playerid)
 	PlayerMenuObjectMove[playerid] = PlayerCreateGUI(playerid, "MenuObjectMove");
 
 	tmpCount = CopyGUIMenuData(MenuInput, tmpArray);
-	AdjustGUIMenuData(tmpArray, 1, .setOffX = 30.0, .setText = "0000.0000", .setAlignment = 2);
+	tmpArray = AdjustGUIMenuData(tmpArray, 1, .setOffX = 30.0, .setText = "0000.0000", .setAlignment = 2);
 	
 	PlayerLoadGUIMenu(playerid, PlayerMenuObjectMove[playerid], tmpArray, 520.0, 146.0, CLICK_OBJMOVE_X_INPUT, E_PLAYERINDEX, tmpCount);
 	PlayerGUISetTextSize(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[0], 62.0, 16.0); // X input
@@ -773,7 +781,7 @@ static CreatePlayerMenus(playerid)
 	PlayerGUISetTextSize(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[0], 62.0, 16.0); // RZ input
 	PlayerElementData[playerid][E_ObjRZ] = E_PLAYERINDEX[1];
 	
-	AdjustGUIMenuData(tmpArray, 1, .setOffX = 28.0, .setText = "0.0", .setAlignment = 2);
+	tmpArray = AdjustGUIMenuData(tmpArray, 1, .setOffX = 28.0, .setText = "0.0", .setAlignment = 2);
 
 	PlayerLoadGUIMenu(playerid, PlayerMenuObjectMove[playerid], tmpArray, 524.0, 308.0, CLICK_OBJMOVE_NUDPOS_INPUT, E_PLAYERINDEX, tmpCount);
 	PlayerGUISetTextSize(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[0], 58.0, 16.0); // nudge pos input
@@ -788,7 +796,7 @@ static CreatePlayerMenus(playerid)
 	PlayerMenuGroupMove[playerid] = PlayerCreateGUI(playerid, "MenuGroupMove");
 
 	tmpCount = CopyGUIMenuData(MenuInput, tmpArray);
-	AdjustGUIMenuData(tmpArray, 1, .setOffX = 28.0, .setText = "0.0", .setAlignment = 2);
+	tmpArray = AdjustGUIMenuData(tmpArray, 1, .setOffX = 28.0, .setText = "0.0", .setAlignment = 2);
 
 	PlayerLoadGUIMenu(playerid, PlayerMenuGroupMove[playerid], tmpArray, 524.0, 308.0, CLICK_GRPMOVE_NUDROT_INPUT, E_PLAYERINDEX, tmpCount);
 	PlayerGUISetTextSize(playerid, PlayerMenuGroupMove[playerid], E_PLAYERINDEX[0], 58.0, 16.0); // nudge rot input

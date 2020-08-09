@@ -134,12 +134,12 @@ stock ApplyGUIArray(GUIMenu:gindex, pindex, const GUIType[GUIDEF], Float:xoffset
 	GUISetProportional(gindex, pindex, GUIType[GUIProportional]);
 	GUISetAlignment(gindex, pindex, GUIType[GUIAlignment]);
 	GUISetShadow(gindex, pindex, GUIType[GUIShadow]);
+	GUISetTextSize(gindex, pindex, xoffset, yoffset);
 
 	if(GUIType[GUIBox])
 	{
 		GUISetBox(gindex, pindex, GUIType[GUIBox]);
 		GUISetBoxColor(gindex, pindex, GUIType[GUIBoxColor]);
-		GUISetTextSize(gindex, pindex, xoffset, yoffset);
 	}
 
 	if(GUIType[GUIPModel] > -1)
@@ -296,36 +296,39 @@ stock AdjustGUIMenuDataText(LoadArray[][GUIDEF], index, const newval[])
 }*/
 
 // Adjust GUI element load data
-AdjustGUIMenuData(LoadArray[][GUIDEF], index, 
+AdjustGUIMenuData(const LoadArray[][GUIDEF], index, 
 	const setText[] = "", Float:setOffX = -80085.420, Float:setOffY = -80085.420, Float:setLSizeX = -80085.420, Float:setLSizeY = -80085.420,
 	Float:setTextSizeX = -80085.420, Float:setTextSizeY = -80085.420, setBackColor = cellmin, setFont = cellmin, setColor = cellmin, setOutline = cellmin,
 	setProportional = cellmin, setAlignment = cellmin, setShadow = cellmin, setBox = cellmin, setBoxColor = cellmin, setSelect = cellmin,
-	Float:setPModelRX = -80085.420, Float:setPModelRY = -80085.420, Float:setPModelRZ = -80085.420, Float:setPModelZoom = -80085.420, setPModel = cellmin)
+	Float:setPModelRX = -80085.420, Float:setPModelRY = -80085.420, Float:setPModelRZ = -80085.420, Float:setPModelZoom = -80085.420, setPModel = cellmin, size = sizeof(LoadArray))
 {
-	if(strlen(setText) > 1) format(LoadArray[index][GUIText], MAX_PLAYER_GUI_TEXT, "%s", setText);
-	if(setOffX != -80085.420) LoadArray[index][GUIOffX] = setOffX;
-	if(setOffY != -80085.420) LoadArray[index][GUIOffX] = setOffX;
-	if(setLSizeX != -80085.420) LoadArray[index][GUILSizeX] = setLSizeX;
-	if(setLSizeY != -80085.420) LoadArray[index][GUILSizeY] = setLSizeY;
-	if(setTextSizeX != -80085.420) LoadArray[index][GUITextSizeX] = setTextSizeX;
-	if(setTextSizeY != -80085.420) LoadArray[index][GUITextSizeY] = setTextSizeY;
-	if(setBackColor != cellmin) LoadArray[index][GUIBackColor] = setBackColor;
-	if(setFont != cellmin) LoadArray[index][GUIFont] = setFont;
-	if(setColor != cellmin) LoadArray[index][GUIColor] = setColor;
-	if(setOutline != cellmin) LoadArray[index][GUIOutline] = setOutline;
-	if(setProportional != cellmin) LoadArray[index][GUIProportional] = setProportional;
-	if(setAlignment != cellmin) LoadArray[index][GUIAlignment] = setAlignment;
-	if(setShadow != cellmin) LoadArray[index][GUIShadow] = setShadow;
-	if(setBox != cellmin) LoadArray[index][GUIBox] = setBox;
-	if(setBoxColor != cellmin) LoadArray[index][GUIBoxColor] = setBoxColor;
-	if(setSelect != cellmin) LoadArray[index][GUISelect] = setSelect;
-	if(setPModelRX != -80085.420) LoadArray[index][GUIPModelRX] = setPModelRX;
-	if(setPModelRY != -80085.420) LoadArray[index][GUIPModelRY] = setPModelRY;
-	if(setPModelRZ != -80085.420) LoadArray[index][GUIPModelRZ] = setPModelRZ;
-	if(setPModelZoom != -80085.420) LoadArray[index][GUIPModelZoom] = setPModelZoom;
-	if(setPModel != cellmin) LoadArray[index][GUIPModel] = setPModel;
+	new tmpArray[MAX_ELEMENTS][GUIDEF];
+	CopyGUIMenuData(LoadArray, tmpArray, size);
+
+	if(strlen(setText) > 1) format(tmpArray[index][GUIText], MAX_PLAYER_GUI_TEXT, "%s", setText);
+	if(setOffX != -80085.420) tmpArray[index][GUIOffX] = setOffX;
+	if(setOffY != -80085.420) tmpArray[index][GUIOffX] = setOffX;
+	if(setLSizeX != -80085.420) tmpArray[index][GUILSizeX] = setLSizeX;
+	if(setLSizeY != -80085.420) tmpArray[index][GUILSizeY] = setLSizeY;
+	if(setTextSizeX != -80085.420) tmpArray[index][GUITextSizeX] = setTextSizeX;
+	if(setTextSizeY != -80085.420) tmpArray[index][GUITextSizeY] = setTextSizeY;
+	if(setBackColor != cellmin) tmpArray[index][GUIBackColor] = setBackColor;
+	if(setFont != cellmin) tmpArray[index][GUIFont] = setFont;
+	if(setColor != cellmin) tmpArray[index][GUIColor] = setColor;
+	if(setOutline != cellmin) tmpArray[index][GUIOutline] = setOutline;
+	if(setProportional != cellmin) tmpArray[index][GUIProportional] = setProportional;
+	if(setAlignment != cellmin) tmpArray[index][GUIAlignment] = setAlignment;
+	if(setShadow != cellmin) tmpArray[index][GUIShadow] = setShadow;
+	if(setBox != cellmin) tmpArray[index][GUIBox] = setBox;
+	if(setBoxColor != cellmin) tmpArray[index][GUIBoxColor] = setBoxColor;
+	if(setSelect != cellmin) tmpArray[index][GUISelect] = setSelect;
+	if(setPModelRX != -80085.420) tmpArray[index][GUIPModelRX] = setPModelRX;
+	if(setPModelRY != -80085.420) tmpArray[index][GUIPModelRY] = setPModelRY;
+	if(setPModelRZ != -80085.420) tmpArray[index][GUIPModelRZ] = setPModelRZ;
+	if(setPModelZoom != -80085.420) tmpArray[index][GUIPModelZoom] = setPModelZoom;
+	if(setPModel != cellmin) tmpArray[index][GUIPModel] = setPModel;
 	
-	return 1;
+	return tmpArray;
 }
 
 // Set GUI Element group
