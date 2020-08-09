@@ -537,11 +537,11 @@ stock const MenuSpriteButton[][GUIDEF] = {
 		1 // Selectable
 	},
 	{	// MenuSpriteButton_Sprite
-		"ld_beat:right", // Text
+		"LD_BEAT:left", // Text
 		1.0000, // OffsetX
 		0.0000, // OffsetY
-		0.6000, // LetterSizeX
-		2.0000, // LetterSizeY
+		0.5000, // LetterSizeX
+		1.0000, // LetterSizeY
 		14.0000, // TextSizeX
 		16.0000, // TextSizeY
 		-10.0000, // ModelRotX
@@ -554,7 +554,7 @@ stock const MenuSpriteButton[][GUIDEF] = {
 		255, // Color
 		0, // Outline
 		1, // Proportional
-		1, // Alignment
+		0, // Alignment
 		0, // Shadow
 		0, // Usebox
 		50, // Boxcolor

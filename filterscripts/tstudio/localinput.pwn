@@ -147,7 +147,6 @@ hook OnPlayerConnect(playerid)
 		editorid = playerid;
     }
 
-		printf("[DEBUGGG] testseted.");
 	return Y_HOOKS_CONTINUE_RETURN_1;
 }
 

@@ -24,7 +24,7 @@ PlayerGUISetLetterSize(playerid, PlayerGUIMenu:gindex, pindex, GUIType[GUILSizeX
 PlayerGUISetColor(playerid, PlayerGUIMenu:gindex, pindex, GUIType[GUIColor])
 PlayerGUISetOutline(playerid, PlayerGUIMenu:gindex, pindex, GUIType[GUIOutline])
 PlayerGUISetProportional(playerid, PlayerGUIMenu:gindex, pindex, GUIType[GUIProportional])
-PlayerGUISetShadow(playerid, PlayerGUIMenu:gindex, pindex, GUIType[GUIShawdow])
+PlayerGUISetShadow(playerid, PlayerGUIMenu:gindex, pindex, GUIType[GUIShadow])
 PlayerGUISetBox(playerid, PlayerGUIMenu:gindex, pindex, GUIType[GUIBox])
 PlayerGUISetBoxColor(playerid, PlayerGUIMenu:gindex, pindex, GUIType[GUIBoxColor])
 PlayerGUISetTextSize(playerid, PlayerGUIMenu:gindex, pindex, xoffset, yoffset)
@@ -279,7 +279,7 @@ stock PlayerApplyGUIArray(playerid, PlayerGUIMenu:gindex, pindex, const GUIType[
 	PlayerGUISetOutline(playerid, gindex, pindex, GUIType[GUIOutline]);
 	PlayerGUISetProportional(playerid, gindex, pindex, GUIType[GUIProportional]);
 	PlayerGUISetAlignment(playerid, gindex, pindex, GUIType[GUIAlignment]);
-	PlayerGUISetShadow(playerid, gindex, pindex, GUIType[GUIShawdow]);
+	PlayerGUISetShadow(playerid, gindex, pindex, GUIType[GUIShadow]);
 
 	if(GUIType[GUIBox])
 	{

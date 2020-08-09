@@ -156,6 +156,8 @@ new PlayerElementData[MAX_PLAYERS][PLAYER_MENU_DATA];
 
 hook OnScriptInit()
 {
+	new tmpArray[MAX_ELEMENTS][GUIDEF], tmpCount;
+	
 	// TOOL BAR
 
 	ToolBar = CreateGUI("ToolBar");
@@ -202,10 +204,25 @@ hook OnScriptInit()
 	GUISetTextSize(MenuMap, E_INDEX[0], 120.0, 16.0); // header box
 	GUISetPlayerText(MenuMap, E_INDEX[1], "Map_Menu");
 
+	/* THEORY */
+	/*AdjustGUIMenuDataFloat(tmpArray, 0, GUITextSizeX, 37.0, GUITextSizeY, 16.0);*/
+	/*AdjustGUIMenuData(tmpArray, 0, GUITextSizeX, 37.0);
+	AdjustGUIMenuData(tmpArray, 0, GUITextSizeY, 16.0);*/
+	/*AdjustGUIMenuDataText(tmpArray, 1, "New");*/
+	//tmpArray[0][GUITextSizeX] = 37.0;
+	//tmpArray[0][GUITextSizeY] = 16.0;
+	//tmpArray[1][GUIText] = "New";
+	/* THEORY */
+	
+	/*tmpCount = CopyGUIMenuData(MenuButton, tmpArray);
+	AdjustGUIMenuData(tmpArray, 1, .setText = "X", .setAlignment = 2);
+	LoadGUIMenu(MenuMap, tmpArray, 502.0, 146.0, CLICK_MAP_NEWMAP, E_INDEX, tmpCount);
+	GUISetTextSize(MenuMap, E_INDEX[0], 37.0, 16.0);*/
+	
 	LoadGUIMenu(MenuMap, MenuButton, 502.0, 146.0, CLICK_MAP_NEWMAP, E_INDEX);
 	GUISetTextSize(MenuMap, E_INDEX[0], 37.0, 16.0); // new map button
 	GUISetPlayerText(MenuMap, E_INDEX[1], "New");
-
+	
 	LoadGUIMenu(MenuMap, MenuButton, 541.0, 146.0, CLICK_MAP_LOADMAP, E_INDEX);
 	GUISetTextSize(MenuMap, E_INDEX[0], 37.0, 16.0); // load map button
 	GUISetPlayerText(MenuMap, E_INDEX[1], "Load");
@@ -259,11 +276,11 @@ hook OnScriptInit()
 
 	LoadGUIMenu(MenuObject, MenuSpriteButton, 602.0, 164.0, CLICK_OBJ_MODEL_R, E_INDEX);
 	GUISetTextSize(MenuObject, E_INDEX[0], 16.0, 16.0); // model right button
-	GUISetPlayerText(MenuObject, E_INDEX[1], "ld_beat:right");
+	GUISetPlayerText(MenuObject, E_INDEX[1], "LD_BEAT:right");
 
 	LoadGUIMenu(MenuObject, MenuSpriteButton, 584.0, 164.0, CLICK_OBJ_MODEL_L, E_INDEX);
 	GUISetTextSize(MenuObject, E_INDEX[0], 16.0, 16.0); // model left button
-	GUISetPlayerText(MenuObject, E_INDEX[1], "ld_beat:left");
+	GUISetPlayerText(MenuObject, E_INDEX[1], "LD_BEAT:left");
 	
 	//
 	LoadGUIMenu(MenuObject, MenuText, 502.0, 182.0, CLICK_NO_GROUP, E_INDEX);
@@ -272,11 +289,11 @@ hook OnScriptInit()
 
 	LoadGUIMenu(MenuObject, MenuSpriteButton, 602.0, 182.0, CLICK_OBJ_GROUP_R, E_INDEX);
 	GUISetTextSize(MenuObject, E_INDEX[0], 16.0, 16.0); // group right button
-	GUISetPlayerText(MenuObject, E_INDEX[1], "ld_beat:right");
+	GUISetPlayerText(MenuObject, E_INDEX[1], "LD_BEAT:right");
 
 	LoadGUIMenu(MenuObject, MenuSpriteButton, 584.0, 182.0, CLICK_OBJ_GROUP_L, E_INDEX);
 	GUISetTextSize(MenuObject, E_INDEX[0], 16.0, 16.0); // group left button
-	GUISetPlayerText(MenuObject, E_INDEX[1], "ld_beat:left");
+	GUISetPlayerText(MenuObject, E_INDEX[1], "LD_BEAT:left");
 	
 	// TODO GROUP INPUT BOX
 	//
@@ -317,87 +334,85 @@ hook OnScriptInit()
 	GUISetTextSize(MenuObjectMove, E_INDEX[0], 25.0, 16.0); // header back button
 	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "Back");
 	//
-	LoadGUIMenu(MenuObjectMove, MenuText, 502.0, 146.0, CLICK_NO_GROUP, E_INDEX);
+	
+	tmpCount = CopyGUIMenuData(MenuText, tmpArray);
+	AdjustGUIMenuData(tmpArray, 1, .setOffX = 8.0, .setText = "X", .setAlignment = 2);
+	
+	LoadGUIMenu(MenuObjectMove, tmpArray, 502.0, 146.0, CLICK_NO_GROUP, E_INDEX, tmpCount);
 	GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // X text
 	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "X");
-	GUISetAlignment(MenuObjectMove, E_INDEX[1], 1);
 
 	LoadGUIMenu(MenuObjectMove, MenuSpriteButton, 602.0, 146.0, CLICK_OBJMOVE_X_L, E_INDEX);
 	GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // X left button
-	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "ld_beat:right");
+	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "LD_BEAT:right");
 
 	LoadGUIMenu(MenuObjectMove, MenuSpriteButton, 584.0, 146.0, CLICK_OBJMOVE_X_R, E_INDEX);
 	GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // X right button
-	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "ld_beat:left");
+	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "LD_BEAT:left");
 	//
-	LoadGUIMenu(MenuObjectMove, MenuText, 502.0, 164.0, CLICK_NO_GROUP, E_INDEX);
+	LoadGUIMenu(MenuObjectMove, tmpArray, 502.0, 164.0, CLICK_NO_GROUP, E_INDEX, tmpCount);
 	GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // Y text
 	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "Y");
-	GUISetAlignment(MenuObjectMove, E_INDEX[1], 1);
 
 	LoadGUIMenu(MenuObjectMove, MenuSpriteButton, 602.0, 164.0, CLICK_OBJMOVE_Y_L, E_INDEX);
 	GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // Y left button
-	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "ld_beat:right");
+	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "LD_BEAT:right");
 
 	LoadGUIMenu(MenuObjectMove, MenuSpriteButton, 584.0, 164.0, CLICK_OBJMOVE_Y_R, E_INDEX);
 	GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // Y right button
-	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "ld_beat:left");
+	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "LD_BEAT:left");
 	//
-	LoadGUIMenu(MenuObjectMove, MenuText, 502.0, 182.0, CLICK_NO_GROUP, E_INDEX);
+	LoadGUIMenu(MenuObjectMove, tmpArray, 502.0, 182.0, CLICK_NO_GROUP, E_INDEX, tmpCount);
 	GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // Z text
 	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "Z");
-	GUISetAlignment(MenuObjectMove, E_INDEX[1], 1);
 
 	LoadGUIMenu(MenuObjectMove, MenuSpriteButton, 602.0, 182.0, CLICK_OBJMOVE_Z_L, E_INDEX);
 	GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // Z left button
-	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "ld_beat:right");
+	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "LD_BEAT:right");
 
 	LoadGUIMenu(MenuObjectMove, MenuSpriteButton, 584.0, 182.0, CLICK_OBJMOVE_Z_R, E_INDEX);
 	GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // Z right button
-	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "ld_beat:left");
+	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "LD_BEAT:left");
 	//
 	LoadGUIMenu(MenuObjectMove, MenuHeader, 500.0, 200.0, CLICK_NO_GROUP, E_INDEX);
 	GUISetTextSize(MenuObjectMove, E_INDEX[0], 120.0, 16.0); // rot header box
 	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "Rotation");
 	//
-	LoadGUIMenu(MenuObjectMove, MenuText, 502.0, 218.0, CLICK_NO_GROUP, E_INDEX);
+	LoadGUIMenu(MenuObjectMove, tmpArray, 502.0, 218.0, CLICK_NO_GROUP, E_INDEX, tmpCount);
 	GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // RX text
 	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "RX");
-	GUISetAlignment(MenuObjectMove, E_INDEX[1], 1);
 
 	LoadGUIMenu(MenuObjectMove, MenuSpriteButton, 602.0, 218.0, CLICK_OBJMOVE_RX_L, E_INDEX);
 	GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // RX left button
-	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "ld_beat:right");
+	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "LD_BEAT:right");
 
 	LoadGUIMenu(MenuObjectMove, MenuSpriteButton, 584.0, 218.0, CLICK_OBJMOVE_RX_R, E_INDEX);
 	GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // RX right button
-	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "ld_beat:left");
+	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "LD_BEAT:left");
 	//
-	LoadGUIMenu(MenuObjectMove, MenuText, 502.0, 236.0, CLICK_NO_GROUP, E_INDEX);
+	LoadGUIMenu(MenuObjectMove, tmpArray, 502.0, 236.0, CLICK_NO_GROUP, E_INDEX, tmpCount);
 	GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // RY text
 	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "RY");
-	GUISetAlignment(MenuObjectMove, E_INDEX[1], 1);
 
 	LoadGUIMenu(MenuObjectMove, MenuSpriteButton, 602.0, 236.0, CLICK_OBJMOVE_RY_L, E_INDEX);
 	GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // RY left button
-	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "ld_beat:right");
+	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "LD_BEAT:right");
 
 	LoadGUIMenu(MenuObjectMove, MenuSpriteButton, 584.0, 236.0, CLICK_OBJMOVE_RY_R, E_INDEX);
 	GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // RY right button
-	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "ld_beat:left");
+	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "LD_BEAT:left");
 	//
-	LoadGUIMenu(MenuObjectMove, MenuText, 502.0, 254.0, CLICK_NO_GROUP, E_INDEX);
+	LoadGUIMenu(MenuObjectMove, tmpArray, 502.0, 254.0, CLICK_NO_GROUP, E_INDEX, tmpCount);
 	GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // RZ text
 	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "RZ");
-	GUISetAlignment(MenuObjectMove, E_INDEX[1], 1);
 
 	LoadGUIMenu(MenuObjectMove, MenuSpriteButton, 602.0, 254.0, CLICK_OBJMOVE_RZ_L, E_INDEX);
 	GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // RZ left button
-	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "ld_beat:right");
+	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "LD_BEAT:right");
 
 	LoadGUIMenu(MenuObjectMove, MenuSpriteButton, 584.0, 254.0, CLICK_OBJMOVE_RZ_R, E_INDEX);
 	GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // RZ right button
-	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "ld_beat:left");
+	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "LD_BEAT:left");
 
 	LoadGUIMenu(MenuObjectMove, MenuButton, 502.0, 272.0, CLICK_OBJMOVE_RESROT, E_INDEX);
 	GUISetTextSize(MenuObjectMove, E_INDEX[0], 116.0, 16.0); // reset rot right button
@@ -413,11 +428,11 @@ hook OnScriptInit()
 
 	LoadGUIMenu(MenuObjectMove, MenuSpriteButton, 602.0, 308.0, CLICK_OBJMOVE_NUDPOS_R, E_INDEX);
 	GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // nudge pos right button
-	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "ld_beat:right");
+	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "LD_BEAT:right");
 
 	LoadGUIMenu(MenuObjectMove, MenuSpriteButton, 584.0, 308.0, CLICK_OBJMOVE_NUDPOS_L, E_INDEX);
 	GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // nudge pos left button
-	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "ld_beat:left");
+	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "LD_BEAT:left");
 	//
 	LoadGUIMenu(MenuObjectMove, MenuText, 502.0, 326.0, CLICK_NO_GROUP, E_INDEX);
 	GUISetTextSize(MenuObjectMove, E_INDEX[0], 20.0, 16.0); // nudge rot text
@@ -425,11 +440,11 @@ hook OnScriptInit()
 
 	LoadGUIMenu(MenuObjectMove, MenuSpriteButton, 602.0, 326.0, CLICK_OBJMOVE_NUDROT_R, E_INDEX);
 	GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // nudge rot right button
-	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "ld_beat:right");
+	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "LD_BEAT:right");
 
 	LoadGUIMenu(MenuObjectMove, MenuSpriteButton, 584.0, 326.0, CLICK_OBJMOVE_NUDROT_L, E_INDEX);
 	GUISetTextSize(MenuObjectMove, E_INDEX[0], 16.0, 16.0); // nudge rot left button
-	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "ld_beat:left");
+	GUISetPlayerText(MenuObjectMove, E_INDEX[1], "LD_BEAT:left");
 
 	// OBJECT-MOVE MORE MENU
 
@@ -551,11 +566,11 @@ hook OnScriptInit()
 
 	LoadGUIMenu(MenuGroupMove, MenuSpriteButton, 602.0, 146.0, CLICK_GRPMOVE_X_L, E_INDEX);
 	GUISetTextSize(MenuGroupMove, E_INDEX[0], 16.0, 16.0); // X left button
-	GUISetPlayerText(MenuGroupMove, E_INDEX[1], "ld_beat:right");
+	GUISetPlayerText(MenuGroupMove, E_INDEX[1], "LD_BEAT:right");
 
 	LoadGUIMenu(MenuGroupMove, MenuSpriteButton, 584.0, 146.0, CLICK_GRPMOVE_X_R, E_INDEX);
 	GUISetTextSize(MenuGroupMove, E_INDEX[0], 16.0, 16.0); // X right button
-	GUISetPlayerText(MenuGroupMove, E_INDEX[1], "ld_beat:left");
+	GUISetPlayerText(MenuGroupMove, E_INDEX[1], "LD_BEAT:left");
 	//
 	LoadGUIMenu(MenuGroupMove, MenuText, 502.0, 164.0, CLICK_NO_GROUP, E_INDEX);
 	GUISetTextSize(MenuGroupMove, E_INDEX[0], 80.0, 16.0); // Y text
@@ -564,11 +579,11 @@ hook OnScriptInit()
 
 	LoadGUIMenu(MenuGroupMove, MenuSpriteButton, 602.0, 164.0, CLICK_GRPMOVE_Y_L, E_INDEX);
 	GUISetTextSize(MenuGroupMove, E_INDEX[0], 16.0, 16.0); // Y left button
-	GUISetPlayerText(MenuGroupMove, E_INDEX[1], "ld_beat:right");
+	GUISetPlayerText(MenuGroupMove, E_INDEX[1], "LD_BEAT:right");
 
 	LoadGUIMenu(MenuGroupMove, MenuSpriteButton, 584.0, 164.0, CLICK_GRPMOVE_Y_R, E_INDEX);
 	GUISetTextSize(MenuGroupMove, E_INDEX[0], 16.0, 16.0); // Y right button
-	GUISetPlayerText(MenuGroupMove, E_INDEX[1], "ld_beat:left");
+	GUISetPlayerText(MenuGroupMove, E_INDEX[1], "LD_BEAT:left");
 	//
 	LoadGUIMenu(MenuGroupMove, MenuText, 502.0, 182.0, CLICK_NO_GROUP, E_INDEX);
 	GUISetTextSize(MenuGroupMove, E_INDEX[0], 80.0, 16.0); // Z text
@@ -577,11 +592,11 @@ hook OnScriptInit()
 
 	LoadGUIMenu(MenuGroupMove, MenuSpriteButton, 602.0, 182.0, CLICK_GRPMOVE_Z_L, E_INDEX);
 	GUISetTextSize(MenuGroupMove, E_INDEX[0], 16.0, 16.0); // Z left button
-	GUISetPlayerText(MenuGroupMove, E_INDEX[1], "ld_beat:right");
+	GUISetPlayerText(MenuGroupMove, E_INDEX[1], "LD_BEAT:right");
 
 	LoadGUIMenu(MenuGroupMove, MenuSpriteButton, 584.0, 182.0, CLICK_GRPMOVE_Z_R, E_INDEX);
 	GUISetTextSize(MenuGroupMove, E_INDEX[0], 16.0, 16.0); // Z right button
-	GUISetPlayerText(MenuGroupMove, E_INDEX[1], "ld_beat:left");
+	GUISetPlayerText(MenuGroupMove, E_INDEX[1], "LD_BEAT:left");
 	//
 	LoadGUIMenu(MenuGroupMove, MenuHeader, 500.0, 200.0, CLICK_NO_GROUP, E_INDEX);
 	GUISetTextSize(MenuGroupMove, E_INDEX[0], 120.0, 16.0); // rot header box
@@ -594,11 +609,11 @@ hook OnScriptInit()
 
 	LoadGUIMenu(MenuGroupMove, MenuSpriteButton, 602.0, 218.0, CLICK_GRPMOVE_RX_L, E_INDEX);
 	GUISetTextSize(MenuGroupMove, E_INDEX[0], 16.0, 16.0); // RX left button
-	GUISetPlayerText(MenuGroupMove, E_INDEX[1], "ld_beat:right");
+	GUISetPlayerText(MenuGroupMove, E_INDEX[1], "LD_BEAT:right");
 
 	LoadGUIMenu(MenuGroupMove, MenuSpriteButton, 584.0, 218.0, CLICK_GRPMOVE_RX_R, E_INDEX);
 	GUISetTextSize(MenuGroupMove, E_INDEX[0], 16.0, 16.0); // RX right button
-	GUISetPlayerText(MenuGroupMove, E_INDEX[1], "ld_beat:left");
+	GUISetPlayerText(MenuGroupMove, E_INDEX[1], "LD_BEAT:left");
 	//
 	LoadGUIMenu(MenuGroupMove, MenuText, 502.0, 236.0, CLICK_NO_GROUP, E_INDEX);
 	GUISetTextSize(MenuGroupMove, E_INDEX[0], 80.0, 16.0); // RY text
@@ -607,11 +622,11 @@ hook OnScriptInit()
 
 	LoadGUIMenu(MenuGroupMove, MenuSpriteButton, 602.0, 236.0, CLICK_GRPMOVE_RY_L, E_INDEX);
 	GUISetTextSize(MenuGroupMove, E_INDEX[0], 16.0, 16.0); // RY left button
-	GUISetPlayerText(MenuGroupMove, E_INDEX[1], "ld_beat:right");
+	GUISetPlayerText(MenuGroupMove, E_INDEX[1], "LD_BEAT:right");
 
 	LoadGUIMenu(MenuGroupMove, MenuSpriteButton, 584.0, 236.0, CLICK_GRPMOVE_RY_R, E_INDEX);
 	GUISetTextSize(MenuGroupMove, E_INDEX[0], 16.0, 16.0); // RY right button
-	GUISetPlayerText(MenuGroupMove, E_INDEX[1], "ld_beat:left");
+	GUISetPlayerText(MenuGroupMove, E_INDEX[1], "LD_BEAT:left");
 	//
 	LoadGUIMenu(MenuGroupMove, MenuText, 502.0, 254.0, CLICK_NO_GROUP, E_INDEX);
 	GUISetTextSize(MenuGroupMove, E_INDEX[0], 80.0, 16.0); // RZ text
@@ -620,11 +635,11 @@ hook OnScriptInit()
 
 	LoadGUIMenu(MenuGroupMove, MenuSpriteButton, 602.0, 254.0, CLICK_GRPMOVE_RZ_L, E_INDEX);
 	GUISetTextSize(MenuGroupMove, E_INDEX[0], 16.0, 16.0); // RZ left button
-	GUISetPlayerText(MenuGroupMove, E_INDEX[1], "ld_beat:right");
+	GUISetPlayerText(MenuGroupMove, E_INDEX[1], "LD_BEAT:right");
 
 	LoadGUIMenu(MenuGroupMove, MenuSpriteButton, 584.0, 254.0, CLICK_GRPMOVE_RZ_R, E_INDEX);
 	GUISetTextSize(MenuGroupMove, E_INDEX[0], 16.0, 16.0); // RZ right button
-	GUISetPlayerText(MenuGroupMove, E_INDEX[1], "ld_beat:left");
+	GUISetPlayerText(MenuGroupMove, E_INDEX[1], "LD_BEAT:left");
 	//
 	LoadGUIMenu(MenuGroupMove, MenuHeader, 500.0, 272.0, CLICK_NO_GROUP, E_INDEX);
 	GUISetTextSize(MenuGroupMove, E_INDEX[0], 120.0, 16.0); // nudge header box
@@ -636,11 +651,11 @@ hook OnScriptInit()
 
 	LoadGUIMenu(MenuGroupMove, MenuSpriteButton, 602.0, 290.0, CLICK_GRPMOVE_NUDPOS_R, E_INDEX);
 	GUISetTextSize(MenuGroupMove, E_INDEX[0], 16.0, 16.0); // nudge pos right button
-	GUISetPlayerText(MenuGroupMove, E_INDEX[1], "ld_beat:right");
+	GUISetPlayerText(MenuGroupMove, E_INDEX[1], "LD_BEAT:right");
 
 	LoadGUIMenu(MenuGroupMove, MenuSpriteButton, 584.0, 290.0, CLICK_GRPMOVE_NUDPOS_L, E_INDEX);
 	GUISetTextSize(MenuGroupMove, E_INDEX[0], 16.0, 16.0); // nudge pos left button
-	GUISetPlayerText(MenuGroupMove, E_INDEX[1], "ld_beat:left");
+	GUISetPlayerText(MenuGroupMove, E_INDEX[1], "LD_BEAT:left");
 	//
 	LoadGUIMenu(MenuGroupMove, MenuText, 502.0, 308.0, CLICK_NO_GROUP, E_INDEX);
 	GUISetTextSize(MenuGroupMove, E_INDEX[0], 20.0, 16.0); // nudge rot text
@@ -648,11 +663,11 @@ hook OnScriptInit()
 
 	LoadGUIMenu(MenuGroupMove, MenuSpriteButton, 602.0, 308.0, CLICK_GRPMOVE_NUDROT_R, E_INDEX);
 	GUISetTextSize(MenuGroupMove, E_INDEX[0], 16.0, 16.0); // nudge rot right button
-	GUISetPlayerText(MenuGroupMove, E_INDEX[1], "ld_beat:right");
+	GUISetPlayerText(MenuGroupMove, E_INDEX[1], "LD_BEAT:right");
 
 	LoadGUIMenu(MenuGroupMove, MenuSpriteButton, 584.0, 308.0, CLICK_GRPMOVE_NUDROT_L, E_INDEX);
 	GUISetTextSize(MenuGroupMove, E_INDEX[0], 16.0, 16.0); // nudge rot left button
-	GUISetPlayerText(MenuGroupMove, E_INDEX[1], "ld_beat:left");
+	GUISetPlayerText(MenuGroupMove, E_INDEX[1], "LD_BEAT:left");
 
 	// GROUP-MOVE MORE MENU
 
@@ -700,6 +715,8 @@ hook OnPlayerConnect(playerid)
 
 static CreatePlayerMenus(playerid)
 {
+	new tmpArray[MAX_ELEMENTS][GUIDEF], tmpCount;
+	
 	// Set selection color
 	SetPlayerGUISelectionColor(playerid, 0xFFFF00FF);
 	
@@ -718,79 +735,67 @@ static CreatePlayerMenus(playerid)
 	PlayerGUISetPlayerText(playerid, PlayerMenuObject[playerid], E_PLAYERINDEX[1], "0");
 	PlayerGUISetAlignment(playerid, PlayerMenuObject[playerid], E_PLAYERINDEX[1], 2);
 	PlayerElementData[playerid][E_ObjGroup] = E_PLAYERINDEX[1];
-
-	PlayerLoadGUIMenu(playerid, PlayerMenuObject[playerid], MenuInput, 531.0, 200.0, CLICK_OBJ_NOTE_INPUT, E_PLAYERINDEX);
+	
+	tmpCount = CopyGUIMenuData(MenuInput, tmpArray);
+	AdjustGUIMenuData(tmpArray, 1, .setOffX = 3.0, .setText = "Some_text_here.", .setAlignment = 1);
+	PlayerLoadGUIMenu(playerid, PlayerMenuObject[playerid], tmpArray, 531.0, 200.0, CLICK_OBJ_NOTE_INPUT, E_PLAYERINDEX, tmpCount);
 	PlayerGUISetTextSize(playerid, PlayerMenuObject[playerid], E_PLAYERINDEX[0], 87.0, 16.0); // note input
-	PlayerGUISetPlayerText(playerid, PlayerMenuObject[playerid], E_PLAYERINDEX[1], "Some_text_here.");
-	PlayerGUISetAlignment(playerid, PlayerMenuObject[playerid], E_PLAYERINDEX[1], 1);
 	PlayerElementData[playerid][E_ObjNote] = E_PLAYERINDEX[1];
 	
 	// Object move menu
 	printf("Object move menu");
 	PlayerMenuObjectMove[playerid] = PlayerCreateGUI(playerid, "MenuObjectMove");
 
-	PlayerLoadGUIMenu(playerid, PlayerMenuObjectMove[playerid], MenuInput, 520.0, 146.0, CLICK_OBJMOVE_X_INPUT, E_PLAYERINDEX);
+	tmpCount = CopyGUIMenuData(MenuInput, tmpArray);
+	AdjustGUIMenuData(tmpArray, 1, .setOffX = 30.0, .setText = "0000.0000", .setAlignment = 2);
+	
+	PlayerLoadGUIMenu(playerid, PlayerMenuObjectMove[playerid], tmpArray, 520.0, 146.0, CLICK_OBJMOVE_X_INPUT, E_PLAYERINDEX, tmpCount);
 	PlayerGUISetTextSize(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[0], 62.0, 16.0); // X input
-	PlayerGUISetPlayerText(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[1], "1524.1000");
-	PlayerGUISetAlignment(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[1], 2);
 	PlayerElementData[playerid][E_ObjX] = E_PLAYERINDEX[1];
 
-	PlayerLoadGUIMenu(playerid, PlayerMenuObjectMove[playerid], MenuInput, 520.0, 164.0, CLICK_OBJMOVE_Y_INPUT, E_PLAYERINDEX);
+	PlayerLoadGUIMenu(playerid, PlayerMenuObjectMove[playerid], tmpArray, 520.0, 164.0, CLICK_OBJMOVE_Y_INPUT, E_PLAYERINDEX, tmpCount);
 	PlayerGUISetTextSize(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[0], 62.0, 16.0); // Y input
-	PlayerGUISetPlayerText(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[1], "123.1000");
-	PlayerGUISetAlignment(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[1], 2);
 	PlayerElementData[playerid][E_ObjY] = E_PLAYERINDEX[1];
 
-	PlayerLoadGUIMenu(playerid, PlayerMenuObjectMove[playerid], MenuInput, 520.0, 182.0, CLICK_OBJMOVE_Z_INPUT, E_PLAYERINDEX);
+	PlayerLoadGUIMenu(playerid, PlayerMenuObjectMove[playerid], tmpArray, 520.0, 182.0, CLICK_OBJMOVE_Z_INPUT, E_PLAYERINDEX, tmpCount);
 	PlayerGUISetTextSize(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[0], 62.0, 16.0); // Z input
-	PlayerGUISetPlayerText(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[1], "12.1000");
-	PlayerGUISetAlignment(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[1], 2);
 	PlayerElementData[playerid][E_ObjZ] = E_PLAYERINDEX[1];
 
-	PlayerLoadGUIMenu(playerid, PlayerMenuObjectMove[playerid], MenuInput, 520.0, 218.0, CLICK_OBJMOVE_RX_INPUT, E_PLAYERINDEX);
+	PlayerLoadGUIMenu(playerid, PlayerMenuObjectMove[playerid], tmpArray, 520.0, 218.0, CLICK_OBJMOVE_RX_INPUT, E_PLAYERINDEX, tmpCount);
 	PlayerGUISetTextSize(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[0], 62.0, 16.0); // RX input
-	PlayerGUISetPlayerText(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[1], "1.1000");
-	PlayerGUISetAlignment(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[1], 2);
 	PlayerElementData[playerid][E_ObjRX] = E_PLAYERINDEX[1];
 
-	PlayerLoadGUIMenu(playerid, PlayerMenuObjectMove[playerid], MenuInput, 520.0, 236.0, CLICK_OBJMOVE_RY_INPUT, E_PLAYERINDEX);
+	PlayerLoadGUIMenu(playerid, PlayerMenuObjectMove[playerid], tmpArray, 520.0, 236.0, CLICK_OBJMOVE_RY_INPUT, E_PLAYERINDEX, tmpCount);
 	PlayerGUISetTextSize(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[0], 62.0, 16.0); // RY input
-	PlayerGUISetPlayerText(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[1], "12.1000");
-	PlayerGUISetAlignment(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[1], 2);
 	PlayerElementData[playerid][E_ObjRY] = E_PLAYERINDEX[1];
 
-	PlayerLoadGUIMenu(playerid, PlayerMenuObjectMove[playerid], MenuInput, 520.0, 254.0, CLICK_OBJMOVE_RZ_INPUT, E_PLAYERINDEX);
+	PlayerLoadGUIMenu(playerid, PlayerMenuObjectMove[playerid], tmpArray, 520.0, 254.0, CLICK_OBJMOVE_RZ_INPUT, E_PLAYERINDEX, tmpCount);
 	PlayerGUISetTextSize(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[0], 62.0, 16.0); // RZ input
-	PlayerGUISetPlayerText(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[1], "123.1000");
-	PlayerGUISetAlignment(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[1], 2);
 	PlayerElementData[playerid][E_ObjRZ] = E_PLAYERINDEX[1];
+	
+	AdjustGUIMenuData(tmpArray, 1, .setOffX = 28.0, .setText = "0.0", .setAlignment = 2);
 
-	PlayerLoadGUIMenu(playerid, PlayerMenuObjectMove[playerid], MenuInput, 524.0, 308.0, CLICK_OBJMOVE_NUDPOS_INPUT, E_PLAYERINDEX);
+	PlayerLoadGUIMenu(playerid, PlayerMenuObjectMove[playerid], tmpArray, 524.0, 308.0, CLICK_OBJMOVE_NUDPOS_INPUT, E_PLAYERINDEX, tmpCount);
 	PlayerGUISetTextSize(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[0], 58.0, 16.0); // nudge pos input
-	PlayerGUISetPlayerText(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[1], "0.5");
-	PlayerGUISetAlignment(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[1], 2);
 	PlayerElementData[playerid][E_ObjNudPos] = E_PLAYERINDEX[1];
 
-	PlayerLoadGUIMenu(playerid, PlayerMenuObjectMove[playerid], MenuInput, 524.0, 326.0, CLICK_OBJMOVE_NUDROT_INPUT, E_PLAYERINDEX);
+	PlayerLoadGUIMenu(playerid, PlayerMenuObjectMove[playerid], tmpArray, 524.0, 326.0, CLICK_OBJMOVE_NUDROT_INPUT, E_PLAYERINDEX, tmpCount);
 	PlayerGUISetTextSize(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[0], 58.0, 16.0); // nudge rot input
-	PlayerGUISetPlayerText(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[1], "1.0");
-	PlayerGUISetAlignment(playerid, PlayerMenuObjectMove[playerid], E_PLAYERINDEX[1], 2);
 	PlayerElementData[playerid][E_ObjNudRot] = E_PLAYERINDEX[1];
 	
 	// Group move menu
 	printf("Group move menu");
 	PlayerMenuGroupMove[playerid] = PlayerCreateGUI(playerid, "MenuGroupMove");
 
-	PlayerLoadGUIMenu(playerid, PlayerMenuGroupMove[playerid], MenuInput, 524.0, 308.0, CLICK_GRPMOVE_NUDROT_INPUT, E_PLAYERINDEX);
+	tmpCount = CopyGUIMenuData(MenuInput, tmpArray);
+	AdjustGUIMenuData(tmpArray, 1, .setOffX = 28.0, .setText = "0.0", .setAlignment = 2);
+
+	PlayerLoadGUIMenu(playerid, PlayerMenuGroupMove[playerid], tmpArray, 524.0, 308.0, CLICK_GRPMOVE_NUDROT_INPUT, E_PLAYERINDEX, tmpCount);
 	PlayerGUISetTextSize(playerid, PlayerMenuGroupMove[playerid], E_PLAYERINDEX[0], 58.0, 16.0); // nudge rot input
-	PlayerGUISetPlayerText(playerid, PlayerMenuGroupMove[playerid], E_PLAYERINDEX[1], "2854.1562");
-	PlayerGUISetAlignment(playerid, PlayerMenuGroupMove[playerid], E_PLAYERINDEX[1], 2);
 	PlayerElementData[playerid][E_GrpNudPos] = E_PLAYERINDEX[1];
 
-	PlayerLoadGUIMenu(playerid, PlayerMenuGroupMove[playerid], MenuInput, 524.0, 290.0, CLICK_GRPMOVE_NUDPOS_INPUT, E_PLAYERINDEX);
+	PlayerLoadGUIMenu(playerid, PlayerMenuGroupMove[playerid], tmpArray, 524.0, 290.0, CLICK_GRPMOVE_NUDPOS_INPUT, E_PLAYERINDEX, tmpCount);
 	PlayerGUISetTextSize(playerid, PlayerMenuGroupMove[playerid], E_PLAYERINDEX[0], 58.0, 16.0); // nudge pos input
-	PlayerGUISetPlayerText(playerid, PlayerMenuGroupMove[playerid], E_PLAYERINDEX[1], "2854.1562");
-	PlayerGUISetAlignment(playerid, PlayerMenuGroupMove[playerid], E_PLAYERINDEX[1], 2);
 	PlayerElementData[playerid][E_GrpNudRot] = E_PLAYERINDEX[1];
 	
 	// Bind menus

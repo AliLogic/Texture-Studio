@@ -20,7 +20,7 @@ GUISetLetterSize(GUIMenu:gindex, pindex, GUIType[GUILSizeX], GUIType[GUILSizeY])
 GUISetColor(GUIMenu:gindex, pindex, GUIType[GUIColor])
 GUISetOutline(GUIMenu:gindex, pindex, GUIType[GUIOutline])
 GUISetProportional(GUIMenu:gindex, pindex, GUIType[GUIProportional])
-GUISetShadow(GUIMenu:gindex, pindex, GUIType[GUIShawdow])
+GUISetShadow(GUIMenu:gindex, pindex, GUIType[GUIShadow])
 GUISetBox(GUIMenu:gindex, pindex, GUIType[GUIBox])
 GUISetBoxColor(GUIMenu:gindex, pindex, GUIType[GUIBoxColor])
 GUISetTextSize(GUIMenu:gindex, pindex, xoffset, yoffset)
@@ -133,7 +133,7 @@ stock ApplyGUIArray(GUIMenu:gindex, pindex, const GUIType[GUIDEF], Float:xoffset
 	GUISetOutline(gindex, pindex, GUIType[GUIOutline]);
 	GUISetProportional(gindex, pindex, GUIType[GUIProportional]);
 	GUISetAlignment(gindex, pindex, GUIType[GUIAlignment]);
-	GUISetShadow(gindex, pindex, GUIType[GUIShawdow]);
+	GUISetShadow(gindex, pindex, GUIType[GUIShadow]);
 
 	if(GUIType[GUIBox])
 	{
@@ -188,7 +188,7 @@ stock UpdateGUIMenu(playerid, GUIMenu:gindex, pindex)
 	// Now show all again
 	for(new i = 0; i < MAX_ELEMENTS; i++)
 	{
-		if(GUIData[_:gindex][GUIUsed][i]) TextDrawHideForPlayer(playerid, GUIData[_:gindex][GUIid][i]);
+		if(GUIData[_:gindex][GUIUsed][i]) TextDrawShowForPlayer(playerid, GUIData[_:gindex][GUIid][i]);
 	}
 	return 1;
 }
@@ -232,7 +232,99 @@ stock UpdateGUIElement(playerid, GUIMenu:gindex, pindex)
 {
 	GUIValid(gindex, pindex);
 	TextDrawHideForPlayer(playerid, GUIData[_:gindex][GUIid][pindex]);
-	TextDrawHideForPlayer(playerid, GUIData[_:gindex][GUIid][pindex]);
+	TextDrawShowForPlayer(playerid, GUIData[_:gindex][GUIid][pindex]);
+	return 1;
+}
+
+// Copy GUI element load data to array
+stock CopyGUIMenuData(const LoadArray[][GUIDEF], ret[MAX_ELEMENTS][GUIDEF], size = sizeof(LoadArray))
+{
+	for(new j; j < size; j++) {
+		for(new i; GUIDEF:i < GUIDEF; i++) {
+			ret[j][GUIDEF:i] = LoadArray[j][GUIDEF:i];
+		}
+	}
+	return size;
+}
+
+/*/ Adjust GUI element load data
+stock AdjustGUIMenuData(LoadArray[][GUIDEF], index, GUIDEF:type, {Float,_}:val, tag = tagof(val))
+{
+	if(tag == tagof(Float:)) {
+		LoadArray[index][type] = Float:(val);
+	}
+	else {
+		LoadArray[index][type] = val;
+	}
+	
+	return 1;
+}*/
+/*stock AdjustGUIMenuData(LoadArray[][GUIDEF], index, GUIDEF:type, Float:val)
+{
+	LoadArray[index][type] = val;
+	return 1;
+}
+
+// Adjust GUI element load data
+stock AdjustGUIMenuDataInt(LoadArray[][GUIDEF], index, {GUIDEF,_}:...)
+{
+	new argCount = numargs();
+	for(new i = 2; i < argCount; i += 2) {
+		LoadArray[index][GUIDEF:getarg(i)] = getarg(i + 1);
+	}
+	
+	return 1;
+}
+
+// Adjust GUI element load data
+stock AdjustGUIMenuDataFloat(LoadArray[][GUIDEF], index, {GUIDEF,Float}:...)
+{
+	new argCount = numargs();
+	for(new i = 2; i < argCount; i += 2) {
+		LoadArray[index][GUIDEF:getarg(i)] = Float:getarg(i + 1);
+	}
+	
+	return 1;
+}
+
+// Adjust GUI element load data
+stock AdjustGUIMenuDataText(LoadArray[][GUIDEF], index, const newval[])
+{
+	format(LoadArray[index][GUIText], MAX_PLAYER_GUI_TEXT, "%s", newval);
+	
+	return 1;
+}*/
+
+// Adjust GUI element load data
+AdjustGUIMenuData(LoadArray[][GUIDEF], index, 
+	const setText[] = "", Float:setOffX = -80085.420, Float:setOffY = -80085.420, Float:setLSizeX = -80085.420, Float:setLSizeY = -80085.420,
+	Float:setTextSizeX = -80085.420, Float:setTextSizeY = -80085.420, setBackColor = cellmin, setFont = cellmin, setColor = cellmin, setOutline = cellmin,
+	setProportional = cellmin, setAlignment = cellmin, setShadow = cellmin, setBox = cellmin, setBoxColor = cellmin, setSelect = cellmin,
+	Float:setPModelRX = -80085.420, Float:setPModelRY = -80085.420, Float:setPModelRZ = -80085.420, Float:setPModelZoom = -80085.420, setPModel = cellmin)
+{
+	if(strlen(setText) > 1) format(LoadArray[index][GUIText], MAX_PLAYER_GUI_TEXT, "%s", setText);
+	if(setOffX != -80085.420) LoadArray[index][GUIOffX] = setOffX;
+	if(setOffY != -80085.420) LoadArray[index][GUIOffX] = setOffX;
+	if(setLSizeX != -80085.420) LoadArray[index][GUILSizeX] = setLSizeX;
+	if(setLSizeY != -80085.420) LoadArray[index][GUILSizeY] = setLSizeY;
+	if(setTextSizeX != -80085.420) LoadArray[index][GUITextSizeX] = setTextSizeX;
+	if(setTextSizeY != -80085.420) LoadArray[index][GUITextSizeY] = setTextSizeY;
+	if(setBackColor != cellmin) LoadArray[index][GUIBackColor] = setBackColor;
+	if(setFont != cellmin) LoadArray[index][GUIFont] = setFont;
+	if(setColor != cellmin) LoadArray[index][GUIColor] = setColor;
+	if(setOutline != cellmin) LoadArray[index][GUIOutline] = setOutline;
+	if(setProportional != cellmin) LoadArray[index][GUIProportional] = setProportional;
+	if(setAlignment != cellmin) LoadArray[index][GUIAlignment] = setAlignment;
+	if(setShadow != cellmin) LoadArray[index][GUIShadow] = setShadow;
+	if(setBox != cellmin) LoadArray[index][GUIBox] = setBox;
+	if(setBoxColor != cellmin) LoadArray[index][GUIBoxColor] = setBoxColor;
+	if(setSelect != cellmin) LoadArray[index][GUISelect] = setSelect;
+	if(setPModelRX != -80085.420) LoadArray[index][GUIPModelRX] = setPModelRX;
+	if(setPModelRY != -80085.420) LoadArray[index][GUIPModelRY] = setPModelRY;
+	if(setPModelRZ != -80085.420) LoadArray[index][GUIPModelRZ] = setPModelRZ;
+	if(setPModelZoom != -80085.420) LoadArray[index][GUIPModelZoom] = setPModelZoom;
+	if(setPModel != cellmin) LoadArray[index][GUIPModel] = setPModel;
+	
 	return 1;
 }
 

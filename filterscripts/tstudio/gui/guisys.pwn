@@ -53,7 +53,7 @@ enum GUIDEF {
 	GUIOutline,
 	GUIProportional,
 	GUIAlignment,
-	GUIShawdow,
+	GUIShadow,
 	GUIBox,
 	GUIBoxColor,
 	GUISelect,
