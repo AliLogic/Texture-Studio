@@ -66,7 +66,7 @@ YCMD:restrict(playerid, arg[], help)
 		
 		if(ObjectData[CurrObject[p]][oGroup] == groupid)
 		{
-			CurrObject[p] = -1;
+			SetCurrObject(p, -1);
 			SendClientMessage(p, STEALTH_YELLOW, "You're selected object has been deselected due to a restriction");
 		}
 		

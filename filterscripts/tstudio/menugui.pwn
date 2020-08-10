@@ -34,13 +34,13 @@ static CurrGroupPosition[MAX_PLAYERS][9];
 
 
 // Movement Increments
-static Float:CurrMovementInc[MAX_PLAYERS];
-static Float:CurrRotationInc[MAX_PLAYERS];
-static Float:CurrMovementGInc[MAX_PLAYERS];
-static Float:CurrRotationGInc[MAX_PLAYERS];
+new Float:CurrMovementInc[MAX_PLAYERS];
+new Float:CurrRotationInc[MAX_PLAYERS];
+new Float:CurrMovementGInc[MAX_PLAYERS];
+new Float:CurrRotationGInc[MAX_PLAYERS];
 
 // Turn delta map movements on/off
-static bool:DeltaMapMovement[MAX_PLAYERS];
+new bool:DeltaMapMovement[MAX_PLAYERS];
 
 #define         EXIT_GUI_MENU 		1
 
@@ -869,7 +869,7 @@ OnGUIClick:ObjectMenu(playerid, group, gindex, pindex)
 					{
 						new Float:tmp;
 						if(sscanf(text, "f", tmp)) return SendClientMessage(playerid, STEALTH_YELLOW, "You must supply a increment value!");
-						if(tmp < -100.0 || tmp > 100.0) return SendClientMessage(playerid, STEALTH_YELLOW, "Out of range increment! <-100.0 - 100.0>");
+						if(tmp < -150.0 || tmp > 150.0) return SendClientMessage(playerid, STEALTH_YELLOW, "Out of range increment! <-150.0 - 150.0>");
 						CurrMovementInc[playerid] = tmp;
 						format(line, sizeof(line), "%0.3f", tmp);
 						PlayerGUISetPlayerText(playerid, PlayerObjectMenu[playerid], E_PLAYERINDEX[7], line);
@@ -887,7 +887,7 @@ OnGUIClick:ObjectMenu(playerid, group, gindex, pindex)
 					{
 						new Float:tmp;
 						if(sscanf(text, "f", tmp)) return SendClientMessage(playerid, STEALTH_YELLOW, "You must supply a increment value!");
-						if(tmp < -100.0 || tmp > 100.0) return SendClientMessage(playerid, STEALTH_YELLOW, "Out of range increment! <-100.0 - 100.0>");
+						if(tmp < -180.0 || tmp > 180.0) return SendClientMessage(playerid, STEALTH_YELLOW, "Out of range increment! <-180.0 - 180.0>");
 						CurrRotationInc[playerid] = tmp;
 						format(line, sizeof(line), "%0.3f", tmp);
 						PlayerGUISetPlayerText(playerid, PlayerObjectMenu[playerid], E_PLAYERINDEX[8], line);
@@ -1205,7 +1205,7 @@ OnGUIClick:GroupMenu(playerid, group, gindex, pindex)
 					{
 						new Float:tmp;
 						if(sscanf(text, "f", tmp)) return SendClientMessage(playerid, STEALTH_YELLOW, "You must supply a increment value!");
-						if(tmp < -100.0 || tmp > 100.0) return SendClientMessage(playerid, STEALTH_YELLOW, "Out of range increment! <-100.0 - 100.0>");
+						if(tmp < -150.0 || tmp > 150.0) return SendClientMessage(playerid, STEALTH_YELLOW, "Out of range increment! <-150.0 - 150.0>");
 						CurrMovementGInc[playerid] = tmp;
 						format(line, sizeof(line), "%0.3f", tmp);
 						PlayerGUISetPlayerText(playerid, PlayerGroupMenu[playerid], E_PLAYERINDEX[7], line);
@@ -1223,7 +1223,7 @@ OnGUIClick:GroupMenu(playerid, group, gindex, pindex)
 					{
 						new Float:tmp;
 						if(sscanf(text, "f", tmp)) return SendClientMessage(playerid, STEALTH_YELLOW, "You must supply a increment value!");
-						if(tmp < -100.0 || tmp > 100.0) return SendClientMessage(playerid, STEALTH_YELLOW, "Out of range increment! <-100.0 - 100.0>");
+						if(tmp < -180.0 || tmp > 180.0) return SendClientMessage(playerid, STEALTH_YELLOW, "Out of range increment! <-180.0 - 180.0>");
 						CurrRotationGInc[playerid] = tmp;
 						format(line, sizeof(line), "%0.3f", tmp);
 						PlayerGUISetPlayerText(playerid, PlayerGroupMenu[playerid], E_PLAYERINDEX[8], line);
@@ -1457,7 +1457,7 @@ public DelayEditPivot(playerid) { if(IsPlayerConnected(playerid)) BroadcastComma
 forward DelayGEdit(playerid);
 public DelayGEdit(playerid) { if(IsPlayerConnected(playerid)) BroadcastCommand(playerid, "/editgroup"); }
 
-public OnPlayerObjectSelectChange(playerid, index)
+public OnPlayerObjectSelect(playerid, index)
 {
 	UpdatePlayerOSelText(playerid);
 	return 1;

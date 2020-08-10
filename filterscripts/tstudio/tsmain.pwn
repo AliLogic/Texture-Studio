@@ -104,10 +104,38 @@ SetCurrObject(playerid, index)
 	if(CanSelectObject(playerid, index))
 	{
 		CurrObject[playerid] = index;
-		CallLocalFunction("OnPlayerObjectSelectChange", "ii", playerid, index);
+		CallLocalFunction("OnPlayerObjectSelect", "ii", playerid, index);
 		return 1;
 	}
 	return 0;
+}
+
+SetObjectModel(index, model)
+{
+	ObjectData[index][oModel] = model;
+
+	SaveUndoInfo(index, UNDO_TYPE_EDIT);
+
+	// Destroy the object
+	DestroyDynamicObject(ObjectData[index][oID]);
+
+	// Re-create object
+	ObjectData[index][oID] = CreateDynamicObject(ObjectData[index][oModel], ObjectData[index][oX], ObjectData[index][oY], ObjectData[index][oZ], ObjectData[index][oRX], ObjectData[index][oRY], ObjectData[index][oRZ], MapSetting[mVirtualWorld], MapSetting[mInterior], -1, 300.0);
+	Streamer_SetFloatData(STREAMER_TYPE_OBJECT, ObjectData[index][oID], E_STREAMER_DRAW_DISTANCE, 300.0);
+
+	// Update streamer for all
+	foreach(new i : Player) Streamer_UpdateEx(i, ObjectData[index][oX], ObjectData[index][oY], ObjectData[index][oZ]);
+
+	// Update the materials
+	UpdateMaterial(index);
+
+	// Update the text
+	UpdateObjectText(index);
+
+	// Save changes to database
+	sqlite_ObjModel(index);
+	CallLocalFunction("OnObjectModelChange", "ii", index, model);
+	return 1;
 }
 
 hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
@@ -708,7 +736,7 @@ sqlite_UpdateObjectPos(index)
 
 	foreach(new i : Player)
 	{
-		if(CurrObject[i] == index) OnObjectUpdatePos(i, index);
+		if(CurrObject[i] == index) CallLocalFunction("OnObjectUpdatePos", "ii", i, index);
 	}
 
 	return 1;
@@ -4098,28 +4126,7 @@ YCMD:oswap(playerid, arg[], help)
 	if(id > 0 && id < 20000)
 	{
 		new index = CurrObject[playerid];
-		ObjectData[index][oModel] = id;
-
-		SaveUndoInfo(index, UNDO_TYPE_EDIT);
-
-		// Destroy the object
-		DestroyDynamicObject(ObjectData[index][oID]);
-
-		// Re-create object
-		ObjectData[index][oID] = CreateDynamicObject(ObjectData[index][oModel], ObjectData[index][oX], ObjectData[index][oY], ObjectData[index][oZ], ObjectData[index][oRX], ObjectData[index][oRY], ObjectData[index][oRZ], MapSetting[mVirtualWorld], MapSetting[mInterior], -1, 300.0);
-		Streamer_SetFloatData(STREAMER_TYPE_OBJECT, ObjectData[index][oID], E_STREAMER_DRAW_DISTANCE, 300.0);
-
-		// Update streamer for all
-		foreach(new i : Player) Streamer_UpdateEx(i, ObjectData[index][oX], ObjectData[index][oY], ObjectData[index][oZ]);
-
-		// Update the materials
-		UpdateMaterial(index);
-
-		// Update the text
-		UpdateObjectText(index);
-
-		// Save changes to database
-		sqlite_ObjModel(index);
+		SetObjectModel(index, id);
 	}
 	else SendClientMessage(playerid, STEALTH_YELLOW, "Invalid Model");
 	return 1;
@@ -4593,6 +4600,87 @@ YCMD:togpivot(playerid, arg[], help)
 }
 
 
+// Set object pos on X axis
+YCMD:sox(playerid, arg[], help)
+{
+	if(help)
+	{
+		SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+		SendClientMessage(playerid, STEALTH_GREEN, "Set current object X axis position.");
+		return 1;
+	}
+
+	MapOpenCheck(playerid);
+	EditCheck(playerid);
+	NoEditingMode(playerid);
+
+	SaveUndoInfo(CurrObject[playerid], UNDO_TYPE_EDIT);
+
+	ObjectData[CurrObject[playerid]][oX] = floatstr(arg);
+	SetDynamicObjectPos(ObjectData[CurrObject[playerid]][oID], ObjectData[CurrObject[playerid]][oX], ObjectData[CurrObject[playerid]][oY], ObjectData[CurrObject[playerid]][oZ]);
+	UpdateObject3DText(CurrObject[playerid]);
+	sqlite_UpdateObjectPos(CurrObject[playerid]);
+	
+	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+	SendClientMessage(playerid, STEALTH_GREEN, sprintf("Set object's X position to %0.4f", ObjectData[CurrObject[playerid]][oX]));
+	
+	return 1;
+}
+
+// Set object pos on Y axis
+YCMD:soy(playerid, arg[], help)
+{
+	if(help)
+	{
+		SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+		SendClientMessage(playerid, STEALTH_GREEN, "Set current object Y axis position.");
+		return 1;
+	}
+
+	MapOpenCheck(playerid);
+	EditCheck(playerid);
+	NoEditingMode(playerid);
+
+	SaveUndoInfo(CurrObject[playerid], UNDO_TYPE_EDIT);
+
+	ObjectData[CurrObject[playerid]][oY] = floatstr(arg);
+	SetDynamicObjectPos(ObjectData[CurrObject[playerid]][oID], ObjectData[CurrObject[playerid]][oX], ObjectData[CurrObject[playerid]][oY], ObjectData[CurrObject[playerid]][oZ]);
+	UpdateObject3DText(CurrObject[playerid]);
+	sqlite_UpdateObjectPos(CurrObject[playerid]);
+	
+	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+	SendClientMessage(playerid, STEALTH_GREEN, sprintf("Set object's Y position to %0.4f", ObjectData[CurrObject[playerid]][oY]));
+	
+	return 1;
+}
+
+// Set object pos on Z axis
+YCMD:soz(playerid, arg[], help)
+{
+	if(help)
+	{
+		SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+		SendClientMessage(playerid, STEALTH_GREEN, "Set current object Z axis position.");
+		return 1;
+	}
+
+	MapOpenCheck(playerid);
+	EditCheck(playerid);
+	NoEditingMode(playerid);
+
+	SaveUndoInfo(CurrObject[playerid], UNDO_TYPE_EDIT);
+
+	ObjectData[CurrObject[playerid]][oZ] = floatstr(arg);
+	SetDynamicObjectPos(ObjectData[CurrObject[playerid]][oID], ObjectData[CurrObject[playerid]][oX], ObjectData[CurrObject[playerid]][oY], ObjectData[CurrObject[playerid]][oZ]);
+	UpdateObject3DText(CurrObject[playerid]);
+	sqlite_UpdateObjectPos(CurrObject[playerid]);
+	
+	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+	SendClientMessage(playerid, STEALTH_GREEN, sprintf("Set object's Z position to %0.4f", ObjectData[CurrObject[playerid]][oZ]));
+	
+	return 1;
+}
+
 // Move object on X axis
 YCMD:ox(playerid, arg[], help)
 {
@@ -4804,6 +4892,110 @@ YCMD:rz(playerid, arg[], help)
 		SetDynamicObjectRot(ObjectData[CurrObject[playerid]][oID], ObjectData[CurrObject[playerid]][oRX], ObjectData[CurrObject[playerid]][oRY], ObjectData[CurrObject[playerid]][oRZ]);
 	}
 
+	sqlite_UpdateObjectPos(CurrObject[playerid]);
+
+	return 1;
+}
+
+// Set object rot on X axis
+YCMD:srx(playerid, arg[], help)
+{
+	if(help)
+	{
+		SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+		SendClientMessage(playerid, STEALTH_GREEN, "Set current object X axis rotation.");
+		return 1;
+	}
+
+	MapOpenCheck(playerid);
+	EditCheck(playerid);
+	NoEditingMode(playerid);
+
+	SaveUndoInfo(CurrObject[playerid], UNDO_TYPE_EDIT);
+
+	ObjectData[CurrObject[playerid]][oRX] = floatstr(arg);
+	SetDynamicObjectRot(ObjectData[CurrObject[playerid]][oID], ObjectData[CurrObject[playerid]][oRX], ObjectData[CurrObject[playerid]][oRY], ObjectData[CurrObject[playerid]][oRZ]);
+	sqlite_UpdateObjectPos(CurrObject[playerid]);
+	
+	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+	SendClientMessage(playerid, STEALTH_GREEN, sprintf("Set object's X rotation to %0.4f", ObjectData[CurrObject[playerid]][oRX]));
+	
+	return 1;
+}
+
+// Set object rot on Y axis
+YCMD:sry(playerid, arg[], help)
+{
+	if(help)
+	{
+		SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+		SendClientMessage(playerid, STEALTH_GREEN, "Set current object Y axis rotation.");
+		return 1;
+	}
+
+	MapOpenCheck(playerid);
+	EditCheck(playerid);
+	NoEditingMode(playerid);
+
+	SaveUndoInfo(CurrObject[playerid], UNDO_TYPE_EDIT);
+
+	ObjectData[CurrObject[playerid]][oRY] = floatstr(arg);
+	SetDynamicObjectRot(ObjectData[CurrObject[playerid]][oID], ObjectData[CurrObject[playerid]][oRX], ObjectData[CurrObject[playerid]][oRY], ObjectData[CurrObject[playerid]][oRZ]);
+	sqlite_UpdateObjectPos(CurrObject[playerid]);
+	
+	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+	SendClientMessage(playerid, STEALTH_GREEN, sprintf("Set object's Y rotation to %0.4f", ObjectData[CurrObject[playerid]][oRY]));
+	
+	return 1;
+}
+
+// Set object rot on Z axis
+YCMD:srz(playerid, arg[], help)
+{
+	if(help)
+	{
+		SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+		SendClientMessage(playerid, STEALTH_GREEN, "Set current object Z axis rotation.");
+		return 1;
+	}
+
+	MapOpenCheck(playerid);
+	EditCheck(playerid);
+	NoEditingMode(playerid);
+
+	SaveUndoInfo(CurrObject[playerid], UNDO_TYPE_EDIT);
+
+	ObjectData[CurrObject[playerid]][oRZ] = floatstr(arg);
+	SetDynamicObjectRot(ObjectData[CurrObject[playerid]][oID], ObjectData[CurrObject[playerid]][oRX], ObjectData[CurrObject[playerid]][oRY], ObjectData[CurrObject[playerid]][oRZ]);
+	sqlite_UpdateObjectPos(CurrObject[playerid]);
+	
+	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+	SendClientMessage(playerid, STEALTH_GREEN, sprintf("Set object's Z rotation to %0.4f", ObjectData[CurrObject[playerid]][oRZ]));
+	
+	return 1;
+}
+
+// Reset object rotation
+YCMD:rreset(playerid, arg[], help)
+{
+	if(help)
+	{
+		SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+		SendClientMessage(playerid, STEALTH_GREEN, "Reset rotation of object.");
+		return 1;
+	}
+	
+	MapOpenCheck(playerid);
+	EditCheck(playerid);
+	NoEditingMode(playerid);
+	
+	SaveUndoInfo(CurrObject[playerid], UNDO_TYPE_EDIT);
+	
+	ObjectData[CurrObject[playerid]][oRX] = 0.0;
+	ObjectData[CurrObject[playerid]][oRY] = 0.0;
+	ObjectData[CurrObject[playerid]][oRZ] = 0.0;
+	SetDynamicObjectRot(ObjectData[CurrObject[playerid]][oID], ObjectData[CurrObject[playerid]][oRX], ObjectData[CurrObject[playerid]][oRY], ObjectData[CurrObject[playerid]][oRZ]);
+	
 	sqlite_UpdateObjectPos(CurrObject[playerid]);
 
 	return 1;

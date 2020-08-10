@@ -180,7 +180,7 @@ GUIHideFirstInStack(playerid)
 	// Hide first visible in order stack
 	for(new i = MAX_PLAYER_GUI - 1; i >= 0; i--)
 	{
-		if(PlayerGUIData[playerid][i][PlayerGUIIsVisible])
+		if(PlayerGUIData[playerid][i][PlayerGUIIsVisible] && !PlayerGUIData[playerid][i][IgnoreClose])
 		{
 			new CallFunc[32];
 			format(CallFunc, sizeof(CallFunc), "ONGUIC_%s", PlayerGUIData[playerid][i][PlayerGUICallFunc]);

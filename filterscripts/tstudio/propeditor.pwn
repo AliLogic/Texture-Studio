@@ -41,7 +41,7 @@ ShowObjectPropMenu(playerid)
 							{
 								SaveUndoInfo(CurrObject[playerid], UNDO_TYPE_EDIT);
 								new groupid = strval(etext);
-								ObjectData[CurrObject[playerid]][oGroup] = groupid;
+								SetObjectGroup(CurrObject[playerid], groupid);
 								OnUpdateGroup3DText(CurrObject[playerid]);
 								UpdateObject3DText(CurrObject[playerid]);
 								sqlite_ObjGroup(CurrObject[playerid]);
@@ -68,11 +68,8 @@ ShowObjectPropMenu(playerid)
 						if(eresponse)
 						{
 							new model = strval(etext);
-
-							SaveUndoInfo(CurrObject[playerid], UNDO_TYPE_EDIT);
-							ObjectData[CurrObject[playerid]][oModel] = model;
-							sqlite_ObjModel(CurrObject[playerid]);
-							RebuildObject(CurrObject[playerid]);
+							SetObjectModel(CurrObject[playerid], model);
+							
 							SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 							SendClientMessage(playerid, STEALTH_YELLOW, "Model changed");
 						}

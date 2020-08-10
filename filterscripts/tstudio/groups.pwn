@@ -331,6 +331,13 @@ GroupRotate(playerid, Float:rx, Float:ry, Float:rz, update = true)
 }
 #endif
 
+SetObjectGroup(index, group)
+{
+	ObjectData[index][oGroup] = group;
+	CallLocalFunction("OnObjectGroupChange", "ii", index, group);
+	return 1;
+}
+
 YCMD:ginfront(playerid, arg[], help)
 {
 	if(help)
@@ -480,7 +487,7 @@ YCMD:ogroup(playerid, arg[], help)
 	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 	
 	SaveUndoInfo(index, UNDO_TYPE_EDIT, time);
-	ObjectData[index][oGroup] = groupid;
+	SetObjectGroup(index, groupid);
 	OnUpdateGroup3DText(index);
 	UpdateObject3DText(index);
 	sqlite_ObjGroup(index);
@@ -519,7 +526,7 @@ YCMD:setgroup(playerid, arg[], help)
 			if(GroupedObjects[playerid][i])
 			{
 				SaveUndoInfo(i, UNDO_TYPE_EDIT, time);
-				ObjectData[i][oGroup] = groupid;
+				SetObjectGroup(i, groupid);
 				OnUpdateGroup3DText(i);
 				UpdateObject3DText(i);
 				sqlite_ObjGroup(i);
