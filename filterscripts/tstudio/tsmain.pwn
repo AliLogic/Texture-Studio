@@ -4975,32 +4975,6 @@ YCMD:srz(playerid, arg[], help)
 	return 1;
 }
 
-// Reset object rotation
-YCMD:rreset(playerid, arg[], help)
-{
-	if(help)
-	{
-		SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
-		SendClientMessage(playerid, STEALTH_GREEN, "Reset rotation of object.");
-		return 1;
-	}
-	
-	MapOpenCheck(playerid);
-	EditCheck(playerid);
-	NoEditingMode(playerid);
-	
-	SaveUndoInfo(CurrObject[playerid], UNDO_TYPE_EDIT);
-	
-	ObjectData[CurrObject[playerid]][oRX] = 0.0;
-	ObjectData[CurrObject[playerid]][oRY] = 0.0;
-	ObjectData[CurrObject[playerid]][oRZ] = 0.0;
-	SetDynamicObjectRot(ObjectData[CurrObject[playerid]][oID], ObjectData[CurrObject[playerid]][oRX], ObjectData[CurrObject[playerid]][oRY], ObjectData[CurrObject[playerid]][oRZ]);
-	
-	sqlite_UpdateObjectPos(CurrObject[playerid]);
-
-	return 1;
-}
-
 // Move all objects on X axis
 YCMD:dox(playerid, arg[], help)
 {

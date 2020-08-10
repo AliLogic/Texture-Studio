@@ -855,7 +855,7 @@ static CreatePlayerMenus(playerid)
 
 hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
-	if(IsFlyMode(playerid) && (newkeys & KEY_WALK))
+	if(newkeys & KEY_WALK)
 	{
 		//if(!EditingMode[playerid])
 		{
@@ -1417,7 +1417,7 @@ OnGUIClick:MenuObjectMove(playerid, group, gindex, pindex)
 		case CLICK_OBJMOVE_RESROT:
 		{
 			EditCheck(playerid);
-			BroadcastCommand(playerid, "/rreset");
+			BroadcastCommand(playerid, "/rotreset");
 			
 			PlayerGUISetPlayerText(playerid, PlayerMenuObjectMove[playerid], PlayerElementData[playerid][E_ObjRX], sprintf("%0.4f", ObjectData[CurrObject[playerid]][oRX]));
 			PlayerGUISetPlayerText(playerid, PlayerMenuObjectMove[playerid], PlayerElementData[playerid][E_ObjRY], sprintf("%0.4f", ObjectData[CurrObject[playerid]][oRY]));
