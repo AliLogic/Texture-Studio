@@ -309,7 +309,9 @@ new             Float:TEXT3D_DRAW_DIST  =   100.0;
 #define         VEHICLE_ATTACH_UPDATE           0
 #define         VEHICLE_REATTACH_UPDATE         1
 
-forward OnPlayerObjectSelectChange(playerid, index);
+forward OnPlayerObjectSelect(playerid, index);
+forward OnObjectGroupChange(objectid, index);
+forward OnObjectModelChange(objectid, index);
 forward OnObjectUpdatePos(playerid, index);
 forward OnUpdateGroup3DText(index);
 forward OnDeleteGroup3DText(index);
