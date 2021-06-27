@@ -51,7 +51,10 @@ new Commands[][COMMAND_INFO] = {
     {0, 0, "exportallmap"},
     {0, 0, "mprop"},
     {0, 0, "time"},
-    
+    {0, 0, "tele"},
+    {0, 0, "tcar"},
+    {0, 0, "weapon"},
+
     {1, 0, "cobject"},
     {1, 0, "dobject"},
     {1, 0, "robject"},
