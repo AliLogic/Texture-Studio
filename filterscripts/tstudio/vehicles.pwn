@@ -208,24 +208,44 @@ YCMD:avdeletecar(playerid, arg[], help)
 	return 1;
 }
 
-
-static VehicleList[4096];
 SSCANF:vehiclemodel(string[])
 {
 	if('0' <= string[0] <= '9')
 	{
 		new ret = strval(string);
+		#if defined UGMP_INCLUDED
+		if (IsValidVehicleModel(ret))
+		{
+			return ret;
+		}
+		#else
 		if (400 <= ret <= 611)
 		{
 			return ret;
 		}
+		#endif
 	}
-	else for(new i; i < sizeof(VehicleNames); i++)
+	else
 	{
-		if(strfind(string, VehicleNames[i], true) != -1)
+		#if defined UGMP_INCLUDED
+		for (new i = 0, j = GetNumVehicleModels(); i != j; ++ i)
 		{
-			return i + 400;
+			new modelid, ignore, name[32];
+			GetValidVehicleModelAtEx(i, modelid, ignore, ignore, name);
+			if (strfind(string, name, true) != -1)
+			{
+				return modelid;
+			}
 		}
+		#else
+		for(new i; i < sizeof(VehicleNames); i++)
+		{
+			if(strfind(string, VehicleNames[i], true) != -1)
+			{
+				return i + 400;
+			}
+		}
+		#endif
 	}
 	
 	return -1;
@@ -233,8 +253,6 @@ SSCANF:vehiclemodel(string[])
 
 public OnFilterScriptInit()
 {
-	for(new i = 0; i < 212; i++) format(VehicleList, sizeof(VehicleList), "%s(%i) %s\n", VehicleList, i+400, VehicleNames[i]);
-
 	#if defined VH_OnFilterScriptInit
 		VH_OnFilterScriptInit();
 	#endif
@@ -398,46 +416,43 @@ YCMD:tcar(playerid, arg[], help)
 		SendClientMessage(playerid, STEALTH_GREEN, "Gives you a temporary vehicle.");
 		return 1;
 	}
-	
-	new model;
-	sscanf(arg, "K<vehiclemodel>(0)", model);
-	
-	if(model)
+
+	new model = -1;
+	sscanf(arg, "k<vehiclemodel>", model);
+
+	if(model != -1)
 	{
-		if(model != -1)
-		{
-			new Float:X, Float:Y, Float:Z, Float:R;
-			GetPlayerPos(playerid, X, Y, Z);
-			GetPlayerFacingAngle(playerid, R);
-			TempVehicle[playerid] = CreateVehicle(model, X + 5.0 * floatcos(R + 180.0, degrees), Y + 5.0 * floatsin(R + 180.0, degrees), Z, R, 0, 0, 1);
-			IsTempVehicle[TempVehicle[playerid]] = true;
-			PutPlayerInVehicle(playerid, TempVehicle[playerid], 0);
-			return 1;
-		}
-		else
-		{
-			SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
-			SendClientMessage(playerid, STEALTH_YELLOW, "Invalid vehicle name/ID.");
-		}
+		new Float:X, Float:Y, Float:Z, Float:R;
+		GetPlayerPos(playerid, X, Y, Z);
+		GetPlayerFacingAngle(playerid, R);
+		TempVehicle[playerid] = CreateVehicle(model, X + 5.0 * floatcos(R + 180.0, degrees), Y + 5.0 * floatsin(R + 180.0, degrees), Z, R, 0, 0, 1);
+		IsTempVehicle[TempVehicle[playerid]] = true;
+		PutPlayerInVehicle(playerid, TempVehicle[playerid], 0);
+		return 1;
 	}
 	else
 	{
-		inline SelectModel(pid, dialogid, response, listitem, string:text[])
-		{
-			#pragma unused listitem, dialogid, pid, text
-			if(response)
-			{
-				new Float:X, Float:Y, Float:Z, Float:R;
-				GetPlayerPos(playerid, X, Y, Z);
-				GetPlayerFacingAngle(playerid, R);
-				TempVehicle[playerid] = CreateVehicle(listitem+400, X, Y, Z, R, 0, 0, 1);
-				IsTempVehicle[TempVehicle[playerid]] = true;
-				PutPlayerInVehicle(playerid, TempVehicle[playerid], 0);
-				return 1;
-			}
-		}
-		Dialog_ShowCallback(playerid, using inline SelectModel, DIALOG_STYLE_LIST, "Texture Studio", VehicleList, "Ok", "Cancel");
+		SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+		SendClientMessage(playerid, STEALTH_YELLOW, "Invalid vehicle name/ID.");
 	}
+	// else
+	// {
+	// 	inline SelectModel(pid, dialogid, response, listitem, string:text[])
+	// 	{
+	// 		#pragma unused listitem, dialogid, pid, text
+	// 		if(response)
+	// 		{
+	// 			new Float:X, Float:Y, Float:Z, Float:R;
+	// 			GetPlayerPos(playerid, X, Y, Z);
+	// 			GetPlayerFacingAngle(playerid, R);
+	// 			TempVehicle[playerid] = CreateVehicle(listitem+400, X, Y, Z, R, 0, 0, 1);
+	// 			IsTempVehicle[TempVehicle[playerid]] = true;
+	// 			PutPlayerInVehicle(playerid, TempVehicle[playerid], 0);
+	// 			return 1;
+	// 		}
+	// 	}
+	// 	Dialog_ShowCallback(playerid, using inline SelectModel, DIALOG_STYLE_LIST, "Texture Studio", VehicleList, "Ok", "Cancel");
+	// }
 	
 	return 1;
 }
@@ -507,54 +522,46 @@ YCMD:avnewcar(playerid, arg[], help)
 
 	NoEditingMode(playerid);
 
-	new model;
-	sscanf(arg, "K<vehiclemodel>(0)", model);
-	
-	if(model)
+	new model = -1;
+	sscanf(arg, "k<vehiclemodel>", model);
+
+	if (model != -1)
 	{
-		new index = Iter_Free(Cars);
-		if(index > -1)
-		{
-			if(model != -1)
-			{
-				GetPlayerPos(playerid, CarData[index][CarSpawnX], CarData[index][CarSpawnY], CarData[index][CarSpawnZ]);
-				GetXYInFrontOfPlayer(playerid, CarData[index][CarSpawnX], CarData[index][CarSpawnY], 2.0);
-				GetPlayerFacingAngle(playerid, CarData[index][CarSpawnFA]);
-				
-				CurrVehicle[playerid] = AddNewCar(model, index, true);
-				
-				SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
-				SendClientMessage(playerid, STEALTH_GREEN, "Vehicle can now be edited!");
-				
-				return 1;
-			}
-			else
-				SendClientMessage(playerid, STEALTH_YELLOW, "Invalid vehicle name or ID");
-		}
-		else
-			SendClientMessage(playerid, STEALTH_YELLOW, "Too many cars");
+		new Float:X, Float:Y, Float:Z, Float:R;
+		GetPlayerPos(playerid, X, Y, Z);
+		GetPlayerFacingAngle(playerid, R);
+		TempVehicle[playerid] = CreateVehicle(model, X + 5.0 * floatcos(R + 180.0, degrees), Y + 5.0 * floatsin(R + 180.0, degrees), Z, R, 0, 0, 1);
+		IsTempVehicle[TempVehicle[playerid]] = true;
+		PutPlayerInVehicle(playerid, TempVehicle[playerid], 0);
+		return 1;
 	}
-	else 
+	else
 	{
-		inline SelectModel(pid, dialogid, response, listitem, string:text[])
-		{
-			#pragma unused listitem, dialogid, pid, text
-			if(response)
-			{
-				new index = Iter_Free(Cars);
-				if(index > -1)
-				{
-					GetPlayerPos(playerid, CarData[index][CarSpawnX], CarData[index][CarSpawnY], CarData[index][CarSpawnZ]);
-					GetXYInFrontOfPlayer(playerid, CarData[index][CarSpawnX], CarData[index][CarSpawnY], 2.0);
-					GetPlayerFacingAngle(playerid, CarData[index][CarSpawnFA]);
-					CurrVehicle[playerid] = AddNewCar(listitem+400, index, true);
-					return 1;
-				}
-				SendClientMessage(playerid, STEALTH_YELLOW, "Too many cars");
-			}
-		}
-		Dialog_ShowCallback(playerid, using inline SelectModel, DIALOG_STYLE_LIST, "Texture Studio", VehicleList, "Ok", "Cancel");
+		SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+		SendClientMessage(playerid, STEALTH_YELLOW, "Invalid vehicle name/ID.");
 	}
+
+	// else 
+	// {
+	// 	inline SelectModel(pid, dialogid, response, listitem, string:text[])
+	// 	{
+	// 		#pragma unused listitem, dialogid, pid, text
+	// 		if(response)
+	// 		{
+	// 			new index = Iter_Free(Cars);
+	// 			if(index > -1)
+	// 			{
+	// 				GetPlayerPos(playerid, CarData[index][CarSpawnX], CarData[index][CarSpawnY], CarData[index][CarSpawnZ]);
+	// 				GetXYInFrontOfPlayer(playerid, CarData[index][CarSpawnX], CarData[index][CarSpawnY], 2.0);
+	// 				GetPlayerFacingAngle(playerid, CarData[index][CarSpawnFA]);
+	// 				CurrVehicle[playerid] = AddNewCar(listitem+400, index, true);
+	// 				return 1;
+	// 			}
+	// 			SendClientMessage(playerid, STEALTH_YELLOW, "Too many cars");
+	// 		}
+	// 	}
+	// 	Dialog_ShowCallback(playerid, using inline SelectModel, DIALOG_STYLE_LIST, "Texture Studio", VehicleList, "Ok", "Cancel");
+	// }
 	
 	return 1;
 }
