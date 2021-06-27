@@ -376,14 +376,14 @@ tsfunc GetNextCameraPosition(move_mode, Float:CP[3], Float:FV[3], &Float:X, &Flo
 		case MOVE_BACK_LEFT:
 		{
 			X = CP[0]+(-OFFSET_X - OFFSET_Y);
- 			Y = CP[1]+(-OFFSET_Y + OFFSET_X);
-		 	Z = CP[2]-OFFSET_Z;
+			Y = CP[1]+(-OFFSET_Y + OFFSET_X);
+			Z = CP[2]-OFFSET_Z;
 		}
 		case MOVE_BACK_RIGHT:
 		{
 			X = CP[0]+(-OFFSET_X + OFFSET_Y);
- 			Y = CP[1]+(-OFFSET_Y - OFFSET_X);
-		 	Z = CP[2]-OFFSET_Z;
+			Y = CP[1]+(-OFFSET_Y - OFFSET_X);
+			Z = CP[2]-OFFSET_Z;
 		}
 		case MOVE_FORWARD_LEFT:
 		{

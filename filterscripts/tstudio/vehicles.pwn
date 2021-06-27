@@ -104,40 +104,40 @@ YCMD:avmodcar(playerid, arg[], help)
 	new vid = GetPlayerVehicleID(playerid);
 	foreach(new i : Cars)
 	{
-	    if(CarData[i][CarID] == vid)
+		if(CarData[i][CarID] == vid)
 		{
-            switch(CarModShops[GetVehicleModel(vid) - 400])
-            {
-	            case NOMODSHOP:
-	            {
+			switch(CarModShops[GetVehicleModel(vid) - 400])
+			{
+				case NOMODSHOP:
+				{
 					SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 					SendClientMessage(playerid, STEALTH_YELLOW, "This model can not be modded.");
 					return 1;
-	            }
-	            case TRANSFENDER:
-	            {
+				}
+				case TRANSFENDER:
+				{
 					GetVehiclePos(vid, ModCarPos[playerid][0], ModCarPos[playerid][1], ModCarPos[playerid][2]);
 					GetVehicleZAngle(vid, ModCarPos[playerid][3]);
 					SetVehiclePos(vid, -1935.8020,247.0903,34.5477);
 					EditingMode[playerid] = true;
 					SetEditMode(playerid, EDIT_MODE_MODCAR);
-	            }
-	            case LOCOLOWCO:
-	            {
+				}
+				case LOCOLOWCO:
+				{
 					GetVehiclePos(vid, ModCarPos[playerid][0], ModCarPos[playerid][1], ModCarPos[playerid][2]);
 					GetVehicleZAngle(vid, ModCarPos[playerid][3]);
 					SetVehiclePos(vid, 2645.0527,-2044.9419,13.4548);
 					EditingMode[playerid] = true;
 					SetEditMode(playerid, EDIT_MODE_MODCAR);
-	            }
-	            case WHEELARCHANGELS:
-	            {
+				}
+				case WHEELARCHANGELS:
+				{
 					GetVehiclePos(vid, ModCarPos[playerid][0], ModCarPos[playerid][1], ModCarPos[playerid][2]);
 					GetVehicleZAngle(vid, ModCarPos[playerid][3]);
 					SetVehiclePos(vid, -2720.8887,217.4109,4.1550);
 					EditingMode[playerid] = true;
 					SetEditMode(playerid, EDIT_MODE_MODCAR);
-	            }
+				}
 			}
 			ResetPlayerMoney(playerid);
 			GivePlayerMoney(playerid, 50000);
@@ -162,10 +162,10 @@ YCMD:avsetspawn(playerid, arg[], help)
 	new vid = GetPlayerVehicleID(playerid);
 	foreach(new i : Cars)
 	{
-	    if(CarData[i][CarID] == vid)
+		if(CarData[i][CarID] == vid)
 		{
-            GetVehiclePos(CarData[i][CarID], CarData[i][CarSpawnX], CarData[i][CarSpawnY], CarData[i][CarSpawnZ]);
-            GetVehicleZAngle(CarData[i][CarID], CarData[i][CarSpawnFA]);
+			GetVehiclePos(CarData[i][CarID], CarData[i][CarSpawnX], CarData[i][CarSpawnY], CarData[i][CarSpawnZ]);
+			GetVehicleZAngle(CarData[i][CarID], CarData[i][CarSpawnFA]);
 			sqlite_SaveVehicleData(i);
 			SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 			SendClientMessage(playerid, STEALTH_YELLOW, "Vehicle spawn has been set (Note vehicle won't respawn here until reloading map!).");
@@ -187,22 +187,22 @@ YCMD:avdeletecar(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 
 	NoEditingMode(playerid);
 
 	VehicleCheck(playerid);
 	
 	inline DeleteVehicleObjects(pid, dialogid, response, listitem, string:text[])
-    {
-        #pragma unused listitem, dialogid, pid, text
+	{
+		#pragma unused listitem, dialogid, pid, text
 		if(response) DestroyEditCar(CurrVehicle[playerid], true, true);
 		else DestroyEditCar(CurrVehicle[playerid], true);
-	    CurrVehicle[playerid] = -1;
-    }
-    Dialog_ShowCallback(playerid, using inline DeleteVehicleObjects, DIALOG_STYLE_LIST, "Texture Studio", "Delete Vehicles Objects?", "Yes", "No");
+		CurrVehicle[playerid] = -1;
+	}
+	Dialog_ShowCallback(playerid, using inline DeleteVehicleObjects, DIALOG_STYLE_LIST, "Texture Studio", "Delete Vehicles Objects?", "Yes", "No");
 	
-   	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 	SendClientMessage(playerid, STEALTH_GREEN, "Vehicle has been deleted.");
 
 	return 1;
@@ -212,14 +212,14 @@ YCMD:avdeletecar(playerid, arg[], help)
 static VehicleList[4096];
 SSCANF:vehiclemodel(string[])
 {
-    if('0' <= string[0] <= '9')
-    {
-        new ret = strval(string);
-        if (400 <= ret <= 611)
-        {
-            return ret;
-        }
-    }
+	if('0' <= string[0] <= '9')
+	{
+		new ret = strval(string);
+		if (400 <= ret <= 611)
+		{
+			return ret;
+		}
+	}
 	else for(new i; i < sizeof(VehicleNames); i++)
 	{
 		if(strfind(string, VehicleNames[i], true) != -1)
@@ -227,8 +227,8 @@ SSCANF:vehiclemodel(string[])
 			return i + 400;
 		}
 	}
-    
-    return -1;
+	
+	return -1;
 }
 
 public OnFilterScriptInit()
@@ -271,7 +271,7 @@ public OnFilterScriptExit()
 
 public OnPlayerDisconnect(playerid, reason)
 {
-    CurrVehicle[playerid] = -1;
+	CurrVehicle[playerid] = -1;
 
 	#if defined VH_OnPlayerDisconnect
 		VH_OnPlayerDisconnect(playerid, reason);
@@ -290,27 +290,27 @@ public OnPlayerDisconnect(playerid, reason)
 
 public OnEnterExitModShop(playerid,enterexit,interiorid)
 {
-    if(enterexit == 1) EditingMode[playerid] = true;
+	if(enterexit == 1) EditingMode[playerid] = true;
 	if(enterexit == 0)
 	{
 		new vid = GetPlayerVehicleID(playerid);
 		foreach(new i : Cars)
 		{
-		    if(CarData[i][CarID] == vid)
+			if(CarData[i][CarID] == vid)
 			{
 				for(new j = 0; j < MAX_CAR_COMPONENTS; j++)
 				{
 					CarData[i][CarComponents][j] = GetVehicleComponentInSlot(vid, j);
 				}
-                sqlite_SaveVehicleData(i);
-                
-                if(GetEditMode(playerid) == EDIT_MODE_MODCAR)
-                {
+				sqlite_SaveVehicleData(i);
+				
+				if(GetEditMode(playerid) == EDIT_MODE_MODCAR)
+				{
 					SetVehiclePos(vid, ModCarPos[playerid][0], ModCarPos[playerid][1], ModCarPos[playerid][2]);
 					SetVehicleZAngle(vid, ModCarPos[playerid][3]);
 					SetEditMode(playerid, EDIT_MODE_NONE);
-                }
-                EditingMode[playerid] = false;
+				}
+				EditingMode[playerid] = false;
 				return 1;
 			}
 		}
@@ -322,9 +322,9 @@ public OnVehicleRespray(playerid, vehicleid, color1, color2)
 {
 	foreach(new i : Cars)
 	{
-	    if(CarData[i][CarID] == vehicleid)
+		if(CarData[i][CarID] == vehicleid)
 		{
-            CarData[i][CarColor1] = color1;
+			CarData[i][CarColor1] = color1;
 			CarData[i][CarColor2] = color2;
 			return 1;
 		}
@@ -336,9 +336,9 @@ public OnVehiclePaintjob(playerid, vehicleid, paintjobid)
 {
 	foreach(new i : Cars)
 	{
-	    if(CarData[i][CarID] == vehicleid)
+		if(CarData[i][CarID] == vehicleid)
 		{
-            CarData[i][CarPaintJob] = paintjobid;
+			CarData[i][CarPaintJob] = paintjobid;
 			return 1;
 		}
 	}
@@ -364,14 +364,14 @@ public OnVehicleSpawn(vehicleid)
 
 	foreach(new i : Cars)
 	{
-	    if(CarData[i][CarID] == vehicleid)
+		if(CarData[i][CarID] == vehicleid)
 		{
-		 	ChangeVehicleColor(CarData[i][CarID], CarData[i][CarColor1], CarData[i][CarColor2]);
-		 	ChangeVehiclePaintjob(CarData[i][CarID], CarData[i][CarPaintJob]);
-		 	for(new j = 0; j < MAX_CAR_COMPONENTS; j++)
-		 	{
-		 	    if(CarData[i][CarComponents][j] > 0) AddVehicleComponent(CarData[i][CarID], CarData[i][CarComponents][j]);
-		 	}
+			ChangeVehicleColor(CarData[i][CarID], CarData[i][CarColor1], CarData[i][CarColor2]);
+			ChangeVehiclePaintjob(CarData[i][CarID], CarData[i][CarPaintJob]);
+			for(new j = 0; j < MAX_CAR_COMPONENTS; j++)
+			{
+				if(CarData[i][CarComponents][j] > 0) AddVehicleComponent(CarData[i][CarID], CarData[i][CarComponents][j]);
+			}
 			return 1;
 		}
 	}
@@ -402,8 +402,8 @@ YCMD:tcar(playerid, arg[], help)
 	new model;
 	sscanf(arg, "K<vehiclemodel>(0)", model);
 	
-    if(model)
-    {
+	if(model)
+	{
 		if(model != -1)
 		{
 			new Float:X, Float:Y, Float:Z, Float:R;
@@ -451,34 +451,34 @@ YCMD:avselectcar(playerid, arg[], help)
 		return 1;
 	}
 
-    inline SelectID(pid, dialogid, response, listitem, string:text[])
-    {
-        #pragma unused listitem, dialogid, pid, text
+	inline SelectID(pid, dialogid, response, listitem, string:text[])
+	{
+		#pragma unused listitem, dialogid, pid, text
 		if(response)
 		{
 			new id = strval(text);
 			foreach(new i : Cars)
 			{
-			    if(CarData[i][CarID] == id)
-			    {
+				if(CarData[i][CarID] == id)
+				{
 					SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 					SendClientMessage(playerid, STEALTH_YELLOW, "This vehicle is already in Texture Studio!");
 					return 1;
-			    }
+				}
 			}
 			new index = Iter_Free(Cars);
 			if(index > -1)
 			{
 				Iter_Add(Cars, id);
-			    GetVehiclePos(id, CarData[index][CarSpawnX], CarData[index][CarSpawnY], CarData[index][CarSpawnZ]);
-			    GetVehicleZAngle(id, CarData[index][CarSpawnFA]);
-	            CarData[index][CarID] = id;
-			    CarData[index][CarModel] = GetVehicleModel(id);
+				GetVehiclePos(id, CarData[index][CarSpawnX], CarData[index][CarSpawnY], CarData[index][CarSpawnZ]);
+				GetVehicleZAngle(id, CarData[index][CarSpawnFA]);
+				CarData[index][CarID] = id;
+				CarData[index][CarModel] = GetVehicleModel(id);
 
 				new line[32];
 				format(line, sizeof(line), "Car Index: %i", index);
 				CarData[index][CarText] = CreateDynamic3DTextLabel(line, -1, CarData[index][CarSpawnX], CarData[index][CarSpawnY], CarData[index][CarSpawnZ], 20.0, INVALID_PLAYER_ID, CarData[index][CarID]);
-		        Streamer_SetFloatData(STREAMER_TYPE_3D_TEXT_LABEL, CarData[index][CarText], E_STREAMER_ATTACH_OFFSET_Z, 2.0);
+				Streamer_SetFloatData(STREAMER_TYPE_3D_TEXT_LABEL, CarData[index][CarText], E_STREAMER_ATTACH_OFFSET_Z, 2.0);
 
 				for(new i = 0; i < MAX_CAR_OBJECTS; i++) CarData[index][CarObjectRef][i] = -1;
 				CarData[index][CarPaintJob] = 3;
@@ -490,10 +490,9 @@ YCMD:avselectcar(playerid, arg[], help)
 			}
 		}
 	}
-    Dialog_ShowCallback(playerid, using inline SelectID, DIALOG_STYLE_INPUT, "Texture Studio", "Input vehicle ID to select", "Ok", "Cancel");
+	Dialog_ShowCallback(playerid, using inline SelectID, DIALOG_STYLE_INPUT, "Texture Studio", "Input vehicle ID to select", "Ok", "Cancel");
 	return 1;
 }
-
 
 YCMD:avnewcar(playerid, arg[], help)
 {
@@ -504,59 +503,59 @@ YCMD:avnewcar(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 
 	NoEditingMode(playerid);
 
 	new model;
 	sscanf(arg, "K<vehiclemodel>(0)", model);
 	
-    if(model)
-    {
-        new index = Iter_Free(Cars);
-        if(index > -1)
-        {
-            if(model != -1)
-            {
-                GetPlayerPos(playerid, CarData[index][CarSpawnX], CarData[index][CarSpawnY], CarData[index][CarSpawnZ]);
-                GetXYInFrontOfPlayer(playerid, CarData[index][CarSpawnX], CarData[index][CarSpawnY], 2.0);
-                GetPlayerFacingAngle(playerid, CarData[index][CarSpawnFA]);
+	if(model)
+	{
+		new index = Iter_Free(Cars);
+		if(index > -1)
+		{
+			if(model != -1)
+			{
+				GetPlayerPos(playerid, CarData[index][CarSpawnX], CarData[index][CarSpawnY], CarData[index][CarSpawnZ]);
+				GetXYInFrontOfPlayer(playerid, CarData[index][CarSpawnX], CarData[index][CarSpawnY], 2.0);
+				GetPlayerFacingAngle(playerid, CarData[index][CarSpawnFA]);
 				
-                CurrVehicle[playerid] = AddNewCar(model, index, true);
+				CurrVehicle[playerid] = AddNewCar(model, index, true);
 				
 				SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 				SendClientMessage(playerid, STEALTH_GREEN, "Vehicle can now be edited!");
 				
-                return 1;
-            }
-            else
-                SendClientMessage(playerid, STEALTH_YELLOW, "Invalid vehicle name or ID");
-        }
-        else
-            SendClientMessage(playerid, STEALTH_YELLOW, "Too many cars");
-    }
-    else 
-    {
-        inline SelectModel(pid, dialogid, response, listitem, string:text[])
-        {
-            #pragma unused listitem, dialogid, pid, text
-            if(response)
-            {
-                new index = Iter_Free(Cars);
-                if(index > -1)
-                {
-                    GetPlayerPos(playerid, CarData[index][CarSpawnX], CarData[index][CarSpawnY], CarData[index][CarSpawnZ]);
-                    GetXYInFrontOfPlayer(playerid, CarData[index][CarSpawnX], CarData[index][CarSpawnY], 2.0);
-                    GetPlayerFacingAngle(playerid, CarData[index][CarSpawnFA]);
-                    CurrVehicle[playerid] = AddNewCar(listitem+400, index, true);
-                    return 1;
-                }
-                SendClientMessage(playerid, STEALTH_YELLOW, "Too many cars");
-            }
-        }
-        Dialog_ShowCallback(playerid, using inline SelectModel, DIALOG_STYLE_LIST, "Texture Studio", VehicleList, "Ok", "Cancel");
-    }
-    
+				return 1;
+			}
+			else
+				SendClientMessage(playerid, STEALTH_YELLOW, "Invalid vehicle name or ID");
+		}
+		else
+			SendClientMessage(playerid, STEALTH_YELLOW, "Too many cars");
+	}
+	else 
+	{
+		inline SelectModel(pid, dialogid, response, listitem, string:text[])
+		{
+			#pragma unused listitem, dialogid, pid, text
+			if(response)
+			{
+				new index = Iter_Free(Cars);
+				if(index > -1)
+				{
+					GetPlayerPos(playerid, CarData[index][CarSpawnX], CarData[index][CarSpawnY], CarData[index][CarSpawnZ]);
+					GetXYInFrontOfPlayer(playerid, CarData[index][CarSpawnX], CarData[index][CarSpawnY], 2.0);
+					GetPlayerFacingAngle(playerid, CarData[index][CarSpawnFA]);
+					CurrVehicle[playerid] = AddNewCar(listitem+400, index, true);
+					return 1;
+				}
+				SendClientMessage(playerid, STEALTH_YELLOW, "Too many cars");
+			}
+		}
+		Dialog_ShowCallback(playerid, using inline SelectModel, DIALOG_STYLE_LIST, "Texture Studio", VehicleList, "Ok", "Cancel");
+	}
+	
 	return 1;
 }
 
@@ -566,20 +565,20 @@ static AddNewCar(modelid, index = -1, bool:sqlsave = true, bool:clearref = true)
 	
 	if(index > -1)
 	{
-	    Iter_Add(Cars, index);
-	    CarData[index][CarID] = CreateVehicle(modelid, CarData[index][CarSpawnX], CarData[index][CarSpawnY], CarData[index][CarSpawnZ], CarData[index][CarSpawnFA], CarData[index][CarColor1], CarData[index][CarColor2], -1, CarData[index][CarSiren]);
+		Iter_Add(Cars, index);
+		CarData[index][CarID] = CreateVehicle(modelid, CarData[index][CarSpawnX], CarData[index][CarSpawnY], CarData[index][CarSpawnZ], CarData[index][CarSpawnFA], CarData[index][CarColor1], CarData[index][CarColor2], -1, CarData[index][CarSiren]);
 		CarData[index][CarModel] = modelid;
 
 		new line[32];
 		format(line, sizeof(line), "Car Index: %i", index);
 		CarData[index][CarText] = CreateDynamic3DTextLabel(line, -1, CarData[index][CarSpawnX], CarData[index][CarSpawnY], CarData[index][CarSpawnZ], 20.0, INVALID_PLAYER_ID, CarData[index][CarID]);
-        Streamer_SetFloatData(STREAMER_TYPE_3D_TEXT_LABEL, CarData[index][CarText], E_STREAMER_ATTACH_OFFSET_Z, 2.0);
+		Streamer_SetFloatData(STREAMER_TYPE_3D_TEXT_LABEL, CarData[index][CarText], E_STREAMER_ATTACH_OFFSET_Z, 2.0);
 
-        ChangeVehiclePaintjob(CarData[index][CarID], CarData[index][CarPaintJob]);
-        for(new i; i < MAX_CAR_COMPONENTS; i++)
-            if(CarData[index][CarComponents][i])
-                AddVehicleComponent(CarData[index][CarID], CarData[index][CarComponents][i]);
-        
+		ChangeVehiclePaintjob(CarData[index][CarID], CarData[index][CarPaintJob]);
+		for(new i; i < MAX_CAR_COMPONENTS; i++)
+			if(CarData[index][CarComponents][i])
+				AddVehicleComponent(CarData[index][CarID], CarData[index][CarComponents][i]);
+		
 		if(clearref)
 		{
 			for(new i = 0; i < MAX_CAR_OBJECTS; i++) CarData[index][CarObjectRef][i] = -1;
@@ -595,13 +594,13 @@ Update3DAttachCarPos(objindex, carindex)
 {
 	for(new i = 0; i < MAX_CAR_OBJECTS; i++)
 	{
-	    if(CarData[carindex][CarObjectRef][i] == objindex)
-	    {
-            Streamer_SetFloatData(STREAMER_TYPE_3D_TEXT_LABEL, ObjectData[objindex][oTextID], E_STREAMER_ATTACH_OFFSET_X, CarData[carindex][COX][i]);
-            Streamer_SetFloatData(STREAMER_TYPE_3D_TEXT_LABEL, ObjectData[objindex][oTextID], E_STREAMER_ATTACH_OFFSET_Y, CarData[carindex][COY][i]);
-            Streamer_SetFloatData(STREAMER_TYPE_3D_TEXT_LABEL, ObjectData[objindex][oTextID], E_STREAMER_ATTACH_OFFSET_Z, CarData[carindex][COZ][i]);
-	        return 1;
-	    }
+		if(CarData[carindex][CarObjectRef][i] == objindex)
+		{
+			Streamer_SetFloatData(STREAMER_TYPE_3D_TEXT_LABEL, ObjectData[objindex][oTextID], E_STREAMER_ATTACH_OFFSET_X, CarData[carindex][COX][i]);
+			Streamer_SetFloatData(STREAMER_TYPE_3D_TEXT_LABEL, ObjectData[objindex][oTextID], E_STREAMER_ATTACH_OFFSET_Y, CarData[carindex][COY][i]);
+			Streamer_SetFloatData(STREAMER_TYPE_3D_TEXT_LABEL, ObjectData[objindex][oTextID], E_STREAMER_ATTACH_OFFSET_Z, CarData[carindex][COZ][i]);
+			return 1;
+		}
 	}
 	return 0;
 }
@@ -632,7 +631,7 @@ sqlite_CreateVehicle()
 			"CORX TEXT,",
 			"CORY TEXT,",
 			"CORZ TEXT,",
-            "CarSiren INTEGER);"
+			"CarSiren INTEGER);"
 		);
 	}
 	db_exec(EditMap, NewVehicleString);
@@ -654,7 +653,7 @@ sqlite_InsertCar(index)
 			InsertCarString,
 			sizeof(InsertCarString),
 			"INSERT INTO `Vehicles`",
-	        "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+			"VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
 		);
 		// Prepare data base for writing
 	}
@@ -662,26 +661,26 @@ sqlite_InsertCar(index)
 	insertcarstmt = db_prepare(EditMap, InsertCarString);
 
 	// Bind our results
-    stmt_bind_value(insertcarstmt, 0, DB::TYPE_INT, index);
-    stmt_bind_value(insertcarstmt, 1, DB::TYPE_INT, CarData[index][CarModel]);
-    stmt_bind_value(insertcarstmt, 2, DB::TYPE_INT, CarData[index][CarColor1]);
-    stmt_bind_value(insertcarstmt, 3, DB::TYPE_INT, CarData[index][CarColor2]);
-    stmt_bind_value(insertcarstmt, 4, DB::TYPE_INT, CarData[index][CarPaintJob]);
-    stmt_bind_value(insertcarstmt, 5, DB::TYPE_FLOAT, CarData[index][CarSpawnX]);
-    stmt_bind_value(insertcarstmt, 6, DB::TYPE_FLOAT, CarData[index][CarSpawnY]);
-    stmt_bind_value(insertcarstmt, 7, DB::TYPE_FLOAT, CarData[index][CarSpawnZ]);
-    stmt_bind_value(insertcarstmt, 8, DB::TYPE_FLOAT, CarData[index][CarSpawnFA]);
-    stmt_bind_value(insertcarstmt, 9, DB::TYPE_ARRAY, CarData[index][CarComponents], MAX_CAR_COMPONENTS);
-    stmt_bind_value(insertcarstmt, 10, DB::TYPE_ARRAY, CarData[index][CarObjectRef], MAX_CAR_OBJECTS);
-    stmt_bind_value(insertcarstmt, 11, DB::TYPE_ARRAY, CarData[index][COX], MAX_CAR_OBJECTS);
-    stmt_bind_value(insertcarstmt, 12, DB::TYPE_ARRAY, CarData[index][COY], MAX_CAR_OBJECTS);
-    stmt_bind_value(insertcarstmt, 13, DB::TYPE_ARRAY, CarData[index][COZ], MAX_CAR_OBJECTS);
-    stmt_bind_value(insertcarstmt, 14, DB::TYPE_ARRAY, CarData[index][CORX], MAX_CAR_OBJECTS);
-    stmt_bind_value(insertcarstmt, 15, DB::TYPE_ARRAY, CarData[index][CORY], MAX_CAR_OBJECTS);
-    stmt_bind_value(insertcarstmt, 16, DB::TYPE_ARRAY, CarData[index][CORZ], MAX_CAR_OBJECTS);
-    stmt_bind_value(insertcarstmt, 17, DB::TYPE_INT, CarData[index][CarSiren]);
+	stmt_bind_value(insertcarstmt, 0, DB::TYPE_INT, index);
+	stmt_bind_value(insertcarstmt, 1, DB::TYPE_INT, CarData[index][CarModel]);
+	stmt_bind_value(insertcarstmt, 2, DB::TYPE_INT, CarData[index][CarColor1]);
+	stmt_bind_value(insertcarstmt, 3, DB::TYPE_INT, CarData[index][CarColor2]);
+	stmt_bind_value(insertcarstmt, 4, DB::TYPE_INT, CarData[index][CarPaintJob]);
+	stmt_bind_value(insertcarstmt, 5, DB::TYPE_FLOAT, CarData[index][CarSpawnX]);
+	stmt_bind_value(insertcarstmt, 6, DB::TYPE_FLOAT, CarData[index][CarSpawnY]);
+	stmt_bind_value(insertcarstmt, 7, DB::TYPE_FLOAT, CarData[index][CarSpawnZ]);
+	stmt_bind_value(insertcarstmt, 8, DB::TYPE_FLOAT, CarData[index][CarSpawnFA]);
+	stmt_bind_value(insertcarstmt, 9, DB::TYPE_ARRAY, CarData[index][CarComponents], MAX_CAR_COMPONENTS);
+	stmt_bind_value(insertcarstmt, 10, DB::TYPE_ARRAY, CarData[index][CarObjectRef], MAX_CAR_OBJECTS);
+	stmt_bind_value(insertcarstmt, 11, DB::TYPE_ARRAY, CarData[index][COX], MAX_CAR_OBJECTS);
+	stmt_bind_value(insertcarstmt, 12, DB::TYPE_ARRAY, CarData[index][COY], MAX_CAR_OBJECTS);
+	stmt_bind_value(insertcarstmt, 13, DB::TYPE_ARRAY, CarData[index][COZ], MAX_CAR_OBJECTS);
+	stmt_bind_value(insertcarstmt, 14, DB::TYPE_ARRAY, CarData[index][CORX], MAX_CAR_OBJECTS);
+	stmt_bind_value(insertcarstmt, 15, DB::TYPE_ARRAY, CarData[index][CORY], MAX_CAR_OBJECTS);
+	stmt_bind_value(insertcarstmt, 16, DB::TYPE_ARRAY, CarData[index][CORZ], MAX_CAR_OBJECTS);
+	stmt_bind_value(insertcarstmt, 17, DB::TYPE_INT, CarData[index][CarSiren]);
 
-    stmt_execute(insertcarstmt);
+	stmt_execute(insertcarstmt);
 	stmt_close(insertcarstmt);
 }
 
@@ -713,7 +712,7 @@ sqlite_SaveVehicleData(index)
 		);
 	}
 
-    savevposstmt = db_prepare(EditMap, VehiclePosUpdateString);
+	savevposstmt = db_prepare(EditMap, VehiclePosUpdateString);
 
 	// Bind values
 	stmt_bind_value(savevposstmt, 0, DB::TYPE_INT, CarData[index][CarModel]);
@@ -729,7 +728,7 @@ sqlite_SaveVehicleData(index)
 	stmt_bind_value(savevposstmt, 10, DB::TYPE_INT, index);
 
 	// Execute stmt
-    stmt_execute(savevposstmt);
+	stmt_execute(savevposstmt);
 	stmt_close(savevposstmt);
 	return 1;
 }
@@ -760,7 +759,7 @@ sqlite_SaveVehicleObjectData(index)
 		);
 	}
 
-    savevdatastmt = db_prepare(EditMap, VehicleDataUpdateString);
+	savevdatastmt = db_prepare(EditMap, VehicleDataUpdateString);
 
 	// Bind values
 	stmt_bind_value(savevdatastmt, 0, DB::TYPE_ARRAY, CarData[index][CarObjectRef], MAX_CAR_OBJECTS);
@@ -773,7 +772,7 @@ sqlite_SaveVehicleObjectData(index)
 	stmt_bind_value(savevdatastmt, 7, DB::TYPE_INT, index);
 
 	// Execute stmt
-    stmt_execute(savevdatastmt);
+	stmt_execute(savevdatastmt);
 	stmt_close(savevdatastmt);
 
 	return 1;
@@ -791,39 +790,39 @@ sqlite_LoadCars()
 	loadcarstmt = db_prepare(EditMap, "SELECT * FROM `Vehicles`");
 	
 	// Bind our results
-    stmt_bind_result_field(loadcarstmt, 0, DB::TYPE_INT, currindex);
-    stmt_bind_result_field(loadcarstmt, 1, DB::TYPE_INT, tmpcar[CarModel]);
-    stmt_bind_result_field(loadcarstmt, 2, DB::TYPE_INT, tmpcar[CarColor1]);
-    stmt_bind_result_field(loadcarstmt, 3, DB::TYPE_INT, tmpcar[CarColor2]);
-    stmt_bind_result_field(loadcarstmt, 4, DB::TYPE_INT, tmpcar[CarPaintJob]);
-    stmt_bind_result_field(loadcarstmt, 5, DB::TYPE_FLOAT, tmpcar[CarSpawnX]);
-    stmt_bind_result_field(loadcarstmt, 6, DB::TYPE_FLOAT, tmpcar[CarSpawnY]);
-    stmt_bind_result_field(loadcarstmt, 7, DB::TYPE_FLOAT, tmpcar[CarSpawnZ]);
-    stmt_bind_result_field(loadcarstmt, 8, DB::TYPE_FLOAT, tmpcar[CarSpawnFA]);
-    stmt_bind_result_field(loadcarstmt, 9, DB::TYPE_ARRAY, tmpcar[CarComponents], MAX_CAR_COMPONENTS);
-    stmt_bind_result_field(loadcarstmt, 10, DB::TYPE_ARRAY, tmpcar[CarObjectRef], MAX_CAR_OBJECTS);
-    stmt_bind_result_field(loadcarstmt, 11, DB::TYPE_ARRAY, tmpcar[COX], MAX_CAR_OBJECTS);
-    stmt_bind_result_field(loadcarstmt, 12, DB::TYPE_ARRAY, tmpcar[COY], MAX_CAR_OBJECTS);
-    stmt_bind_result_field(loadcarstmt, 13, DB::TYPE_ARRAY, tmpcar[COZ], MAX_CAR_OBJECTS);
-    stmt_bind_result_field(loadcarstmt, 14, DB::TYPE_ARRAY, tmpcar[CORX], MAX_CAR_OBJECTS);
-    stmt_bind_result_field(loadcarstmt, 15, DB::TYPE_ARRAY, tmpcar[CORY], MAX_CAR_OBJECTS);
-    stmt_bind_result_field(loadcarstmt, 16, DB::TYPE_ARRAY, tmpcar[CORZ], MAX_CAR_OBJECTS);
-    stmt_bind_result_field(loadcarstmt, 17, DB::TYPE_INT, tmpcar[CarSiren]);
+	stmt_bind_result_field(loadcarstmt, 0, DB::TYPE_INT, currindex);
+	stmt_bind_result_field(loadcarstmt, 1, DB::TYPE_INT, tmpcar[CarModel]);
+	stmt_bind_result_field(loadcarstmt, 2, DB::TYPE_INT, tmpcar[CarColor1]);
+	stmt_bind_result_field(loadcarstmt, 3, DB::TYPE_INT, tmpcar[CarColor2]);
+	stmt_bind_result_field(loadcarstmt, 4, DB::TYPE_INT, tmpcar[CarPaintJob]);
+	stmt_bind_result_field(loadcarstmt, 5, DB::TYPE_FLOAT, tmpcar[CarSpawnX]);
+	stmt_bind_result_field(loadcarstmt, 6, DB::TYPE_FLOAT, tmpcar[CarSpawnY]);
+	stmt_bind_result_field(loadcarstmt, 7, DB::TYPE_FLOAT, tmpcar[CarSpawnZ]);
+	stmt_bind_result_field(loadcarstmt, 8, DB::TYPE_FLOAT, tmpcar[CarSpawnFA]);
+	stmt_bind_result_field(loadcarstmt, 9, DB::TYPE_ARRAY, tmpcar[CarComponents], MAX_CAR_COMPONENTS);
+	stmt_bind_result_field(loadcarstmt, 10, DB::TYPE_ARRAY, tmpcar[CarObjectRef], MAX_CAR_OBJECTS);
+	stmt_bind_result_field(loadcarstmt, 11, DB::TYPE_ARRAY, tmpcar[COX], MAX_CAR_OBJECTS);
+	stmt_bind_result_field(loadcarstmt, 12, DB::TYPE_ARRAY, tmpcar[COY], MAX_CAR_OBJECTS);
+	stmt_bind_result_field(loadcarstmt, 13, DB::TYPE_ARRAY, tmpcar[COZ], MAX_CAR_OBJECTS);
+	stmt_bind_result_field(loadcarstmt, 14, DB::TYPE_ARRAY, tmpcar[CORX], MAX_CAR_OBJECTS);
+	stmt_bind_result_field(loadcarstmt, 15, DB::TYPE_ARRAY, tmpcar[CORY], MAX_CAR_OBJECTS);
+	stmt_bind_result_field(loadcarstmt, 16, DB::TYPE_ARRAY, tmpcar[CORZ], MAX_CAR_OBJECTS);
+	stmt_bind_result_field(loadcarstmt, 17, DB::TYPE_INT, tmpcar[CarSiren]);
 
 	// Execute query
-    if(stmt_execute(loadcarstmt))
-    {
-        while(stmt_fetch_row(loadcarstmt))
-        {
-            CarData[currindex][CarModel] = tmpcar[CarModel];
-            CarData[currindex][CarColor1] = tmpcar[CarColor1];
-            CarData[currindex][CarColor2] = tmpcar[CarColor2];
-            CarData[currindex][CarPaintJob] = tmpcar[CarPaintJob];
-            CarData[currindex][CarSpawnX] = tmpcar[CarSpawnX];
-            CarData[currindex][CarSpawnY] = tmpcar[CarSpawnY];
-            CarData[currindex][CarSpawnZ] = tmpcar[CarSpawnZ];
-            CarData[currindex][CarSpawnFA] = tmpcar[CarSpawnFA];
-            CarData[currindex][CarSiren] = tmpcar[CarSiren];
+	if(stmt_execute(loadcarstmt))
+	{
+		while(stmt_fetch_row(loadcarstmt))
+		{
+			CarData[currindex][CarModel] = tmpcar[CarModel];
+			CarData[currindex][CarColor1] = tmpcar[CarColor1];
+			CarData[currindex][CarColor2] = tmpcar[CarColor2];
+			CarData[currindex][CarPaintJob] = tmpcar[CarPaintJob];
+			CarData[currindex][CarSpawnX] = tmpcar[CarSpawnX];
+			CarData[currindex][CarSpawnY] = tmpcar[CarSpawnY];
+			CarData[currindex][CarSpawnZ] = tmpcar[CarSpawnZ];
+			CarData[currindex][CarSpawnFA] = tmpcar[CarSpawnFA];
+			CarData[currindex][CarSiren] = tmpcar[CarSiren];
 
 			for(new i = 0; i < MAX_CAR_COMPONENTS; i++) CarData[currindex][CarComponents][i] = tmpcar[CarComponents][i];
 			for(new i = 0; i < MAX_CAR_OBJECTS; i++)
@@ -837,25 +836,25 @@ sqlite_LoadCars()
 				CarData[currindex][CORZ][i] = tmpcar[CORZ][i];
 			}
 			
-		 	AddNewCar(CarData[currindex][CarModel], currindex, false, false);
-		 	ChangeVehicleColor(CarData[currindex][CarID], CarData[currindex][CarColor1], CarData[currindex][CarColor2]);
-		 	ChangeVehiclePaintjob(CarData[currindex][CarID], CarData[currindex][CarPaintJob]);
-		 	for(new i = 0; i < MAX_CAR_COMPONENTS; i++)
-		 	{
-		 	    if(CarData[currindex][CarComponents][i] > 0) AddVehicleComponent(CarData[currindex][CarID], CarData[currindex][CarComponents][i]);
-		 	}
-		 	
-		 	for(new i = 0; i < MAX_CAR_OBJECTS; i++)
-		 	{
-		 	    if(tmpcar[CarObjectRef][i] > -1)
-		 	    {
-	                AttachDynamicObjectToVehicle(ObjectData[CarData[currindex][CarObjectRef][i]][oID], CarData[currindex][CarID],
+			AddNewCar(CarData[currindex][CarModel], currindex, false, false);
+			ChangeVehicleColor(CarData[currindex][CarID], CarData[currindex][CarColor1], CarData[currindex][CarColor2]);
+			ChangeVehiclePaintjob(CarData[currindex][CarID], CarData[currindex][CarPaintJob]);
+			for(new i = 0; i < MAX_CAR_COMPONENTS; i++)
+			{
+				if(CarData[currindex][CarComponents][i] > 0) AddVehicleComponent(CarData[currindex][CarID], CarData[currindex][CarComponents][i]);
+			}
+			
+			for(new i = 0; i < MAX_CAR_OBJECTS; i++)
+			{
+				if(tmpcar[CarObjectRef][i] > -1)
+				{
+					AttachDynamicObjectToVehicle(ObjectData[CarData[currindex][CarObjectRef][i]][oID], CarData[currindex][CarID],
 						CarData[currindex][COX][i], CarData[currindex][COY][i], CarData[currindex][COZ][i], CarData[currindex][CORX][i], CarData[currindex][CORY][i], CarData[currindex][CORZ][i]);
 					ObjectData[CarData[currindex][CarObjectRef][i]][oAttachedVehicle] = currindex;
-	                UpdateObject3DText(CarData[currindex][CarObjectRef][i], false);
-		 	    }
-		 	}
-	 	}
+					UpdateObject3DText(CarData[currindex][CarObjectRef][i], false);
+				}
+			}
+		}
 	}
 	stmt_close(loadcarstmt);
 }
@@ -863,8 +862,8 @@ sqlite_LoadCars()
 ClearVehicles()
 {
 	foreach(new i : Player) CurrVehicle[i] = -1;
-    DeleteAllCars();
-    return 1;
+	DeleteAllCars();
+	return 1;
 }
 
 
@@ -879,20 +878,20 @@ DeleteAllCars()
 
 DestroyEditCar(index, bool:sqldelete=true, deleteobjects=false)
 {
-    DestroyVehicle(CarData[index][CarID]);
-    CarData[index][CarModel] = -1;
-    CarData[index][CarColor1] = -1;
-    CarData[index][CarColor2] = -1;
-    CarData[index][CarPaintJob] = 0;
-    CarData[index][CarSiren] = 0;
-    CarData[index][CarSpawnX] = 0.0;
-    CarData[index][CarSpawnY] = 0.0;
-    CarData[index][CarSpawnZ] = 0.0;
-    CarData[index][CarSpawnFA] = 0.0;
-    
-    DestroyDynamic3DTextLabel(CarData[index][CarText]);
-    
-    for(new i = 0; i < MAX_CAR_COMPONENTS; i++) CarData[index][CarComponents][i] = 0;
+	DestroyVehicle(CarData[index][CarID]);
+	CarData[index][CarModel] = -1;
+	CarData[index][CarColor1] = -1;
+	CarData[index][CarColor2] = -1;
+	CarData[index][CarPaintJob] = 0;
+	CarData[index][CarSiren] = 0;
+	CarData[index][CarSpawnX] = 0.0;
+	CarData[index][CarSpawnY] = 0.0;
+	CarData[index][CarSpawnZ] = 0.0;
+	CarData[index][CarSpawnFA] = 0.0;
+	
+	DestroyDynamic3DTextLabel(CarData[index][CarText]);
+	
+	for(new i = 0; i < MAX_CAR_COMPONENTS; i++) CarData[index][CarComponents][i] = 0;
 	for(new i = 0; i < MAX_CAR_OBJECTS; i++)
 	{
 		if(CarData[index][CarObjectRef][i] > -1)
@@ -903,7 +902,7 @@ DestroyEditCar(index, bool:sqldelete=true, deleteobjects=false)
 			else
 			{
 				// Destroy the object
-			    DestroyDynamicObject(ObjectData[oindex][oID]);
+				DestroyDynamicObject(ObjectData[oindex][oID]);
 
 				// Re-create object
 				ObjectData[index][oID] = CreateDynamicObject(ObjectData[oindex][oModel], ObjectData[oindex][oX], ObjectData[oindex][oY], ObjectData[oindex][oZ], ObjectData[oindex][oRX], ObjectData[oindex][oRY], ObjectData[oindex][oRZ], MapSetting[mVirtualWorld], MapSetting[mInterior], -1, 300.0);
@@ -919,19 +918,19 @@ DestroyEditCar(index, bool:sqldelete=true, deleteobjects=false)
 				UpdateObject3DText(oindex, false);
 			}
 		}
-	    CarData[index][CarObjectRef][i] = -1;
-	    CarData[index][COX][i] = 0.0;
-	    CarData[index][COY][i] = 0.0;
-	    CarData[index][COZ][i] = 0.0;
-	    CarData[index][CORX][i] = 0.0;
-	    CarData[index][CORY][i] = 0.0;
-	    CarData[index][CORZ][i] = 0.0;
+		CarData[index][CarObjectRef][i] = -1;
+		CarData[index][COX][i] = 0.0;
+		CarData[index][COY][i] = 0.0;
+		CarData[index][COZ][i] = 0.0;
+		CarData[index][CORX][i] = 0.0;
+		CarData[index][CORY][i] = 0.0;
+		CarData[index][CORZ][i] = 0.0;
 	}
 	if(sqldelete)
 	{
-	    new q[128];
-	    format(q, sizeof(q), "DELETE FROM `Vehicles` WHERE `IndexID` = %i", index);
-	    db_query(EditMap, q);
+		new q[128];
+		format(q, sizeof(q), "DELETE FROM `Vehicles` WHERE `IndexID` = %i", index);
+		db_query(EditMap, q);
 	}
 	
 	new next;
@@ -949,7 +948,7 @@ YCMD:avcarcolor(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 
 	NoEditingMode(playerid);
 
@@ -967,16 +966,16 @@ YCMD:avcarcolor(playerid, arg[], help)
 				{
 					if(listitem == 0) CarData[CurrVehicle[playerid]][CarColor1] = clistitem;
 					else if(listitem == 1) CarData[CurrVehicle[playerid]][CarColor2] = clistitem;
-				    ChangeVehicleColor(CarData[CurrVehicle[playerid]][CarID], CarData[CurrVehicle[playerid]][CarColor1], CarData[CurrVehicle[playerid]][CarColor2]);
+					ChangeVehicleColor(CarData[CurrVehicle[playerid]][CarID], CarData[CurrVehicle[playerid]][CarColor1], CarData[CurrVehicle[playerid]][CarColor2]);
 					sqlite_SaveVehicleData(CurrVehicle[playerid]);
 				}
 				Dialog_ShowCallback(playerid, using inline Response, DIALOG_STYLE_LIST, "Select car color", "Car Color 1\nCar Color 2", "Ok", "Cancel");
 			}
-		    Dialog_ShowCallback(playerid, using inline ChooseColor, DIALOG_STYLE_LIST, "Car Color List", VehicleColorList, "Ok", "Cancel");
+			Dialog_ShowCallback(playerid, using inline ChooseColor, DIALOG_STYLE_LIST, "Car Color List", VehicleColorList, "Ok", "Cancel");
 			return 1;
 		}
 	}
-    Dialog_ShowCallback(playerid, using inline Response, DIALOG_STYLE_LIST, "Select car color", "Car Color 1\nCar Color 2", "Ok", "Cancel");
+	Dialog_ShowCallback(playerid, using inline Response, DIALOG_STYLE_LIST, "Select car color", "Car Color 1\nCar Color 2", "Ok", "Cancel");
 	return 1;
 }
 
@@ -989,7 +988,7 @@ YCMD:avpaint(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 
 	NoEditingMode(playerid);
 
@@ -1001,12 +1000,12 @@ YCMD:avpaint(playerid, arg[], help)
 		if(response)
 		{
 			CarData[CurrVehicle[playerid]][CarPaintJob] = listitem;
-		    ChangeVehiclePaintjob(CarData[CurrVehicle[playerid]][CarID], CarData[CurrVehicle[playerid]][CarPaintJob]);
+			ChangeVehiclePaintjob(CarData[CurrVehicle[playerid]][CarID], CarData[CurrVehicle[playerid]][CarPaintJob]);
 			sqlite_SaveVehicleData(CurrVehicle[playerid]);
 			Dialog_ShowCallback(playerid, using inline Response, DIALOG_STYLE_LIST, "Select Paint Job", "Paint Job 1\nPaint Job 2\nPaint Job 3\nNone", "Ok", "Cancel");
 		}
 	}
-    Dialog_ShowCallback(playerid, using inline Response, DIALOG_STYLE_LIST, "Select Paint Job", "Paint Job 1\nPaint Job 2\nPaint Job 3\nNone", "Ok", "Cancel");
+	Dialog_ShowCallback(playerid, using inline Response, DIALOG_STYLE_LIST, "Select Paint Job", "Paint Job 1\nPaint Job 2\nPaint Job 3\nNone", "Ok", "Cancel");
 	return 1;
 }
 
@@ -1019,22 +1018,22 @@ YCMD:avsiren(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 
 	NoEditingMode(playerid);
 
 	VehicleCheck(playerid);
 
 	CarData[CurrVehicle[playerid]][CarSiren] = CarData[CurrVehicle[playerid]][CarSiren] ? 0 : 1;
-    
-    // TODO: Destroy and recreate vehicle to apply the siren
-    
-    sqlite_SaveVehicleData(CurrVehicle[playerid]);
-    
-    SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
-    SendClientMessage(playerid, STEALTH_GREEN, sprintf("Toggled vehicle's siren %s{33DD11}",
-        (CarData[CurrVehicle[playerid]][CarSiren] ? ("{00AA00}On") : ("{AA0000}Off"))));
-    return 1;
+	
+	// TODO: Destroy and recreate vehicle to apply the siren
+	
+	sqlite_SaveVehicleData(CurrVehicle[playerid]);
+	
+	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+	SendClientMessage(playerid, STEALTH_GREEN, sprintf("Toggled vehicle's siren %s{33DD11}",
+		(CarData[CurrVehicle[playerid]][CarSiren] ? ("{00AA00}On") : ("{AA0000}Off"))));
+	return 1;
 }
 
 YCMD:avrespawn(playerid, arg[], help)
@@ -1046,14 +1045,14 @@ YCMD:avrespawn(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 
 	NoEditingMode(playerid);
 
 	VehicleCheck(playerid);
 
 	SetVehicleToRespawn(CarData[CurrVehicle[playerid]][CarID]);
-    return 1;
+	return 1;
 }
 
 YCMD:avattach(playerid, arg[], help)
@@ -1065,7 +1064,7 @@ YCMD:avattach(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 
 	NoEditingMode(playerid);
 	
@@ -1073,16 +1072,16 @@ YCMD:avattach(playerid, arg[], help)
 	
 	VehicleCheck(playerid);
 	
- 	inline CloneVA(cpid, cdialogid, cresponse, clistitem, string:ctext[])
+	inline CloneVA(cpid, cdialogid, cresponse, clistitem, string:ctext[])
 	{
-    	#pragma unused clistitem, cdialogid, cpid, ctext
+		#pragma unused clistitem, cdialogid, cpid, ctext
 		new bool:clone;
- 		if(cresponse) clone = true;
-        for(new i = 0; i < MAX_CAR_OBJECTS; i++)
-        {
-            if(CarData[CurrVehicle[playerid]][CarObjectRef][i] == -1)
-            {
-            	if(clone) SetCurrObject(playerid, CloneObject(CurrObject[playerid]));
+		if(cresponse) clone = true;
+		for(new i = 0; i < MAX_CAR_OBJECTS; i++)
+		{
+			if(CarData[CurrVehicle[playerid]][CarObjectRef][i] == -1)
+			{
+				if(clone) SetCurrObject(playerid, CloneObject(CurrObject[playerid]));
 				else
 				{
 					if(IsObjectAttachedToVehicle(CurrObject[playerid]))
@@ -1092,30 +1091,30 @@ YCMD:avattach(playerid, arg[], help)
 					}
 				}
 
-                AttachDynamicObjectToVehicle(ObjectData[CurrObject[playerid]][oID], CarData[CurrVehicle[playerid]][CarID], 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
-                CarData[CurrVehicle[playerid]][CarObjectRef][i] = CurrObject[playerid];
-                ObjectData[CurrObject[playerid]][oAttachedVehicle] = CurrVehicle[playerid];
-                
-                CarData[CurrVehicle[playerid]][COX][i] = 0.0;
-                CarData[CurrVehicle[playerid]][COY][i] = 0.0;
-                CarData[CurrVehicle[playerid]][COZ][i] = 0.0;
-                CarData[CurrVehicle[playerid]][CORX][i] = 0.0;
-                CarData[CurrVehicle[playerid]][CORY][i] = 0.0;
-                CarData[CurrVehicle[playerid]][CORZ][i] = 0.0;
+				AttachDynamicObjectToVehicle(ObjectData[CurrObject[playerid]][oID], CarData[CurrVehicle[playerid]][CarID], 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+				CarData[CurrVehicle[playerid]][CarObjectRef][i] = CurrObject[playerid];
+				ObjectData[CurrObject[playerid]][oAttachedVehicle] = CurrVehicle[playerid];
+				
+				CarData[CurrVehicle[playerid]][COX][i] = 0.0;
+				CarData[CurrVehicle[playerid]][COY][i] = 0.0;
+				CarData[CurrVehicle[playerid]][COZ][i] = 0.0;
+				CarData[CurrVehicle[playerid]][CORX][i] = 0.0;
+				CarData[CurrVehicle[playerid]][CORY][i] = 0.0;
+				CarData[CurrVehicle[playerid]][CORZ][i] = 0.0;
 
-                sqlite_SaveVehicleObjectData(CurrVehicle[playerid]);
-                
-                UpdateObject3DText(CurrObject[playerid], false);
+				sqlite_SaveVehicleObjectData(CurrVehicle[playerid]);
+				
+				UpdateObject3DText(CurrObject[playerid], false);
 
 				SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 				SendClientMessage(playerid, STEALTH_GREEN, "Attached object to vehicle.");
 
 				return 1;
 			}
-        }
+		}
 		SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 		SendClientMessage(playerid, STEALTH_YELLOW, "This vehicle has too many objects.");
-   	}
+	}
 	Dialog_ShowCallback(playerid, using inline CloneVA, DIALOG_STYLE_MSGBOX, "Texture Studio", "Would you like to clone this object\nbefore attaching to vehicle?", "Yes", "No");
 
 	return 1;
@@ -1275,7 +1274,7 @@ YCMD:avdetach(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 
 	NoEditingMode(playerid);
 
@@ -1286,10 +1285,10 @@ YCMD:avdetach(playerid, arg[], help)
 		new index = CurrObject[playerid];
 		if(ObjectData[index][oAttachedVehicle] > -1) UpdateAttachedObjectRef(ObjectData[index][oAttachedVehicle], index);
 		
-	    ObjectData[CurrObject[playerid]][oAttachedVehicle] = -1;
-	    
+		ObjectData[CurrObject[playerid]][oAttachedVehicle] = -1;
+		
 		// Destroy the object
-	    DestroyDynamicObject(ObjectData[index][oID]);
+		DestroyDynamicObject(ObjectData[index][oID]);
 
 		// Re-create object
 		ObjectData[index][oID] = CreateDynamicObject(ObjectData[index][oModel], ObjectData[index][oX], ObjectData[index][oY], ObjectData[index][oZ], ObjectData[index][oRX], ObjectData[index][oRY], ObjectData[index][oRZ], MapSetting[mVirtualWorld], MapSetting[mInterior], -1, 300.0);
@@ -1326,9 +1325,9 @@ YCMD:avsel(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
-    new index = strval(arg);
-    if(Iter_Contains(Cars, index))
+	MapOpenCheck();
+	new index = strval(arg);
+	if(Iter_Contains(Cars, index))
 	{
 		CurrVehicle[playerid] = index;
 		SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
@@ -1355,8 +1354,8 @@ YCMD:avclonecar(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
-    NoEditingMode(playerid);
+	MapOpenCheck();
+	NoEditingMode(playerid);
 	VehicleCheck(playerid);
 	
 	new index = Iter_Free(Cars);
@@ -1368,40 +1367,40 @@ YCMD:avclonecar(playerid, arg[], help)
 		GetPlayerPos(playerid, CarData[index][CarSpawnX], CarData[index][CarSpawnY], CarData[index][CarSpawnZ]);
 		GetXYInFrontOfPlayer(playerid, CarData[index][CarSpawnX], CarData[index][CarSpawnY], 2.0);
 		GetPlayerFacingAngle(playerid, CarData[index][CarSpawnFA]);
-        
-        CarData[index][CarColor1]     = CarData[CloneCar][CarColor1];
-        CarData[index][CarColor2]     = CarData[CloneCar][CarColor2];
-        CarData[index][CarPaintJob]   = CarData[CloneCar][CarPaintJob];
-        CarData[index][CarSiren]      = CarData[CloneCar][CarSiren];
-        CarData[index][CarComponents] = CarData[CloneCar][CarComponents];
-        
+		
+		CarData[index][CarColor1]     = CarData[CloneCar][CarColor1];
+		CarData[index][CarColor2]     = CarData[CloneCar][CarColor2];
+		CarData[index][CarPaintJob]   = CarData[CloneCar][CarPaintJob];
+		CarData[index][CarSiren]      = CarData[CloneCar][CarSiren];
+		CarData[index][CarComponents] = CarData[CloneCar][CarComponents];
+		
 		CurrVehicle[playerid] = AddNewCar(CarData[CloneCar][CarModel], index, true);
 
 		// Clone and attach objects
 		for(new i = 0; i < MAX_CAR_OBJECTS; i++)
 		{
-		    if(CarData[CloneCar][CarObjectRef][i] == -1) continue;
+			if(CarData[CloneCar][CarObjectRef][i] == -1) continue;
 
-		    // Clone and attach
-		    new CloneIndex = CloneObject(CarData[CloneCar][CarObjectRef][i]);
+			// Clone and attach
+			new CloneIndex = CloneObject(CarData[CloneCar][CarObjectRef][i]);
 
-            AttachDynamicObjectToVehicle(ObjectData[CloneIndex][oID], CarData[CurrVehicle[playerid]][CarID],
+			AttachDynamicObjectToVehicle(ObjectData[CloneIndex][oID], CarData[CurrVehicle[playerid]][CarID],
 				CarData[CloneCar][COX][i], CarData[CloneCar][COY][i], CarData[CloneCar][COZ][i], CarData[CloneCar][CORX][i], CarData[CloneCar][CORY][i], CarData[CloneCar][CORZ][i]);
-            CarData[CurrVehicle[playerid]][CarObjectRef][i] = CloneIndex;
-            ObjectData[CloneIndex][oAttachedVehicle] = CurrVehicle[playerid];
-            
-            CarData[CurrVehicle[playerid]][COX][i] = CarData[CloneCar][COX][i];
-            CarData[CurrVehicle[playerid]][COY][i] = CarData[CloneCar][COY][i];
-            CarData[CurrVehicle[playerid]][COZ][i] = CarData[CloneCar][COZ][i];
-            CarData[CurrVehicle[playerid]][CORX][i] = CarData[CloneCar][CORX][i];
-            CarData[CurrVehicle[playerid]][CORY][i] = CarData[CloneCar][CORY][i];
-            CarData[CurrVehicle[playerid]][CORZ][i] = CarData[CloneCar][CORZ][i];
+			CarData[CurrVehicle[playerid]][CarObjectRef][i] = CloneIndex;
+			ObjectData[CloneIndex][oAttachedVehicle] = CurrVehicle[playerid];
+			
+			CarData[CurrVehicle[playerid]][COX][i] = CarData[CloneCar][COX][i];
+			CarData[CurrVehicle[playerid]][COY][i] = CarData[CloneCar][COY][i];
+			CarData[CurrVehicle[playerid]][COZ][i] = CarData[CloneCar][COZ][i];
+			CarData[CurrVehicle[playerid]][CORX][i] = CarData[CloneCar][CORX][i];
+			CarData[CurrVehicle[playerid]][CORY][i] = CarData[CloneCar][CORY][i];
+			CarData[CurrVehicle[playerid]][CORZ][i] = CarData[CloneCar][CORZ][i];
 
-            sqlite_SaveVehicleObjectData(CurrVehicle[playerid]);
+			sqlite_SaveVehicleObjectData(CurrVehicle[playerid]);
 
-            UpdateObject3DText(CloneIndex, false);
+			UpdateObject3DText(CloneIndex, false);
 		}
-        SendClientMessage(playerid, STEALTH_GREEN, "You have cloned this vehicle.");
+		SendClientMessage(playerid, STEALTH_GREEN, "You have cloned this vehicle.");
 		return 1;
 	}
 	SendClientMessage(playerid, STEALTH_YELLOW, "Too many cars");
@@ -1419,7 +1418,7 @@ YCMD:avox(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 
 	NoEditingMode(playerid);
 
@@ -1433,9 +1432,9 @@ YCMD:avox(playerid, arg[], help)
 		
 		new refindex = GetCarObjectRefIndex(ObjectData[CurrObject[playerid]][oAttachedVehicle], CurrObject[playerid]);
 		CarData[ObjectData[CurrObject[playerid]][oAttachedVehicle]][COX][refindex] += dist;
-	    UpdateAttachedVehicleObject(ObjectData[CurrObject[playerid]][oAttachedVehicle], refindex, VEHICLE_ATTACH_UPDATE);
+		UpdateAttachedVehicleObject(ObjectData[CurrObject[playerid]][oAttachedVehicle], refindex, VEHICLE_ATTACH_UPDATE);
 
-	    sqlite_SaveVehicleObjectData(ObjectData[CurrObject[playerid]][oAttachedVehicle]);
+		sqlite_SaveVehicleObjectData(ObjectData[CurrObject[playerid]][oAttachedVehicle]);
 
 		UpdatePlayerOSelText(playerid);
 	}
@@ -1457,7 +1456,7 @@ YCMD:avoy(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 
 	NoEditingMode(playerid);
 
@@ -1471,9 +1470,9 @@ YCMD:avoy(playerid, arg[], help)
 
 		new refindex = GetCarObjectRefIndex(ObjectData[CurrObject[playerid]][oAttachedVehicle], CurrObject[playerid]);
 		CarData[ObjectData[CurrObject[playerid]][oAttachedVehicle]][COY][refindex] += dist;
-	    UpdateAttachedVehicleObject(ObjectData[CurrObject[playerid]][oAttachedVehicle], refindex, VEHICLE_ATTACH_UPDATE);
+		UpdateAttachedVehicleObject(ObjectData[CurrObject[playerid]][oAttachedVehicle], refindex, VEHICLE_ATTACH_UPDATE);
 
-	    sqlite_SaveVehicleObjectData(ObjectData[CurrObject[playerid]][oAttachedVehicle]);
+		sqlite_SaveVehicleObjectData(ObjectData[CurrObject[playerid]][oAttachedVehicle]);
 
 		UpdatePlayerOSelText(playerid);
 	}
@@ -1495,7 +1494,7 @@ YCMD:avoz(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 
 	NoEditingMode(playerid);
 
@@ -1509,9 +1508,9 @@ YCMD:avoz(playerid, arg[], help)
 
 		new refindex = GetCarObjectRefIndex(ObjectData[CurrObject[playerid]][oAttachedVehicle], CurrObject[playerid]);
 		CarData[ObjectData[CurrObject[playerid]][oAttachedVehicle]][COZ][refindex] += dist;
-	    UpdateAttachedVehicleObject(ObjectData[CurrObject[playerid]][oAttachedVehicle], refindex, VEHICLE_ATTACH_UPDATE);
+		UpdateAttachedVehicleObject(ObjectData[CurrObject[playerid]][oAttachedVehicle], refindex, VEHICLE_ATTACH_UPDATE);
 
-	    sqlite_SaveVehicleObjectData(ObjectData[CurrObject[playerid]][oAttachedVehicle]);
+		sqlite_SaveVehicleObjectData(ObjectData[CurrObject[playerid]][oAttachedVehicle]);
 
 		UpdatePlayerOSelText(playerid);
 	}
@@ -1533,7 +1532,7 @@ YCMD:avrx(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 
 	NoEditingMode(playerid);
 
@@ -1547,9 +1546,9 @@ YCMD:avrx(playerid, arg[], help)
 
 		new refindex = GetCarObjectRefIndex(ObjectData[CurrObject[playerid]][oAttachedVehicle], CurrObject[playerid]);
 		CarData[ObjectData[CurrObject[playerid]][oAttachedVehicle]][CORX][refindex] += dist;
-	    UpdateAttachedVehicleObject(ObjectData[CurrObject[playerid]][oAttachedVehicle], refindex, VEHICLE_ATTACH_UPDATE);
+		UpdateAttachedVehicleObject(ObjectData[CurrObject[playerid]][oAttachedVehicle], refindex, VEHICLE_ATTACH_UPDATE);
 
-	    sqlite_SaveVehicleObjectData(ObjectData[CurrObject[playerid]][oAttachedVehicle]);
+		sqlite_SaveVehicleObjectData(ObjectData[CurrObject[playerid]][oAttachedVehicle]);
 
 		UpdatePlayerOSelText(playerid);
 	}
@@ -1571,7 +1570,7 @@ YCMD:avry(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 
 	NoEditingMode(playerid);
 
@@ -1585,9 +1584,9 @@ YCMD:avry(playerid, arg[], help)
 
 		new refindex = GetCarObjectRefIndex(ObjectData[CurrObject[playerid]][oAttachedVehicle], CurrObject[playerid]);
 		CarData[ObjectData[CurrObject[playerid]][oAttachedVehicle]][CORY][refindex] += dist;
-	    UpdateAttachedVehicleObject(ObjectData[CurrObject[playerid]][oAttachedVehicle], refindex, VEHICLE_ATTACH_UPDATE);
+		UpdateAttachedVehicleObject(ObjectData[CurrObject[playerid]][oAttachedVehicle], refindex, VEHICLE_ATTACH_UPDATE);
 
-	    sqlite_SaveVehicleObjectData(ObjectData[CurrObject[playerid]][oAttachedVehicle]);
+		sqlite_SaveVehicleObjectData(ObjectData[CurrObject[playerid]][oAttachedVehicle]);
 
 		UpdatePlayerOSelText(playerid);
 	}
@@ -1609,7 +1608,7 @@ YCMD:avrz(playerid, arg[], help)
 		return 1;
 	}
 
-    MapOpenCheck();
+	MapOpenCheck();
 
 	NoEditingMode(playerid);
 
@@ -1623,9 +1622,9 @@ YCMD:avrz(playerid, arg[], help)
 
 		new refindex = GetCarObjectRefIndex(ObjectData[CurrObject[playerid]][oAttachedVehicle], CurrObject[playerid]);
 		CarData[ObjectData[CurrObject[playerid]][oAttachedVehicle]][CORZ][refindex] += dist;
-	    UpdateAttachedVehicleObject(ObjectData[CurrObject[playerid]][oAttachedVehicle], refindex, VEHICLE_ATTACH_UPDATE);
+		UpdateAttachedVehicleObject(ObjectData[CurrObject[playerid]][oAttachedVehicle], refindex, VEHICLE_ATTACH_UPDATE);
 
-	    sqlite_SaveVehicleObjectData(ObjectData[CurrObject[playerid]][oAttachedVehicle]);
+		sqlite_SaveVehicleObjectData(ObjectData[CurrObject[playerid]][oAttachedVehicle]);
 
 		UpdatePlayerOSelText(playerid);
 	}
@@ -1643,13 +1642,13 @@ static Float:AVEditObjPos[MAX_PLAYERS][6];
 
 EditVehicleObject(playerid)
 {
-    MapOpenCheck();
+	MapOpenCheck();
 
 	EditCheck(playerid);
 
-   	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
+	SendClientMessage(playerid, STEALTH_ORANGE, "______________________________________________");
 
-   	if(!EditingMode[playerid])
+	if(!EditingMode[playerid])
 	{
 		new carindex = ObjectData[CurrObject[playerid]][oAttachedVehicle];
 		new refindex = GetCarObjectRefIndex(ObjectData[CurrObject[playerid]][oAttachedVehicle], CurrObject[playerid]);
@@ -1665,12 +1664,12 @@ EditVehicleObject(playerid)
 			CarData[carindex][CORZ][refindex],
 			-1, -1, playerid);
 
-        AVEditObjPos[playerid][0] = CarData[carindex][COX][refindex];
-        AVEditObjPos[playerid][1] = CarData[carindex][COY][refindex];
-        AVEditObjPos[playerid][2] = CarData[carindex][COZ][refindex];
-        AVEditObjPos[playerid][3] = CarData[carindex][CORX][refindex];
-        AVEditObjPos[playerid][4] = CarData[carindex][CORY][refindex];
-        AVEditObjPos[playerid][5] = CarData[carindex][CORZ][refindex];
+		AVEditObjPos[playerid][0] = CarData[carindex][COX][refindex];
+		AVEditObjPos[playerid][1] = CarData[carindex][COY][refindex];
+		AVEditObjPos[playerid][2] = CarData[carindex][COZ][refindex];
+		AVEditObjPos[playerid][3] = CarData[carindex][CORX][refindex];
+		AVEditObjPos[playerid][4] = CarData[carindex][CORY][refindex];
+		AVEditObjPos[playerid][5] = CarData[carindex][CORZ][refindex];
 
 		Streamer_SetFloatData(STREAMER_TYPE_OBJECT, PivotObject[playerid], E_STREAMER_DRAW_DISTANCE, 3000.0);
 
@@ -1699,20 +1698,20 @@ OnPlayerEditVObject(playerid, objectid, response, Float:x, Float:y, Float:z, Flo
 	{
 		new refindex = GetCarObjectRefIndex(ObjectData[CurrObject[playerid]][oAttachedVehicle], CurrObject[playerid]);
 
-	    AVEditPos[playerid][0] = x - AVEditPos[playerid][0];
-	    AVEditPos[playerid][1] = y - AVEditPos[playerid][1];
-	    AVEditPos[playerid][2] = z - AVEditPos[playerid][2];
+		AVEditPos[playerid][0] = x - AVEditPos[playerid][0];
+		AVEditPos[playerid][1] = y - AVEditPos[playerid][1];
+		AVEditPos[playerid][2] = z - AVEditPos[playerid][2];
 
-        CarData[ObjectData[CurrObject[playerid]][oAttachedVehicle]][COX][refindex] = AVEditPos[playerid][0];
-	    CarData[ObjectData[CurrObject[playerid]][oAttachedVehicle]][COY][refindex] = AVEditPos[playerid][1];
-        CarData[ObjectData[CurrObject[playerid]][oAttachedVehicle]][COZ][refindex] = AVEditPos[playerid][2];
+		CarData[ObjectData[CurrObject[playerid]][oAttachedVehicle]][COX][refindex] = AVEditPos[playerid][0];
+		CarData[ObjectData[CurrObject[playerid]][oAttachedVehicle]][COY][refindex] = AVEditPos[playerid][1];
+		CarData[ObjectData[CurrObject[playerid]][oAttachedVehicle]][COZ][refindex] = AVEditPos[playerid][2];
 
-        CarData[ObjectData[CurrObject[playerid]][oAttachedVehicle]][CORX][refindex] = rx;
-	    CarData[ObjectData[CurrObject[playerid]][oAttachedVehicle]][CORY][refindex] = ry;
-        CarData[ObjectData[CurrObject[playerid]][oAttachedVehicle]][CORZ][refindex] = rz;
+		CarData[ObjectData[CurrObject[playerid]][oAttachedVehicle]][CORX][refindex] = rx;
+		CarData[ObjectData[CurrObject[playerid]][oAttachedVehicle]][CORY][refindex] = ry;
+		CarData[ObjectData[CurrObject[playerid]][oAttachedVehicle]][CORZ][refindex] = rz;
 
-	    UpdateAttachedVehicleObject(ObjectData[CurrObject[playerid]][oAttachedVehicle], refindex, VEHICLE_ATTACH_UPDATE);
-	    sqlite_SaveVehicleObjectData(ObjectData[CurrObject[playerid]][oAttachedVehicle]);
+		UpdateAttachedVehicleObject(ObjectData[CurrObject[playerid]][oAttachedVehicle], refindex, VEHICLE_ATTACH_UPDATE);
+		sqlite_SaveVehicleObjectData(ObjectData[CurrObject[playerid]][oAttachedVehicle]);
 
 		DestroyDynamicObject(PivotObject[playerid]);
 
@@ -1728,21 +1727,21 @@ OnPlayerEditVObject(playerid, objectid, response, Float:x, Float:y, Float:z, Flo
 
 		new refindex = GetCarObjectRefIndex(ObjectData[CurrObject[playerid]][oAttachedVehicle], CurrObject[playerid]);
 
-	    tmpx = x - AVEditPos[playerid][0];
-	    tmpy = y - AVEditPos[playerid][1];
-	    tmpz = z - AVEditPos[playerid][2];
+		tmpx = x - AVEditPos[playerid][0];
+		tmpy = y - AVEditPos[playerid][1];
+		tmpz = z - AVEditPos[playerid][2];
 
-        CarData[ObjectData[CurrObject[playerid]][oAttachedVehicle]][COX][refindex] = tmpx;
-	    CarData[ObjectData[CurrObject[playerid]][oAttachedVehicle]][COY][refindex] = tmpy;
-        CarData[ObjectData[CurrObject[playerid]][oAttachedVehicle]][COZ][refindex] = tmpz;
-        
-        CarData[ObjectData[CurrObject[playerid]][oAttachedVehicle]][CORX][refindex] = rx;
-	    CarData[ObjectData[CurrObject[playerid]][oAttachedVehicle]][CORY][refindex] = ry;
-        CarData[ObjectData[CurrObject[playerid]][oAttachedVehicle]][CORZ][refindex] = rz;
-        
-        SetVehicleZAngle(CarData[ObjectData[CurrObject[playerid]][oAttachedVehicle]][CarID], 0.0);
+		CarData[ObjectData[CurrObject[playerid]][oAttachedVehicle]][COX][refindex] = tmpx;
+		CarData[ObjectData[CurrObject[playerid]][oAttachedVehicle]][COY][refindex] = tmpy;
+		CarData[ObjectData[CurrObject[playerid]][oAttachedVehicle]][COZ][refindex] = tmpz;
+		
+		CarData[ObjectData[CurrObject[playerid]][oAttachedVehicle]][CORX][refindex] = rx;
+		CarData[ObjectData[CurrObject[playerid]][oAttachedVehicle]][CORY][refindex] = ry;
+		CarData[ObjectData[CurrObject[playerid]][oAttachedVehicle]][CORZ][refindex] = rz;
+		
+		SetVehicleZAngle(CarData[ObjectData[CurrObject[playerid]][oAttachedVehicle]][CarID], 0.0);
 
-        UpdateAttachedVehicleObject(ObjectData[CurrObject[playerid]][oAttachedVehicle], refindex, VEHICLE_ATTACH_UPDATE);
+		UpdateAttachedVehicleObject(ObjectData[CurrObject[playerid]][oAttachedVehicle], refindex, VEHICLE_ATTACH_UPDATE);
 	
 	}
 	else if(response == EDIT_RESPONSE_CANCEL)
@@ -1754,14 +1753,14 @@ OnPlayerEditVObject(playerid, objectid, response, Float:x, Float:y, Float:z, Flo
 
 		new refindex = GetCarObjectRefIndex(ObjectData[CurrObject[playerid]][oAttachedVehicle], CurrObject[playerid]);
 
-        CarData[ObjectData[CurrObject[playerid]][oAttachedVehicle]][COX][refindex] = AVEditObjPos[playerid][0];
-        CarData[ObjectData[CurrObject[playerid]][oAttachedVehicle]][COY][refindex] = AVEditObjPos[playerid][1];
-        CarData[ObjectData[CurrObject[playerid]][oAttachedVehicle]][COZ][refindex] = AVEditObjPos[playerid][2];
-        CarData[ObjectData[CurrObject[playerid]][oAttachedVehicle]][CORX][refindex] = AVEditObjPos[playerid][3];
-        CarData[ObjectData[CurrObject[playerid]][oAttachedVehicle]][CORY][refindex] = AVEditObjPos[playerid][4];
-        CarData[ObjectData[CurrObject[playerid]][oAttachedVehicle]][CORZ][refindex] = AVEditObjPos[playerid][5];
+		CarData[ObjectData[CurrObject[playerid]][oAttachedVehicle]][COX][refindex] = AVEditObjPos[playerid][0];
+		CarData[ObjectData[CurrObject[playerid]][oAttachedVehicle]][COY][refindex] = AVEditObjPos[playerid][1];
+		CarData[ObjectData[CurrObject[playerid]][oAttachedVehicle]][COZ][refindex] = AVEditObjPos[playerid][2];
+		CarData[ObjectData[CurrObject[playerid]][oAttachedVehicle]][CORX][refindex] = AVEditObjPos[playerid][3];
+		CarData[ObjectData[CurrObject[playerid]][oAttachedVehicle]][CORY][refindex] = AVEditObjPos[playerid][4];
+		CarData[ObjectData[CurrObject[playerid]][oAttachedVehicle]][CORZ][refindex] = AVEditObjPos[playerid][5];
 
-        UpdateAttachedVehicleObject(ObjectData[CurrObject[playerid]][oAttachedVehicle], refindex, VEHICLE_ATTACH_UPDATE);
+		UpdateAttachedVehicleObject(ObjectData[CurrObject[playerid]][oAttachedVehicle], refindex, VEHICLE_ATTACH_UPDATE);
 
 		EditingMode[playerid] = false;
 		SetEditMode(playerid, EDIT_MODE_NONE);
@@ -1774,19 +1773,19 @@ UpdateAttachedVehicleObject(carindex, refindex, type)
 {
 	if(type == VEHICLE_ATTACH_UPDATE)
 	{
-	    Streamer_SetFloatData(STREAMER_TYPE_OBJECT, ObjectData[CarData[carindex][CarObjectRef][refindex]][oID], E_STREAMER_ATTACH_OFFSET_X, CarData[carindex][COX][refindex]);
-	    Streamer_SetFloatData(STREAMER_TYPE_OBJECT, ObjectData[CarData[carindex][CarObjectRef][refindex]][oID], E_STREAMER_ATTACH_OFFSET_Y, CarData[carindex][COY][refindex]);
-	    Streamer_SetFloatData(STREAMER_TYPE_OBJECT, ObjectData[CarData[carindex][CarObjectRef][refindex]][oID], E_STREAMER_ATTACH_OFFSET_Z, CarData[carindex][COZ][refindex]);
-	    Streamer_SetFloatData(STREAMER_TYPE_OBJECT, ObjectData[CarData[carindex][CarObjectRef][refindex]][oID], E_STREAMER_ATTACH_R_X, CarData[carindex][CORX][refindex]);
-	    Streamer_SetFloatData(STREAMER_TYPE_OBJECT, ObjectData[CarData[carindex][CarObjectRef][refindex]][oID], E_STREAMER_ATTACH_R_Y, CarData[carindex][CORY][refindex]);
-	    Streamer_SetFloatData(STREAMER_TYPE_OBJECT, ObjectData[CarData[carindex][CarObjectRef][refindex]][oID], E_STREAMER_ATTACH_R_Z, CarData[carindex][CORZ][refindex]);
+		Streamer_SetFloatData(STREAMER_TYPE_OBJECT, ObjectData[CarData[carindex][CarObjectRef][refindex]][oID], E_STREAMER_ATTACH_OFFSET_X, CarData[carindex][COX][refindex]);
+		Streamer_SetFloatData(STREAMER_TYPE_OBJECT, ObjectData[CarData[carindex][CarObjectRef][refindex]][oID], E_STREAMER_ATTACH_OFFSET_Y, CarData[carindex][COY][refindex]);
+		Streamer_SetFloatData(STREAMER_TYPE_OBJECT, ObjectData[CarData[carindex][CarObjectRef][refindex]][oID], E_STREAMER_ATTACH_OFFSET_Z, CarData[carindex][COZ][refindex]);
+		Streamer_SetFloatData(STREAMER_TYPE_OBJECT, ObjectData[CarData[carindex][CarObjectRef][refindex]][oID], E_STREAMER_ATTACH_R_X, CarData[carindex][CORX][refindex]);
+		Streamer_SetFloatData(STREAMER_TYPE_OBJECT, ObjectData[CarData[carindex][CarObjectRef][refindex]][oID], E_STREAMER_ATTACH_R_Y, CarData[carindex][CORY][refindex]);
+		Streamer_SetFloatData(STREAMER_TYPE_OBJECT, ObjectData[CarData[carindex][CarObjectRef][refindex]][oID], E_STREAMER_ATTACH_R_Z, CarData[carindex][CORZ][refindex]);
 
 	}
 	else if(type == VEHICLE_REATTACH_UPDATE)
 	{
 		refindex = GetCarObjectRefIndex(carindex, refindex);
 		
-	    AttachDynamicObjectToVehicle(ObjectData[CarData[carindex][CarObjectRef][refindex]][oID], CarData[carindex][CarID],
+		AttachDynamicObjectToVehicle(ObjectData[CarData[carindex][CarObjectRef][refindex]][oID], CarData[carindex][CarID],
 			CarData[carindex][COX][refindex], CarData[carindex][COY][refindex], CarData[carindex][COZ][refindex],
 			CarData[carindex][CORX][refindex], CarData[carindex][CORY][refindex], CarData[carindex][CORZ][refindex]
 		);
@@ -1805,9 +1804,9 @@ UpdateAttachedObjectRef(carindex, objindex)
 	{
 		CarData[carindex][CarObjectRef][refindex] = -1;
 		sqlite_SaveVehicleObjectData(carindex);
-	    return 1;
+		return 1;
 	}
-    return 0;
+	return 0;
 }
 
 GetCarObjectRefIndex(carindex, objindex)
@@ -1823,7 +1822,7 @@ static IsObjectAttachedToVehicle(index)
 {
 	foreach(new i : Cars)
 	{
-	    for(new j = 0; j < MAX_CAR_OBJECTS; j++) if(CarData[i][CarObjectRef][j] == index) return 1;
+		for(new j = 0; j < MAX_CAR_OBJECTS; j++) if(CarData[i][CarObjectRef][j] == index) return 1;
 	}
 	return 0;
 }
@@ -1837,7 +1836,7 @@ GetXYInFrontOfPlayer(playerid, &Float:x, &Float:y, Float:distance)
 	GetPlayerFacingAngle(playerid, a);
 
 	if (GetPlayerVehicleID(playerid)) {
-	    GetVehicleZAngle(GetPlayerVehicleID(playerid), a);
+		GetVehicleZAngle(GetPlayerVehicleID(playerid), a);
 	}
 
 	x += (distance * floatsin(-a, degrees));
@@ -1862,63 +1861,63 @@ static ExportCar(playerid, index, name[])
 	fwrite(f, "new carvid;\r\n\n");
 	
 	// Init script
-    fwrite(f, "public OnFilterScriptInit()\r\n");
-    fwrite(f, "{ \r\n");
-    fwrite(f,"    new tmpobjid;\r\n\n");
-    
+	fwrite(f, "public OnFilterScriptInit()\r\n");
+	fwrite(f, "{ \r\n");
+	fwrite(f,"    new tmpobjid;\r\n\n");
+	
 	format(templine, sizeof(templine), "    carvid = CreateVehicle(%i,%.3f,%.3f,%.3f,%.3f,%i,%i,-1,%i);\r\n\n",
-        CarData[index][CarModel], CarData[index][CarSpawnX], CarData[index][CarSpawnY], CarData[index][CarSpawnZ], CarData[index][CarSpawnFA], CarData[index][CarColor1], CarData[index][CarColor2], CarData[index][CarSiren] ? 1 : 0
+		CarData[index][CarModel], CarData[index][CarSpawnX], CarData[index][CarSpawnY], CarData[index][CarSpawnZ], CarData[index][CarSpawnFA], CarData[index][CarColor1], CarData[index][CarColor2], CarData[index][CarSiren] ? 1 : 0
 	);
 	
- 	fwrite(f, templine);
+	fwrite(f, templine);
 
 
 	// Mod components
 	for(new i = 0; i < MAX_CAR_COMPONENTS; i++)
 	{
-	    if(CarData[index][CarComponents][i] > 0)
-	    {
-	        format(templine, sizeof(templine), "    AddVehicleComponent(carvid, %i);\r\n", CarData[index][CarComponents][i]);
+		if(CarData[index][CarComponents][i] > 0)
+		{
+			format(templine, sizeof(templine), "    AddVehicleComponent(carvid, %i);\r\n", CarData[index][CarComponents][i]);
 			fwrite(f, templine);
-	    }
+		}
 	}
 	
 	// Paintjob
 	if(CarData[index][CarPaintJob] < 3)
 	{
-        format(templine, sizeof(templine), "    ChangeVehiclePaintjob(carvid, %i);\r\n\n", CarData[index][CarPaintJob]);
+		format(templine, sizeof(templine), "    ChangeVehiclePaintjob(carvid, %i);\r\n\n", CarData[index][CarPaintJob]);
 		fwrite(f, templine);
 	}
 
 
 	// Objects
-    for(new i = 0; i < MAX_CAR_OBJECTS; i++)
-    {
+	for(new i = 0; i < MAX_CAR_OBJECTS; i++)
+	{
 		// No object
-        if(CarData[index][CarObjectRef][i] == -1) continue;
-        new oindex = CarData[index][CarObjectRef][i];
+		if(CarData[index][CarObjectRef][i] == -1) continue;
+		new oindex = CarData[index][CarObjectRef][i];
 
 		// Create object
 		format(templine,sizeof(templine),"    tmpobjid = CreateDynamicObject(%i,0.0,0.0,-1000.0,0.0,0.0,0.0,-1,-1,-1,300.0,300.0);\r\n",ObjectData[oindex][oModel]);
-        fwrite(f,templine);
+		fwrite(f,templine);
 
 
 		// Write all materials and colors
 		for(new j = 0; j < MAX_MATERIALS; j++)
-    	{
+		{
 			// Does object have a texture set?
-            if(ObjectData[oindex][oTexIndex][j] != 0)
-            {
+			if(ObjectData[oindex][oTexIndex][j] != 0)
+			{
 				format(templine,sizeof(templine),"    SetDynamicObjectMaterial(tmpobjid, %i, %i, %c%s%c, %c%s%c, %i);\r\n",
 					j, GetTModel(ObjectData[oindex][oTexIndex][j]), 34, GetTXDName(ObjectData[oindex][oTexIndex][j]), 34, 34,GetTextureName(ObjectData[oindex][oTexIndex][j]), 34, ObjectData[oindex][oColorIndex][j]
 				);
 
 				fwrite(f,templine);
-            }
+			}
 
-            // No texture how about a color?
-            else if(ObjectData[oindex][oColorIndex][j] != 0)
-            {
+			// No texture how about a color?
+			else if(ObjectData[oindex][oColorIndex][j] != 0)
+			{
 				format(templine,sizeof(templine),"    SetDynamicObjectMaterial(tmpobjid, %i, -1, %c%s%c, %c%s%c, %i);\r\n", j, 34, "none", 34, 34,"none", 34, ObjectData[oindex][oColorIndex][j]);
 				fwrite(f,templine);
 			}
@@ -1948,29 +1947,29 @@ static ExportCar(playerid, index, name[])
 		fwrite(f,templine);
 	}
 
-    fwrite(f, "} \r\n\n");
+	fwrite(f, "} \r\n\n");
 
 	// Exit script
-    fwrite(f, "public OnFilterScriptExit()\r\n");
-    fwrite(f, "{ \r\n");
-    fwrite(f,"    DestroyVehicle(carvid);\r\n");
-    fwrite(f, "} \r\n\n");
-    
+	fwrite(f, "public OnFilterScriptExit()\r\n");
+	fwrite(f, "{ \r\n");
+	fwrite(f,"    DestroyVehicle(carvid);\r\n");
+	fwrite(f, "} \r\n\n");
+	
 	// Vehicle respawn
-    fwrite(f, "public OnVehicleSpawn(vehicleid)\r\n");
+	fwrite(f, "public OnVehicleSpawn(vehicleid)\r\n");
 
-    fwrite(f, "{ \r\n");
-    fwrite(f, "    if(vehicleid == carvid)\r\n");
-    fwrite(f, "    { \r\n");
+	fwrite(f, "{ \r\n");
+	fwrite(f, "    if(vehicleid == carvid)\r\n");
+	fwrite(f, "    { \r\n");
 
 	// Mod components
 	for(new i = 0; i < MAX_CAR_COMPONENTS; i++)
 	{
-	    if(CarData[index][CarComponents][i] > 0)
-	    {
-	        format(templine, sizeof(templine), "        AddVehicleComponent(carvid, %i);\r\n", CarData[index][CarComponents][i]);
+		if(CarData[index][CarComponents][i] > 0)
+		{
+			format(templine, sizeof(templine), "        AddVehicleComponent(carvid, %i);\r\n", CarData[index][CarComponents][i]);
 			fwrite(f, templine);
-	    }
+		}
 	}
 
 
@@ -1978,16 +1977,16 @@ static ExportCar(playerid, index, name[])
 	// Paintjob
 	if(CarData[index][CarPaintJob] < 3)
 	{
-        format(templine, sizeof(templine), "        ChangeVehiclePaintjob(carvid, %i);\r\n", CarData[index][CarPaintJob]);
+		format(templine, sizeof(templine), "        ChangeVehiclePaintjob(carvid, %i);\r\n", CarData[index][CarPaintJob]);
 		fwrite(f, templine);
 	}
 
-    fwrite(f, "    } \r\n");
+	fwrite(f, "    } \r\n");
 
 
-    fwrite(f, "} \r\n");
+	fwrite(f, "} \r\n");
 
-    fclose(f);
+	fclose(f);
 
 	format(templine, sizeof(templine), "Exported vehicle to filterscript %s", name);
 
@@ -2024,85 +2023,85 @@ static ExportAllCars(playerid, name[])
 	fwrite(f, "\n");
 
 	// Init script
-    fwrite(f, "public OnFilterScriptInit()\r\n");
-    fwrite(f, "{ \r\n");
-    fwrite(f,"    new tmpobjid;\r\n\n");
+	fwrite(f, "public OnFilterScriptInit()\r\n");
+	fwrite(f, "{ \r\n");
+	fwrite(f,"    new tmpobjid;\r\n\n");
 
 	foreach(new i : Cars)
 	{
 		format(templine, sizeof(templine), "    carvid_%i = CreateVehicle(%i,%.3f,%.3f,%.3f,%.3f,%i,%i,-1,%i);\r\n",
-	        CurrCar++, CarData[i][CarModel], CarData[i][CarSpawnX], CarData[i][CarSpawnY], CarData[i][CarSpawnZ], CarData[i][CarSpawnFA], CarData[i][CarColor1], CarData[i][CarColor2], CarData[i][CarSiren] ? 1 : 0
+			CurrCar++, CarData[i][CarModel], CarData[i][CarSpawnX], CarData[i][CarSpawnY], CarData[i][CarSpawnZ], CarData[i][CarSpawnFA], CarData[i][CarColor1], CarData[i][CarColor2], CarData[i][CarSiren] ? 1 : 0
 		);
-        fwrite(f, templine);
+		fwrite(f, templine);
 	}
 	
 	CurrCar = 0;
 
-    fwrite(f, "\n");
+	fwrite(f, "\n");
 
 	foreach(new i : Cars)
 	{
 		// Mod components
 		for(new j = 0; j < MAX_CAR_COMPONENTS; j++)
 		{
-		    if(CarData[i][CarComponents][j] > 0)
-		    {
-		        format(templine, sizeof(templine), "    AddVehicleComponent(carvid_%i, %i);\r\n", CurrCar, CarData[i][CarComponents][j]);
+			if(CarData[i][CarComponents][j] > 0)
+			{
+				format(templine, sizeof(templine), "    AddVehicleComponent(carvid_%i, %i);\r\n", CurrCar, CarData[i][CarComponents][j]);
 				fwrite(f, templine);
-		    }
+			}
 		}
 		CurrCar++;
 	}
 
-    CurrCar = 0;
-    
-    fwrite(f, "\n");
+	CurrCar = 0;
+	
+	fwrite(f, "\n");
 
 	foreach(new i : Cars)
 	{
 		// Paintjob
 		if(CarData[i][CarPaintJob] < 3)
 		{
-	        format(templine, sizeof(templine), "    ChangeVehiclePaintjob(carvid_%i, %i);\r\n", CurrCar, CarData[i][CarPaintJob]);
+			format(templine, sizeof(templine), "    ChangeVehiclePaintjob(carvid_%i, %i);\r\n", CurrCar, CarData[i][CarPaintJob]);
 			fwrite(f, templine);
 		}
 		CurrCar++;
 	}
 
-    CurrCar = 0;
-    
-    fwrite(f, "\n");
+	CurrCar = 0;
+	
+	fwrite(f, "\n");
 
 	foreach(new i : Cars)
 	{
 		// Objects
-	    for(new j = 0; j < MAX_CAR_OBJECTS; j++)
-	    {
+		for(new j = 0; j < MAX_CAR_OBJECTS; j++)
+		{
 			// No object
-	        if(CarData[i][CarObjectRef][j] == -1) continue;
-	        new oindex = CarData[i][CarObjectRef][j];
+			if(CarData[i][CarObjectRef][j] == -1) continue;
+			new oindex = CarData[i][CarObjectRef][j];
 
 			// Create object
 			format(templine,sizeof(templine),"    tmpobjid = CreateDynamicObject(%i,0.0,0.0,-1000.0,0.0,0.0,0.0,-1,-1,-1,300.0,300.0);\r\n",ObjectData[oindex][oModel]);
-	        fwrite(f,templine);
+			fwrite(f,templine);
 
 
 			// Write all materials and colors
 			for(new k = 0; k < MAX_MATERIALS; k++)
-	    	{
+			{
 				// Does object have a texture set?
-	            if(ObjectData[oindex][oTexIndex][k] != 0)
-	            {
+				if(ObjectData[oindex][oTexIndex][k] != 0)
+				{
 					format(templine,sizeof(templine),"    SetDynamicObjectMaterial(tmpobjid, %i, %i, %c%s%c, %c%s%c, %i);\r\n",
 						k, GetTModel(ObjectData[oindex][oTexIndex][k]), 34, GetTXDName(ObjectData[oindex][oTexIndex][k]), 34, 34,GetTextureName(ObjectData[oindex][oTexIndex][k]), 34, ObjectData[oindex][oColorIndex][k]
 					);
 
 					fwrite(f,templine);
-	            }
+				}
 
-	            // No texture how about a color?
-	            else if(ObjectData[oindex][oColorIndex][k] != 0)
-	            {
+				// No texture how about a color?
+				else if(ObjectData[oindex][oColorIndex][k] != 0)
+				{
 					format(templine,sizeof(templine),"    SetDynamicObjectMaterial(tmpobjid, %i, -1, %c%s%c, %c%s%c, %i);\r\n", j, 34, "none", 34, 34,"none", 34, ObjectData[oindex][oColorIndex][k]);
 					fwrite(f,templine);
 				}
@@ -2135,62 +2134,62 @@ static ExportAllCars(playerid, name[])
 		
 		fwrite(f, "\n");
 	}
-    fwrite(f, "} \r\n\n");
+	fwrite(f, "} \r\n\n");
 
 	CurrCar = 0;
 
 	// Exit script
-    fwrite(f, "public OnFilterScriptExit()\r\n");
-    fwrite(f, "{ \r\n");
-    
+	fwrite(f, "public OnFilterScriptExit()\r\n");
+	fwrite(f, "{ \r\n");
+	
 	foreach(new i : Cars)
 	{
 		format(templine, sizeof(templine), "    DestroyVehicle(carvid_%i);\r\n", CurrCar);
-    	fwrite(f, templine);
-        CurrCar++;
+		fwrite(f, templine);
+		CurrCar++;
 	}
 
-    fwrite(f, "} \r\n\n");
+	fwrite(f, "} \r\n\n");
 
-    CurrCar = 0;
-    
+	CurrCar = 0;
+	
 	// Vehicle respawn
-    fwrite(f, "public OnVehicleSpawn(vehicleid)\r\n");
+	fwrite(f, "public OnVehicleSpawn(vehicleid)\r\n");
 
-    fwrite(f, "{ \r\n");
-    foreach(new i : Cars)
-    {
+	fwrite(f, "{ \r\n");
+	foreach(new i : Cars)
+	{
 		if(CurrCar == 0) format(templine, sizeof(templine), "    if(vehicleid == carvid_%i)\r\n", CurrCar);
 		else format(templine, sizeof(templine), "    else if(vehicleid == carvid_%i)\r\n", CurrCar);
-        fwrite(f, templine);
+		fwrite(f, templine);
 
 		fwrite(f, "    {\r\n");
 
 		// Mod components
 		for(new j = 0; j < MAX_CAR_COMPONENTS; j++)
 		{
-		    if(CarData[i][CarComponents][j] > 0)
-		    {
-		        format(templine, sizeof(templine), "        AddVehicleComponent(carvid_%i, %i);\r\n", CurrCar, CarData[i][CarComponents][i]);
+			if(CarData[i][CarComponents][j] > 0)
+			{
+				format(templine, sizeof(templine), "        AddVehicleComponent(carvid_%i, %i);\r\n", CurrCar, CarData[i][CarComponents][i]);
 				fwrite(f, templine);
-		    }
+			}
 		}
 
 		// Paintjob
 		if(CarData[i][CarPaintJob] < 3)
 		{
-	        format(templine, sizeof(templine), "        ChangeVehiclePaintjob(carvid_%i, %i);\r\n", CurrCar, CarData[i][CarPaintJob]);
+			format(templine, sizeof(templine), "        ChangeVehiclePaintjob(carvid_%i, %i);\r\n", CurrCar, CarData[i][CarPaintJob]);
 			fwrite(f, templine);
 		}
 
-	    fwrite(f, "    }\r\n");
+		fwrite(f, "    }\r\n");
 
-        CurrCar++;
+		CurrCar++;
 	}
 
-    fwrite(f, "} \r\n");
+	fwrite(f, "} \r\n");
 
-    fclose(f);
+	fclose(f);
 
 	format(templine, sizeof(templine), "Exported vehicles to filterscript %s", name);
 
@@ -2217,9 +2216,9 @@ YCMD:avexport(playerid, arg[], help)
 	// Ask for a map name
 	inline ExportVehicle(epid, edialogid, eresponse, elistitem, string:etext[])
 	{
-	    #pragma unused elistitem, edialogid, epid
-	    if(eresponse)
-	    {
+		#pragma unused elistitem, edialogid, epid
+		if(eresponse)
+		{
 			// Was a map name supplied ?
 			if(!isnull(etext))
 			{
@@ -2237,18 +2236,18 @@ YCMD:avexport(playerid, arg[], help)
 				format(exportmap, sizeof(exportmap), "tstudio/ExportCars/%s.pwn", etext);
 
 				// Map exists ask to remove
-			    if(fexist(exportmap))
+				if(fexist(exportmap))
 				{
 					inline RemoveVehicle(rpid, rdialogid, rresponse, rlistitem, string:rtext[])
 					{
-				        #pragma unused rlistitem, rdialogid, rpid, rtext
+						#pragma unused rlistitem, rdialogid, rpid, rtext
 
 						// Remove map and export
-				        if(rresponse)
-				        {
-				            fremove(exportmap);
-				            ExportCar(playerid, CurrVehicle[playerid], exportmap);
-				        }
+						if(rresponse)
+						{
+							fremove(exportmap);
+							ExportCar(playerid, CurrVehicle[playerid], exportmap);
+						}
 					}
 					Dialog_ShowCallback(playerid, using inline RemoveVehicle, DIALOG_STYLE_MSGBOX, "Texture Studio (Vehicle Export)", "A export exists with this name replace?", "Ok", "Cancel");
 				}
@@ -2290,9 +2289,9 @@ YCMD:avexportall(playerid, arg[], help)
 	// Ask for a map name
 	inline ExportVehicles(epid, edialogid, eresponse, elistitem, string:etext[])
 	{
-	    #pragma unused elistitem, edialogid, epid
-	    if(eresponse)
-	    {
+		#pragma unused elistitem, edialogid, epid
+		if(eresponse)
+		{
 			// Was a map name supplied ?
 			if(!isnull(etext))
 			{
@@ -2310,18 +2309,18 @@ YCMD:avexportall(playerid, arg[], help)
 				format(exportmap, sizeof(exportmap), "tstudio/ExportCars/%s.pwn", etext);
 
 				// Map exists ask to remove
-			    if(fexist(exportmap))
+				if(fexist(exportmap))
 				{
 					inline RemoveVehicles(rpid, rdialogid, rresponse, rlistitem, string:rtext[])
 					{
-				        #pragma unused rlistitem, rdialogid, rpid, rtext
+						#pragma unused rlistitem, rdialogid, rpid, rtext
 
 						// Remove map and export
-				        if(rresponse)
-				        {
-				            fremove(exportmap);
-				            ExportAllCars(playerid, exportmap);
-				        }
+						if(rresponse)
+						{
+							fremove(exportmap);
+							ExportAllCars(playerid, exportmap);
+						}
 					}
 					Dialog_ShowCallback(playerid, using inline RemoveVehicles, DIALOG_STYLE_MSGBOX, "Texture Studio (Export Vehicles)", "A export exists with this name replace?", "Ok", "Cancel");
 				}

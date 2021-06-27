@@ -109,6 +109,7 @@ Commands: (Currently 65 commands)
 	/0group - This will move all grouped objects center to 0,0,0 useful for getting attached object offsets (Not in the GUI yet)
 
 	Vehicles:
+	/tcar - Create a new temporary car
 	/avmodcar - Mod a car it will teleport the vehicle to the correct mod garage if modable
 	/avsetspawn - Set the spawn position of a vehicle
 	/avnewcar - Create a new car
@@ -132,6 +133,9 @@ Commands: (Currently 65 commands)
 	Other:
 	/echo - Will echo back any text sent this is useful for autohotkey so that you can create
 	displayed output for your keybinds
+	/time - Change in game time
+	/weapon - Spawn in game weapon
+	/tele - Teleport to x, y, z coords
 
 	
 Keycombos:
